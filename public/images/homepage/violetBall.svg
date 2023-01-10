@@ -1,0 +1,35 @@
+<svg width="138" height="138" viewBox="0 0 138 138" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_123_237)">
+<g filter="url(#filter0_i_123_237)">
+<path d="M22.3556 119.846C-5.72548 94.084 -7.6063 50.4367 18.1547 22.3556C43.9156 -5.72548 87.5635 -7.6063 115.644 18.1547C143.725 43.9156 145.606 87.5635 119.846 115.644C94.084 143.725 50.4367 145.606 22.3556 119.846Z" fill="url(#paint0_radial_123_237)"/>
+</g>
+<g opacity="0.8">
+<path d="M73.3219 49.0551L72.8736 49.9154L67.6593 76.4147L67.8753 76.7357L81.6066 71.8852L73.3219 49.0551Z" fill="white" fill-opacity="0.68"/>
+<path d="M73.3218 49.0546L57.0052 67.044L67.8751 76.7354L70.4059 63.8734L73.3218 49.0546Z" fill="white" fill-opacity="0.333"/>
+<path d="M67.4164 79.065L67.2287 79.2197L65.3712 88.6596L65.4357 89.1313L81.1546 74.2197L67.4164 79.065Z" fill="white" fill-opacity="0.68"/>
+<path d="M65.4358 89.1305L67.4166 79.0641L56.5459 69.3765L65.4358 89.1305Z" fill="white" fill-opacity="0.333"/>
+<path d="M67.875 76.7342L81.6061 71.8838L70.4058 63.8725L67.875 76.7342Z" fill="white"/>
+<path d="M57.0051 67.0441L67.8749 76.7352L70.4058 63.8735L57.0051 67.0441Z" fill="white" fill-opacity="0.68"/>
+</g>
+</g>
+<defs>
+<filter id="filter0_i_123_237" x="0" y="0" width="138" height="138" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset/>
+<feGaussianBlur stdDeviation="23"/>
+<feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.917667 0 0 0 0 0.683333 0 0 0 0 1 0 0 0 0.42 0"/>
+<feBlend mode="normal" in2="shape" result="effect1_innerShadow_123_237"/>
+</filter>
+<radialGradient id="paint0_radial_123_237" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(84.1964 138) rotate(-96.1702) scale(137.565 148.703)">
+<stop/>
+<stop offset="0.707176" stop-color="#5B4BB9"/>
+<stop offset="1" stop-color="white"/>
+</radialGradient>
+<clipPath id="clip0_123_237">
+<rect width="138" height="138" fill="white"/>
+</clipPath>
+</defs>
+</svg>
