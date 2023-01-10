@@ -8,6 +8,9 @@ import moment from 'moment'
 import numeral from 'numeral'
 import CountUp from 'react-countup'
 
+import AOS from 'aos'
+import 'aos/dist/aos.css'
+
 const Title = styled(Heading)`
   text-align: center;
   font-weight: 800;
@@ -230,6 +233,14 @@ const TextName = styled(Text)`
   }
 `
 
+const ChartBase = styled.div`
+  width: 42px;
+  height: 3px;
+
+  background: linear-gradient(180deg, #8145ff 0%, #00fec1 100%);
+  border-radius: 8px;
+`
+
 const Items = [
   // {
   //   value: '13.81',
@@ -245,7 +256,7 @@ const Items = [
 
 const { Option } = Select
 
-const Exchange = () => {
+const Exchange = (props) => {
   const [count, setCount] = useState(3)
   const [deposit, setDeposit] = useState(1000)
   const [period, setPeriod] = useState({ old: 2, current: 2 })
@@ -304,10 +315,14 @@ const Exchange = () => {
 
   useEffect(() => {
     getExchange()
+    AOS.init({
+      duration: 2000,
+    })
+    AOS.refresh()
   }, [])
 
   return (
-    <Wrapper>
+    <Wrapper data-aos="fade-up">
       <Title color="mainColor">
         Calculate your crypto <StyledText>earnings</StyledText>
       </Title>
@@ -400,12 +415,12 @@ const Exchange = () => {
                 separator=","
                 delay={3}
                 duration={1}
-                end={Number((deposit * (1 + (percen * 12 * period.current))).toFixed(2))}
+                end={Number((deposit * (1 + percen * 12 * period.current)).toFixed(2))}
                 prefix="$"
                 decimals={2}
                 className="style-countup"
               >
-                {numeral(deposit * (1 + (percen * 12 * period.current))).format('0,0.00')}
+                {numeral(deposit * (1 + percen * 12 * period.current)).format('0,0.00')}
               </CountUp>
             </HeadingCustom>
             <Text color="mainColor" style={{ color: '#CED8E1' }}>
@@ -427,11 +442,12 @@ const Exchange = () => {
             </Column>
             <Column>
               {period.current >= 2 ? (
-                <img src={images.col2u} alt="" />
+                <img src={images.chart2up} />
               ) : period.current < period.old && !(period.old < 2) ? (
-                <img src={images.col2d} alt="" />
+                <img src={images.chart2down} alt="" />
               ) : (
-                <img src={images.col0} alt="" />
+                // <img src={images.colbase} alt="" />
+                <ChartBase />
               )}
               <ButtonCustom
                 className={period.current === 2 ? 'active' : ''}
@@ -445,11 +461,12 @@ const Exchange = () => {
             </Column>
             <Column>
               {period.current >= 3 ? (
-                <img src={images.col3u} alt="" />
+                <img src={images.chart3up} />
               ) : period.current < period.old && !(period.old < 3) ? (
-                <img src={images.col3d} alt="" />
+                <img src={images.chart3down} alt="" />
               ) : (
-                <img src={images.col0} alt="" />
+                // <img src={images.colbase} alt="" />
+                <ChartBase />
               )}
               <ButtonCustom
                 className={period.current === 3 ? 'active' : ''}
@@ -463,11 +480,12 @@ const Exchange = () => {
             </Column>
             <Column>
               {period.current >= 4 ? (
-                <img src={images.col4u} alt="" />
+                <img src={images.chart4up} />
               ) : period.current < period.old && !(period.old < 4) ? (
-                <img src={images.col4d} alt="" />
+                <img src={images.chart4down} alt="" />
               ) : (
-                <img src={images.col0} alt="" />
+                // <img src={images.colbase} alt="" />
+                <ChartBase />
               )}
               <ButtonCustom
                 className={period.current === 4 ? 'active' : ''}

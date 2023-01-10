@@ -3,7 +3,7 @@ import { ContextApi } from '@pancakeswap/localization'
 import { PageMeta } from './types'
 
 export const DEFAULT_META: PageMeta = {
-  title: 'My gamer',
+  title: 'Trendy Defi',
   description:
     'MYGAMER is an all-in-one platform that permits you to earn through Staking, Swap, Minigames, NFT trading and more. We aim to build an ecosystem where you can do everything without facing any technical barriers.',
   image: 'https://testnet-swap.mygamer.org/images/thumnal.jpg',
@@ -45,7 +45,7 @@ const getPathList = (t: ContextApi['t']): PathList => {
       '/pancake-squad': { basePath: true, title: t('Pancake Squad') },
       '/pottery': { basePath: true, title: t('Pottery') },
     },
-    defaultTitleSuffix: t('My gamer'),
+    defaultTitleSuffix: t('Trendy Defi'),
   }
 }
 

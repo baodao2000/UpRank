@@ -1,10 +1,20 @@
 import React, { useEffect, useState, useRef } from 'react'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import images from 'configs/images'
 import { Heading, Flex, Text, Skeleton, ChartIcon, CommunityIcon, SwapIcon, Button } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
 import PageSection from 'components/PageSection'
 import Exchange from './components/Exchange'
+import AOS from 'aos'
+import 'aos/dist/aos.css'
+
+const shine = keyframes`
+  100% {
+    left: 125%;
+    opacity: 0;
+    visibility: hidden;
+  }
+`
 
 const Wrapper = styled.div`
   font-family: 'Inter';
@@ -391,7 +401,39 @@ const StepList = styled.div`
 const Step = styled.div`
   width: 100%;
   padding: 2%;
+  position: relative;
   border-radius: 8px;
+  background: linear-gradient(146.96deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 100%),
+    linear-gradient(153.15deg, #4c0bd3 8.57%, #8145ff 100%);
+  overflow: hidden;
+
+  &::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+    content: '';
+    width: 5px;
+    height: 100%;
+    background: -o-linear-gradient(left, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 100%);
+    background: -webkit-gradient(
+      linear,
+      left top,
+      right top,
+      from(rgba(255, 255, 255, 0)),
+      to(rgba(255, 255, 255, 0.3))
+    );
+    background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 100%);
+    -webkit-transform: skewX(-25deg);
+    -ms-transform: skewX(-25deg);
+    transform: skewX(-25deg);
+  }
+
+  &:hover::before {
+    display: block;
+    animation: ${shine} 1.1s;
+  }
+
   p {
     margin-top: 5%;
     line-height: 39px;
@@ -410,18 +452,6 @@ const Step = styled.div`
   }
   img {
     text-align: left;
-  }
-  &.download {
-    background: linear-gradient(146.96deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 100%),
-      linear-gradient(153.15deg, #4c0bd3 8.57%, #8145ff 100%);
-  }
-  &.create {
-    background: linear-gradient(146.96deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 100%),
-      linear-gradient(153.15deg, #4c0bd3 8.57%, #8145ff 100%);
-  }
-  &.get {
-    background: linear-gradient(146.96deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 100%),
-      linear-gradient(153.15deg, #4c0bd3 8.57%, #8145ff 100%);
   }
   @media screen and (max-width: 500px) {
     margin-top: 10px;
@@ -540,6 +570,13 @@ const HomePage: React.FC<React.PropsWithChildren> = () => {
     ref.current?.scrollIntoView({ behavior: 'smooth' })
   }
 
+  useEffect(() => {
+    AOS.init({
+      duration: 2000,
+    })
+    AOS.refresh()
+  }, [])
+
   return (
     <>
       <style jsx global>{`
@@ -554,7 +591,7 @@ const HomePage: React.FC<React.PropsWithChildren> = () => {
       <Wrapper>
         <Container>
           <Head>
-            <ContentHead>
+            <ContentHead data-aos="fade-up-right">
               <h2>Buy & Sell Cryptocurrency in minutes.</h2>
               <p>Join now on the largest cryptocurrency exchange in the world.</p>
               <LinkToDownload>
@@ -571,10 +608,10 @@ const HomePage: React.FC<React.PropsWithChildren> = () => {
                 </ListImgButton>
               </LinkToDownload>
             </ContentHead>
-            <ImageHead src={images.coinHead} alt="" />
+            <ImageHead data-aos="fade-up-left" src={images.coinHead} alt="" />
           </Head>
           <Crypto>
-            <Content>
+            <Content data-aos="fade-right">
               <Title color="mainColor" className="title colorchange">
                 <StyledText>All-in-One</StyledText> for Your Crypto
               </Title>
@@ -599,7 +636,7 @@ const HomePage: React.FC<React.PropsWithChildren> = () => {
             </ImageLeft>
           </Crypto>
           <div ref={ref}>
-            <Exchange />
+            <Exchange data-aos="fade-up" />
           </div>
 
           <StepBlock>
@@ -608,15 +645,15 @@ const HomePage: React.FC<React.PropsWithChildren> = () => {
             </Title>
             <TitleM color="mainColor">It only takes a few minutes</TitleM>
             <StepList>
-              <Step className="download">
+              <Step data-aos="flip-left" data-aos-easing="linear" data-aos-duration="1000" className="download">
                 <img src={images.arrowDown} alt="" />
                 <p>Download TrendyDefi</p>
               </Step>
-              <Step className="create">
+              <Step data-aos="flip-left" data-aos-easing="linear" data-aos-duration="2000" className="create">
                 <img src={images.wallet} alt="" />
                 <p>Create a new wallet</p>
               </Step>
-              <Step className="get">
+              <Step data-aos="flip-left" data-aos-easing="linear" data-aos-duration="3000" className="get">
                 <img src={images.crypto} alt="" />
                 <p>Get some crypto</p>
               </Step>
@@ -628,7 +665,7 @@ const HomePage: React.FC<React.PropsWithChildren> = () => {
           </StepBlock>
 
           <Insurance className="block">
-            <Content className="insurance">
+            <Content data-aos="fade-right" data-aos-duration="1500" className="insurance">
               <Title color="mainColor">
                 <StyledText2>Mutuals</StyledText2> to replace <StyledText2>insurance</StyledText2>
               </Title>
@@ -642,12 +679,17 @@ const HomePage: React.FC<React.PropsWithChildren> = () => {
 
           <Covered className="block">
             <Title color="mainColor">We’ve got you covered</Title>
-            <TitleM color="mainColor"><StyledText>Only you</StyledText> can access your wallet.</TitleM>
-            <TitleM color="mainColor">We <StyledText>don’t collect</StyledText> any personal data.</TitleM>
+            <TitleM color="mainColor">
+              <StyledText>Only you</StyledText> can access your wallet.
+            </TitleM>
+            <TitleM color="mainColor">
+              We <StyledText>don’t collect</StyledText> any personal data.
+            </TitleM>
             <CoveredList>
-              {coverdList.map((n) => {
+              {coverdList.map((n, i) => {
+                i += 600
                 return (
-                  <CoveredItem key={n.title}>
+                  <CoveredItem data-aos="zoom-in" data-aos-duration={i} data-aos-easing="linear" key={n.title}>
                     <img src={n.img} alt="" />
                     <TagCustom color="mainColor">{n.title}</TagCustom>
                     <ContentCustom color="mainColor">{n.detail}</ContentCustom>

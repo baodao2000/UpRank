@@ -76,7 +76,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           name="twitter:title"
           content="Welcome to mygamer All the best games in the world are here. make a lot of money only at mygamer.org"
         />
-        <title>My gamer</title>
+        <title>Trendy Defi</title>
       </Head>
       <NextThemeProvider>
         <StyledThemeProvider>
