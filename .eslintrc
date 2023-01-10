@@ -39,6 +39,11 @@
     "@typescript-eslint/no-shadow": 0,
     "prefer-const": 0,
     "no-unneeded-ternary": 0,
+    "import/newline-after-import": 0,
+    "import/extensions": 0,
+    "react/jsx-curly-brace-presence": 0,
+    "react/jsx-boolean-value": 0,
+    "react/no-array-index-key": 0,
     // Exchange
     "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["state", "memo"] }],
     "react/require-default-props": 0,
