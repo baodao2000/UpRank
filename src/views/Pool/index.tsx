@@ -1,145 +1,256 @@
-import { useMemo } from 'react'
+import { Button, Flex, Heading, LinkExternal, useModal, Text } from '@pancakeswap/uikit'
+import PageHeader from 'components/PageHeader'
 import styled from 'styled-components'
-import { Text, Flex, CardBody, CardFooter, Button, AddIcon } from '@pancakeswap/uikit'
-import Link from 'next/link'
-import { useWeb3React } from '@pancakeswap/wagmi'
-import { useTranslation } from '@pancakeswap/localization'
-import { useLPTokensWithBalanceByAccount } from 'views/Swap/StableSwap/hooks/useStableConfig'
-import FullPositionCard, { StableFullPositionCard } from '../../components/PositionCard'
-import { useTokenBalancesWithLoadingIndicator } from '../../state/wallet/hooks'
-import { usePairs, PairState } from '../../hooks/usePairs'
-import { toV2LiquidityToken, useTrackedTokenPairs } from '../../state/user/hooks'
-import Dots from '../../components/Loader/Dots'
-import { AppHeader, AppBody } from '../../components/App'
-import Page from '../Page'
+import images from 'configs/images'
+import { FC, useEffect, useState } from 'react'
+import contracts from 'config/constants/contracts'
+import BigNumber from 'bignumber.js'
+import { isMobile } from 'react-device-detect'
+import { formatEther } from '@ethersproject/units'
+import { getBlockExploreLink, getBlockExploreName } from 'utils'
+import { shortenURL } from 'views/Pools2/util'
+import moment from 'moment'
+import { ModalCheckRegister } from 'components/ModalRegister/ModalCheckRegister'
+import { ModalRegister } from 'components/ModalRegister'
+import refferalAbi from 'config/abi/refferal.json'
+import { getContract, getPoolsContract } from 'utils/contractHelpers'
+import { trendyColors } from 'style/trendyTheme'
+import TrendyPageLoader from 'components/Loader/TrendyPageLoader'
+import ClaimPoolModal from './components/ClaimModal'
+import WithDrawModal from './components/WithDrawModal'
+import useActiveWeb3React from '../../hooks/useActiveWeb3React'
+import TableDataPool from './components/TableData'
+import DetailInfoPool from './components/DetailInfo'
+import DepositPoolModal from './components/DepositModal'
+import { ChainId } from '../../../packages/swap-sdk/src/constants'
 
-const Body = styled(CardBody)`
-  background-color: ${({ theme }) => theme.colors.dropdownDeep};
+// ============= STYLED
+const PoolDetail = styled.div`
+  background: url(${images.poolDetailFooterBg}) no-repeat bottom;
+  background-size: contain;
+  @media screen and (max-width: 768px) {
+    background: url(${images.poolDetailFooterBg}) no-repeat bottom;
+    background-size: fixed;
+  }
+`
+const Body = styled.div`
+  background: none;
+  padding: 70px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  align-items: center;
+  @media (max-width: 575px) {
+    padding: 32px 20px 70px;
+  }
+`
+const PoolName = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 20px;
+`
+const PoolLogo = styled.img`
+  transform: translateY(8px);
+  width: 100px;
+  @media screen and (max-width: 1028px) {
+    width: 80px;
+    transform: translateY(6px);
+  }
+  @media screen and (max-width: 851px) {
+    width: 70px;
+    transform: translateY(4px);
+  }
+  @media screen and (max-width: 575px) {
+    width: 60px;
+  }
+  @media screen and (max-width: 450px) {
+    width: 50px;
+  }
+`
+const ButtonArea = styled.div`
+  width: 1000px;
+  @media screen and (max-width: 967px) {
+    width: 700px;
+  }
+  @media screen and (max-width: 851px) {
+    width: 570px;
+  }
+  @media screen and (max-width: 575px) {
+    width: 100%;
+  }
+  display: flex;
+  justify-content: space-evenly;
+  @media screen and (max-width: 851px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
 `
 
-const StyledButton = styled(Button)`
-  background: linear-gradient(135deg, #105eec 0%, #061428 100%);
-  color: #ffffff;
-`
+const Pool = ({ poolId }) => {
+  const { account, chainId, chain } = useActiveWeb3React()
+  const [isLoading, setIsLoading] = useState(true)
+  const [isRef, setIsRef] = useState(false)
+  const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId
+  const getPoolContract = getPoolsContract(CHAIN_ID)
+  const refferCT = getContract({
+    address: contracts.refferal[CHAIN_ID],
+    abi: refferalAbi,
+    chainId: CHAIN_ID,
+  })
+  const isETHW = chainId === ChainId.ETHW
+  const unit = isETHW ? 'ETHW' : 'MATIC'
+  const [poolInfo, setPoolInfo] = useState({
+    currentInterest: 0,
+    enable: true,
+    maxLock: 0,
+    minLock: 0,
+    timeLock: 0,
+    totalLock: 0,
+    pid: -1,
+    currentReward: 0,
+    totalReward: 0,
+    startTime: 0,
+    userClaimedLength: 0,
+    userTotalLock: 0,
+    rateBNB2USD: 1,
+    unit: '',
+    minUSD2BNB: 0,
+    maxUSD2BNB: 0,
+  })
+  const [isUnLockable, setIsUnLockable] = useState(false)
+  const [openModalCheckRegisterModal] = useModal(<ModalCheckRegister />, false, false, 'removeModalCheckRegister')
 
-export default function Pool() {
-  const { account } = useWeb3React()
-  const { t } = useTranslation()
-
-  // fetch the user's balances of all tracked V2 LP tokens
-  const trackedTokenPairs = useTrackedTokenPairs()
-  const tokenPairsWithLiquidityTokens = useMemo(
-    () => trackedTokenPairs.map((tokens) => ({ liquidityToken: toV2LiquidityToken(tokens), tokens })),
-    [trackedTokenPairs],
+  const getPool = async () => {
+    try {
+      const pool = await getPoolContract.pools(poolId)
+      const currentReward = await getPoolContract.currentReward(poolId, account)
+      const rateBnbUsd = await getPoolContract.bnbPrice()
+      const users = await getPoolContract.users(account, poolId)
+      const minMaxUSD2BNB = await getPoolContract.minMaxUSD2BNB(poolId)
+      const getUsersClaimedLength = await getPoolContract.getUsersClaimedLength(poolId, account)
+      setPoolInfo({
+        currentInterest: (Number(pool.currentInterest.toString()) / 10000) * 365,
+        enable: pool.enable,
+        maxLock: Number(formatEther(pool.maxLock)),
+        minLock: Number(formatEther(pool.minLock)),
+        timeLock: pool.timeLock.toString(),
+        totalLock: Number(formatEther(pool.totalLock)),
+        pid: poolId,
+        currentReward: Number(formatEther(currentReward)),
+        totalReward: Number(formatEther(users.totalReward)),
+        startTime: Number(users.startTime),
+        userTotalLock: Number(formatEther(users.totalLock)),
+        userClaimedLength: Number(getUsersClaimedLength),
+        rateBNB2USD: Number(formatEther(rateBnbUsd[0])) / Number(formatEther(rateBnbUsd[1])),
+        unit,
+        minUSD2BNB: Number(formatEther(minMaxUSD2BNB._min)),
+        maxUSD2BNB: Number(formatEther(minMaxUSD2BNB._max)),
+      })
+      setIsUnLockable(Number(users.startTime) > 0 && moment().unix() - Number(users.startTime) > pool.timeLock)
+      setIsLoading(false)
+    } catch (e) {
+      console.log(e)
+    }
+  }
+  const handleSuccess = () => {
+    getPool()
+  }
+  const [openDepositModal] = useModal(
+    <DepositPoolModal pool={poolInfo} onSuccess={handleSuccess} account={account} />,
+    true,
   )
-  const liquidityTokens = useMemo(
-    () => tokenPairsWithLiquidityTokens.map((tpwlt) => tpwlt.liquidityToken),
-    [tokenPairsWithLiquidityTokens],
-  )
-  const [v2PairsBalances, fetchingV2PairBalances] = useTokenBalancesWithLoadingIndicator(
-    account ?? undefined,
-    liquidityTokens,
-  )
 
-  const stablePairs = useLPTokensWithBalanceByAccount(account)
-
-  // fetch the reserves for all V2 pools in which the user has a balance
-  const liquidityTokensWithBalances = useMemo(
-    () =>
-      tokenPairsWithLiquidityTokens.filter(({ liquidityToken }) =>
-        v2PairsBalances[liquidityToken.address]?.greaterThan('0'),
-      ),
-    [tokenPairsWithLiquidityTokens, v2PairsBalances],
-  )
-
-  const v2Pairs = usePairs(liquidityTokensWithBalances.map(({ tokens }) => tokens))
-  const v2IsLoading =
-    fetchingV2PairBalances ||
-    v2Pairs?.length < liquidityTokensWithBalances.length ||
-    (v2Pairs?.length && v2Pairs.every(([pairState]) => pairState === PairState.LOADING))
-  const allV2PairsWithLiquidity = v2Pairs
-    ?.filter(([pairState, pair]) => pairState === PairState.EXISTS && Boolean(pair))
-    .map(([, pair]) => pair)
-
-  const renderBody = () => {
-    if (!account) {
-      return (
-        <Text color="textSubtle" textAlign="center">
-          {t('Connect to a wallet to view your liquidity.')}
-        </Text>
-      )
-    }
-    if (v2IsLoading) {
-      return (
-        <Text color="textSubtle" textAlign="center">
-          <Dots>{t('Loading')}</Dots>
-        </Text>
-      )
-    }
-
-    let positionCards = []
-
-    if (allV2PairsWithLiquidity?.length > 0) {
-      positionCards = allV2PairsWithLiquidity.map((v2Pair, index) => (
-        <FullPositionCard
-          key={v2Pair.liquidityToken.address}
-          pair={v2Pair}
-          mb={Boolean(stablePairs?.length) || index < allV2PairsWithLiquidity.length - 1 ? '16px' : 0}
-        />
-      ))
-    }
-
-    if (stablePairs?.length > 0) {
-      positionCards = [
-        ...positionCards,
-        ...stablePairs?.map((stablePair, index) => (
-          <StableFullPositionCard
-            key={stablePair.liquidityToken.address}
-            pair={stablePair}
-            mb={index < stablePairs.length - 1 ? '16px' : 0}
-          />
-        )),
-      ]
-    }
-
-    if (positionCards?.length > 0) {
-      return positionCards
-    }
-
-    return (
-      <Text color="textSubtle" textAlign="center">
-        {t('No liquidity found.')}
-      </Text>
-    )
+  // ===> check to open registration modal
+  const handleOpenDepositModal = () => {
+    if (isRef === true) {
+      openModalCheckRegisterModal()
+    } else openDepositModal()
   }
 
+  // ===> handle when click Deposit Button
+  const checkRegisAccount = async () => {
+    if (account) {
+      const a = await refferCT.isReferrer(account)
+      setIsRef(!a)
+    }
+  }
+
+  const [openClaimModal] = useModal(
+    <ClaimPoolModal account={account} onSuccess={handleSuccess} pool={poolInfo} />,
+    true,
+  )
+  const [openUnlockModal] = useModal(<WithDrawModal pool={poolInfo} onSuccess={handleSuccess} account={account} />)
+  useEffect(() => {
+    getPool()
+    checkRegisAccount()
+  }, [account])
+
   return (
-    <Page>
-      <AppBody>
-        <AppHeader title={t('Your Liquidity')} subtitle={t('Remove liquidity to receive tokens back')} />
-        <Body>
-          {renderBody()}
-          {account && !v2IsLoading && (
-            <Flex flexDirection="column" alignItems="center" mt="24px">
-              <Text color="textSubtle" mb="8px">
-                {t("Don't see a pool you joined?")}
-              </Text>
-              <Link href="/find" passHref>
-                <Button id="import-pool-link" variant="secondary" scale="sm" as="a">
-                  {t('Find other LP tokens')}
-                </Button>
-              </Link>
+    <PoolDetail>
+      {' '}
+      {isLoading ? (
+        <TrendyPageLoader />
+      ) : (
+        <>
+          <PageHeader background="none">
+            <Flex flex="1" flexDirection="column" mr={['8px', 0]} alignItems="center">
+              <PoolName>
+                <PoolLogo src={images.logoMatic} alt="pool name" />
+                <Text fontSize={['28px', '40px', '42px', '50px', '70px']} fontWeight="600" color="subtle">
+                  MATIC
+                </Text>
+              </PoolName>
+              <Heading scale="md" color="text">
+                <LinkExternal
+                  fontSize={['14px', '16px', '18px', '20px', '22px']}
+                  href={getBlockExploreLink(contracts.pools[CHAIN_ID], 'address', CHAIN_ID)}
+                  ellipsis={true}
+                >
+                  {shortenURL(`Contract: ${contracts.pools[CHAIN_ID]}`, 35)}
+                </LinkExternal>
+              </Heading>
             </Flex>
-          )}
-        </Body>
-        <CardFooter style={{ textAlign: 'center' }}>
-          <Link href="/add" passHref>
-            <StyledButton id="join-pool-button" width="100%" startIcon={<AddIcon color="white" />}>
-              {t('Add Liquidity')}
-            </StyledButton>
-          </Link>
-        </CardFooter>
-      </AppBody>
-    </Page>
+          </PageHeader>
+          <Body>
+            <DetailInfoPool poolInfo={poolInfo} />
+            <TableDataPool pool={poolInfo} userClaimedLength={poolInfo.userClaimedLength} />
+            <ButtonArea>
+              <Button
+                variant="primary"
+                width={['120px', '150px', '180px', '200px']}
+                onClick={() => handleOpenDepositModal()}
+                scale={isMobile ? 'sm' : 'md'}
+              >
+                Deposit
+              </Button>
+              <Button
+                variant={poolInfo.currentReward > 0 ? 'danger' : 'light'}
+                disabled={poolInfo.currentReward === 0}
+                width={['120px', '150px', '180px', '200px']}
+                onClick={openClaimModal}
+                scale={isMobile ? 'sm' : 'md'}
+              >
+                Claim
+              </Button>
+              {isUnLockable && (
+                <Button
+                  variant="subtle"
+                  width={['120px', '150px', '180px', '200px']}
+                  onClick={openUnlockModal}
+                  scale={isMobile ? 'sm' : 'md'}
+                >
+                  Unlock
+                </Button>
+              )}
+            </ButtonArea>
+          </Body>
+        </>
+      )}
+    </PoolDetail>
   )
 }
+export const PoolDetailLayout: FC<React.PropsWithChildren<unknown>> = ({ children }) => {
+  return <PoolDetail>{children}</PoolDetail>
+}
+export default Pool

@@ -117,12 +117,31 @@ export const BUSD_GOERLI = new Token(
   'https://www.paxos.com/busd/',
 )
 
+export const BUSD_ETHW = new Token(
+  ChainId.ETHW,
+  '0x4Fabb145d64652a948d72533023f6E7A623C7C53',
+  18,
+  'BUSD',
+  'Binance USD',
+  'https://www.paxos.com/busd/',
+)
+export const BUSD_MATIC = new Token(
+  ChainId.MATIC,
+  '0xb809b9B2dc5e93CB863176Ea2D565425B03c0540',
+  18,
+  'BUSD',
+  'Binance USD',
+  'https://www.paxos.com/busd/',
+)
+
 export const BUSD: Record<ChainId, Token> = {
   [ChainId.ETHEREUM]: BUSD_ETH,
+  [ChainId.ETHW]: BUSD_ETHW,
   [ChainId.RINKEBY]: BUSD_RINKEBY,
   [ChainId.GOERLI]: BUSD_GOERLI,
   [ChainId.BSC]: BUSD_BSC,
   [ChainId.BSC_TESTNET]: BUSD_TESTNET,
+  [ChainId.MATIC]: BUSD_MATIC,
 }
 
 export const CAKE = {
@@ -142,3 +161,11 @@ export const USDT = {
   [ChainId.BSC]: USDT_BSC,
   [ChainId.ETHEREUM]: USDT_ETH,
 }
+
+export const WBTC_ETH = new Token(
+  ChainId.ETHEREUM,
+  '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599',
+  8,
+  'WBTC',
+  'Wrapped BTC',
+)

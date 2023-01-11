@@ -326,10 +326,7 @@ const Pools = () => {
       setRateBnbUsd(Number(formatEther(rateBnbUsd[0])) / Number(formatEther(rateBnbUsd[1])))
       const newPoolInfo = Promise.all(
         pools.map(async (pool, id) => {
-          console.log(getPoolContract.users)
-
           let userLock = await getPoolContract.users(account, id)
-          console.log(userLock)
           return {
             currentInterest: ((Number(pool.currentInterest.toString()) / 10000) * 365).toFixed(2),
             enable: pool.enable,

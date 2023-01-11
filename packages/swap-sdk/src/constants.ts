@@ -11,6 +11,7 @@ export enum ChainId {
   BSC = 56,
   BSC_TESTNET = 97,
   ETHW = 10001,
+  MATIC = 137,
 }
 
 export enum TradeType {

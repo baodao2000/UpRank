@@ -1,8 +1,9 @@
-import Pool from 'views/Pool2'
+import Pool, { PoolDetailLayout } from 'views/Pool'
 import { useRouter } from 'next/router'
 
-const PoolDetail = () => {
+const PoolDetailPage = () => {
   const poolId = useRouter().query.poolId as string
   return <>{poolId && <Pool poolId={poolId} />}</>
 }
-export default PoolDetail
+PoolDetailPage.Layout = PoolDetailLayout
+export default PoolDetailPage
