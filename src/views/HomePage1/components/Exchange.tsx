@@ -423,7 +423,7 @@ const Exchange = (props) => {
                 {numeral(deposit * (1 + percen * 12 * period.current)).format('0,0.00')}
               </CountUp>
             </HeadingCustom>
-            <Text color="mainColor" style={{ color: '#CED8E1' }}>
+            <Text style={{ color: '#CED8E1' }}>
               Calculated based on the current MATIC/USD price of ${numeral(price).format('0,0.00')}
             </Text>
           </ChartInfo>
