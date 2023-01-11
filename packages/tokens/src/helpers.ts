@@ -55,10 +55,12 @@ export type TokenAddressMap = Readonly<{
  */
 export const EMPTY_LIST: TokenAddressMap = {
   [ChainId.ETHEREUM]: {},
+  [ChainId.ETHW]: {},
   [ChainId.RINKEBY]: {},
   [ChainId.GOERLI]: {},
   [ChainId.BSC]: {},
   [ChainId.BSC_TESTNET]: {},
+  [ChainId.MATIC]: {},
 }
 
 export function deserializeToken(serializedToken: SerializedWrappedToken): Token {

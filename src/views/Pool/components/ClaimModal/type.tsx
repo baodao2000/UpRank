@@ -1,9 +1,8 @@
 import { InjectedModalProps } from '@pancakeswap/uikit'
-// import { Pool } from 'views/Pools/util'
+import { Pool } from 'views/Pools2/util'
 
 export interface ClaimPoolModalProps extends InjectedModalProps {
-  pool: any
+  pool: Pool
   account: string
-  reload: () => void
   onSuccess: () => void
 }
