@@ -1,17 +1,17 @@
 import { useTranslation } from '@pancakeswap/localization'
 import { Box, Modal, useToast, Button, Input, Text } from '@pancakeswap/uikit'
 import { useWeb3LibraryContext, useWeb3React } from '@pancakeswap/wagmi'
+import CountUp from 'react-countup'
 import useTheme from 'hooks/useTheme'
 import { useState } from 'react'
-import CountUp from 'react-countup'
 import styled from 'styled-components'
-// import { trendyColors } from 'style/trendyTheme'
+import { trendyColors } from 'style/trendyTheme'
 import useConfirmTransaction from 'hooks/useConfirmTransaction'
 import { useCallWithMarketGasPrice } from 'hooks/useCallWithMarketGasPrice'
 import { usePoolsContract } from 'hooks/useContract'
 import { ToastDescriptionWithTx } from 'components/Toast'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
-// import { ChainId } from '../../../../../packages/swap-sdk/src/constants'
+import { ChainId } from '../../../../../packages/swap-sdk/src/constants'
 import { ClaimPoolModalProps } from './type'
 
 // STYLE
@@ -59,6 +59,7 @@ const ThreeDots = styled.p`
 `
 const Error = styled.span`
   margin: -0.5em 0 1em;
+  color: ${trendyColors.ORANGE};
 `
 
 const ClaimPoolModal: React.FC<React.PropsWithChildren<ClaimPoolModalProps>> = ({
@@ -66,7 +67,6 @@ const ClaimPoolModal: React.FC<React.PropsWithChildren<ClaimPoolModalProps>> = (
   account,
   onDismiss,
   onSuccess,
-  reload,
 }) => {
   const { callWithMarketGasPrice } = useCallWithMarketGasPrice()
   const [modalIsOpen, setModalIsOpen] = useState(true)
@@ -78,14 +78,14 @@ const ClaimPoolModal: React.FC<React.PropsWithChildren<ClaimPoolModalProps>> = (
   const { theme } = useTheme()
   const [amount, setAmount] = useState(0)
   const [isValidAmount, setIsValidAmount] = useState(true)
-  const poolsContract = usePoolsContract()
+  const poolContract = usePoolsContract()
   const { chainId } = useActiveWeb3React()
-  // const isETHW = chainId === ChainId.ETHW
-  // const unit = isETHW ? 'ETHW' : 'tBNB'
+  const isETHW = chainId === ChainId.ETHW
+  const unit = isETHW ? 'ETHW' : 'tBNB'
 
   const { isConfirming, handleConfirm } = useConfirmTransaction({
     onConfirm: () => {
-      return callWithMarketGasPrice(poolsContract, 'claimReward', [pool.pid])
+      return callWithMarketGasPrice(poolContract, 'claimReward', [pool.pid])
     },
     onSuccess: async ({ receipt }) => {
       setConfirmedTxHash(receipt.transactionHash)
@@ -98,42 +98,50 @@ const ClaimPoolModal: React.FC<React.PropsWithChildren<ClaimPoolModalProps>> = (
   return (
     <Modal
       style={depositModal}
-      title="CLAIM"
+      title={'CLAIM'}
       onDismiss={onDismiss}
       hideCloseButton={false}
       headerBackground={theme.colors.gradientCardHeader}
     >
       <Wrapper>
         <ClaimAmount>
-          {/* <Text fontSize="18px">
+          <Text fontSize="18px">
             Current reward:{' '}
-            <CountUp
-              separator=","
-              start={0}
-              preserveValue
-              delay={0}
-              // end={Number(pool.currentReward / pool.rateBNB2USD)}
-              end={pool.currentReward}
-              decimals={pool.currentReward === 0 ? 0 : 6}
-              duration={0.5}
-            />{' '}
+            {
+              <CountUp
+                separator=","
+                start={0}
+                preserveValue
+                delay={0}
+                end={Number(pool.currentReward / pool.rateBNB2USD)}
+                decimals={pool.currentReward === 0 ? 0 : 6}
+                duration={0.5}
+              />
+            }{' '}
             $
-          </Text> */}
+          </Text>
           <Text fontSize="16px">
-            Current reward:~{' '}
-            <CountUp
-              separator=","
-              start={0}
-              preserveValue
-              delay={0}
-              end={Number(pool.currentReward)}
-              decimals={pool.currentReward === 0 ? 0 : 6}
-              duration={0.5}
-            />{' '}
+            ~{' '}
+            {
+              <CountUp
+                separator=","
+                start={0}
+                preserveValue
+                delay={0}
+                end={Number(pool.currentReward)}
+                decimals={pool.currentReward === 0 ? 0 : 6}
+                duration={0.5}
+              />
+            }{' '}
             {pool.unit}
           </Text>
         </ClaimAmount>
-        <Button variant="danger" width="180px" disabled={isConfirming || !isValidAmount} onClick={handleConfirm}>
+        <Button
+          variant={'danger'}
+          width="180px"
+          disabled={isConfirming || (!isValidAmount ? true : false)}
+          onClick={handleConfirm}
+        >
           {isConfirming ? (
             <ThreeDots className="loading">
               Claiming<span>.</span>
