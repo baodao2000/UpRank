@@ -57,6 +57,8 @@ const images = {
   iconBusd: '/images/coin/busd.svg',
   bgProfile: '/images/homepage/bgprofile.png',
   colbase: '/images/homepage/colbase.svg',
+  chart1up: '/images/homepage/chart1up.gif',
+  chart1down: '/images/homepage/chart1down.gif',
   chart2up: '/images/homepage/chart2up.gif',
   chart3up: '/images/homepage/chart3up.gif',
   chart4up: '/images/homepage/chart4up.gif',

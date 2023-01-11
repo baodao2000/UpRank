@@ -429,7 +429,14 @@ const Exchange = (props) => {
           </ChartInfo>
           <Chart>
             <Column>
-              <img src={images.col1u} alt="" />
+              {period.current >= 1 ? (
+                <img src={images.chart1up} />
+              ) : period.current < period.old && !(period.old < 2) ? (
+                <img src={images.chart1down} alt="" />
+              ) : (
+                // <img src={images.colbase} alt="" />
+                <ChartBase />
+              )}
               <ButtonCustom
                 className={period.current === 1 ? 'active' : ''}
                 variant="secondary"
@@ -443,7 +450,7 @@ const Exchange = (props) => {
             <Column>
               {period.current >= 2 ? (
                 <img src={images.chart2up} />
-              ) : period.current < period.old && !(period.old < 2) ? (
+              ) : period.current < period.old && !(period.old < 1) ? (
                 <img src={images.chart2down} alt="" />
               ) : (
                 // <img src={images.colbase} alt="" />
