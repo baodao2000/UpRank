@@ -11,13 +11,23 @@ import {
   StyledText,
   StyledToolsContainer,
 } from "./styles";
-
+import { Text } from "@pancakeswap/uikit";
 import { Button } from "../Button";
 import CakePrice from "../CakePrice/CakePrice";
 import LangSelector from "../LangSelector/LangSelector";
 import { ArrowForwardIcon, LogoWithTextIcon } from "../Svg";
 import { ThemeSwitcher } from "../ThemeSwitcher";
 import { FooterProps } from "./types";
+import styled from "styled-components";
+import images from "configs/images";
+
+const ListImgButton = styled.div`
+  margin-top: 36px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 3%;
+`;
 
 const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
   items,
@@ -31,8 +41,33 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
   ...props
 }) => {
   return (
-    <StyledFooter data-theme="dark" p={["40px 16px", null, "56px 40px 32px 40px"]} {...props} justifyContent="center">
-      <Flex flexDirection="column" width={["100%", null, "1200px;"]}>
+    <StyledFooter data-theme="isDark" p={["40px 16px", null, "56px 40px 32px 40px"]} {...props} justifyContent="center">
+      <ListImgButton>
+        <a href="">
+          <img src={images.downloadIOS} alt="" />
+        </a>
+        <a href="">
+          <img src={images.downloadPlay} alt="" />
+        </a>
+        <a href="">
+          <img src={images.downloadAPK} alt="" />
+        </a>
+      </ListImgButton>
+      <ListImgButton>
+        <a href="">
+          <img src={images.twitter} alt="" />
+        </a>
+        <a href="">
+          <img src={images.telegram} alt="" />
+        </a>
+        <a href="">
+          <img src={images.medium} alt="" />
+        </a>
+      </ListImgButton>
+
+      <Text>© 2022 TrendyDefi. All rights reserved.</Text>
+
+      {/* <Flex flexDirection="column" width={["100%", null, "1200px;"]}>
         <StyledIconMobileContainer display={["block", null, "none"]}>
           <LogoWithTextIcon isDark width="130px" />
         </StyledIconMobileContainer>
@@ -103,7 +138,7 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
             </Button>
           </Flex>
         </StyledToolsContainer>
-      </Flex>
+      </Flex>  */}
     </StyledFooter>
   );
 };

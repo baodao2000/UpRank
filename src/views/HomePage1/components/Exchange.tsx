@@ -169,6 +169,7 @@ const Column = styled.div`
   flex-direction: column;
   margin-top: 10%;
   align-items: center;
+  justify-content: center;
   width: 20%;
   img {
     width: 80%;
@@ -429,14 +430,7 @@ const Exchange = (props) => {
           </ChartInfo>
           <Chart>
             <Column>
-              {period.current >= 1 ? (
-                <img src={images.chart1up} />
-              ) : period.current < period.old && !(period.old < 2) ? (
-                <img src={images.chart1down} alt="" />
-              ) : (
-                // <img src={images.colbase} alt="" />
-                <ChartBase />
-              )}
+              <img src={images.chart1up} alt="" />
               <ButtonCustom
                 className={period.current === 1 ? 'active' : ''}
                 variant="secondary"
@@ -444,7 +438,7 @@ const Exchange = (props) => {
                   setPeriod((past) => ({ old: past.current, current: 1 }))
                 }}
               >
-                1 year
+                1 yr
               </ButtonCustom>
             </Column>
             <Column>
