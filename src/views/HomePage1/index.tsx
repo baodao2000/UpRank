@@ -588,6 +588,7 @@ const HomePage: React.FC<React.PropsWithChildren> = () => {
 
   useEffect(() => {
     AOS.init({
+      disable: 'phone',
       duration: 2000,
     })
     AOS.refresh()
