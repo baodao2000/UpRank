@@ -33,7 +33,7 @@ const GlobalStyle = createGlobalStyle`
     flex-direction: column;
   }
   body {
-    background: linear-gradient(249.6deg, #105EEC 4.22%, #061428 89.63%);
+    background-color: #13171b;
 
     img {
       height: auto;

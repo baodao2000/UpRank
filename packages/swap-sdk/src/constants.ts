@@ -156,4 +156,9 @@ export const NATIVE: Record<
     symbol: 'tBNB',
     decimals: 18,
   },
+  [ChainId.MATIC]: {
+    name: 'Matic',
+    symbol: 'MATIC',
+    decimals: 18,
+  },
 }

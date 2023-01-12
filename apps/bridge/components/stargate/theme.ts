@@ -22,6 +22,7 @@ function pointsToRem(size: number) {
 
 export const FontFamily = {
   KANIT: "'Kanit', sans-serif",
+  RobotoFlex: "'Roboto Flex', sans-serif",
 }
 
 const FontWeight = {

@@ -11,7 +11,7 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Kanit', sans-serif;
   }
   body {
-    background: linear-gradient(249.6deg, #105EEC 4.22%, #061428 89.63%);
+    background-color: #13171b;
     height: auto;
 
     img {

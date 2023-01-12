@@ -4,11 +4,13 @@ import { Box, Flex } from "../Box";
 import SocialLinks from "./Components/SocialLinks";
 
 export const StyledFooter = styled(Flex)`
+  position: relative;
   background: black;
   padding-top: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: 2;
   p {
     margin-top: 24px;
   }

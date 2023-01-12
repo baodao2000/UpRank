@@ -17,9 +17,11 @@ const shine = keyframes`
 `
 
 const Wrapper = styled.div`
+  position: relative;
   font-family: 'Inter';
   font-style: normal;
   background-color: #13171b;
+  position: relative;
 `
 
 const Container = styled.div`
@@ -87,6 +89,7 @@ const TitleM = styled(Text)`
 const Head = styled(Flex)`
   padding-top: 50px;
   position: relative;
+  z-index: 1;
   width: 100%;
   flex-direction: column;
 
@@ -126,6 +129,7 @@ const HeadPage = styled.div`
 `
 const ContentHead = styled.div`
   width: 100%;
+  z-index: 1;
 
   ${({ theme }) => theme.mediaQueries.md} {
     max-width: 653px;
@@ -197,6 +201,7 @@ const ListImgButton = styled.div`
 
 const Crypto = styled.div`
   position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -269,12 +274,13 @@ const Insurance = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  position: relative;
+  z-index: 1;
   justify-content: space-between;
-  background: url(${images.bginsurance}) no-repeat 22%;
   background-attachment: fixed, scroll;
   height: 635px;
   .insurance {
-    width: 30%;
+    width: 40%;
   }
   img {
     animation: shake 10s linear 10s infinite alternate-reverse;
@@ -394,6 +400,8 @@ const CustomSpan = styled(Text)`
   }
 `
 const StepBlock = styled.div`
+  position: relative;
+  z-index: 1;
   margin-top: -5%;
   display: flex;
   flex-direction: column;
@@ -423,6 +431,7 @@ const StepList = styled.div`
 const Step = styled.div`
   width: 100%;
   padding: 2%;
+  min-height: 265px;
   position: relative;
   border-radius: 8px;
   background: linear-gradient(146.96deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 100%),
@@ -488,6 +497,8 @@ const Covered = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
+  z-index: 1;
   @media screen and (max-width: 600px) {
     display: flex;
     align-items: center;
@@ -563,6 +574,11 @@ const ButtonCustom = styled(Button)`
   }
 `
 
+const StyledBackground = styled.img`
+  position: absolute;
+  z-index: 0;
+`
+
 const coverdList = [
   {
     img: images.key2,
@@ -615,6 +631,8 @@ const HomePage: React.FC<React.PropsWithChildren> = () => {
       `}</style>
       <Wrapper>
         <Container>
+          {/* <StyledBackground src={images.bgTrendy} /> */}
+
           <Head>
             <ContentHead data-aos="fade-up-right">
               <h2>Buy & Sell Cryptocurrency in minutes.</h2>

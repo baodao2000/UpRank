@@ -52,6 +52,8 @@ const TitleM = styled(Text)`
   }
 `
 const Wrapper = styled.div`
+  position: relative;
+  z-index: 1;
   margin-top: 10%;
   @media screen and (max-width: 820px) {
     padding: 0 7%;
@@ -64,7 +66,6 @@ const Wrapper = styled.div`
 const Table = styled.div`
   padding: 40px 84px;
   display: flex;
-  box-shadow: red;
   border-radius: 8px;
   background: black;
   @media screen and (max-width: 900px) {
@@ -72,14 +73,11 @@ const Table = styled.div`
   }
 `
 const ExchangePart = styled.div`
-  border-right: 1px solid;
-  border-color: red;
   flex-basis: calc(100% / 3);
   padding: 20px 2%;
   display: flex;
   flex-direction: column;
   row-gap: 10px;
-  justify-content: space-between;
   background: black;
 
   @media screen and (max-width: 820px) {
@@ -96,13 +94,14 @@ const CryptoSelect = styled.div`
   .ant-select {
     .ant-select-selector {
       height: 60px;
-      border-radius: 10px;
-      background: #d9d9d9;
+      border-radius: 25px;
+      background: #f9f7ff;
     }
   }
 `
 const SelectCustom = styled(Select)`
   width: 100%;
+
   .nameCry {
     padding-top: 2%;
     @media (min-width: 500px) and (max-width: 820px) {
@@ -126,9 +125,10 @@ const InputContainer = styled.div`
     margin-top: 4%;
   }
   .ant-input-number {
-    background: #d9d9d9;
+    background: #f9f7ff;
     width: 100%;
-    border-radius: 10px;
+    border-radius: 25px;
+    font-weight: 700;
 
     .ant-input-number-input-wrap {
       width: 80%;
@@ -139,12 +139,15 @@ const InputContainer = styled.div`
     }
   }
 `
-const TextCustom = styled(Text)``
+const TextCustom = styled(Text)`
+  margin-top: 16px;
+`
 
 const ChartPart = styled.div`
   height: 100%;
   flex-basis: calc(100% * 2 / 3);
   padding: 20px 2%;
+  margin-left: 100px;
   .notOnPC {
     display: none;
   }
@@ -446,7 +449,6 @@ const Exchange = (props) => {
               ) : period.current < period.old && !(period.old < 1) ? (
                 <img src={images.chart2down} alt="" />
               ) : (
-                // <img src={images.colbase} alt="" />
                 <ChartBase />
               )}
               <ButtonCustom
@@ -465,7 +467,6 @@ const Exchange = (props) => {
               ) : period.current < period.old && !(period.old < 3) ? (
                 <img src={images.chart3down} alt="" />
               ) : (
-                // <img src={images.colbase} alt="" />
                 <ChartBase />
               )}
               <ButtonCustom
@@ -484,7 +485,6 @@ const Exchange = (props) => {
               ) : period.current < period.old && !(period.old < 4) ? (
                 <img src={images.chart4down} alt="" />
               ) : (
-                // <img src={images.colbase} alt="" />
                 <ChartBase />
               )}
               <ButtonCustom
