@@ -204,8 +204,8 @@ const Chart = styled.div`
 const ButtonCustom = styled(Button)`
   border: 1px solid #d2d2d2;
   color: #ffffff;
-  transform: translateX(-10%);
   background: #0a0d10;
+  margin-top: 12px;
 
   &:hover {
     border-color: ${({ theme }) => theme.colors.primary};
@@ -392,7 +392,6 @@ const Exchange = (props) => {
               approx. {numeral(deposit * price).format('0,0.00')} {` `} MATIC/USD
             </Text>
           </div>
-
           <TextCustom className="onPC" color="mainColor">
             Annual Percentage Yield (APY) as of {Date}. APY may change at any time before or after account is opened.
             This calculator is for illustrative purposes only and may not apply to your individual circumstances.
@@ -438,7 +437,7 @@ const Exchange = (props) => {
                   setPeriod((past) => ({ old: past.current, current: 1 }))
                 }}
               >
-                1 yr
+                1 year
               </ButtonCustom>
             </Column>
             <Column>
