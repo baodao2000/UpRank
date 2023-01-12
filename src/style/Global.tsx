@@ -8,7 +8,7 @@ declare module 'styled-components' {
 
 const GlobalStyle = createGlobalStyle`
   * {
-    font-family: 'Kanit', sans-serif;
+    font-family: 'KANIT', sans-serif;
   }
   body {
     background: linear-gradient(249.6deg, #105EEC 4.22%, #061428 89.63%);

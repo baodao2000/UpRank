@@ -15,8 +15,7 @@ const InfoDetail = styled.div`
   width: 800px;
   padding: 2%;
   border-radius: 40px;
-  background: linear-gradient(146.96deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 100%),
-    linear-gradient(153.15deg, #4c0bd3 8.57%, #8145ff 60%);
+  background: linear-gradient(153.15deg, #7c07d8 8.57%, rgba(129, 69, 255, 0.02) 100%);
   @media screen and (max-width: 967px) {
     width: 700px;
   }
@@ -85,6 +84,7 @@ const Line = styled.div`
     }
   }
 `
+const maincolor = `${trendyColors.MAIN_GREEN}`
 const responsiveTextSize = ['12px', '14px', '16px', '18px', '20px']
 const responsiveTextSizeBNB = ['10px', '12px', '12px', '14px', '16px']
 
@@ -112,26 +112,26 @@ const DetailInfoPool: React.FC<
     <InfoDetail>
       <Line>
         <Text fontSize={responsiveTextSize}>Current Interest</Text>
-        <Text fontSize={responsiveTextSize} className="value">
+        <Text style={{ color: `${maincolor}` }} fontSize={responsiveTextSize} className="value">
           {<CountUp start={0} preserveValue delay={0} end={Number(currentInterest)} decimals={2} duration={0.5} />} %
         </Text>
       </Line>
       <Line>
         <Text fontSize={responsiveTextSize}>Lock Time</Text>
-        <Text fontSize={responsiveTextSize} className="value">
+        <Text style={{ color: '#48E3E3' }} fontSize={responsiveTextSize} className="value">
           {timeLock === 0 ? 0 : timeDisplayLong(timeLock)}
         </Text>
       </Line>
       <Line>
         <Text fontSize={responsiveTextSize}>Spend Time</Text>
-        <Text fontSize={responsiveTextSize} className="value">
+        <Text style={{ color: '#48E3E3' }} fontSize={responsiveTextSize} className="value">
           {startTime === 0 ? 0 : timeDisplayLong(Number(now - startTime))}
         </Text>
       </Line>
       <Line>
         <Text fontSize={responsiveTextSize}>Current Reward</Text>
         {currentReward === 0 ? (
-          <Text fontSize={responsiveTextSize} className="value">
+          <Text style={{ color: '#48E3E3' }} fontSize={responsiveTextSize} className="value">
             0
           </Text>
         ) : (
@@ -166,7 +166,7 @@ const DetailInfoPool: React.FC<
       <Line>
         <Text fontSize={responsiveTextSize}>Total Reward</Text>
         {totalReward === 0 ? (
-          <Text fontSize={responsiveTextSize} className="value">
+          <Text style={{ color: '#48E3E3' }} fontSize={responsiveTextSize} className="value">
             0
           </Text>
         ) : (

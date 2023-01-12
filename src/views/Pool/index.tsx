@@ -26,10 +26,10 @@ import { ChainId } from '../../../packages/swap-sdk/src/constants'
 
 // ============= STYLED
 const PoolDetail = styled.div`
-  background: url(${images.poolDetailFooterBg}) no-repeat bottom;
+  background: url(${images.backgroundpool}) #1e1e1e no-repeat bottom;
   background-size: contain;
   @media screen and (max-width: 768px) {
-    background: url(${images.poolDetailFooterBg}) no-repeat bottom;
+    background: url(${images.backgroundpool}) #1e1e1e no-repeat bottom;
     background-size: fixed;
   }
 `
@@ -51,7 +51,8 @@ const PoolName = styled.div`
 `
 const PoolLogo = styled.img`
   transform: translateY(8px);
-  width: 100px;
+  width: 80px;
+  height: auto;
   @media screen and (max-width: 1028px) {
     width: 80px;
     transform: translateY(6px);
@@ -225,6 +226,7 @@ const Pool = ({ poolId }) => {
                 Deposit
               </Button>
               <Button
+                style={{ color: '#6216B0', backgroundColor: '#D9D9D9' }}
                 variant={poolInfo.currentReward > 0 ? 'danger' : 'light'}
                 disabled={poolInfo.currentReward === 0}
                 width={['120px', '150px', '180px', '200px']}

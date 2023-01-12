@@ -109,7 +109,7 @@ const UserMenu = () => {
   }
 
   return (
-    <ConnectWalletButton scale="sm">
+    <ConnectWalletButton style={{ background: 'linear-gradient(270.19deg, #6059FF 0.11%, #5F82FF 99.8%)' }} scale="sm">
       <Box display={['none', , , 'block']}>
         <Trans>Connect Wallet</Trans>
       </Box>

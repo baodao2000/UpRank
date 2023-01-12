@@ -265,7 +265,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
   return (
     <TablePool>
       <TableHeader>
-        <Text fontSize={responsiveTextSizeHeader}>Your Income</Text>
+        <Text fontSize={responsiveTextSizeHeader}>Your Income </Text>
       </TableHeader>
       <Table>
         <thead>
