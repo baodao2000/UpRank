@@ -28,6 +28,13 @@ const ListImgButton = styled.div`
   justify-content: center;
   gap: 3%;
 `;
+const Title = styled(Text)`
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 30px;
+  width: 300px;
+  text-align: center;
+`;
 
 const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
   items,
@@ -42,6 +49,7 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
 }) => {
   return (
     <StyledFooter data-theme="isDark" p={["40px 16px", null, "56px 40px 32px 40px"]} {...props} justifyContent="center">
+      <Title>So what are you waiting for? Download here </Title>
       <ListImgButton>
         <a href="">
           <img src={images.downloadIOS} alt="" />

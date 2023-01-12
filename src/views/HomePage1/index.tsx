@@ -96,6 +96,10 @@ const Head = styled(Flex)`
     justify-content: space-between;
     align-items: center;
   }
+  @media screen and (max-width: 600px) {
+    display: flex;
+    align-item: ceneter;
+  }
 `
 
 const HeadPage = styled.div`
@@ -156,6 +160,10 @@ const ContentHead = styled.div`
 const ImageHead = styled.img`
   width: 100%;
   max-width: 715px;
+  height: auto;
+  @media screen and (max-width: 1024px) {
+    width: 50%;
+  }
 `
 
 const LinkToDownload = styled.div`
@@ -588,7 +596,7 @@ const HomePage: React.FC<React.PropsWithChildren> = () => {
 
   useEffect(() => {
     AOS.init({
-      disable: 'phone',
+      disable: 'mobile',
       duration: 2000,
     })
     AOS.refresh()

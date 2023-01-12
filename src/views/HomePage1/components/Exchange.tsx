@@ -438,7 +438,7 @@ const Exchange = (props) => {
                   setPeriod((past) => ({ old: past.current, current: 1 }))
                 }}
               >
-                1 yr
+                1 year
               </ButtonCustom>
             </Column>
             <Column>

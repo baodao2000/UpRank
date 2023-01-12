@@ -30,7 +30,7 @@ import { ChainId } from '../../../packages/swap-sdk/src/constants'
 
 // ============= STYLED
 const Container = styled.div`
-  background: url(${images.poolDetailFooterBg}) no-repeat bottom;
+  background: #1e1e1e;
   background-size: contain;
 `
 const Body = styled.div`
@@ -364,6 +364,13 @@ const Pools = () => {
         <>
           <PageHeader background="none">
             <Flex flex="1" flexDirection="column" mr={['8px', 0]} alignItems="center">
+              <Text
+                fontSize={['22px', '22px', '36px', '40px', '50px', '60px']}
+                fontWeight="600"
+                color="rgba(122, 66, 241, 1)"
+              >
+                Connect successfully!
+              </Text>
               <Text fontSize={['22px', '22px', '36px', '40px', '50px', '60px']} fontWeight="600" color="mainColor">
                 Total Lock:{' '}
                 {
