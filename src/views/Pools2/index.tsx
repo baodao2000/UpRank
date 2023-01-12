@@ -30,7 +30,7 @@ import { ChainId } from '../../../packages/swap-sdk/src/constants'
 
 // ============= STYLED
 const Container = styled.div`
-  background: url(${images.poolDetailFooterBg}) no-repeat bottom;
+  background: #1e1e1e;
   background-size: contain;
 `
 const Body = styled.div`
@@ -77,7 +77,6 @@ const pools = [
     tagColor: trendyColors.MAIN_GREEN,
     totalLock: '',
     logo: images.logoMatic,
-    backgroundColor: '180deg, #CABDE1 0%, #976EDD 100%',
   },
   {
     key: 1,
@@ -85,7 +84,6 @@ const pools = [
     tagColor: trendyColors.MAIN_GREEN,
     totalLock: '',
     logo: images.logoMatic,
-    backgroundColor: '180deg, #CABDE1 0%, #976EDD 100%',
   },
   {
     key: 2,
@@ -93,7 +91,6 @@ const pools = [
     tagColor: trendyColors.MAIN_GREEN,
     totalLock: '',
     logo: images.logoMatic,
-    backgroundColor: '180deg, #CABDE1 0%, #976EDD 100%',
   },
   {
     key: 3,
@@ -101,7 +98,6 @@ const pools = [
     tagColor: trendyColors.MAIN_GREEN,
     totalLock: '',
     logo: images.logoMatic,
-    backgroundColor: '180deg, #CABDE1 0%, #976EDD 100%',
   },
   {
     key: 4,
@@ -109,7 +105,6 @@ const pools = [
     tagColor: trendyColors.MAIN_GREEN,
     totalLock: '',
     logo: images.logoMatic,
-    backgroundColor: '180deg, #CABDE1 0%, #976EDD 100%',
   },
   {
     key: 5,
@@ -117,7 +112,6 @@ const pools = [
     tagColor: trendyColors.MAIN_GREEN,
     totalLock: '',
     logo: images.logoMatic,
-    backgroundColor: '180deg, #CABDE1 0%, #976EDD 100%',
   },
 
   // {
@@ -150,7 +144,6 @@ const Card = styled.div`
   height: 456px;
   min-width: 300px;
   border-radius: 30px;
-  border: 4px solid #41f3ff;
   padding: 20px;
   @media screen and (max-width: 575px) {
     border: 3px solid #41f3ff;
@@ -371,6 +364,13 @@ const Pools = () => {
         <>
           <PageHeader background="none">
             <Flex flex="1" flexDirection="column" mr={['8px', 0]} alignItems="center">
+              <Text
+                fontSize={['22px', '22px', '36px', '40px', '50px', '60px']}
+                fontWeight="600"
+                color="rgba(122, 66, 241, 1)"
+              >
+                Connect successfully!
+              </Text>
               <Text fontSize={['22px', '22px', '36px', '40px', '50px', '60px']} fontWeight="600" color="mainColor">
                 Total Lock:{' '}
                 {
@@ -463,7 +463,7 @@ const Pools = () => {
                   <Card
                     key={r}
                     style={{
-                      background: `linear-gradient(${pools[r].backgroundColor})`,
+                      background: `linear-gradient(146.96deg,rgba(255,255,255,0.4) 0%,rgba(255,255,255,0) 100%), linear-gradient(153.15deg,#4c0bd3 8.57%,#8145ff 60%)`,
                     }}
                   >
                     <LogoAndName>

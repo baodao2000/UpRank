@@ -63,11 +63,21 @@ const StyledButton = styled(Button)`
   font-size: 24px;
   line-height: 120%;
 `
-
+const StyledButton2 = styled(Button)`
+  background-color: #1e1e1e;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 120%;
+  border-radius: 30px;
+  color: #00f0e1;
+  border: 2px solid #00f0e1;
+  border-radius: 30px;
+`
 const TitleM = styled(Text)`
   font-weight: 500;
   font-size: 24px;
   line-height: 39px;
+  color: #ced8e1;
   @media screen and (max-width: 500px) {
     font-size: 16px;
     line-height: 28px;
@@ -85,6 +95,10 @@ const Head = styled(Flex)`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+  }
+  @media screen and (max-width: 600px) {
+    display: flex;
+    align-item: ceneter;
   }
 `
 
@@ -146,6 +160,10 @@ const ContentHead = styled.div`
 const ImageHead = styled.img`
   width: 100%;
   max-width: 715px;
+  height: auto;
+  @media screen and (max-width: 1024px) {
+    width: 50%;
+  }
 `
 
 const LinkToDownload = styled.div`
@@ -297,7 +315,7 @@ const Insurance = styled.div`
     }
   }
   @media screen and (max-width: 600px) {
-    flex-direction: column;
+    flex-direction: column-reverse;
     height: auto;
     text-align: center;
     .insurance {
@@ -333,6 +351,10 @@ const Content = styled.div`
       width: 5%;
       margin-bottom: -1%;
     }
+  }
+  @media screen and (max-width: 600px) {
+    display: flex;
+    align-items: center;
   }
 `
 
@@ -466,7 +488,9 @@ const Covered = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  @media screen and (max-width: 500px) {
+  @media screen and (max-width: 600px) {
+    display: flex;
+    align-items: center;
     text-align: center;
   }
 `
@@ -479,7 +503,7 @@ const CoveredList = styled.div`
   // background-size: cover;
   padding-left: 20%;
   padding-bottom: 48px;
-  @media screen and (max-width: 500px) {
+  @media screen and (max-width: 600px) {
     padding-left: 0;
     display: flex;
     flex-direction: column;
@@ -515,7 +539,7 @@ const ContentCustom = styled(Text)`
   font-size: 20px;
   line-height: 24px;
   width: 50%;
-  @media screen and (max-width: 500px) {
+  @media screen and (max-width: 600px) {
     font-size: 20px;
     line-height: 30px;
     margin-bottom: 15px;
@@ -529,7 +553,7 @@ const ButtonCustom = styled(Button)`
   margin-top: 5%;
   background: #816bf2;
   text-align: unset;
-  color: white;
+  color: #eaeaea;
   border: 0.5px solid rgba(88, 108, 158, 0.04);
   box-shadow: 0px 4px 50px rgba(205, 255, 252, 0.25), 0px 4px 100px rgba(212, 218, 220, 0.25), inset 0px 4px 4px #6d50ff,
     inset 0px 4px 2px rgba(211, 218, 255, 0.25), inset 0px 4px 20px rgba(252, 254, 255, 0.34);
@@ -572,6 +596,7 @@ const HomePage: React.FC<React.PropsWithChildren> = () => {
 
   useEffect(() => {
     AOS.init({
+      disable: 'mobile',
       duration: 2000,
     })
     AOS.refresh()
@@ -643,7 +668,7 @@ const HomePage: React.FC<React.PropsWithChildren> = () => {
             <Title color="mainColor">
               <StyledText>Get started</StyledText> in 3 simple steps
             </Title>
-            <TitleM color="mainColor">It only takes a few minutes</TitleM>
+            <TitleM>It only takes a few minutes</TitleM>
             <StepList>
               <Step data-aos="flip-left" data-aos-easing="linear" data-aos-duration="1000" className="download">
                 <img src={images.arrowDown} alt="" />
@@ -660,7 +685,7 @@ const HomePage: React.FC<React.PropsWithChildren> = () => {
             </StepList>
 
             <StyledButton variant="primary" style={{ width: '256px', height: '56px', marginTop: '20px' }}>
-              Download
+              Download here
             </StyledButton>
           </StepBlock>
 
@@ -673,6 +698,9 @@ const HomePage: React.FC<React.PropsWithChildren> = () => {
                 We build a safe and trusted platform for users. Property insurance products will increase safety for
                 investors.
               </TitleM>
+              <StyledButton2 variant="primary" style={{ width: '256px', height: '56px', marginTop: '20px' }}>
+                Download here
+              </StyledButton2>
             </Content>
             <img className="token" src={images.insurance1} alt="" />
           </Insurance>
@@ -690,7 +718,7 @@ const HomePage: React.FC<React.PropsWithChildren> = () => {
                 i += 600
                 return (
                   <CoveredItem data-aos="zoom-in" data-aos-duration={i} data-aos-easing="linear" key={n.title}>
-                    <img src={n.img} alt="" />
+                    <img style={{ width: '140px', height: '140px', objectFit: 'contain' }} src={n.img} alt="" />
                     <TagCustom color="mainColor">{n.title}</TagCustom>
                     <ContentCustom color="mainColor">{n.detail}</ContentCustom>
                   </CoveredItem>

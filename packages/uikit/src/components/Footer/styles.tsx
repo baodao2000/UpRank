@@ -4,7 +4,7 @@ import { Box, Flex } from "../Box";
 import SocialLinks from "./Components/SocialLinks";
 
 export const StyledFooter = styled(Flex)`
-  background: ${darkColors.backgroundAlt};
+  background: black;
   padding-top: 100px;
   display: flex;
   flex-direction: column;

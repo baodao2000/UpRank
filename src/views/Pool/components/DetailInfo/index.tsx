@@ -13,6 +13,10 @@ const InfoDetail = styled.div`
   flex-direction: column;
   gap: 1.5em;
   width: 800px;
+  padding: 2%;
+  border-radius: 40px;
+  background: linear-gradient(146.96deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 100%),
+    linear-gradient(153.15deg, #4c0bd3 8.57%, #8145ff 60%);
   @media screen and (max-width: 967px) {
     width: 700px;
   }
@@ -195,7 +199,7 @@ const DetailInfoPool: React.FC<
         )}
       </Line>
       <Line className="total-lock">
-        <Text fontSize={responsiveTextSize} color="white" className="value">
+        <Text fontSize={responsiveTextSize} className="value">
           Total Lock:{' '}
           <CountUp
             start={0}
