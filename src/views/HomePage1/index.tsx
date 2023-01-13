@@ -7,6 +7,8 @@ import PageSection from 'components/PageSection'
 import Exchange from './components/Exchange'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
+import HeadHome from './components/Head'
+import Crypto from './components/CryptoHome'
 
 const shine = keyframes`
   100% {
@@ -18,17 +20,15 @@ const shine = keyframes`
 
 const Wrapper = styled.div`
   position: relative;
-  font-family: 'Inter';
   font-style: normal;
   background-color: #13171b;
-  position: relative;
 `
 
 const Container = styled.div`
   width: 100%;
-  max-width: 1390px;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 0 25px;
+  padding: 0 20px;
 
   .buttonSpace {
   }
@@ -83,190 +83,7 @@ const TitleM = styled(Text)`
   @media screen and (max-width: 500px) {
     font-size: 16px;
     line-height: 28px;
-  }
-`
-
-const Head = styled(Flex)`
-  padding-top: 50px;
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  flex-direction: column;
-
-  ${({ theme }) => theme.mediaQueries.md} {
-    padding: 118px 0;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-  }
-  @media screen and (max-width: 600px) {
-    display: flex;
-    align-item: ceneter;
-  }
-`
-
-const HeadPage = styled.div`
-  align-items: center;
-  height: 1300px;
-  background: url(${images.bghead}) no-repeat center;
-  background-size: cover;
-  padding-top: 10%;
-
-  @media screen and (max-width: 1024px) {
-    height: 1500px;
-  }
-  @media screen and (max-width: 820px) {
-    // height: 800px;
-  }
-  @media screen and (max-width: 740px) {
-    // height: 1500px;
-    // background-size: 150% auto;
-  }
-  @media screen and (max-width: 414px) {
-    height: 900px;
-    // padding-top: 20%;
-  }
-`
-const ContentHead = styled.div`
-  width: 100%;
-  z-index: 1;
-
-  ${({ theme }) => theme.mediaQueries.md} {
-    max-width: 653px;
-  }
-
-  h2 {
-    font-weight: 700;
-    font-size: 64px;
-    line-height: 60px;
-    letter-spacing: 0.001em;
-    text-transform: uppercase;
-    color: #7a42f1;
-    margin-bottom: 20px;
-
-    @media screen and (max-width: 1024px) {
-      font-size: 54px;
-      line-height: 50px;
-    }
-    @media screen and (max-width: 500px) {
-      font-size: 30px;
-      line-height: 26px;
-    }
-  }
-  p {
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 23px;
-    color: #d9d1ff;
-  }
-`
-
-const ImageHead = styled.img`
-  width: 100%;
-  max-width: 715px;
-  height: auto;
-  @media screen and (max-width: 1024px) {
-    width: 50%;
-  }
-`
-
-const LinkToDownload = styled.div`
-  margin-top: 48px;
-  text-align: center;
-  span {
-    color: #393939;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 40px;
-  }
-`
-
-const ListImgButton = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 2%;
-
-  a {
-    border: 1px solid #a6a6a6;
-    border-radius: 7px;
-  }
-
-  @media screen and (max-width: 500px) {
-    gap: 0.5%;
-    img {
-      width: 90%;
-    }
-  }
-`
-
-const Crypto = styled.div`
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  .cyptophone {
-    animation: shake 10s linear 10s infinite alternate-reverse;
-    @keyframes shake {
-      0%,
-      100% {
-        transform: translateY(0);
-      }
-      10%,
-      30%,
-      50%,
-      70%,
-      90% {
-        transform: translateY(-10px);
-      }
-      20%,
-      40%,
-      60%,
-      80% {
-        transform: translateY(10px);
-      }
-    }
-  }
-  span {
-    font-weight: 500;
-    font-size: 32px;
-    line-height: 39px;
-    @media screen and (max-width: 1024px) {
-      font-size: 24px;
-      line-height: 15px;
-    }
-    @media screen and (max-width: 920px) {
-      font-size: 22px;
-      line-height: 20px;
-    }
-    @media screen and (max-width: 414px) {
-      line-height: 20px;
-      font-size: 20px;
-    }
-  }
-  .title {
-    width: 80%;
-    @media screen and (max-width: 820px) {
-      width: 100%;
-    }
-  }
-  @media screen and (max-width: 1180px) {
-    .cyptophone {
-      width: 50%;
-    }
-    margin-left: 9%;
-    margin-right: 9%;
-  }
-  @media screen and (max-width: 820px) {
-    flex-direction: column;
-  }
-  @media screen and (max-width: 414px) {
-    .cyptophone {
-      width: 70%;
-    }
-    margin-left: 7%;
-    margin-right: 7%;
+    text-align: center;
   }
 `
 
@@ -338,6 +155,11 @@ const Insurance = styled.div`
 const StyledText = styled.p`
   color: #8145ff;
   display: inline;
+  text-align: center;
+
+  ${({ theme }) => theme.mediaQueries.sm} {
+    text-align: start;
+  }
 `
 
 const StyledText2 = styled.p`
@@ -364,41 +186,6 @@ const Content = styled.div`
   }
 `
 
-const ImageLeft = styled(Flex)`
-  max-width: 715px;
-  width: 100%;
-
-  img {
-    position: relative;
-  }
-`
-
-const CustomSpan = styled(Text)`
-  display: flex;
-  align-items: center;
-  margin-top: 24px;
-  font-weight: 500;
-  font-size: 32px;
-  line-height: 39px;
-
-  img {
-    margin-right: 16px;
-  }
-
-  @media screen and (max-width: 1024px) {
-    font-size: 24px;
-    line-height: 15px;
-  }
-  @media screen and (max-width: 920px) {
-    font-size: 22px;
-    line-height: 20px;
-  }
-  @media screen and (max-width: 414px) {
-    line-height: 20px;
-    font-size: 20px;
-    margin-top: 18px;
-  }
-`
 const StepBlock = styled.div`
   position: relative;
   z-index: 1;
@@ -558,25 +345,15 @@ const ContentCustom = styled(Text)`
     width: 100%;
   }
 `
-const ButtonCustom = styled(Button)`
-  width: auto;
-  height: 56px;
-  margin-top: 5%;
-  background: #816bf2;
-  text-align: unset;
-  color: #eaeaea;
-  border: 0.5px solid rgba(88, 108, 158, 0.04);
-  box-shadow: 0px 4px 50px rgba(205, 255, 252, 0.25), 0px 4px 100px rgba(212, 218, 220, 0.25), inset 0px 4px 4px #6d50ff,
-    inset 0px 4px 2px rgba(211, 218, 255, 0.25), inset 0px 4px 20px rgba(252, 254, 255, 0.34);
-
-  ${({ theme }) => theme.mediaQueries.sm} {
-    width: auto;
-  }
-`
 
 const StyledBackground = styled.img`
   position: absolute;
   z-index: 0;
+  display: none;
+
+  ${({ theme }) => theme.mediaQueries.xl} {
+    display: block;
+  }
 `
 
 const coverdList = [
@@ -612,11 +389,12 @@ const HomePage: React.FC<React.PropsWithChildren> = () => {
 
   useEffect(() => {
     AOS.init({
-      disable: 'mobile',
-      duration: 2000,
+      disable: function () {
+        var maxWidth = 1000
+        return window.innerWidth < maxWidth
+      },
     })
-    AOS.refresh()
-  }, [])
+  })
 
   return (
     <>
@@ -631,53 +409,9 @@ const HomePage: React.FC<React.PropsWithChildren> = () => {
       `}</style>
       <Wrapper>
         <Container>
-          {/* <StyledBackground src={images.bgTrendy} /> */}
-
-          <Head>
-            <ContentHead data-aos="fade-up-right">
-              <h2>Buy & Sell Cryptocurrency in minutes.</h2>
-              <p>Join now on the largest cryptocurrency exchange in the world.</p>
-              <LinkToDownload>
-                <ListImgButton>
-                  <a href="">
-                    <img src={images.downloadIOS} alt="" />
-                  </a>
-                  <a href="">
-                    <img src={images.downloadPlay} alt="" />
-                  </a>
-                  <a href="">
-                    <img src={images.downloadAPK} alt="" />
-                  </a>
-                </ListImgButton>
-              </LinkToDownload>
-            </ContentHead>
-            <ImageHead data-aos="fade-up-left" src={images.coinHead} alt="" />
-          </Head>
-          <Crypto>
-            <Content data-aos="fade-right">
-              <Title color="mainColor" className="title colorchange">
-                <StyledText>All-in-One</StyledText> for Your Crypto
-              </Title>
-              <CustomSpan color="mainColor" className="colorchange">
-                <img src={images.star} /> Buy, send and swap tokens
-              </CustomSpan>
-              <CustomSpan color="mainColor" className="colorchange">
-                <img src={images.star} /> Earn Passive Income With Crypto
-              </CustomSpan>
-              <CustomSpan color="mainColor" className="colorchange">
-                <img src={images.star} /> Private & Secure
-              </CustomSpan>
-              <CustomSpan color="mainColor" className="colorchange">
-                <img src={images.star} /> Exchange Instantly
-              </CustomSpan>
-            </Content>
-            <ImageLeft flexDirection="column" alignItems="center">
-              <img className="cyptophone" srcSet={images.phone} alt="" />
-              <ButtonCustom onClick={handleClick} variant="primary">
-                Calculate your earnings
-              </ButtonCustom>
-            </ImageLeft>
-          </Crypto>
+          <StyledBackground src={images.bgTrendy} />
+          <HeadHome />
+          <Crypto handleClick={handleClick} />
           <div ref={ref}>
             <Exchange data-aos="fade-up" />
           </div>

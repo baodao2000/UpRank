@@ -13,16 +13,18 @@ import 'aos/dist/aos.css'
 
 const Title = styled(Heading)`
   text-align: center;
-  font-weight: 800;
-  font-size: 48px;
-  line-height: 58px;
+  font-weight: 700;
+  font-size: 34px;
+  line-height: 37px;
   margin-bottom: 24px;
-  @media screen and (max-width: 500px) {
+
+  ${({ theme }) => theme.mediaQueries.md} {
     font-size: 40px;
-    line-height: 40px;
-    margin-bottom: 15px;
-    margin-left: 5%;
-    margin-right: 5%;
+    line-height: 46px;
+  }
+  ${({ theme }) => theme.mediaQueries.xl} {
+    font-size: 64px;
+    line-height: 60px;
   }
 `
 const StyledText = styled.p`
@@ -54,27 +56,25 @@ const TitleM = styled(Text)`
 const Wrapper = styled.div`
   position: relative;
   z-index: 1;
-  margin-top: 10%;
-  @media screen and (max-width: 820px) {
-    padding: 0 7%;
-  }
-  @media screen and (max-width: 500px) {
-    margin-top: 15%;
-    padding: 0 2%;
-  }
+  margin-top: 14%;
 `
 const Table = styled.div`
-  padding: 40px 84px;
+  padding: 20px;
   display: flex;
-  border-radius: 8px;
+  border-radius: 20px;
+  flex-direction: column;
   background: black;
-  @media screen and (max-width: 900px) {
-    flex-direction: column;
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    padding: 30px 74px;
+  }
+  ${({ theme }) => theme.mediaQueries.xl} {
+    flex-direction: row;
+    padding: 40px 84px;
   }
 `
 const ExchangePart = styled.div`
   flex-basis: calc(100% / 3);
-  padding: 20px 2%;
   display: flex;
   flex-direction: column;
   row-gap: 10px;
@@ -103,7 +103,7 @@ const SelectCustom = styled(Select)`
   width: 100%;
 
   .nameCry {
-    padding-top: 2%;
+    padding-top: 3%;
     @media (min-width: 500px) and (max-width: 820px) {
       padding-top: 1%;
     }
@@ -141,13 +141,15 @@ const InputContainer = styled.div`
 `
 const TextCustom = styled(Text)`
   margin-top: 16px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
 `
 
 const ChartPart = styled.div`
   height: 100%;
   flex-basis: calc(100% * 2 / 3);
-  padding: 20px 2%;
-  margin-left: 100px;
+
   .notOnPC {
     display: none;
   }
@@ -156,6 +158,9 @@ const ChartPart = styled.div`
       margin-top: 5%;
       display: block;
     }
+  }
+  ${({ theme }) => theme.mediaQueries.md} {
+    padding-left: 10%;
   }
 `
 const HeadingCustom = styled(Heading)`
@@ -188,8 +193,10 @@ const Column = styled.div`
 `
 
 const ChartInfo = styled.div`
-  @media screen and (max-width: 820px) {
-    text-align: center;
+  margin-top: 20px;
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    margin-top: 0;
   }
 `
 
@@ -219,7 +226,7 @@ const ButtonCustom = styled(Button)`
   }
   @media screen and (max-width: 500px) {
     font-size: 15px !important;
-    width: 70%;
+    width: 80%;
     height: 40px;
     padding: 0;
   }
@@ -231,6 +238,7 @@ const TextName = styled(Text)`
   line-height: 23px;
   margin-bottom: 6px;
   color: #9665ff;
+  text-align: start;
 
   @media screen and (max-width: 820px) {
     font-size: 20px;
@@ -346,7 +354,7 @@ const Exchange = (props) => {
                   label: (
                     <Row>
                       <Col className="nameCry">
-                        <img src={images.iconMatic} />
+                        <img src={images.iconMatic} alt="" />
                       </Col>
                       <Col className="depositNumb">
                         <p>
@@ -367,7 +375,7 @@ const Exchange = (props) => {
                     <div>
                       <Row>
                         <Col style={{ paddingTop: '1%' }}>
-                          <img src={`${item.img}`} />
+                          <img src={`${item.img}`} alt="" />
                         </Col>
                         <Col style={{ marginLeft: '20px' }}>
                           <p>
@@ -391,7 +399,7 @@ const Exchange = (props) => {
                 onChange={onChange}
               />
             </InputContainer>
-            <Text style={{ color: '#9665FF' }}>
+            <Text style={{ color: '#9665FF', textAlign: 'start' }}>
               approx. {numeral(deposit * price).format('0,0.00')} {` `} MATIC/USD
             </Text>
           </div>
@@ -404,7 +412,7 @@ const Exchange = (props) => {
         </ExchangePart>
         <ChartPart>
           <ChartInfo>
-            <img src={images.chartIcon} />
+            <img src={images.chartIcon} alt="" />
             <Text
               color="mainColor"
               fontSize={28}
@@ -445,7 +453,7 @@ const Exchange = (props) => {
             </Column>
             <Column>
               {period.current >= 2 ? (
-                <img src={images.chart2up} />
+                <img src={images.chart2up} alt="" />
               ) : period.current < period.old && !(period.old < 1) ? (
                 <img src={images.chart2down} alt="" />
               ) : (
@@ -463,7 +471,7 @@ const Exchange = (props) => {
             </Column>
             <Column>
               {period.current >= 3 ? (
-                <img src={images.chart3up} />
+                <img src={images.chart3up} alt="" />
               ) : period.current < period.old && !(period.old < 3) ? (
                 <img src={images.chart3down} alt="" />
               ) : (
@@ -481,7 +489,7 @@ const Exchange = (props) => {
             </Column>
             <Column>
               {period.current >= 4 ? (
-                <img src={images.chart4up} />
+                <img src={images.chart4up} alt="" />
               ) : period.current < period.old && !(period.old < 4) ? (
                 <img src={images.chart4down} alt="" />
               ) : (

@@ -47,6 +47,8 @@
     "no-empty": 0,
     "react/self-closing-comp": 0,
     "jsx-a11y/control-has-associated-label": 0,
+    "object-shorthand": 0,
+    "no-var": 0,
     // Exchange
     // "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["state", "memo"] }],
     "import/order": 0,

@@ -58,7 +58,6 @@ const BodyWrapper = styled(Box)`
   height: auto;
   min-height: 100vh;
   overflow: hidden;
-  padding-bottom: 20vh;
 
   ${({ theme }) => theme.mediaQueries.md} {
     padding-bottom: 0;

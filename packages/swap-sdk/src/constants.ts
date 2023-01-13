@@ -162,3 +162,12 @@ export const NATIVE: Record<
     decimals: 18,
   },
 }
+export const TokenName = {
+  [ChainId.ETHEREUM]: 'ETH',
+  [ChainId.RINKEBY]: 'RKB',
+  [ChainId.GOERLI]: 'GL',
+  [ChainId.BSC]: 'BSC',
+  [ChainId.BSC_TESTNET]: 'BSCT',
+  [ChainId.ETHW]: 'ETW',
+  [ChainId.MATIC]: 'MT',
+}

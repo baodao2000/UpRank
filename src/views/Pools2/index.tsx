@@ -26,7 +26,7 @@ import Link from 'next/link'
 import { formatEther } from '@ethersproject/units'
 import { bnb2Usd, shortenURL, timeDisplay } from './util'
 import useActiveWeb3React from '../../hooks/useActiveWeb3React'
-import { ChainId } from '../../../packages/swap-sdk/src/constants'
+import { TokenName, ChainId } from '../../../packages/swap-sdk/src/constants'
 
 // ============= STYLED
 const Container = styled.div`
@@ -289,7 +289,6 @@ const Pools = () => {
   const { toastSuccess, toastError } = useToast()
   const { callWithMarketGasPrice } = useCallWithMarketGasPrice()
   const poolContract = usePoolsContract()
-  const isETHW = chainId === ChainId.ETHW
   const [isLoading, setIsLoading] = useState(true)
   const [rateBnbUsd, setRateBnbUsd] = useState(1)
   const { isConfirming, handleConfirm } = useConfirmTransaction({
@@ -301,6 +300,8 @@ const Pools = () => {
       onSuccess()
     },
   })
+
+  console.log(TokenName)
 
   const getCommission = async () => {
     if (account) {
@@ -345,7 +346,7 @@ const Pools = () => {
     addressOrName: contracts.pools[CHAIN_ID],
   })
   const balance = isFetched && data && data.value ? formatBigNumber(data.value, 6) : 0
-  const unit = isETHW ? 'ETHW' : 'MATIC'
+  const unit = TokenName[chainId]
 
   const onSuccess = () => {
     getCommission()
@@ -482,7 +483,7 @@ const Pools = () => {
                   >
                     <LogoAndName>
                       <img src={pools[r].logo} alt="logo" />
-                      <span>{pools[r].name}</span>
+                      <span>{unit}</span>
                     </LogoAndName>
                     <Info>
                       <Reward>
