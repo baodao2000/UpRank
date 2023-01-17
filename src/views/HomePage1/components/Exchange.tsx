@@ -14,8 +14,8 @@ import 'aos/dist/aos.css'
 const Title = styled(Heading)`
   text-align: center;
   font-weight: 700;
-  font-size: 34px;
-  line-height: 37px;
+  font-size: 24px;
+  line-height: 25px;
   margin-bottom: 24px;
 
   ${({ theme }) => theme.mediaQueries.md} {
@@ -57,6 +57,13 @@ const Wrapper = styled.div`
   position: relative;
   z-index: 1;
   margin-top: 14%;
+  max-width: 1186px;
+
+  ${({ theme }) => theme.mediaQueries.sm} {
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+  }
 `
 const Table = styled.div`
   padding: 20px;
@@ -64,6 +71,8 @@ const Table = styled.div`
   border-radius: 20px;
   flex-direction: column;
   background: black;
+  border: 2px solid #0a0d10;
+  box-shadow: inset -2px 4px 8px #000000, inset -4px 4px 32px #171717;
 
   ${({ theme }) => theme.mediaQueries.md} {
     padding: 30px 74px;
@@ -93,30 +102,43 @@ const CryptoSelect = styled.div`
   margin-bottom: 26px;
   .ant-select {
     .ant-select-selector {
-      height: 60px;
+      height: 40px;
       border-radius: 25px;
       background: #f9f7ff;
+
+      ${({ theme }) => theme.mediaQueries.sm} {
+        height: 52px;
+      }
     }
   }
 `
 const SelectCustom = styled(Select)`
   width: 100%;
+  position: relative;
 
   .nameCry {
-    padding-top: 3%;
-    @media (min-width: 500px) and (max-width: 820px) {
-      padding-top: 1%;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+
+    ${({ theme }) => theme.mediaQueries.sm} {
+      width: 40px;
+      height: 40px;
     }
   }
+
   .depositNumb {
-    margin-left: 20px;
-    padding-top: 1%;
-    @media (min-width: 500px) and (max-width: 820px) {
-      padding-top: 0.5%;
-      // text-align: left;
-    }
-    @media screen and (max-width: 500px) {
-      text-align: left;
+    margin-left: 56px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Helvetica, sans-serif';
+
+    .number {
+      font-size: 16px;
+      font-family: Helvetica, sans-serif;
     }
   }
 `
@@ -144,6 +166,7 @@ const TextCustom = styled(Text)`
   font-weight: 400;
   font-size: 14px;
   line-height: 16px;
+  font-family: 'Helvetica', sans-serif;
 `
 
 const ChartPart = styled.div`
@@ -159,7 +182,7 @@ const ChartPart = styled.div`
       display: block;
     }
   }
-  ${({ theme }) => theme.mediaQueries.md} {
+  ${({ theme }) => theme.mediaQueries.xl} {
     padding-left: 10%;
   }
 `
@@ -170,6 +193,14 @@ const HeadingCustom = styled(Heading)`
 
   .style-countup {
     color: #00ffc2;
+    font-weight: 700;
+    font-size: 24px;
+    font-family: Helvetica, sans-serif;
+
+    ${({ theme }) => theme.mediaQueries.md} {
+      font-size: 55px;
+      line-height: 66px;
+    }
   }
 `
 const Column = styled.div`
@@ -181,6 +212,12 @@ const Column = styled.div`
   width: 20%;
   img {
     width: 80%;
+  }
+
+  &:last-child {
+    button {
+      margin-right: 0;
+    }
   }
 
   @media screen and (max-width: 415px) {
@@ -216,6 +253,12 @@ const ButtonCustom = styled(Button)`
   color: #ffffff;
   background: #0a0d10;
   margin-top: 12px;
+  font-size: 14px;
+  line-height: 20px;
+  padding: 4px 10px;
+  border-radius: 8px;
+  margin-right: 10px;
+  height: 40px;
 
   &:hover {
     border-color: ${({ theme }) => theme.colors.primary};
@@ -224,11 +267,9 @@ const ButtonCustom = styled(Button)`
     border-color: ${({ theme }) => theme.colors.primary};
     color: ${({ theme }) => theme.colors.primary};
   }
-  @media screen and (max-width: 500px) {
-    font-size: 15px !important;
-    width: 80%;
-    height: 40px;
-    padding: 0;
+
+  ${({ theme }) => theme.mediaQueries.sm} {
+    margin-right: 0;
   }
 `
 
@@ -251,6 +292,36 @@ const ChartBase = styled.div`
 
   background: linear-gradient(180deg, #8145ff 0%, #00fec1 100%);
   border-radius: 8px;
+`
+
+const StyledInputNumber = styled.div`
+  height: 40px;
+  position: relative;
+
+  input {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    font-family: Helvetica, sans-serif;
+    font-weight: 700;
+  }
+
+  ${({ theme }) => theme.mediaQueries.sm} {
+    height: unset;
+  }
+`
+
+const StyledTextProject = styled(Text)`
+  font-size: 20px;
+  line-height: 23px;
+  font-weight: 700;
+  font-family: Helvetica, sans-serif;
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    font-size: 28px;
+    line-height: 32px;
+  }
 `
 
 const Items = [
@@ -345,7 +416,7 @@ const Exchange = (props) => {
         <ExchangePart>
           <div>
             <CryptoSelect>
-              <TextName color="mainColor" style={{ color: '' }}>
+              <TextName color="mainColor" style={{ fontFamily: 'Helvetica, sans-serif' }}>
                 Crypto
               </TextName>
               <SelectCustom
@@ -358,12 +429,9 @@ const Exchange = (props) => {
                       </Col>
                       <Col className="depositNumb">
                         <p>
-                          <b>POLYGON</b>
+                          <b style={{ fontFamily: 'Helvetica, sans-serif', fontSize: 16 }}>POLYGON</b>
                         </p>
-                        <p className="number" style={{ marginTop: '-10px' }}>
-                          {' '}
-                          {numeral(percen * 100).format('0,0.0')}% (Monthly)
-                        </p>
+                        <p className="number"> {numeral(percen * 100).format('0,0.0')}% (Monthly)</p>
                       </Col>
                     </Row>
                   ),
@@ -377,11 +445,13 @@ const Exchange = (props) => {
                         <Col style={{ paddingTop: '1%' }}>
                           <img src={`${item.img}`} alt="" />
                         </Col>
-                        <Col style={{ marginLeft: '20px' }}>
+                        <Col style={{ marginLeft: '20px', fontWeight: 700 }}>
                           <p>
                             <b>{item.label}</b>
                           </p>
-                          <span>{numeral(percen * 100).format('0,0.0')}% (Monthly)</span>
+                          <span style={{ fontFamily: 'Helvetica, sans-serif' }}>
+                            {numeral(percen * 100).format('0,0.0')}% (Monthly)
+                          </span>
                         </Col>
                       </Row>
                     </div>
@@ -391,7 +461,9 @@ const Exchange = (props) => {
             </CryptoSelect>
 
             <InputContainer>
-              <TextName color="mainColor">Deposit Amount</TextName>
+              <TextName color="mainColor" style={{ fontFamily: 'Helvetica, sans-serif' }}>
+                Deposit Amount
+              </TextName>
               <InputNumber
                 formatter={(value) => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                 min={0}
@@ -399,7 +471,7 @@ const Exchange = (props) => {
                 onChange={onChange}
               />
             </InputContainer>
-            <Text style={{ color: '#9665FF', textAlign: 'start' }}>
+            <Text style={{ color: '#9665FF', textAlign: 'start', fontFamily: 'Helvetica, sans-serif' }}>
               approx. {numeral(deposit * price).format('0,0.00')} {` `} MATIC/USD
             </Text>
           </div>
@@ -413,14 +485,9 @@ const Exchange = (props) => {
         <ChartPart>
           <ChartInfo>
             <img src={images.chartIcon} alt="" />
-            <Text
-              color="mainColor"
-              fontSize={28}
-              fontWeight={700}
-              style={{ display: 'inline', marginLeft: 10, color: '#FFFFFF' }}
-            >
+            <StyledTextProject color="mainColor" style={{ display: 'inline', marginLeft: 10, color: '#FFFFFF' }}>
               Projected {period.current} years interest
-            </Text>
+            </StyledTextProject>
             <HeadingCustom color="mainColor">
               <CountUp
                 separator=","
@@ -434,7 +501,7 @@ const Exchange = (props) => {
                 {numeral(deposit * (1 + percen * 12 * period.current)).format('0,0.00')}
               </CountUp>
             </HeadingCustom>
-            <Text style={{ color: '#CED8E1' }}>
+            <Text style={{ color: '#CED8E1', fontSize: 16, fontFamily: 'Helvetica Light, sans-serif' }}>
               Calculated based on the current MATIC/USD price of ${numeral(price).format('0,0.00')}
             </Text>
           </ChartInfo>

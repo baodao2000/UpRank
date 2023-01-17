@@ -22,12 +22,15 @@ import useActiveWeb3React from '../../hooks/useActiveWeb3React'
 import TableDataPool from './components/TableData'
 import DetailInfoPool from './components/DetailInfo'
 import DepositPoolModal from './components/DepositModal'
-import { ChainId } from '../../../packages/swap-sdk/src/constants'
+import { ChainId, NATIVE } from '../../../packages/swap-sdk/src/constants'
 
 // ============= STYLED
 const PoolDetail = styled.div`
   background: url(${images.backgroundpool}) #1e1e1e no-repeat bottom;
   background-size: contain;
+  * {
+    font-family: Helvetica, sans-serif;
+  }
   @media screen and (max-width: 768px) {
     background: url(${images.backgroundpool}) #1e1e1e no-repeat bottom;
     background-size: fixed;
@@ -100,7 +103,7 @@ const Pool = ({ poolId }) => {
     chainId: CHAIN_ID,
   })
   const isETHW = chainId === ChainId.ETHW
-  const unit = isETHW ? 'ETHW' : 'MATIC'
+  const unit = NATIVE[chainId].symbol
   const [poolInfo, setPoolInfo] = useState({
     currentInterest: 0,
     enable: true,
@@ -199,7 +202,7 @@ const Pool = ({ poolId }) => {
               <PoolName>
                 <PoolLogo src={images.logoMatic} alt="pool name" />
                 <Text fontSize={['28px', '40px', '42px', '50px', '70px']} fontWeight="600" color="subtle">
-                  MATIC
+                  {unit}
                 </Text>
               </PoolName>
               <Heading scale="md" color="text">

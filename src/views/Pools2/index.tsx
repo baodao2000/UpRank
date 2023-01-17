@@ -26,12 +26,15 @@ import Link from 'next/link'
 import { formatEther } from '@ethersproject/units'
 import { bnb2Usd, shortenURL, timeDisplay } from './util'
 import useActiveWeb3React from '../../hooks/useActiveWeb3React'
-import { TokenName, ChainId } from '../../../packages/swap-sdk/src/constants'
+import { ChainId, NATIVE } from '../../../packages/swap-sdk/src/constants'
 
 // ============= STYLED
 const Container = styled.div`
   background: url(${images.backgroundpool}) #1e1e1e no-repeat;
   background-size: contain;
+  * {
+    font-family: Helvetica, sans-serif;
+  }
   @media screen and (max-width: 1024px) {
     background: none;
     background-color: #1e1e1e;
@@ -191,6 +194,7 @@ const LogoAndName = styled.div`
     font-family: Inter;
     color: #ffffff;
     font-weight: 700;
+    font-family: Helvetica, sans-serif;
   }
   img {
     width: 100px;
@@ -301,8 +305,6 @@ const Pools = () => {
     },
   })
 
-  console.log(TokenName)
-
   const getCommission = async () => {
     if (account) {
       const comm = await getPoolContract.remainComm(account)
@@ -346,7 +348,7 @@ const Pools = () => {
     addressOrName: contracts.pools[CHAIN_ID],
   })
   const balance = isFetched && data && data.value ? formatBigNumber(data.value, 6) : 0
-  const unit = TokenName[chainId]
+  const unit = NATIVE[chainId].symbol
 
   const onSuccess = () => {
     getCommission()

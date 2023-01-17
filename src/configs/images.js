@@ -3,7 +3,7 @@ const images = {
   arrowDown: '/images/homepage/arrow-down-circle.png',
   wallet: '/images/homepage/wallet.png',
   crypto: '/images/homepage/crypto.png',
-  bgTrendy: '/images/homepage/bg-trendy2.png',
+  bgTrendy: '/images/homepage/bg-trendy.png',
   key2: '/images/homepage/Key.png',
   bookOpen: '/images/homepage/bookopen.png',
   lock2: '/images/homepage/lock.png',

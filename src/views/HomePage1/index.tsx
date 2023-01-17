@@ -64,6 +64,7 @@ const StyledButton = styled(Button)`
   font-weight: 400;
   font-size: 24px;
   line-height: 120%;
+  font-family: Helvetica, sans-serif;
 `
 const StyledButton2 = styled(Button)`
   background-color: #1e1e1e;
@@ -74,6 +75,7 @@ const StyledButton2 = styled(Button)`
   color: #00f0e1;
   border: 2px solid #00f0e1;
   border-radius: 30px;
+  font-family: Helvetica, sans-serif;
 `
 const TitleM = styled(Text)`
   font-weight: 500;
@@ -260,6 +262,7 @@ const Step = styled.div`
     font-size: 32px;
     color: #252627;
     width: 60%;
+    font-family: Helvetica, sans-serif;
     @media screen and (max-width: 1024px) {
       font-size: 24px;
       width: 100%;
@@ -324,6 +327,7 @@ const TagCustom = styled(Text)`
   font-weight: 700;
   font-size: 32px;
   line-height: 39px;
+  font-family: Helvetica, sans-serif;
   @media screen and (max-width: 500px) {
     font-size: 26px;
     line-height: 32px;
@@ -337,6 +341,7 @@ const ContentCustom = styled(Text)`
   font-size: 20px;
   line-height: 24px;
   width: 50%;
+  font-family: Helvetica, sans-serif;
   @media screen and (max-width: 600px) {
     font-size: 20px;
     line-height: 30px;
@@ -390,7 +395,7 @@ const HomePage: React.FC<React.PropsWithChildren> = () => {
   useEffect(() => {
     AOS.init({
       disable: function () {
-        var maxWidth = 1000
+        var maxWidth = 2000
         return window.innerWidth < maxWidth
       },
     })

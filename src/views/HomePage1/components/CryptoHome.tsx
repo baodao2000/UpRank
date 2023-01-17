@@ -66,20 +66,21 @@ const Crypto = styled.div`
 `
 
 const Title = styled(Heading)`
-  font-size: 34px;
-  line-height: 37px;
-  text-align: center;
+  font-size: 24px;
+  line-height: 25px;
   letter-spacing: 0.001em;
   transform: rotate(0.87deg);
+  text-align: center;
+  font-weight: 700;
+  font-family: 'Helvetica', sans-serif;
 
   ${({ theme }) => theme.mediaQueries.md} {
-    font-weight: 700;
     font-size: 40px;
-    line-height: 50px;
+    line-height: 46px;
+    text-align: start;
   }
   ${({ theme }) => theme.mediaQueries.xl} {
-    font-weight: 700;
-    font-size: 48px;
+    font-size: 64px;
     line-height: 60px;
     letter-spacing: 0.001em;
     text-align: start;
@@ -95,6 +96,7 @@ const StyledText = styled.p`
   color: #8145ff;
   display: inline;
   align-items: start;
+  font-family: 'Helvetica', sans-serif;
 `
 
 const ButtonCustom = styled(Button)`
@@ -106,8 +108,12 @@ const ButtonCustom = styled(Button)`
   border: 0.5px solid rgba(88, 108, 158, 0.04);
   box-shadow: 0px 4px 50px rgba(205, 255, 252, 0.25), 0px 4px 100px rgba(212, 218, 220, 0.25), inset 0px 4px 4px #6d50ff,
     inset 0px 4px 2px rgba(211, 218, 255, 0.25), inset 0px 4px 20px rgba(252, 254, 255, 0.34);
+  font-size: 13px;
+  line-height: 20px;
+
   ${({ theme }) => theme.mediaQueries.md} {
     height: 56px;
+    font-size: 18px;
   }
 `
 
@@ -146,11 +152,11 @@ const CustomSpan = styled(Text)`
     font-weight: 500;
     font-size: 16px;
     line-height: 19px;
-    text-align: justify;
 
     ${({ theme }) => theme.mediaQueries.xl} {
       font-size: 24px;
       line-height: 29px;
+      text-align: justify;
     }
   }
 
@@ -164,7 +170,7 @@ const CryptoHome = ({ handleClick }) => {
     <Crypto>
       <Content data-aos="fade-right">
         <Title color="mainColor" className="title colorchange">
-          <StyledText>All-in-One</StyledText> for Your CryptoHome
+          <StyledText>All-in-One</StyledText> for Your Crypto
         </Title>
         <CustomSpan color="mainColor" className="colorchange">
           <img src={images.star} alt="" />

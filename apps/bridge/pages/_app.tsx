@@ -22,8 +22,12 @@ const StyledThemeProvider: React.FC<React.PropsWithChildren> = (props) => {
 }
 
 const GlobalStyle = createGlobalStyle`
+  @font-face {
+    font-family: 'Helvetica', sans-serif;;
+    src: url("/assets/fonts/Helvetica.ttf");
+  }
   * {
-    font-family: 'Kanit', sans-serif;
+    font-family: 'Helvetica', sans-serif;
   }
   html, body, #__next {
     height: 100%;

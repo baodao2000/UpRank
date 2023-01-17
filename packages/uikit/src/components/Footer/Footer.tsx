@@ -27,13 +27,38 @@ const ListImgButton = styled.div`
   flex-direction: row;
   justify-content: center;
   gap: 3%;
+
+  a {
+    border: 1px solid #a6a6a6;
+    border-radius: 7px;
+    background: #0c0d10;
+    mix-blend-mode: normal;
+
+    img {
+      border-radius: 7px;
+    }
+  }
 `;
-const Title = styled(Text)`
-  font-weight: 700;
+const StyledTitle = styled(Text)`
+  font-style: normal;
+  font-weight: 400;
   font-size: 20px;
   line-height: 30px;
-  width: 300px;
   text-align: center;
+  letter-spacing: 0.001em;
+  color: #beb7b7;
+  width: 300px;
+
+  span {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 30px;
+    text-align: center;
+    letter-spacing: 0.001em;
+    color: #beb7b7;
+    font-weight: 700;
+  }
 `;
 
 const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
@@ -49,7 +74,9 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
 }) => {
   return (
     <StyledFooter data-theme="isDark" p={["40px 16px", null, "56px 40px 32px 40px"]} {...props} justifyContent="center">
-      <Title>So what are you waiting for? Download here </Title>
+      <StyledTitle>
+        So what are you waiting for? <span>Download here</span>
+      </StyledTitle>
       <ListImgButton>
         <a href="">
           <img src={images.downloadIOS} alt="" />
@@ -61,7 +88,7 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
           <img src={images.downloadAPK} alt="" />
         </a>
       </ListImgButton>
-      <ListImgButton>
+      {/* <ListImgButton>
         <a href="">
           <img src={images.twitter} alt="" />
         </a>
@@ -71,9 +98,9 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
         <a href="">
           <img src={images.medium} alt="" />
         </a>
-      </ListImgButton>
+      </ListImgButton> */}
 
-      <Text>© 2022 TrendyDefi. All rights reserved.</Text>
+      {/* <Text>© 2022 TrendyDefi. All rights reserved.</Text> */}
 
       {/* <Flex flexDirection="column" width={["100%", null, "1200px;"]}>
         <StyledIconMobileContainer display={["block", null, "none"]}>

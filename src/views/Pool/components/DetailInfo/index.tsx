@@ -16,6 +16,7 @@ const InfoDetail = styled.div`
   padding: 2%;
   border-radius: 40px;
   background: linear-gradient(153.15deg, #7c07d8 8.57%, rgba(129, 69, 255, 0.02) 100%);
+
   @media screen and (max-width: 967px) {
     width: 700px;
   }
@@ -38,7 +39,6 @@ const Line = styled.div`
   justify-content: space-between;
   align-items: center;
   div {
-    font-family: 'Inter';
     font-style: normal;
     font-weight: 300;
     line-height: 24px;

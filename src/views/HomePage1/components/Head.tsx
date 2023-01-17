@@ -28,16 +28,16 @@ const ContentHead = styled.div`
   }
 
   h2 {
-    font-family: 'Roboto Flex';
     font-weight: 700;
-    font-size: 34px;
-    line-height: 37px;
+    font-size: 24px;
+    line-height: 25px;
     text-align: center;
     letter-spacing: 0.001em;
     text-transform: uppercase;
     color: #816bf2;
     text-align: center;
     margin-bottom: 20px;
+    word-wrap: break-word;
 
     ${({ theme }) => theme.mediaQueries.md} {
       font-size: 40px;
@@ -63,10 +63,6 @@ const ContentHead = styled.div`
       font-size: 20px;
       line-height: 26px;
       display: block;
-    }
-    ${({ theme }) => theme.mediaQueries.xl} {
-      font-size: 40px;
-      line-height: 46px;
     }
   }
 `
@@ -122,6 +118,10 @@ const ListImgButton = styled.div`
     border-radius: 7px;
   }
 
+  img {
+    border-radius: 7px;
+  }
+
   ${({ theme }) => theme.mediaQueries.md} {
     display: flex;
   }
@@ -130,8 +130,7 @@ const ListImgButton = styled.div`
 const ListImgButtonMb = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 2%;
-  row-gap: 30px;
+  row-gap: 20px;
   margin-bottom: 25px;
 
   ${({ theme }) => theme.mediaQueries.md} {
