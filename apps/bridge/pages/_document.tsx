@@ -34,7 +34,11 @@ class MyDocument extends Document {
       <Html translate="no">
         <Head>
           <link rel="preconnect" href="https://fonts.gstatic.com" />
-          <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600&amp;display=swap" rel="stylesheet" />
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link
+            href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,400;8..144,500;8..144,600;8..144,700&display=swap"
+            rel="stylesheet"
+          />
           <link rel="shortcut icon" href="https://mygamer.org/favicon.ico" />
           <link rel="apple-touch-icon" href="https://mygamer.org/logo.png" />
         </Head>

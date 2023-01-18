@@ -58,11 +58,25 @@ const Wrapper = styled.div`
   z-index: 1;
   margin-top: 14%;
   max-width: 1186px;
+  width: 100%;
 
-  ${({ theme }) => theme.mediaQueries.sm} {
+  ${({ theme }) => theme.mediaQueries.xl} {
     width: 85%;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  .ant-input-number-input {
+    font-weight: 700;
+    font-family: 'Helvetica, sans-serif';
+  }
+
+  .showPc {
+    display: none;
+
+    ${({ theme }) => theme.mediaQueries.md} {
+      display: block;
+    }
   }
 `
 const Table = styled.div`
@@ -70,16 +84,22 @@ const Table = styled.div`
   display: flex;
   border-radius: 20px;
   flex-direction: column;
-  background: black;
+  background: #0a0d10;
   border: 2px solid #0a0d10;
   box-shadow: inset -2px 4px 8px #000000, inset -4px 4px 32px #171717;
 
   ${({ theme }) => theme.mediaQueries.md} {
-    padding: 30px 74px;
-  }
-  ${({ theme }) => theme.mediaQueries.xl} {
+    padding: 30px 40px;
     flex-direction: row;
+  }
+  ${({ theme }) => theme.mediaQueries.xxl} {
     padding: 40px 84px;
+  }
+
+  .showMb {
+    ${({ theme }) => theme.mediaQueries.md} {
+      display: none;
+    }
   }
 `
 const ExchangePart = styled.div`
@@ -87,7 +107,7 @@ const ExchangePart = styled.div`
   display: flex;
   flex-direction: column;
   row-gap: 10px;
-  background: black;
+  background: #0a0d10;
 
   @media screen and (max-width: 820px) {
     .onPC {
@@ -99,17 +119,17 @@ const ExchangePart = styled.div`
   }
 `
 const CryptoSelect = styled.div`
-  margin-bottom: 26px;
+  margin-bottom: 16px;
   .ant-select {
     .ant-select-selector {
-      height: 40px;
+      height: 52px;
       border-radius: 25px;
       background: #f9f7ff;
-
-      ${({ theme }) => theme.mediaQueries.sm} {
-        height: 52px;
-      }
     }
+  }
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    margin-bottom: 26px;
   }
 `
 const SelectCustom = styled(Select)`
@@ -117,19 +137,15 @@ const SelectCustom = styled(Select)`
   position: relative;
 
   .nameCry {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-
-    ${({ theme }) => theme.mediaQueries.sm} {
-      width: 40px;
-      height: 40px;
-    }
   }
 
   .depositNumb {
+    height: 100%;
     margin-left: 56px;
     position: absolute;
     top: 50%;
@@ -138,6 +154,8 @@ const SelectCustom = styled(Select)`
 
     .number {
       font-size: 16px;
+      position: absolute;
+      bottom: -2px;
       font-family: Helvetica, sans-serif;
     }
   }
@@ -162,11 +180,12 @@ const InputContainer = styled.div`
   }
 `
 const TextCustom = styled(Text)`
-  margin-top: 16px;
+  margin-top: 10px;
   font-weight: 400;
   font-size: 14px;
   line-height: 16px;
   font-family: 'Helvetica', sans-serif;
+  text-align: start;
 `
 
 const ChartPart = styled.div`
@@ -182,7 +201,7 @@ const ChartPart = styled.div`
       display: block;
     }
   }
-  ${({ theme }) => theme.mediaQueries.xl} {
+  ${({ theme }) => theme.mediaQueries.md} {
     padding-left: 10%;
   }
 `
@@ -206,19 +225,9 @@ const HeadingCustom = styled(Heading)`
 const Column = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 10%;
   align-items: center;
   justify-content: center;
   width: 20%;
-  img {
-    width: 80%;
-  }
-
-  &:last-child {
-    button {
-      margin-right: 0;
-    }
-  }
 
   @media screen and (max-width: 415px) {
     align-items: center;
@@ -237,14 +246,20 @@ const ChartInfo = styled.div`
   }
 `
 
+const WrapperInfoText = styled.div`
+  display: flex;
+  align-items: center;
+`
+
 const Chart = styled.div`
   display: flex;
   flex-direction: row;
   align-items: flex-end;
   justify-content: center;
-  gap: 5%;
-  @media screen and (max-width: 415px) {
-    gap: 0;
+  gap: 4%;
+
+  ${({ theme }) => theme.mediaQueries.sm} {
+    gap: 8%;
   }
 `
 
@@ -254,11 +269,11 @@ const ButtonCustom = styled(Button)`
   background: #0a0d10;
   margin-top: 12px;
   font-size: 14px;
-  line-height: 20px;
-  padding: 4px 10px;
+  line-height: 16px;
   border-radius: 8px;
-  margin-right: 10px;
   height: 40px;
+  width: 90%;
+  padding: 0;
 
   &:hover {
     border-color: ${({ theme }) => theme.colors.primary};
@@ -268,8 +283,8 @@ const ButtonCustom = styled(Button)`
     color: ${({ theme }) => theme.colors.primary};
   }
 
-  ${({ theme }) => theme.mediaQueries.sm} {
-    margin-right: 0;
+  ${({ theme }) => theme.mediaQueries.md} {
+    width: 70%;
   }
 `
 
@@ -292,24 +307,6 @@ const ChartBase = styled.div`
 
   background: linear-gradient(180deg, #8145ff 0%, #00fec1 100%);
   border-radius: 8px;
-`
-
-const StyledInputNumber = styled.div`
-  height: 40px;
-  position: relative;
-
-  input {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    transform: translateY(-50%);
-    font-family: Helvetica, sans-serif;
-    font-weight: 700;
-  }
-
-  ${({ theme }) => theme.mediaQueries.sm} {
-    height: unset;
-  }
 `
 
 const StyledTextProject = styled(Text)`
@@ -406,13 +403,13 @@ const Exchange = (props) => {
 
   return (
     <Wrapper data-aos="fade-up">
-      <Title color="mainColor">
+      <Title className="showPc" color="mainColor">
         Calculate your crypto <StyledText>earnings</StyledText>
       </Title>
-      {/* <TitleM color="mainColor">
-        Enter an amount, pick a cryptocurrency, and select a time frame to find out how much interest you can earn.
-      </TitleM> */}
       <Table>
+        <Title className="showMb" color="mainColor">
+          Calculate your crypto <StyledText>earnings</StyledText>
+        </Title>
         <ExchangePart>
           <div>
             <CryptoSelect>
@@ -428,9 +425,9 @@ const Exchange = (props) => {
                         <img src={images.iconMatic} alt="" />
                       </Col>
                       <Col className="depositNumb">
-                        <p>
+                        <span>
                           <b style={{ fontFamily: 'Helvetica, sans-serif', fontSize: 16 }}>POLYGON</b>
-                        </p>
+                        </span>
                         <p className="number"> {numeral(percen * 100).format('0,0.0')}% (Monthly)</p>
                       </Col>
                     </Row>
@@ -475,7 +472,7 @@ const Exchange = (props) => {
               approx. {numeral(deposit * price).format('0,0.00')} {` `} MATIC/USD
             </Text>
           </div>
-          <TextCustom className="onPC" color="mainColor">
+          <TextCustom color="mainColor">
             Annual Percentage Yield (APY) as of {Date}. APY may change at any time before or after account is opened.
             This calculator is for illustrative purposes only and may not apply to your individual circumstances.
             Calculated values assume that principal and interest remain on deposit and are rounded to the nearest
@@ -484,10 +481,12 @@ const Exchange = (props) => {
         </ExchangePart>
         <ChartPart>
           <ChartInfo>
-            <img src={images.chartIcon} alt="" />
-            <StyledTextProject color="mainColor" style={{ display: 'inline', marginLeft: 10, color: '#FFFFFF' }}>
-              Projected {period.current} years interest
-            </StyledTextProject>
+            <WrapperInfoText>
+              <img src={images.chartIcon} alt="" />
+              <StyledTextProject color="mainColor" style={{ display: 'inline', marginLeft: 10, color: '#FFFFFF' }}>
+                Projected {period.current} years interest
+              </StyledTextProject>
+            </WrapperInfoText>
             <HeadingCustom color="mainColor">
               <CountUp
                 separator=","
@@ -519,13 +518,7 @@ const Exchange = (props) => {
               </ButtonCustom>
             </Column>
             <Column>
-              {period.current >= 2 ? (
-                <img src={images.chart2up} alt="" />
-              ) : period.current < period.old && !(period.old < 1) ? (
-                <img src={images.chart2down} alt="" />
-              ) : (
-                <ChartBase />
-              )}
+              {period.current >= 2 ? <img src={images.chart2up} alt="" /> : <img src={images.chart2down} alt="" />}
               <ButtonCustom
                 className={period.current === 2 ? 'active' : ''}
                 variant="secondary"
@@ -537,13 +530,7 @@ const Exchange = (props) => {
               </ButtonCustom>
             </Column>
             <Column>
-              {period.current >= 3 ? (
-                <img src={images.chart3up} alt="" />
-              ) : period.current < period.old && !(period.old < 3) ? (
-                <img src={images.chart3down} alt="" />
-              ) : (
-                <ChartBase />
-              )}
+              {period.current >= 3 ? <img src={images.chart3up} alt="" /> : <img src={images.chart3down} alt="" />}
               <ButtonCustom
                 className={period.current === 3 ? 'active' : ''}
                 variant="secondary"
@@ -555,13 +542,7 @@ const Exchange = (props) => {
               </ButtonCustom>
             </Column>
             <Column>
-              {period.current >= 4 ? (
-                <img src={images.chart4up} alt="" />
-              ) : period.current < period.old && !(period.old < 4) ? (
-                <img src={images.chart4down} alt="" />
-              ) : (
-                <ChartBase />
-              )}
+              {period.current >= 4 ? <img src={images.chart4up} alt="" /> : <img src={images.chart4down} alt="" />}
               <ButtonCustom
                 className={period.current === 4 ? 'active' : ''}
                 variant="secondary"
@@ -574,12 +555,6 @@ const Exchange = (props) => {
             </Column>
           </Chart>
           <br />
-          <TextCustom className="notOnPC" color="mainColor">
-            Annual Percentage Yield (APY) as of {Date}. APY may change at any time before or after account is opened.
-            This calculator is for illustrative purposes only and may not apply to your individual circumstances.
-            Calculated values assume that principal and interest remain on deposit and are rounded to the nearest
-            dollar. All APY’s are subject to change.
-          </TextCustom>
         </ChartPart>
       </Table>
     </Wrapper>

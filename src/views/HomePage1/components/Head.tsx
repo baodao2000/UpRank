@@ -1,7 +1,6 @@
 import { Flex } from '@pancakeswap/uikit'
 import styled from 'styled-components'
 import images from 'configs/images'
-import AOS from 'aos'
 import 'aos/dist/aos.css'
 
 const Head = styled(Flex)`
@@ -22,9 +21,10 @@ const Head = styled(Flex)`
 const ContentHead = styled.div`
   width: 100%;
   z-index: 1;
+  padding-right: 20px;
 
   ${({ theme }) => theme.mediaQueries.md} {
-    max-width: 653px;
+    max-width: 50%;
   }
 
   h2 {

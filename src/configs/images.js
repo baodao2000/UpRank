@@ -8,6 +8,7 @@ const images = {
   bookOpen: '/images/homepage/bookopen.png',
   lock2: '/images/homepage/lock.png',
   person: '/images/homepage/person.png',
+  galaxy: '/images/homepage/galaxy.png',
   star: '/images/homepage/star.png',
   coinHead: '/images/homepage/coinhead.png',
   phone: '/images/homepage/phone.png',

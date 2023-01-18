@@ -199,7 +199,7 @@ const DetailInfoPool: React.FC<
         )}
       </Line>
       <Line className="total-lock">
-        <Text fontSize={responsiveTextSize} className="value">
+        <Text fontSize={responsiveTextSize} className="value" style={{ color: 'black' }}>
           Total Lock:{' '}
           <CountUp
             start={0}

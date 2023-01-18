@@ -38,11 +38,6 @@ const GlobalStyle = createGlobalStyle`
   }
   body {
     background-color: #13171b;
-
-    img {
-      height: auto;
-      max-width: 100%;
-    }
   }
 `
 

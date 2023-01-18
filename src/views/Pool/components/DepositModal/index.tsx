@@ -22,6 +22,7 @@ const InputArea = styled.div`
   align-items: flex-end;
   gap: 0.5em;
   margin-bottom: 1em;
+  color: white;
   span.bnb {
     font-style: italic;
   }

@@ -1,6 +1,7 @@
 import styled, { keyframes } from 'styled-components'
 import images from 'configs/images'
 import { Flex, Text, Button, Heading } from '@pancakeswap/uikit'
+import 'aos/dist/aos.css'
 
 const Crypto = styled.div`
   position: relative;
@@ -49,11 +50,6 @@ const Crypto = styled.div`
       font-size: 20px;
     }
   }
-  .title {
-    @media screen and (max-width: 820px) {
-      width: 100%;
-    }
-  }
 
   ${({ theme }) => theme.mediaQueries.md} {
     margin-top: 0;
@@ -73,13 +69,16 @@ const Title = styled(Heading)`
   text-align: center;
   font-weight: 700;
   font-family: 'Helvetica', sans-serif;
+  margin-bottom: 0;
 
   ${({ theme }) => theme.mediaQueries.md} {
     font-size: 40px;
     line-height: 46px;
     text-align: start;
+    margin-bottom: 20px;
   }
   ${({ theme }) => theme.mediaQueries.xl} {
+    margin-bottom: 40px;
     font-size: 64px;
     line-height: 60px;
     letter-spacing: 0.001em;
@@ -90,6 +89,11 @@ const Title = styled(Heading)`
 const Content = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    width: 50%;
+  }
 `
 
 const StyledText = styled.p`
@@ -110,8 +114,32 @@ const ButtonCustom = styled(Button)`
     inset 0px 4px 2px rgba(211, 218, 255, 0.25), inset 0px 4px 20px rgba(252, 254, 255, 0.34);
   font-size: 13px;
   line-height: 20px;
+  display: none;
 
   ${({ theme }) => theme.mediaQueries.md} {
+    display: block;
+    height: 56px;
+    font-size: 18px;
+  }
+`
+
+const ButtonCustomMb = styled(Button)`
+  width: auto;
+  height: 36px;
+  background: #816bf2;
+  text-align: unset;
+  color: #eaeaea;
+  border: 0.5px solid rgba(88, 108, 158, 0.04);
+  box-shadow: 0px 4px 50px rgba(205, 255, 252, 0.25), 0px 4px 100px rgba(212, 218, 220, 0.25), inset 0px 4px 4px #6d50ff,
+    inset 0px 4px 2px rgba(211, 218, 255, 0.25), inset 0px 4px 20px rgba(252, 254, 255, 0.34);
+  font-size: 13px;
+  line-height: 20px;
+  display: block;
+  margin-top: 28px;
+  border-radius: 10px;
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    display: none;
     height: 56px;
     font-size: 18px;
   }
@@ -119,7 +147,8 @@ const ButtonCustom = styled(Button)`
 
 const ImageLeft = styled(Flex)`
   max-width: 715px;
-  width: 100%;
+  width: 50%;
+  display: none;
 
   img {
     position: relative;
@@ -129,19 +158,34 @@ const ImageLeft = styled(Flex)`
     }
   }
 
-  ${({ theme }) => theme.mediaQueries.xl} {
+  ${({ theme }) => theme.mediaQueries.md} {
     display: flex;
+  }
+`
+
+const ImageLeftMb = styled(Flex)`
+  max-width: 715px;
+  width: 100%;
+
+  img {
+    position: relative;
+    margin-top: 20px;
+  }
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    display: none;
+    width: 50%;
   }
 `
 
 const CustomSpan = styled(Text)`
   display: flex;
   align-items: center;
-  margin-top: 24px;
   font-weight: 500;
   font-size: 32px;
   line-height: 39px;
-  padding-left: 14%;
+  padding-left: 10%;
+  margin-top: 10px;
 
   img {
     width: 14px;
@@ -153,6 +197,10 @@ const CustomSpan = styled(Text)`
     font-size: 16px;
     line-height: 19px;
 
+    ${({ theme }) => theme.mediaQueries.md} {
+      font-size: 18px;
+      line-height: 26px;
+    }
     ${({ theme }) => theme.mediaQueries.xl} {
       font-size: 24px;
       line-height: 29px;
@@ -160,8 +208,15 @@ const CustomSpan = styled(Text)`
     }
   }
 
-  ${({ theme }) => theme.mediaQueries.sm} {
+  @media screen and (min-width: 500px) {
+    padding-left: 26%;
+  }
+  ${({ theme }) => theme.mediaQueries.md} {
     padding-left: 0%;
+    margin-top: 16px;
+  }
+  ${({ theme }) => theme.mediaQueries.xl} {
+    margin-top: 24px;
   }
 `
 
@@ -172,6 +227,9 @@ const CryptoHome = ({ handleClick }) => {
         <Title color="mainColor" className="title colorchange">
           <StyledText>All-in-One</StyledText> for Your Crypto
         </Title>
+        <ImageLeftMb flexDirection="column" alignItems="center">
+          <img className="cyptophone" srcSet={images.phone} alt="" />
+        </ImageLeftMb>
         <CustomSpan color="mainColor" className="colorchange">
           <img src={images.star} alt="" />
           <span>Buy, send and swap tokens</span>
@@ -195,6 +253,9 @@ const CryptoHome = ({ handleClick }) => {
           Calculate your earnings
         </ButtonCustom>
       </ImageLeft>
+      <ButtonCustomMb onClick={handleClick} variant="primary">
+        Calculate your earnings
+      </ButtonCustomMb>
     </Crypto>
   )
 }

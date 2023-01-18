@@ -91,6 +91,10 @@ const ButtonArea = styled.div`
   }
 `
 
+const StyledButton = styled(Button)`
+  color: white;
+`
+
 const Pool = ({ poolId }) => {
   const { account, chainId, chain } = useActiveWeb3React()
   const [isLoading, setIsLoading] = useState(true)
@@ -201,7 +205,7 @@ const Pool = ({ poolId }) => {
             <Flex flex="1" flexDirection="column" mr={['8px', 0]} alignItems="center">
               <PoolName>
                 <PoolLogo src={images.logoMatic} alt="pool name" />
-                <Text fontSize={['28px', '40px', '42px', '50px', '70px']} fontWeight="600" color="subtle">
+                <Text fontSize={['28px', '40px', '42px', '50px', '70px']} fontWeight="600">
                   {unit}
                 </Text>
               </PoolName>

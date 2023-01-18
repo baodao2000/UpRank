@@ -19,7 +19,7 @@ import { ArrowForwardIcon, LogoWithTextIcon } from "../Svg";
 import { ThemeSwitcher } from "../ThemeSwitcher";
 import { FooterProps } from "./types";
 import styled from "styled-components";
-import images from "configs/images";
+import images from "../../../../../src/configs/images";
 
 const ListImgButton = styled.div`
   margin-top: 36px;
@@ -27,6 +27,7 @@ const ListImgButton = styled.div`
   flex-direction: row;
   justify-content: center;
   gap: 3%;
+  display: none;
 
   a {
     border: 1px solid #a6a6a6;
@@ -37,6 +38,20 @@ const ListImgButton = styled.div`
     img {
       border-radius: 7px;
     }
+  }
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    display: flex;
+  }
+`;
+const ListImgButtonMb = styled.div`
+  margin-top: 36px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  row-gap: 30px;
+  ${({ theme }) => theme.mediaQueries.md} {
+    display: none;
   }
 `;
 const StyledTitle = styled(Text)`
@@ -88,6 +103,17 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
           <img src={images.downloadAPK} alt="" />
         </a>
       </ListImgButton>
+      <ListImgButtonMb>
+        <a href="">
+          <img src={images.apple} alt="" />
+        </a>
+        <a href="">
+          <img src={images.chPlay} alt="" />
+        </a>
+        <a href="">
+          <img src={images.android} alt="" />
+        </a>
+      </ListImgButtonMb>
       {/* <ListImgButton>
         <a href="">
           <img src={images.twitter} alt="" />
