@@ -1,5 +1,5 @@
 const images = {
-  insurance1: '/images/homepage/insurance1.png',
+  insurance1: '/images/homepage/Insurance1.png',
   arrowDown: '/images/homepage/arrow-down-circle.png',
   wallet: '/images/homepage/wallet.png',
   crypto: '/images/homepage/crypto.png',

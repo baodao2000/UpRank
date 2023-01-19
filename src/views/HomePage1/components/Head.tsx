@@ -135,6 +135,9 @@ const ListImgButtonMb = styled.div`
   flex-direction: column;
   row-gap: 20px;
   margin-bottom: 25px;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
 
   ${({ theme }) => theme.mediaQueries.md} {
     flex-direction: row;

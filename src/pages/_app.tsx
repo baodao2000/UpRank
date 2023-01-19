@@ -68,13 +68,13 @@ function MyApp(props: AppProps<{ initialReduxState: any }>) {
         />
         <meta
           name="description"
-          content="MYGAMER is an all-in-one platform that permits you to earn through Staking, Swap, Minigames, NFT trading and more. We aim to build an ecosystem where you can do everything without facing any technical barriers"
+          content="Customers interesteds in blockchain-related investments and financial services can use Trendy Defi, a decentralized e-wallet"
         />
         <meta name="theme-color" content="#1FC7D4" />
         <meta name="twitter:image" content="https://testnet-swap.mygamer.org/thumnal.jpg" />
         <meta
           name="twitter:description"
-          content="MYGAMER is an all-in-one platform that permits you to earn through Staking, Swap, Minigames, NFT trading and more. We aim to build an ecosystem where you can do everything without facing any technical barriers."
+          content="Customers interesteds in blockchain-related investments and financial services can use Trendy Defi, a decentralized e-wallet"
         />
         <meta name="twitter:card" content="summary_large_image" />
         <meta
