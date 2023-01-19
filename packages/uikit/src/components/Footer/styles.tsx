@@ -13,6 +13,11 @@ export const StyledFooter = styled(Flex)`
   p {
     margin-top: 24px;
   }
+
+  img {
+    width: 100%;
+    height: auto;
+  }
 `;
 
 export const StyledList = styled.ul`

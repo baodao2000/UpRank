@@ -153,6 +153,7 @@ const ImageLeft = styled(Flex)`
   img {
     position: relative;
     margin-top: 20px;
+    width: 100%;
     ${({ theme }) => theme.mediaQueries.xl} {
       margin-top: 0;
     }
@@ -170,6 +171,7 @@ const ImageLeftMb = styled(Flex)`
   img {
     position: relative;
     margin-top: 20px;
+    width: 100%;
   }
 
   ${({ theme }) => theme.mediaQueries.md} {

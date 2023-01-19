@@ -229,12 +229,14 @@ const Column = styled.div`
   justify-content: center;
   width: 20%;
 
+  img {
+    width: 100%;
+    height: auto;
+  }
+
   @media screen and (max-width: 415px) {
     align-items: center;
     width: 30%;
-    img {
-      width: auto;
-    }
   }
 `
 

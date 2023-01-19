@@ -204,7 +204,7 @@ const Pool = ({ poolId }) => {
           <PageHeader background="none">
             <Flex flex="1" flexDirection="column" mr={['8px', 0]} alignItems="center">
               <PoolName>
-                <PoolLogo src={images.logoMatic} alt="pool name" />
+                <PoolLogo src={`/images/chains/${chainId}.png`} alt="pool name" />
                 <Text fontSize={['28px', '40px', '42px', '50px', '70px']} fontWeight="600">
                   {unit}
                 </Text>

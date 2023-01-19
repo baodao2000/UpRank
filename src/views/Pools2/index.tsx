@@ -484,7 +484,7 @@ const Pools = () => {
                     }}
                   >
                     <LogoAndName>
-                      <img src={pools[r].logo} alt="logo" />
+                      <img src={`/images/chains/${chainId}.png`} alt="logo" />
                       <span>{unit}</span>
                     </LogoAndName>
                     <Info>
@@ -493,7 +493,7 @@ const Pools = () => {
                           <Line>
                             <TitelandIcon>
                               <span>Min Stake</span>
-                              <img src={images.logoMatic} alt="" width="16px" />
+                              <img src={`/images/chains/${chainId}.png`} alt="" width="16px" />
                             </TitelandIcon>
                             <span
                               className="value"
@@ -595,7 +595,7 @@ const Pools = () => {
                                 }
                                 {` `}
                               </span>
-                              <img src={images.logoMatic} alt="" width="18px" />
+                              <img src={`/images/chains/${chainId}.png`} alt="" width="18px" />
                             </TitelandIcon>
                           </Line>
                         </Lineleft>
@@ -603,7 +603,7 @@ const Pools = () => {
                           <Line>
                             <TitelandIcon>
                               <span>Max Stake</span>
-                              <img src={images.logoMatic} alt="" width="16px" />
+                              <img src={`/images/chains/${chainId}.png`} alt="" width="16px" />
                             </TitelandIcon>
                             <span
                               className="value"
@@ -691,7 +691,7 @@ const Pools = () => {
                                 }
                                 {` `}
                               </span>
-                              <img src={images.logoMatic} alt="" width="18px" />
+                              <img src={`/images/chains/${chainId}.png`} alt="" width="18px" />
                             </TitelandIcon>
                           </Line>
                         </Lineright>

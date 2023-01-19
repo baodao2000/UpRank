@@ -4,7 +4,7 @@ const images = {
   wallet: '/images/homepage/wallet.png',
   crypto: '/images/homepage/crypto.png',
   bgTrendy: '/images/homepage/bg-trendy.png',
-  key2: '/images/homepage/Key.png',
+  key2: '/images/homepage/key.png',
   bookOpen: '/images/homepage/bookopen.png',
   lock2: '/images/homepage/lock.png',
   person: '/images/homepage/person.png',

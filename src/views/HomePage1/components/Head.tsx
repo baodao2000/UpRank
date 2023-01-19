@@ -16,12 +16,16 @@ const Head = styled(Flex)`
     justify-content: space-between;
     align-items: center;
   }
+
+  img {
+    width: 100%;
+    height: auto;
+  }
 `
 
 const ContentHead = styled.div`
   width: 100%;
   z-index: 1;
-  padding-right: 20px;
 
   ${({ theme }) => theme.mediaQueries.md} {
     max-width: 50%;
@@ -92,7 +96,6 @@ const ImageShowMb = styled.img`
 const LinkToDownload = styled.div`
   margin-top: 40px;
   text-align: center;
-  padding: 0 40px;
 
   span {
     color: #393939;
