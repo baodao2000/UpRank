@@ -1,5 +1,5 @@
 import { BinanceWalletConnector } from '@pancakeswap/wagmi/connectors/binanceWallet'
-import { bsc, bscTest, goerli, rinkeby } from '@pancakeswap/wagmi/chains'
+import { bsc, bscTest, goerli, rinkeby, matic } from '@pancakeswap/wagmi/chains'
 import { configureChains, createClient } from 'wagmi'
 import memoize from 'lodash/memoize'
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
@@ -11,6 +11,7 @@ import { SafeConnector } from '@gnosis.pm/safe-apps-wagmi'
 
 const CHAINS = [
   bsc,
+  matic,
   // TODO: ETH
   // mainnet,
   bscTest,

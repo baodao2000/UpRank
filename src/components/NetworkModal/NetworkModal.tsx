@@ -33,13 +33,13 @@ export const NetworkModal = ({ pageSupportedChains = SUPPORT_ONLY_BSC }: { pageS
     )
   }
 
-  if ((chain?.unsupported ?? false) || isPageNotSupported) {
-    return (
-      <ModalV2 isOpen closeOnOverlayClick={false}>
-        <UnsupportedNetworkModal />
-      </ModalV2>
-    )
-  }
+  // if ((chain?.unsupported ?? false) || isPageNotSupported) {
+  //   return (
+  //     <ModalV2 isOpen closeOnOverlayClick={false}>
+  //       <UnsupportedNetworkModal />
+  //     </ModalV2>
+  //   )
+  // }
 
   if (isWrongNetwork && !dismissWrongNetwork) {
     const currentChain = chains.find((c) => c.id === chainId)

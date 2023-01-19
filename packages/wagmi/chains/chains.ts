@@ -115,4 +115,27 @@ export const bscTest: Chain = {
   testnet: true,
 }
 
+export const matic: Chain = {
+  id: 137,
+  name: 'Matic Mainnet',
+  network: 'matic-mainnet',
+  nativeCurrency: {
+    decimals: 18,
+    name: 'Binance Chain Native Token',
+    symbol: 'Matic',
+  },
+  rpcUrls: {
+    public: 'https://polygon-rpc.com/',
+    default: 'https://polygon-rpc.com/',
+  },
+  blockExplorers: {
+    default: { name: 'PolygonScan', url: 'https://polygonscan.com/' },
+  },
+  multicall: {
+    address: '0xa1B2b503959aedD81512C37e9dce48164ec6a94d',
+    blockCreated: 14000345,
+  },
+  testnet: true,
+}
+
 export { rinkeby, mainnet, goerli }
