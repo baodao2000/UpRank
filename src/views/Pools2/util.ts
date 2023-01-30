@@ -43,12 +43,12 @@ export const timeDisplay = (seconds: number) => {
   let m = Math.floor((seconds % 3600) / 60)
   let s = Math.floor(seconds % 60)
 
-  let yDisplay = y > 0 ? y + (y === 1 ? ' y ' : ' ys ') : ''
-  let moDisplay = mo > 0 ? mo + (mo === 1 ? ' m, ' : ' ms ') : ''
-  let dDisplay = d > 0 ? d + (d === 1 ? ' day ' : ' days ') : ''
-  let hDisplay = h > 0 ? h + (h === 1 ? ' h ' : ' hs ') : ''
-  let mDisplay = m > 0 ? m + (m === 1 ? ' min ' : ' mins ') : ''
-  let sDisplay = s > 0 ? s + (s === 1 ? ' s' : ' secs ') : ''
+  let yDisplay = y > 0 ? y + (y === 1 ? ' Y ' : ' Y ') : ''
+  let moDisplay = mo > 0 ? mo + (mo === 1 ? ' M, ' : ' M ') : ''
+  let dDisplay = d > 0 ? d + (d === 1 ? ' d ' : ' d ') : ''
+  let hDisplay = h > 0 ? (h < 10 ? '0' + h + (h === 1 ? ':' : ':') : h + (h === 1 ? ':' : ':')) : ''
+  let mDisplay = m > 0 ? (m < 10 ? '0' + m + (m === 1 ? ':' : ':') : m + (m === 1 ? ':' : ':')) : ''
+  let sDisplay = s > 0 ? (s < 10 ? '0' + s : s) : ''
   return yDisplay + moDisplay + dDisplay + hDisplay + mDisplay + sDisplay
 }
 

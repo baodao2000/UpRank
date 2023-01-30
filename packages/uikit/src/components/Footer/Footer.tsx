@@ -50,6 +50,7 @@ const ListImgButtonMb = styled.div`
   flex-direction: column;
   justify-content: center;
   row-gap: 30px;
+  padding: 0 14%;
   ${({ theme }) => theme.mediaQueries.md} {
     display: none;
   }

@@ -67,8 +67,8 @@ const Wrapper = styled.div`
   }
 
   .ant-input-number-input {
+    font-family: 'Helvetica Compressed';
     font-weight: 700;
-    font-family: 'Helvetica, sans-serif';
   }
 
   .showPc {
@@ -513,7 +513,9 @@ const Exchange = (props) => {
                 className={period.current === 1 ? 'active' : ''}
                 variant="secondary"
                 onClick={() => {
-                  setPeriod((past) => ({ old: past.current, current: 1 }))
+                  setTimeout(() => {
+                    setPeriod((past) => ({ old: past.current, current: 1 }))
+                  }, 400)
                 }}
               >
                 1 year
@@ -525,7 +527,9 @@ const Exchange = (props) => {
                 className={period.current === 2 ? 'active' : ''}
                 variant="secondary"
                 onClick={() => {
-                  setPeriod((past) => ({ old: past.current, current: 2 }))
+                  setTimeout(() => {
+                    setPeriod((past) => ({ old: past.current, current: 2 }))
+                  }, 400)
                 }}
               >
                 2 year
@@ -537,7 +541,9 @@ const Exchange = (props) => {
                 className={period.current === 3 ? 'active' : ''}
                 variant="secondary"
                 onClick={() => {
-                  setPeriod((past) => ({ old: past.current, current: 3 }))
+                  setTimeout(() => {
+                    setPeriod((past) => ({ old: past.current, current: 3 }))
+                  }, 400)
                 }}
               >
                 3 year
@@ -549,7 +555,9 @@ const Exchange = (props) => {
                 className={period.current === 4 ? 'active' : ''}
                 variant="secondary"
                 onClick={() => {
-                  setPeriod((past) => ({ old: past.current, current: 4 }))
+                  setTimeout(() => {
+                    setPeriod((past) => ({ old: past.current, current: 4 }))
+                  }, 400)
                 }}
               >
                 4 year

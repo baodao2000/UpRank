@@ -53,16 +53,13 @@ const PoolName = styled.div`
   gap: 20px;
 `
 const PoolLogo = styled.img`
-  transform: translateY(8px);
   width: 80px;
   height: auto;
   @media screen and (max-width: 1028px) {
     width: 80px;
-    transform: translateY(6px);
   }
   @media screen and (max-width: 851px) {
     width: 70px;
-    transform: translateY(4px);
   }
   @media screen and (max-width: 575px) {
     width: 60px;
@@ -214,6 +211,8 @@ const Pool = ({ poolId }) => {
                   fontSize={['14px', '16px', '18px', '20px', '22px']}
                   href={getBlockExploreLink(contracts.pools[CHAIN_ID], 'address', CHAIN_ID)}
                   ellipsis={true}
+                  color="#00F0E1"
+                  style={{ color: '#00F0E1' }}
                 >
                   {shortenURL(`Contract: ${contracts.pools[CHAIN_ID]}`, 35)}
                 </LinkExternal>

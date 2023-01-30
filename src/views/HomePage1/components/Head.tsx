@@ -11,7 +11,7 @@ const Head = styled(Flex)`
   flex-direction: column;
 
   ${({ theme }) => theme.mediaQueries.md} {
-    padding: 118px 0;
+    padding: 100px 0;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
@@ -135,12 +135,14 @@ const ListImgButtonMb = styled.div`
   flex-direction: column;
   row-gap: 20px;
   margin-bottom: 25px;
-  width: 80%;
   margin-left: auto;
   margin-right: auto;
-
+  padding: 0 14%;
+  width: 100%;
+  ${({ theme }) => theme.mediaQueries.sm} {
+    padding: 0 20%;
+  }
   ${({ theme }) => theme.mediaQueries.md} {
-    flex-direction: row;
     display: none;
   }
 `
@@ -164,7 +166,7 @@ const HeadHome = () => {
               <img src={images.downloadAPK} alt="" />
             </a>
           </ListImgButton>
-          <ListImgButtonMb>
+          <ListImgButtonMb data-aos="fade-up-left">
             <a href="">
               <img src={images.apple} alt="" />
             </a>

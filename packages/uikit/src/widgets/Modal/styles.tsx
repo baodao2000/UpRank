@@ -8,15 +8,15 @@ import { ModalProps } from "./types";
 
 export const mobileFooterHeight = 73;
 
-export const ModalHeader = styled.div<{ background?: string }>`
+export const ModalHeader = styled.div<{ headerBackground?: string }>`
   align-items: center;
-  background: transparent;
   border-bottom: 1px solid #383241;
   display: flex;
   padding: 12px 24px;
+  background: ${({ headerBackground }) => headerBackground};
 
   ${({ theme }) => theme.mediaQueries.md} {
-    background: ${({ background }) => "linear-gradient(166.77deg, #3B4155 0%, #3A3045 100%)" || "transparent"};
+    background: ${({ headerBackground }) => headerBackground || "transparent"};
   }
 `;
 
@@ -58,7 +58,6 @@ export const ModalContainer = styled(MotionBox)<{ $minWidth: string }>`
   background: #27262c;
   box-shadow: 0px 20px 36px -8px rgba(14, 14, 44, 0.1), 0px 1px 1px rgba(0, 0, 0, 0.05);
   border: 1px solid #383241;
-  border-radius: 32px 32px 0px 0px;
   width: 100%;
   max-height: calc(var(--vh, 1vh) * 100);
   z-index: ${({ theme }) => theme.zIndices.modal};
@@ -72,7 +71,6 @@ export const ModalContainer = styled(MotionBox)<{ $minWidth: string }>`
     width: auto;
     position: auto;
     bottom: auto;
-    border-radius: 32px;
     max-width: 100%;
     max-height: 100vh;
   }

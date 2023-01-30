@@ -19,12 +19,16 @@ import { DepositPoolModalProps } from './type'
 const InputArea = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
   gap: 0.5em;
   margin-bottom: 1em;
   color: white;
+  font-weight: 600;
   span.bnb {
     font-style: italic;
+    color: white;
+  }
+  span {
+    color: white;
   }
 `
 const depositModal = {}
@@ -63,32 +67,47 @@ const Error = styled.span`
 const UserBalance = styled.div`
   span {
     font-size: 14px;
+    font-weight: 600;
     opacity: 0.6;
+    color: rgba(255, 255, 255, 0.6);
   }
   width: 100%;
   display: flex;
-  justify-content: flex-end;
   align-items: center;
 `
 const MinMaxButtons = styled.div`
   display: flex;
   gap: 0.5em;
+  margin-top: 8px;
 `
 const MinMax = styled.button`
   background: none;
-  border-radius: 12px;
-  border: 1.5px solid ${trendyColors.DARK_PURPLE};
-  color: ${trendyColors.DARK_PURPLE};
+  border-radius: 8px;
+  border: 1px solid #00f0e1;
+  color: #00f0e1;
   font-weight: 600;
   text-align: center;
   font-size: 12px;
   line-height: 16px;
+  padding: 2px 12px;
   cursor: pointer;
   &.active {
-    background: ${trendyColors.DARK_PURPLE};
-    color: ${trendyColors.WHITE};
+    background: #00f0e1;
+    color: black;
   }
 `
+
+const StyledButton = styled(Button)`
+  max-width: 240px;
+  max-height: 40px;
+  width: 100%;
+`
+
+const StyledInput = styled(Input)`
+  outline: none;
+  border: 3px solid #009571;
+`
+
 const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>> = ({
   pool,
   account,
@@ -184,17 +203,24 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
       title={'DEPOSIT'}
       onDismiss={onDismiss}
       hideCloseButton={false}
-      headerBackground={theme.colors.gradientCardHeader}
+      borderRadius={25}
+      headerBackground="rgb(105 84 156 / 77%)"
+      background={'linear-gradient(139.08deg, #171718 1.7%, rgba(86, 27, 211, 0.84) 108.66%)'}
     >
       <InputArea>
         <span>
-          Amount ( from{' '}
-          <CountUp start={0} preserveValue delay={0} end={Number(pool.minLock)} decimals={0} duration={0.5} /> $ to{' '}
-          <CountUp start={0} preserveValue delay={0} end={Number(pool.maxLock)} decimals={0} duration={0.5}></CountUp> $
-          )
-        </span>
-        <span className="bnb">
-          from{' ~'}
+          Amount: <br></br>
+          <CountUp
+            start={0}
+            preserveValue
+            delay={0}
+            end={Number(pool.minLock)}
+            decimals={0}
+            duration={0.5}
+            style={{ color: '#2CE0D5', fontWeight: 600 }}
+          />
+          <span style={{ color: '#2CE0D5', fontWeight: 600 }}>$</span>
+          <span style={{ color: '#2CE0D5' }}>{' ~ '}</span>
           <CountUp
             start={0}
             preserveValue
@@ -202,8 +228,20 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
             end={Number(pool.minLock / pool.rateBNB2USD)}
             decimals={2}
             duration={0.5}
+            style={{ color: '#2CE0D5', fontWeight: 400 }}
           />{' '}
-          <img src={images.logoMatic} alt="" width="16px" /> to{' ~'}
+          <img src={images.logoMatic} alt="" width="12px" /> to{' '}
+          <CountUp
+            start={0}
+            preserveValue
+            delay={0}
+            end={Number(pool.maxLock)}
+            decimals={0}
+            duration={0.5}
+            style={{ color: '#2CE0D5', fontWeight: 600 }}
+          ></CountUp>
+          <span style={{ color: '#2CE0D5', fontWeight: 600 }}>$</span>
+          <span style={{ color: '#2CE0D5' }}>{' ~ '}</span>
           <CountUp
             start={0}
             preserveValue
@@ -211,9 +249,11 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
             end={Number(pool.maxLock / pool.rateBNB2USD)}
             decimals={2}
             duration={0.5}
+            style={{ color: '#2CE0D5', fontWeight: 400 }}
           ></CountUp>{' '}
-          <img src={images.logoMatic} alt="" width="16px" />
+          <img src={images.logoMatic} alt="" width="12px" />
         </span>
+        <span className="bnb"></span>
         <UserBalance>
           <span>
             Balance:{' '}
@@ -227,7 +267,7 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
                 duration={0.5}
               ></CountUp>
             }{' '}
-            <img src={images.logoMatic} alt="" width="16px" />
+            <img src={images.logoMatic} alt="" width="12px" />
             {'  ~'}
             {
               <CountUp
@@ -242,7 +282,7 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
             {'$'}
           </span>
         </UserBalance>
-        <Input
+        <StyledInput
           value={amount}
           autoFocus={true}
           type="number"
@@ -269,21 +309,23 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
         </MinMaxButtons>
       </InputArea>
       {isValidAmount ? <></> : <Error>Amount is out of acceptable range !!</Error>}
-      <Button
-        variant={!isValidAmount ? 'light' : 'primary'}
-        disabled={isConfirming || (!isValidAmount ? true : false)}
-        onClick={handleConfirm}
-      >
-        {isConfirming ? (
-          <ThreeDots className="loading">
-            Depositing<span>.</span>
-            <span>.</span>
-            <span>.</span>
-          </ThreeDots>
-        ) : (
-          'Deposit'
-        )}
-      </Button>
+      <div style={{ textAlign: 'center' }}>
+        <StyledButton
+          variant={!isValidAmount ? 'light' : 'primary'}
+          disabled={isConfirming || (!isValidAmount ? true : false)}
+          onClick={handleConfirm}
+        >
+          {isConfirming ? (
+            <ThreeDots className="loading">
+              Depositing<span>.</span>
+              <span>.</span>
+              <span>.</span>
+            </ThreeDots>
+          ) : (
+            'Deposit'
+          )}
+        </StyledButton>
+      </div>
     </Modal>
   )
 }

@@ -33,7 +33,7 @@ const getHeight = ({ scale = scales.MD }: StyledInputProps) => {
 };
 
 const Input = styled.input<InputProps>`
-  background-color: #372f47;
+  background-color: linear-gradient(360deg, rgba(0, 254, 193, 0.58) -135.83%, rgba(11, 14, 14, 0) 123.33%);
   border-radius: 16px;
   box-shadow: inset 0px 2px 2px -1px rgba(74, 74, 104, 0.1);
   color: #f4eeff;
@@ -57,16 +57,7 @@ const Input = styled.input<InputProps>`
   }
 
   &:focus:not(:disabled) {
-    box-shadow: ${({ theme, isWarning, isSuccess }) => {
-      if (isWarning) {
-        return theme.shadows.warning;
-      }
-
-      if (isSuccess) {
-        return theme.shadows.success;
-      }
-      return theme.shadows.focus;
-    }};
+    border: 3px solid #009571;
   }
 `;
 

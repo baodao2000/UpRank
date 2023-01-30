@@ -2,7 +2,7 @@ import { PropsWithChildren, useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { trendyColors } from 'style/trendyTheme'
 import { Text, Button } from '@pancakeswap/uikit'
-import { Pool, timeDisplayLong } from 'views/Pools2/util'
+import { Pool, timeDisplay, timeDisplayLong } from 'views/Pools2/util'
 import moment from 'moment'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import Balance from 'components/Balance'
@@ -13,8 +13,8 @@ const InfoDetail = styled.div`
   flex-direction: column;
   gap: 1.5em;
   width: 800px;
-  padding: 2%;
-  border-radius: 40px;
+  padding: 20px;
+  border-radius: 20px;
   background: linear-gradient(153.15deg, #7c07d8 8.57%, rgba(129, 69, 255, 0.02) 100%);
 
   @media screen and (max-width: 967px) {
@@ -54,7 +54,7 @@ const Line = styled.div`
   &.total-lock,
   &.commission {
     color: white;
-    algin-items: flex-end;
+    align-items: flex-end;
     justify-content: flex-end;
     div {
       background: ${trendyColors.MAIN_GREEN};
@@ -111,25 +111,33 @@ const DetailInfoPool: React.FC<
   return (
     <InfoDetail>
       <Line>
-        <Text fontSize={responsiveTextSize}>Current Interest</Text>
+        <Text fontSize={responsiveTextSize} style={{ fontWeight: 600 }}>
+          Current Interest
+        </Text>
         <Text style={{ color: `${maincolor}` }} fontSize={responsiveTextSize} className="value">
           {<CountUp start={0} preserveValue delay={0} end={Number(currentInterest)} decimals={2} duration={0.5} />} %
         </Text>
       </Line>
       <Line>
-        <Text fontSize={responsiveTextSize}>Lock Time</Text>
+        <Text fontSize={responsiveTextSize} style={{ fontWeight: 600 }}>
+          Lock Time
+        </Text>
         <Text style={{ color: '#48E3E3' }} fontSize={responsiveTextSize} className="value">
           {timeLock === 0 ? 0 : timeDisplayLong(timeLock)}
         </Text>
       </Line>
       <Line>
-        <Text fontSize={responsiveTextSize}>Spend Time</Text>
+        <Text fontSize={responsiveTextSize} style={{ fontWeight: 600 }}>
+          Spend Time
+        </Text>
         <Text style={{ color: '#48E3E3' }} fontSize={responsiveTextSize} className="value">
-          {startTime === 0 ? 0 : timeDisplayLong(Number(now - startTime))}
+          {startTime === 0 ? 0 : timeDisplay(Number(now - startTime))}
         </Text>
       </Line>
       <Line>
-        <Text fontSize={responsiveTextSize}>Current Reward</Text>
+        <Text fontSize={responsiveTextSize} style={{ fontWeight: 600 }}>
+          Current Reward
+        </Text>
         {currentReward === 0 ? (
           <Text style={{ color: '#48E3E3' }} fontSize={responsiveTextSize} className="value">
             0
@@ -164,7 +172,9 @@ const DetailInfoPool: React.FC<
         )}
       </Line>
       <Line>
-        <Text fontSize={responsiveTextSize}>Total Reward</Text>
+        <Text fontSize={responsiveTextSize} style={{ fontWeight: 600 }}>
+          Total Reward
+        </Text>
         {totalReward === 0 ? (
           <Text style={{ color: '#48E3E3' }} fontSize={responsiveTextSize} className="value">
             0

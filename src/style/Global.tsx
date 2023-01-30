@@ -8,23 +8,28 @@ declare module 'styled-components' {
 
 const GlobalStyle = createGlobalStyle`
   @font-face {
-    font-family: 'Helvetica', sans-serif;;
+    font-family: 'Helvetica';
     src: url("/assets/fonts/Helvetica.ttf");
     font-weight: 400;
   }
   @font-face {
-    font-family: 'Helvetica Light', sans-serif;;
+    font-family: 'Helvetica Light';
     src: url("/assets/fonts/Helvetica-Light.ttf");
     font-weight: 400;
   }
   @font-face {
-    font-family: 'Helvetica', sans-serif;;
+    font-family: 'Helvetica';
     src: url("/assets/fonts/helvetica-neue-medium.ttf");
     font-weight: 500;
   }
   @font-face {
-    font-family: 'Helvetica', sans-serif;;
+    font-family: 'Helvetica';
     src: url("/assets/fonts/Helvetica-Bold.ttf");
+    font-weight: 700;
+  }
+  @font-face {
+    font-family: 'Helvetica Compressed';
+    src: url("/assets/fonts/HelveticaCompressed.ttf");
     font-weight: 700;
   }
   * {

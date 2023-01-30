@@ -3,6 +3,9 @@ import { StyledMenuItemProps } from "./types";
 
 export const StyledMenuItemContainer = styled.div<StyledMenuItemProps>`
   position: relative;
+  * {
+    font-family: "Helvetica Compressed";
+  }
 
   ${({ $isActive, $variant, theme }) =>
     $isActive &&
@@ -26,7 +29,7 @@ const StyledMenuItem = styled.a<StyledMenuItemProps>`
   align-items: center;
 
   color: #d2d6ef;
-  font-size: 16px;
+  font-size: 25px;
   text-transform: uppercase;
   font-weight: 800;
   /* font-weight: ${({ $isActive }) => ($isActive ? "600" : "400")}; */

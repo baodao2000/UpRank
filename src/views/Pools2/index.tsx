@@ -24,7 +24,7 @@ import { formatBigNumber } from 'utils/formatBalance'
 import { poolBaseUrl } from 'views/Pools/constants'
 import Link from 'next/link'
 import { formatEther } from '@ethersproject/units'
-import { bnb2Usd, shortenURL, timeDisplay } from './util'
+import { bnb2Usd, shortenURL, timeDisplayLong } from './util'
 import useActiveWeb3React from '../../hooks/useActiveWeb3React'
 import { ChainId, NATIVE } from '../../../packages/swap-sdk/src/constants'
 
@@ -47,7 +47,7 @@ const Container = styled.div`
 `
 const Body = styled.div`
   background: none;
-  padding: 50px;
+  padding: 20px;
 `
 const PoolsList = styled.div`
   display: grid;
@@ -57,7 +57,7 @@ const PoolsList = styled.div`
   grid-row-gap: 40px;
   align-items: center;
   justify-content: center;
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: 720px) {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -163,7 +163,7 @@ const Card = styled.div`
   gap: 15px;
   width: 480px;
   height: 410px;
-  border-radius: 30px;
+  border-radius: 20px;
   padding: 20px;
   @media screen and (max-width: 1300px) {
     width: 100%;
@@ -197,8 +197,7 @@ const LogoAndName = styled.div`
     font-family: Helvetica, sans-serif;
   }
   img {
-    width: 100px;
-    height: 100px;
+    width: 80px;
   }
   @media screen and (max-width: 1024px) {
     display: flex;
@@ -206,13 +205,11 @@ const LogoAndName = styled.div`
     justify-content: space-between;
     img {
       width: 70px;
-      height: 70px;
     }
   }
-  @media screen and (max-width: 375px) {
+  @media screen and (max-width: 800px) {
     img {
       width: 50px;
-      height: 30pxs;
     }
     span {
       font-size: 24px;
@@ -257,17 +254,22 @@ const Line = styled.div`
   }
   @media screen and (max-width: 1024px) {
     span {
+      font-size: 15px;
+    }
+  }
+  @media screen and (max-width: 852px) {
+    span {
+      font-size: 14px;
+    }
+  }
+  @media screen and (max-width: 720px) {
+    span {
       font-size: 16px;
     }
   }
-  @media screen and (max-width: 800px) {
+  @media screen and (max-width: 380px) {
     span {
-      font-size: 13px;
-    }
-  }
-  @media screen and (max-width: 375px) {
-    span {
-      font-size: 11px;
+      font-size: 12px;
     }
   }
 `
@@ -275,6 +277,15 @@ const TitelandIcon = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
+
+  .label {
+    font-weight: 400;
+    font-size: 14px;
+  }
+
+  @media screen and (min-width: 601px) and (max-width: 768px) {
+    gap: 5px;
+  }
 `
 const Lineleft = styled.div``
 const Lineright = styled.div``
@@ -368,13 +379,13 @@ const Pools = () => {
         <>
           <PageHeader background="none">
             <Flex flex="1" flexDirection="column" mr={['8px', 0]} alignItems="center">
-              <Text
+              {/* <Text
                 fontSize={['22px', '22px', '36px', '40px', '50px', '60px']}
                 fontWeight="600"
                 style={{ color: '#7A42F1' }}
               >
                 Connect successfully!
-              </Text>
+              </Text> */}
               <Text
                 fontSize={['22px', '22px', '36px', '40px', '50px', '60px']}
                 fontWeight="600"
@@ -421,7 +432,8 @@ const Pools = () => {
                   fontSize={['14px', '16px', '18px', '20px', '22px']}
                   href={getBlockExploreLink(contracts.pools[CHAIN_ID], 'address', CHAIN_ID)}
                   ellipsis={true}
-                  style={{ color: '#C5C5C5' }}
+                  style={{ color: '#00F0E1' }}
+                  color="#00F0E1"
                 >
                   {shortenURL(`Contract: ${contracts.pools[CHAIN_ID]}`, 35)}
                 </LinkExternal>
@@ -492,16 +504,16 @@ const Pools = () => {
                         <Lineleft>
                           <Line>
                             <TitelandIcon>
-                              <span>Min Stake</span>
+                              <span className="label">Min Stake</span>
                               <img src={`/images/chains/${chainId}.png`} alt="" width="16px" />
                             </TitelandIcon>
                             <span
                               className="value"
                               style={{
                                 color: `${pools[r].tagColor}`,
+                                marginBottom: 10,
                               }}
                             >
-                              (
                               {
                                 <CountUp
                                   separator=","
@@ -514,7 +526,7 @@ const Pools = () => {
                                   duration={1}
                                 />
                               }
-                              $) {` ~ `}
+                              $ {` ~ `}
                               {
                                 <CountUp
                                   separator=","
@@ -530,10 +542,11 @@ const Pools = () => {
                             </span>
                           </Line>
                           <Line>
-                            <span>Interest</span>
+                            <span style={{ fontWeight: 400, fontSize: 14 }}>Interest</span>
                             <span
                               style={{
                                 color: `${pools[r].tagColor}`,
+                                marginBottom: 10,
                               }}
                               className="value"
                             >
@@ -555,15 +568,19 @@ const Pools = () => {
                             </span>
                           </Line>
                           <Line>
-                            <span>Total Lock</span>
+                            <TitelandIcon>
+                              <span className="label">Total Lock</span>
+                              <img src={`/images/chains/${chainId}.png`} alt="" width="18px" />
+                            </TitelandIcon>
+
                             <TitelandIcon>
                               <span
                                 style={{
                                   color: `${pools[r].tagColor}`,
+                                  marginBottom: 10,
                                 }}
                                 className="value"
                               >
-                                (
                                 {
                                   <CountUp
                                     separator=","
@@ -578,7 +595,7 @@ const Pools = () => {
                                     }}
                                   />
                                 }
-                                $) {` ~ `}
+                                $ {` ~ `}
                                 {
                                   <CountUp
                                     separator=","
@@ -595,23 +612,22 @@ const Pools = () => {
                                 }
                                 {` `}
                               </span>
-                              <img src={`/images/chains/${chainId}.png`} alt="" width="18px" />
                             </TitelandIcon>
                           </Line>
                         </Lineleft>
                         <Lineright>
                           <Line>
                             <TitelandIcon>
-                              <span>Max Stake</span>
+                              <span className="label">Max Stake</span>
                               <img src={`/images/chains/${chainId}.png`} alt="" width="16px" />
                             </TitelandIcon>
                             <span
                               className="value"
                               style={{
                                 color: `${pools[r].tagColor}`,
+                                marginBottom: 10,
                               }}
                             >
-                              (
                               {
                                 <CountUp
                                   separator=","
@@ -624,7 +640,7 @@ const Pools = () => {
                                   duration={1}
                                 />
                               }
-                              $) {` ~ `}
+                              $ {` ~ `}
                               {
                                 <CountUp
                                   separator=","
@@ -640,18 +656,23 @@ const Pools = () => {
                             </span>
                           </Line>
                           <Line>
-                            <span>Time Lock</span>
+                            <span style={{ fontWeight: 400, fontSize: 14 }}>Time Lock</span>
                             <span
                               style={{
                                 color: `${pools[r].tagColor}`,
+                                marginBottom: 10,
                               }}
                               className="value"
                             >
-                              {timeDisplay(i.timeLock)}
+                              {timeDisplayLong(i.timeLock)}
                             </span>
                           </Line>
                           <Line>
-                            <span>Your Lock</span>
+                            <TitelandIcon>
+                              <span className="label">Your Lock</span>
+                              <img src={`/images/chains/${chainId}.png`} alt="" width="18px" />
+                            </TitelandIcon>
+
                             <TitelandIcon>
                               <span
                                 style={{
@@ -659,7 +680,6 @@ const Pools = () => {
                                 }}
                                 className="value"
                               >
-                                (
                                 {
                                   <CountUp
                                     separator=","
@@ -674,7 +694,7 @@ const Pools = () => {
                                     }}
                                   />
                                 }
-                                $) {` ~ `}
+                                $ {` ~ `}
                                 {
                                   <CountUp
                                     separator=","
@@ -691,7 +711,6 @@ const Pools = () => {
                                 }
                                 {` `}
                               </span>
-                              <img src={`/images/chains/${chainId}.png`} alt="" width="18px" />
                             </TitelandIcon>
                           </Line>
                         </Lineright>

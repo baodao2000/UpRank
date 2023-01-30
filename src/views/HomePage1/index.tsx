@@ -59,14 +59,14 @@ const HomePage: React.FC<React.PropsWithChildren> = () => {
     ref.current?.scrollIntoView({ behavior: 'smooth' })
   }
 
-  useEffect(() => {
-    AOS.init({
-      disable: function () {
-        var maxWidth = 1000
-        return window.innerWidth < maxWidth
-      },
-    })
-  })
+  // useEffect(() => {
+  //   AOS.init({
+  //     disable: function () {
+  //       var maxWidth = 1000
+  //       return window.innerWidth < maxWidth
+  //     },
+  //   })
+  // })
 
   return (
     <>
