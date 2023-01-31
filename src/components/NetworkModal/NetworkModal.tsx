@@ -41,15 +41,15 @@ export const NetworkModal = ({ pageSupportedChains = SUPPORT_ONLY_BSC }: { pageS
   //   )
   // }
 
-  if (isWrongNetwork && !dismissWrongNetwork) {
-    const currentChain = chains.find((c) => c.id === chainId)
-    if (!currentChain) return null
-    return (
-      <ModalV2 isOpen={isWrongNetwork} closeOnOverlayClick onDismiss={() => setDismissWrongNetwork(true)}>
-        <WrongNetworkModal currentChain={currentChain} onDismiss={() => setDismissWrongNetwork(true)} />
-      </ModalV2>
-    )
-  }
+  // if (isWrongNetwork && !dismissWrongNetwork) {
+  //   const currentChain = chains.find((c) => c.id === chainId)
+  //   if (!currentChain) return null
+  //   return (
+  //     <ModalV2 isOpen={isWrongNetwork} closeOnOverlayClick onDismiss={() => setDismissWrongNetwork(true)}>
+  //       <WrongNetworkModal currentChain={currentChain} onDismiss={() => setDismissWrongNetwork(true)} />
+  //     </ModalV2>
+  //   )
+  // }
 
   return null
 }
