@@ -1,7 +1,7 @@
 import { PropsWithChildren, useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { trendyColors } from 'style/trendyTheme'
-import { Text, Button } from '@pancakeswap/uikit'
+import { Text, Button, Flex } from '@pancakeswap/uikit'
 import { Pool, timeDisplay, timeDisplayLong } from 'views/Pools2/util'
 import moment from 'moment'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
@@ -56,29 +56,29 @@ const Line = styled.div`
     color: white;
     align-items: flex-end;
     justify-content: flex-end;
-    div {
+    > div {
       background: ${trendyColors.MAIN_GREEN};
       border-radius: 8px;
       padding: 12px 30px;
       font-weight: 600;
     }
     @media screen and (max-width: 967px) {
-      div {
+      > div {
         padding: 12px 28px;
       }
     }
     @media screen and (max-width: 851px) {
-      div {
+      > div {
         padding: 10px 24px;
       }
     }
     @media screen and (max-width: 575px) {
-      div {
+      > div {
         padding: 8px 20px;
       }
     }
     @media screen and (max-width: 450px) {
-      div {
+      > div {
         padding: 6px 15px;
       }
     }
@@ -94,7 +94,7 @@ const DetailInfoPool: React.FC<
     pip?: number
   }>
 > = ({ poolInfo, ...props }) => {
-  const { account } = useActiveWeb3React()
+  const { account, chainId } = useActiveWeb3React()
   const currentInterest = poolInfo.currentInterest
   const timeLock = poolInfo.timeLock
   const totalLock = poolInfo.totalLock
@@ -156,7 +156,11 @@ const DetailInfoPool: React.FC<
               />
               $
             </Text>
-            <Text fontSize={responsiveTextSizeBNB} className="value">
+            <Text
+              fontSize={responsiveTextSizeBNB}
+              className="value"
+              style={{ display: 'flex', alignItems: 'center', gap: 6 }}
+            >
               ~{' '}
               <CountUp
                 start={0}
@@ -166,7 +170,7 @@ const DetailInfoPool: React.FC<
                 decimals={totalReward > 0 ? 6 : 0}
                 duration={0.5}
               />{' '}
-              {poolInfo.unit}
+              <img src={`/images/chains/${chainId}.png`} alt="pool name" width={18} />
             </Text>
           </Amount>
         )}
@@ -193,7 +197,11 @@ const DetailInfoPool: React.FC<
               />
               $
             </Text>
-            <Text fontSize={responsiveTextSizeBNB} className="value">
+            <Text
+              fontSize={responsiveTextSizeBNB}
+              className="value"
+              style={{ display: 'flex', alignItems: 'center', gap: 6 }}
+            >
               ~{' '}
               <CountUp
                 start={0}
@@ -203,14 +211,18 @@ const DetailInfoPool: React.FC<
                 decimals={totalReward > 0 ? 6 : 0}
                 duration={0.5}
               />{' '}
-              {poolInfo.unit}
+              <img src={`/images/chains/${chainId}.png`} alt="pool name" width={18} />
             </Text>
           </Amount>
         )}
       </Line>
       <Line className="total-lock">
-        <Text fontSize={responsiveTextSize} className="value" style={{ color: 'black' }}>
-          Total Lock:{' '}
+        <Text
+          fontSize={responsiveTextSize}
+          className="value"
+          style={{ color: 'black', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+        >
+          Total Lock: &#48;
           <CountUp
             start={0}
             preserveValue
@@ -219,16 +231,25 @@ const DetailInfoPool: React.FC<
             decimals={totalLock > 0 ? 2 : 0}
             duration={0.5}
           />
-          {' $ ~ '}
-          <CountUp
-            start={0}
-            preserveValue
-            delay={0}
-            end={Number(totalLock)}
-            decimals={totalLock > 0 ? 2 : 0}
-            duration={0.5}
-          />{' '}
-          {poolInfo.unit}
+          {`$ ~`}&ensp;
+          <div style={{ gap: 6, display: 'flex', alignItems: 'center' }}>
+            <CountUp
+              start={0}
+              preserveValue
+              delay={0}
+              end={Number(totalLock)}
+              decimals={totalLock > 0 ? 2 : 0}
+              duration={0.5}
+              style={{ fontWeight: 600 }}
+            />
+            <img
+              src={`/images/chains/${chainId}.png`}
+              alt="pool name"
+              width={18}
+              height={18}
+              style={{ transform: 'translate(0, -1px)' }}
+            />
+          </div>
         </Text>
       </Line>
     </InfoDetail>

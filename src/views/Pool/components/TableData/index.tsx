@@ -117,7 +117,10 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
                     />
                     $
                   </Text>
-                  <Text fontSize={responsiveTextSizeBNB}>
+                  <Text
+                    fontSize={responsiveTextSizeBNB}
+                    style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 6 }}
+                  >
                     ~{' '}
                     <CountUp
                       start={0}
@@ -127,7 +130,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
                       decimals={pool.userTotalLock > 0 ? 2 : 0}
                       duration={0.5}
                     />{' '}
-                    {pool.unit}
+                    <img src={`/images/chains/${chainId}.png`} alt="pool name" width={18} />
                   </Text>
                 </AmountData>
               )}
@@ -138,7 +141,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
               ) : (
                 <AmountData>
                   <Text fontSize={responsiveTextSize}>
-                    ~
+                    ~{' '}
                     <CountUp
                       start={0}
                       preserveValue
@@ -149,7 +152,10 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
                     />
                     $
                   </Text>
-                  <Text fontSize={responsiveTextSizeBNB}>
+                  <Text
+                    fontSize={responsiveTextSizeBNB}
+                    style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 6 }}
+                  >
                     ~{' '}
                     <CountUp
                       start={0}
@@ -159,7 +165,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
                       decimals={pool.currentReward > 0 ? 2 : 0}
                       duration={0.5}
                     />{' '}
-                    {pool.unit}
+                    <img src={`/images/chains/${chainId}.png`} alt="pool name" width={18} />
                   </Text>
                 </AmountData>
               )}

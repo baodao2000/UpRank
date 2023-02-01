@@ -48,6 +48,9 @@ const Container = styled.div`
 const Body = styled.div`
   background: none;
   padding: 20px;
+  @media screen and (max-width: 575px) {
+    padding: 10px;
+  }
 `
 const PoolsList = styled.div`
   display: grid;
@@ -175,6 +178,7 @@ const Card = styled.div`
   }
   @media screen and (max-width: 575px) {
     width: 100%;
+    padding: 15px;
   }
   @media screen and (max-width: 375px) {
     width: 100%;
@@ -402,7 +406,7 @@ const Pools = () => {
                     duration={0.5}
                   />
                 }
-                {'$ ~'}
+                {'$ ~ '}
                 {
                   <CountUp
                     separator=","
@@ -504,13 +508,14 @@ const Pools = () => {
                           <Line>
                             <TitelandIcon>
                               <span className="label">Min Stake</span>
-                              <img src={`/images/chains/${chainId}.png`} alt="" width="16px" />
                             </TitelandIcon>
                             <span
                               className="value"
                               style={{
                                 color: `${pools[r].tagColor}`,
                                 marginBottom: 10,
+                                display: 'flex',
+                                flexWrap: 'wrap',
                               }}
                             >
                               {
@@ -525,18 +530,21 @@ const Pools = () => {
                                   duration={1}
                                 />
                               }
-                              $ {` ~ `}
+                              $ {` ~`}&ensp;
                               {
-                                <CountUp
-                                  separator=","
-                                  style={{ color: `${pools[r].tagColor}` }}
-                                  start={0}
-                                  preserveValue
-                                  delay={0}
-                                  end={Number(i.minLock / i.rateBNB2USD)}
-                                  decimals={2}
-                                  duration={1}
-                                />
+                                <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                                  <CountUp
+                                    separator=","
+                                    style={{ color: `${pools[r].tagColor}` }}
+                                    start={0}
+                                    preserveValue
+                                    delay={0}
+                                    end={Number(i.minLock / i.rateBNB2USD)}
+                                    decimals={2}
+                                    duration={1}
+                                  />
+                                  <img src={`/images/chains/${chainId}.png`} alt="" width="16px" />
+                                </div>
                               }{' '}
                             </span>
                           </Line>
@@ -569,7 +577,6 @@ const Pools = () => {
                           <Line>
                             <TitelandIcon>
                               <span className="label">Total Lock</span>
-                              <img src={`/images/chains/${chainId}.png`} alt="" width="18px" />
                             </TitelandIcon>
 
                             <TitelandIcon>
@@ -577,6 +584,8 @@ const Pools = () => {
                                 style={{
                                   color: `${pools[r].tagColor}`,
                                   marginBottom: 10,
+                                  display: 'flex',
+                                  flexWrap: 'wrap',
                                 }}
                                 className="value"
                               >
@@ -594,20 +603,23 @@ const Pools = () => {
                                     }}
                                   />
                                 }
-                                $ {` ~ `}
+                                $ {` ~ `}&ensp;
                                 {
-                                  <CountUp
-                                    separator=","
-                                    start={0}
-                                    preserveValue
-                                    delay={0}
-                                    end={Number(i.totalLock)}
-                                    decimals={2}
-                                    duration={1}
-                                    style={{
-                                      color: `${pools[r].tagColor}`,
-                                    }}
-                                  />
+                                  <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                                    <CountUp
+                                      separator=","
+                                      start={0}
+                                      preserveValue
+                                      delay={0}
+                                      end={Number(i.totalLock)}
+                                      decimals={2}
+                                      duration={1}
+                                      style={{
+                                        color: `${pools[r].tagColor}`,
+                                      }}
+                                    />
+                                    <img src={`/images/chains/${chainId}.png`} alt="" width="16px" />
+                                  </div>
                                 }
                                 {` `}
                               </span>
@@ -618,13 +630,14 @@ const Pools = () => {
                           <Line>
                             <TitelandIcon>
                               <span className="label">Max Stake</span>
-                              <img src={`/images/chains/${chainId}.png`} alt="" width="16px" />
                             </TitelandIcon>
                             <span
                               className="value"
                               style={{
                                 color: `${pools[r].tagColor}`,
                                 marginBottom: 10,
+                                display: 'flex',
+                                flexWrap: 'wrap',
                               }}
                             >
                               {
@@ -639,18 +652,21 @@ const Pools = () => {
                                   duration={1}
                                 />
                               }
-                              $ {` ~ `}
+                              $ {` ~ `}&ensp;
                               {
-                                <CountUp
-                                  separator=","
-                                  style={{ color: `${pools[r].tagColor}` }}
-                                  start={0}
-                                  preserveValue
-                                  delay={0}
-                                  end={Number(i.maxLock / i.rateBNB2USD)}
-                                  decimals={2}
-                                  duration={1}
-                                />
+                                <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                                  <CountUp
+                                    separator=","
+                                    style={{ color: `${pools[r].tagColor}` }}
+                                    start={0}
+                                    preserveValue
+                                    delay={0}
+                                    end={Number(i.maxLock / i.rateBNB2USD)}
+                                    decimals={2}
+                                    duration={1}
+                                  />
+                                  <img src={`/images/chains/${chainId}.png`} alt="" width="16px" />
+                                </div>
                               }{' '}
                             </span>
                           </Line>
@@ -669,13 +685,14 @@ const Pools = () => {
                           <Line>
                             <TitelandIcon>
                               <span className="label">Your Lock</span>
-                              <img src={`/images/chains/${chainId}.png`} alt="" width="18px" />
                             </TitelandIcon>
 
                             <TitelandIcon>
                               <span
                                 style={{
                                   color: `${pools[r].tagColor}`,
+                                  display: 'flex',
+                                  flexWrap: 'wrap',
                                 }}
                                 className="value"
                               >
@@ -693,20 +710,23 @@ const Pools = () => {
                                     }}
                                   />
                                 }
-                                $ {` ~ `}
+                                $ {` ~ `}&ensp;
                                 {
-                                  <CountUp
-                                    separator=","
-                                    start={0}
-                                    preserveValue
-                                    delay={0}
-                                    end={Number(i.yourLock)}
-                                    decimals={2}
-                                    duration={1}
-                                    style={{
-                                      color: `${pools[r].tagColor}`,
-                                    }}
-                                  />
+                                  <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                                    <CountUp
+                                      separator=","
+                                      start={0}
+                                      preserveValue
+                                      delay={0}
+                                      end={Number(i.yourLock)}
+                                      decimals={2}
+                                      duration={1}
+                                      style={{
+                                        color: `${pools[r].tagColor}`,
+                                      }}
+                                    />
+                                    <img src={`/images/chains/${chainId}.png`} alt="" width="16px" />
+                                  </div>
                                 }
                                 {` `}
                               </span>

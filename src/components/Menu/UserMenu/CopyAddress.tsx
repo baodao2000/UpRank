@@ -9,7 +9,7 @@ interface CopyAddressProps extends FlexProps {
 
 const Wrapper = styled(Flex)`
   align-items: center;
-  background-color: ${({ theme }) => theme.colors.dropdown};
+  background: linear-gradient(360deg, rgba(0, 254, 193, 0.58) -135.83%, rgba(11, 14, 14, 0) 123.33%);
   border-radius: 16px;
   position: relative;
 `

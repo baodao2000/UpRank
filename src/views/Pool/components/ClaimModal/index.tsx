@@ -26,7 +26,10 @@ const Wrapper = styled.div`
 const ClaimAmount = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
+`
+const StyledButton = styled(Button)`
+  background: #1fc7d4;
 `
 const depositModal = {}
 const depositInput = {
@@ -101,12 +104,14 @@ const ClaimPoolModal: React.FC<React.PropsWithChildren<ClaimPoolModalProps>> = (
       title={'CLAIM'}
       onDismiss={onDismiss}
       hideCloseButton={false}
-      headerBackground={theme.colors.gradientCardHeader}
+      borderRadius={25}
+      headerBackground="rgb(105 84 156 / 77%)"
+      background={'linear-gradient(139.08deg, #171718 1.7%, rgba(86, 27, 211, 0.84) 108.66%)'}
     >
       <Wrapper>
         <ClaimAmount>
-          <Text fontSize="18px">
-            Current reward:{' '}
+          <Text fontSize="18px">Current reward:</Text>
+          <Text fontSize="16px">
             {
               <CountUp
                 separator=","
@@ -118,10 +123,7 @@ const ClaimPoolModal: React.FC<React.PropsWithChildren<ClaimPoolModalProps>> = (
                 duration={0.5}
               />
             }{' '}
-            $
-          </Text>
-          <Text fontSize="16px">
-            ~{' '}
+            $ ~{' '}
             {
               <CountUp
                 separator=","
@@ -136,7 +138,7 @@ const ClaimPoolModal: React.FC<React.PropsWithChildren<ClaimPoolModalProps>> = (
             {pool.unit}
           </Text>
         </ClaimAmount>
-        <Button
+        <StyledButton
           variant={'danger'}
           width="180px"
           disabled={isConfirming || (!isValidAmount ? true : false)}
@@ -151,7 +153,7 @@ const ClaimPoolModal: React.FC<React.PropsWithChildren<ClaimPoolModalProps>> = (
           ) : (
             'Claim'
           )}
-        </Button>
+        </StyledButton>
       </Wrapper>
     </Modal>
   )
