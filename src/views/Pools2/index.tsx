@@ -191,7 +191,6 @@ const LogoAndName = styled.div`
     font-size: 40px;
     line-height: 48px;
     font-style: normal;
-    font-family: Inter;
     color: #ffffff;
     font-weight: 700;
     font-family: Helvetica, sans-serif;

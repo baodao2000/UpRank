@@ -3,10 +3,6 @@ import { StyledMenuItemProps } from "./types";
 
 export const StyledMenuItemContainer = styled.div<StyledMenuItemProps>`
   position: relative;
-  * {
-    font-family: "Helvetica Compressed";
-  }
-
   ${({ $isActive, $variant, theme }) =>
     $isActive &&
     $variant === "subMenu" &&
@@ -32,6 +28,8 @@ const StyledMenuItem = styled.a<StyledMenuItemProps>`
   font-size: 25px;
   text-transform: uppercase;
   font-weight: 800;
+  font-family: "Helvetica Compressed";
+
   /* font-weight: ${({ $isActive }) => ($isActive ? "600" : "400")}; */
   opacity: ${({ $isDisabled }) => ($isDisabled ? 0.5 : 1)};
 

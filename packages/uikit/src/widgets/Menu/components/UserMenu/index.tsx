@@ -10,6 +10,9 @@ import { UserMenuItem } from "./styles";
 export const StyledUserMenu = styled(Flex)`
   align-items: center;
   background-color: #353547;
+  * {
+    font-family: "Helvetica Rounded";
+  }
   border-radius: 16px;
   box-shadow: inset 0px -2px 0px rgba(0, 0, 0, 0.1);
   cursor: pointer;
@@ -46,6 +49,9 @@ const Menu = styled.div<{ isOpen: boolean }>`
   width: 280px;
   visibility: visible;
   z-index: 1001;
+  * {
+    font-family: "Helvetica Rounded";
+  }
 
   ${({ isOpen }) =>
     !isOpen &&

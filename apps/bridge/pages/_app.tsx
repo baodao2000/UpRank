@@ -26,9 +26,6 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Helvetica', sans-serif;;
     src: url("/assets/fonts/Helvetica.ttf");
   }
-  * {
-    font-family: 'Helvetica', sans-serif;
-  }
   html, body, #__next {
     height: 100%;
   }

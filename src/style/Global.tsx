@@ -28,12 +28,24 @@ const GlobalStyle = createGlobalStyle`
     font-weight: 700;
   }
   @font-face {
+    font-family: 'Helvetica Rounded';
+    src: url("/assets/fonts/HelveticaRoundedLTStd-BdCn.otf");
+    font-weight: 400;
+  }
+  @font-face {
+    font-family: 'Helvetica Rounded';
+    src: url("/assets/fonts/HelveticaRoundedLTStd-Bd.otf");
+    font-weight: 600;
+  }
+  @font-face {
+    font-family: 'Helvetica Rounded';
+    src: url("/assets/fonts/HelveticaRoundedLTStd-Black.otf");
+    font-weight: 700;
+  }
+  @font-face {
     font-family: 'Helvetica Compressed';
     src: url("/assets/fonts/HelveticaCompressed.ttf");
     font-weight: 700;
-  }
-  * {
-    font-family: 'Roboto', sans-serif;
   }
   body {
     background-color: #13171b;
