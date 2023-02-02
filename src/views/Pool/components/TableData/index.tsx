@@ -14,6 +14,36 @@ import { formatEther } from '@ethersproject/units'
 import Dots from 'components/Loader/Dots'
 
 // STYLE
+const TableContainer = styled.div`
+  // max-width: 100%;
+  // min-width: 100vw;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  align-items: center;
+  &.scroll::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  &.scroll::-webkit-scrollbar-track {
+    background-color: white;
+  }
+  &.scroll::-webkit-scrollbar-thumb {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background: rgb(0, 240, 225);
+  }
+  @media screen and (max-width: 480px) {
+    overflow-x: auto;
+    // white-space: nowrap;
+    width: 100%;
+    > div > table {
+      overflow: auto;
+      // white-space: nowrap;
+      margin-left: 1.5em;
+    }
+  }
+`
+
 const TableHeader = styled.span`
   font-size: 26px;
 `
@@ -28,6 +58,9 @@ const TablePool = styled.div`
       bottom-border: 1px solid ${trendyColors.BLACK};
     }
   }
+  .left {
+    padding-left: 30px;
+  }
   width: 800px;
   @media screen and (max-width: 967px) {
     width: 700px;
@@ -37,6 +70,18 @@ const TablePool = styled.div`
   }
   @media screen and (max-width: 575px) {
     width: 100%;
+  }
+  @media screen and (max-width: 480px) {
+    width: 100%;
+    .hiden {
+      display: none;
+    }
+  }
+  @media screen and (max-width: 360px) {
+    width: 100%;
+    .left {
+      padding-left: 60px;
+    }
   }
 `
 const AmountData = styled.div`
@@ -85,7 +130,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
       <>
         {pool.totalLock > 0 && (
           <tr>
-            <Td textAlign={'right'}>
+            <Td textAlign={'right'} className="hiden">
               <Text fontSize={responsiveTextSize}>Total</Text>
             </Td>
             <Td textAlign={'right'}>
@@ -106,7 +151,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
               ) : (
                 <AmountData>
                   <Text fontSize={responsiveTextSize}>
-                    ~{' '}
+                    ~
                     <CountUp
                       start={0}
                       preserveValue
@@ -114,6 +159,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
                       end={pool.userTotalLock * pool.rateBNB2USD}
                       decimals={pool.userTotalLock > 0 ? 2 : 0}
                       duration={0.5}
+                      style={{ marginRight: 6 }}
                     />
                     $
                   </Text>
@@ -121,7 +167,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
                     fontSize={responsiveTextSizeBNB}
                     style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 6 }}
                   >
-                    ~{' '}
+                    ~
                     <CountUp
                       start={0}
                       preserveValue
@@ -129,7 +175,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
                       end={pool.userTotalLock}
                       decimals={pool.userTotalLock > 0 ? 2 : 0}
                       duration={0.5}
-                    />{' '}
+                    />
                     <img src={`/images/chains/${chainId}.png`} alt="pool name" width={18} />
                   </Text>
                 </AmountData>
@@ -141,7 +187,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
               ) : (
                 <AmountData>
                   <Text fontSize={responsiveTextSize}>
-                    ~{' '}
+                    ~
                     <CountUp
                       start={0}
                       preserveValue
@@ -149,6 +195,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
                       end={pool.currentReward * pool.rateBNB2USD}
                       decimals={pool.currentReward > 0 ? 2 : 0}
                       duration={0.5}
+                      style={{ marginRight: 6 }}
                     />
                     $
                   </Text>
@@ -156,7 +203,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
                     fontSize={responsiveTextSizeBNB}
                     style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 6 }}
                   >
-                    ~{' '}
+                    ~
                     <CountUp
                       start={0}
                       preserveValue
@@ -164,7 +211,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
                       end={pool.currentReward}
                       decimals={pool.currentReward > 0 ? 2 : 0}
                       duration={0.5}
-                    />{' '}
+                    />
                     <img src={`/images/chains/${chainId}.png`} alt="pool name" width={18} />
                   </Text>
                 </AmountData>
@@ -200,7 +247,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
                   ) : (
                     <AmountData>
                       <Text fontSize={responsiveTextSize}>
-                        ~{' '}
+                        ~
                         <CountUp
                           start={0}
                           preserveValue
@@ -212,7 +259,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
                         $
                       </Text>
                       <Text fontSize={responsiveTextSizeBNB}>
-                        ~{' '}
+                        ~
                         <CountUp
                           start={0}
                           preserveValue
@@ -220,7 +267,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
                           end={claimHistory.totalLock}
                           decimals={claimHistory.totalLock > 0 ? 2 : 0}
                           duration={0.5}
-                        />{' '}
+                        />
                         {pool.unit}
                       </Text>
                     </AmountData>
@@ -232,7 +279,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
                   ) : (
                     <AmountData>
                       <Text fontSize={responsiveTextSize}>
-                        ~{' '}
+                        ~
                         <CountUp
                           start={0}
                           preserveValue
@@ -244,7 +291,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
                         $
                       </Text>
                       <Text fontSize={responsiveTextSizeBNB}>
-                        ~{' '}
+                        ~
                         <CountUp
                           start={0}
                           preserveValue
@@ -252,7 +299,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
                           end={claimHistory.amount}
                           decimals={claimHistory.amount > 0 ? 4 : 0}
                           duration={0.5}
-                        />{' '}
+                        />
                         {pool.unit}
                       </Text>
                     </AmountData>
@@ -269,45 +316,49 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
   }
 
   return (
-    <TablePool>
+    <>
       <TableHeader>
         <Text fontSize={responsiveTextSizeHeader}>Your Income </Text>
       </TableHeader>
-      <Table>
-        <thead>
-          <tr>
-            <Th textAlign="right">
-              <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
-                Date Time
-              </Text>
-            </Th>
-            <Th textAlign="right">
-              <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
-                Interest (%)
-              </Text>
-            </Th>
-            <Th textAlign="right">
-              <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
-                Your Lock
-              </Text>
-            </Th>
-            <Th textAlign="right">
-              <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
-                Your Income
-              </Text>
-            </Th>
-            <Th textAlign="center">
-              <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
-                Action
-              </Text>
-            </Th>
-          </tr>
-        </thead>
-        <tbody>
-          <>{renderClaimHistory()}</>
-        </tbody>
-      </Table>
-    </TablePool>
+      <TableContainer>
+        <TablePool>
+          <Table>
+            <thead>
+              <tr>
+                <Th textAlign="right" className="hiden">
+                  <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
+                    Date Time
+                  </Text>
+                </Th>
+                <Th textAlign="right" className="left">
+                  <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
+                    Interest (%)
+                  </Text>
+                </Th>
+                <Th textAlign="right">
+                  <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
+                    Your Lock
+                  </Text>
+                </Th>
+                <Th textAlign="right">
+                  <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
+                    Your Income
+                  </Text>
+                </Th>
+                <Th textAlign="center">
+                  <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
+                    Action
+                  </Text>
+                </Th>
+              </tr>
+            </thead>
+            <tbody>
+              <>{renderClaimHistory()}</>
+            </tbody>
+          </Table>
+        </TablePool>
+      </TableContainer>
+    </>
   )
 }
 export default TableDataPool

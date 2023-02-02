@@ -2,6 +2,7 @@ import {
   MenuItemsType,
   DropdownMenuItemType,
   SwapIcon,
+  PoolIcon,
   SwapFillIcon,
   EarnFillIcon,
   EarnIcon,
@@ -95,6 +96,13 @@ const config: (
     {
       label: t('Pools'),
       href: '/pools',
+      showItemsOnMobile: false,
+      icon: PoolIcon,
+      items: [].map((item) => addMenuItemSupported(item, chainId)),
+    },
+    {
+      label: t('Dao'),
+      href: '/dao',
       showItemsOnMobile: false,
       icon: SwapIcon,
       items: [].map((item) => addMenuItemSupported(item, chainId)),

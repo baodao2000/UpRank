@@ -41,7 +41,7 @@ const Body = styled.div`
   padding: 70px;
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 30px;
   align-items: center;
   @media (max-width: 575px) {
     padding: 32px 20px 70px;
