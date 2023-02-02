@@ -2,6 +2,7 @@ const images = {
   insurance1: '/images/homepage/Insurance1.png',
   arrowDown: '/images/homepage/arrow-down-circle.png',
   wallet: '/images/homepage/wallet.png',
+  bgdao: '/images/dao/bgdao.svg',
   crypto: '/images/homepage/crypto.png',
   bgTrendy: '/images/homepage/bg-trendy.png',
   key2: '/images/homepage/key.png',

@@ -29,7 +29,7 @@ const getDisabledStyles = ({ $isLoading, theme }: TransientButtonProps) => {
       box-shadow: none;
       color: #666171 !important;
       cursor: not-allowed;
-      border-radius: 10px;
+      border-radius: 16px;
     }
   `;
 };

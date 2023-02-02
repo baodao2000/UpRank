@@ -222,7 +222,7 @@ const DetailInfoPool: React.FC<
           className="value"
           style={{ color: 'black', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
         >
-          Total Lock: &#48;
+          Total Lock: &ensp;
           <CountUp
             start={0}
             preserveValue

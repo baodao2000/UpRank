@@ -14,13 +14,9 @@ import { formatEther } from '@ethersproject/units'
 import Dots from 'components/Loader/Dots'
 
 // STYLE
-const TableContainer = styled.div`
-  // max-width: 100%;
-  // min-width: 100vw;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5em;
-  align-items: center;
+const TableScroll = styled.div`
+  max-width: 100%;
+  width: 100%;
   &.scroll::-webkit-scrollbar {
     width: 10px;
     height: 10px;
@@ -34,13 +30,10 @@ const TableContainer = styled.div`
   }
   @media screen and (max-width: 480px) {
     overflow-x: auto;
-    // white-space: nowrap;
     width: 100%;
-    > div > table {
-      overflow: auto;
-      // white-space: nowrap;
-      margin-left: 1.5em;
-    }
+  }
+  Td {
+    border-bottom: 0;
   }
 `
 
@@ -55,13 +48,10 @@ const TablePool = styled.div`
   table > thead {
     tr {
       font-weight: 300;
-      bottom-border: 1px solid ${trendyColors.BLACK};
+      border-bottom: 1px solid ${trendyColors.BLACK};
     }
   }
-  .left {
-    padding-left: 30px;
-  }
-  width: 800px;
+  width: auto;
   @media screen and (max-width: 967px) {
     width: 700px;
   }
@@ -79,9 +69,6 @@ const TablePool = styled.div`
   }
   @media screen and (max-width: 360px) {
     width: 100%;
-    .left {
-      padding-left: 60px;
-    }
   }
 `
 const AmountData = styled.div`
@@ -130,10 +117,10 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
       <>
         {pool.totalLock > 0 && (
           <tr>
-            <Td textAlign={'right'} className="hiden">
+            <Td textAlign={'left'}>
               <Text fontSize={responsiveTextSize}>Total</Text>
             </Td>
-            <Td textAlign={'right'}>
+            <Td textAlign={'center'}>
               <Text fontSize={responsiveTextSize}>
                 <CountUp
                   start={0}
@@ -165,7 +152,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
                   </Text>
                   <Text
                     fontSize={responsiveTextSizeBNB}
-                    style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 6 }}
+                    style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}
                   >
                     ~
                     <CountUp
@@ -201,7 +188,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
                   </Text>
                   <Text
                     fontSize={responsiveTextSizeBNB}
-                    style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 6 }}
+                    style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}
                   >
                     ~
                     <CountUp
@@ -212,7 +199,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
                       decimals={pool.currentReward > 0 ? 2 : 0}
                       duration={0.5}
                     />
-                    <img src={`/images/chains/${chainId}.png`} alt="pool name" width={18} />
+                    <img src={`/images/chains/${chainId}.png`} alt="pool name" width={18} style={{ marginLeft: 6 }} />
                   </Text>
                 </AmountData>
               )}
@@ -320,44 +307,42 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
       <TableHeader>
         <Text fontSize={responsiveTextSizeHeader}>Your Income </Text>
       </TableHeader>
-      <TableContainer>
-        <TablePool>
-          <Table>
-            <thead>
-              <tr>
-                <Th textAlign="right" className="hiden">
-                  <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
-                    Date Time
-                  </Text>
-                </Th>
-                <Th textAlign="right" className="left">
-                  <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
-                    Interest (%)
-                  </Text>
-                </Th>
-                <Th textAlign="right">
-                  <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
-                    Your Lock
-                  </Text>
-                </Th>
-                <Th textAlign="right">
-                  <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
-                    Your Income
-                  </Text>
-                </Th>
-                <Th textAlign="center">
-                  <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
-                    Action
-                  </Text>
-                </Th>
-              </tr>
-            </thead>
-            <tbody>
-              <>{renderClaimHistory()}</>
-            </tbody>
-          </Table>
-        </TablePool>
-      </TableContainer>
+      <TablePool>
+        <TableScroll className="scroll">
+          <thead>
+            <tr>
+              <Th textAlign="left">
+                <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
+                  Date Time
+                </Text>
+              </Th>
+              <Th textAlign="center">
+                <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
+                  Interest (%)
+                </Text>
+              </Th>
+              <Th textAlign="right">
+                <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
+                  Your Lock
+                </Text>
+              </Th>
+              <Th textAlign="right">
+                <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
+                  Your Income
+                </Text>
+              </Th>
+              <Th textAlign="center">
+                <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
+                  Action
+                </Text>
+              </Th>
+            </tr>
+          </thead>
+          <tbody>
+            <>{renderClaimHistory()}</>
+          </tbody>
+        </TableScroll>
+      </TablePool>
     </>
   )
 }
