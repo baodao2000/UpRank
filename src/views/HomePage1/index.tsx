@@ -14,10 +14,6 @@ import Covered from './components/Covered'
 const Wrapper = styled.div`
   font-style: normal;
   background-color: #13171b;
-
-  * {
-    font-family: 'Roboto', sans-serif;
-  }
 `
 
 const Container = styled.div`

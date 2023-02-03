@@ -58,7 +58,7 @@ const PoolsList = styled.div`
   justify-items: center;
   grid-column-gap: 40px;
   grid-row-gap: 40px;
-  align-items: center;
+  align-items: stretch;
   justify-content: center;
   @media screen and (max-width: 720px) {
     display: flex;
@@ -165,7 +165,7 @@ const Card = styled.div`
   justify-content: flex-end;
   gap: 15px;
   width: 480px;
-  height: 410px;
+  height: auto;
   border-radius: 20px;
   padding: 20px;
   @media screen and (max-width: 1300px) {

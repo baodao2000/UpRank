@@ -95,7 +95,7 @@ const TagCustom = styled(Text)`
   margin-top: 24px;
   font-weight: 700;
   font-size: 20px;
-  font-family: Helvetica, sans-serif;
+  font-family: 'Helvetica Rounded', sans-serif;
 
   ${({ theme }) => theme.mediaQueries.md} {
     font-size: 32px;

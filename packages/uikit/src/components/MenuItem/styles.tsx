@@ -30,7 +30,7 @@ const StyledMenuItem = styled.a<StyledMenuItemProps>`
   font-weight: 800;
   font-family: "Helvetica Compressed";
 
-  /* font-weight: ${({ $isActive }) => ($isActive ? "600" : "400")}; */
+  color: ${({ $isActive }) => ($isActive ? "rgb(0, 240, 225)" : "#d2d6ef")};
   opacity: ${({ $isDisabled }) => ($isDisabled ? 0.5 : 1)};
 
   ${({ $statusColor, theme }) =>

@@ -100,13 +100,13 @@ const config: (
       icon: PoolIcon,
       items: [].map((item) => addMenuItemSupported(item, chainId)),
     },
-    {
-      label: t('Dao'),
-      href: '/dao',
-      showItemsOnMobile: false,
-      icon: SwapIcon,
-      items: [].map((item) => addMenuItemSupported(item, chainId)),
-    },
+    // {
+    //   label: t('Dao'),
+    //   href: '/dao',
+    //   showItemsOnMobile: false,
+    //   icon: SwapIcon,
+    //   items: [].map((item) => addMenuItemSupported(item, chainId)),
+    // },
     // {
     //   label: t('Earn'),
     //   href: '/farms',
