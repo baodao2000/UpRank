@@ -5,8 +5,8 @@ import { PageMeta } from './types'
 export const DEFAULT_META: PageMeta = {
   title: 'Trendy Defi',
   description:
-    'MYGAMER is an all-in-one platform that permits you to earn through Staking, Swap, Minigames, NFT trading and more. We aim to build an ecosystem where you can do everything without facing any technical barriers.',
-  image: 'https://testnet-swap.mygamer.org/images/thumnal.jpg',
+    'Customers interesteds in blockchain-related investments and financial services can use Trendy Defi, a decentralized e-wallet',
+  image: '%PUBLIC_URL%/images/thumnal.jpg',
 }
 
 interface PathList {

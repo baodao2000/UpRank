@@ -45,7 +45,7 @@ const images = {
   logoBusd: 'images/pools/busd.svg',
   logoBtc: 'images/pools/btc.svg',
   poolDetailFooterBg: '../images/pools/poolDetailFooterBg.png',
-  backgroundpool: '../images/pools/backgroundpool.svg',
+  backgroundpool: '../images/pools/backgroundpool.png',
   iconEthw: 'images/coin/eth.svg',
   iconMatic: 'images/coin/matic.svg',
   chartIcon: 'images/homepage/chart-icon.png',

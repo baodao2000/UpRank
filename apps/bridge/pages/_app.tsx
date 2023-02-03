@@ -62,7 +62,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           content="Customers interesteds in blockchain-related investments and financial services can use Trendy Defi, a decentralized e-wallet."
         />
         <meta name="theme-color" content="#1FC7D4" />
-        <meta name="twitter:image" content="https://testnet-swap.mygamer.org/images/thumnal.jpg" />
+        <meta name="twitter:image" content="%PUBLIC_URL%/images/thumnal.jpg" />
         <meta
           name="twitter:description"
           content="Customers interesteds in blockchain-related investments and financial services can use Trendy Defi, a decentralized e-wallet"
