@@ -80,7 +80,7 @@ const Wrapper = styled.div`
   }
 `
 const Table = styled.div`
-  padding: 20px;
+  padding: 40px 20px 0 20px;
   display: flex;
   border-radius: 20px;
   flex-direction: column;
@@ -89,11 +89,11 @@ const Table = styled.div`
   box-shadow: inset -2px 4px 8px #000000, inset -4px 4px 32px #171717;
 
   ${({ theme }) => theme.mediaQueries.md} {
-    padding: 30px 40px;
+    padding: 40px 40px 0 40px;
     flex-direction: row;
   }
   ${({ theme }) => theme.mediaQueries.xxl} {
-    padding: 40px 84px;
+    padding: 70px 84px 0 84px;
   }
 
   .showMb {
@@ -186,6 +186,10 @@ const TextCustom = styled(Text)`
   line-height: 16px;
   font-family: 'Helvetica', sans-serif;
   text-align: start;
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    margin-top: 40px;
+  }
 `
 
 const ChartPart = styled.div`
@@ -259,6 +263,7 @@ const Chart = styled.div`
   align-items: flex-end;
   justify-content: center;
   gap: 4%;
+  transform: translateY(-14%);
 
   ${({ theme }) => theme.mediaQueries.sm} {
     gap: 8%;
@@ -564,7 +569,6 @@ const Exchange = (props) => {
               </ButtonCustom>
             </Column>
           </Chart>
-          <br />
         </ChartPart>
       </Table>
     </Wrapper>
