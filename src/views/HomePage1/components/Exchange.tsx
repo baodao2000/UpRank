@@ -57,7 +57,7 @@ const Wrapper = styled.div`
   position: relative;
   z-index: 1;
   margin-top: 14%;
-  max-width: 1186px;
+  max-width: 1000px;
   width: 100%;
 
   ${({ theme }) => theme.mediaQueries.xl} {
@@ -494,12 +494,12 @@ const Exchange = (props) => {
                 separator=","
                 delay={3}
                 duration={1}
-                end={Number((deposit * (1 + percen * 12 * period.current)).toFixed(2))}
+                end={Number((deposit * (percen * 12 * period.current)).toFixed(2))}
                 prefix="$"
                 decimals={2}
                 className="style-countup"
               >
-                {numeral(deposit * (1 + percen * 12 * period.current)).format('0,0.00')}
+                {numeral(deposit * (percen * 12 * period.current)).format('0,0.00')}
               </CountUp>
             </HeadingCustom>
             <Text style={{ color: '#CED8E1', fontSize: 16, fontFamily: 'Helvetica Light, sans-serif' }}>
@@ -507,7 +507,7 @@ const Exchange = (props) => {
             </Text>
           </ChartInfo>
           <Chart>
-            <Column>
+            {/* <Column>
               <img src={images.chart1up} alt="" />
               <ButtonCustom
                 className={period.current === 1 ? 'active' : ''}
@@ -520,9 +520,9 @@ const Exchange = (props) => {
               >
                 1 year
               </ButtonCustom>
-            </Column>
+            </Column> */}
             <Column>
-              {period.current >= 2 ? <img src={images.chart2up} alt="" /> : <img src={images.chart2down} alt="" />}
+              {period.current >= 2 ? <img src={images.chart1up} alt="" /> : <img src={images.chart1down} alt="" />}
               <ButtonCustom
                 className={period.current === 2 ? 'active' : ''}
                 variant="secondary"
@@ -536,7 +536,7 @@ const Exchange = (props) => {
               </ButtonCustom>
             </Column>
             <Column>
-              {period.current >= 3 ? <img src={images.chart3up} alt="" /> : <img src={images.chart3down} alt="" />}
+              {period.current >= 3 ? <img src={images.chart2up} alt="" /> : <img src={images.chart2down} alt="" />}
               <ButtonCustom
                 className={period.current === 3 ? 'active' : ''}
                 variant="secondary"
@@ -550,7 +550,7 @@ const Exchange = (props) => {
               </ButtonCustom>
             </Column>
             <Column>
-              {period.current >= 4 ? <img src={images.chart4up} alt="" /> : <img src={images.chart4down} alt="" />}
+              {period.current >= 4 ? <img src={images.chart3up} alt="" /> : <img src={images.chart3down} alt="" />}
               <ButtonCustom
                 className={period.current === 4 ? 'active' : ''}
                 variant="secondary"
