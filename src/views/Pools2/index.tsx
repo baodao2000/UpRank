@@ -679,7 +679,7 @@ const Pools = () => {
                               }}
                               className="value"
                             >
-                              {timeDisplayLong(i.timeLock)}
+                              {timeDisplayLong(i.timeLock) ? timeDisplayLong(i.timeLock) : '0'}
                             </span>
                           </Line>
                           <Line>

@@ -123,7 +123,7 @@ const DetailInfoPool: React.FC<
           Lock Time
         </Text>
         <Text style={{ color: '#48E3E3' }} fontSize={responsiveTextSize} className="value">
-          {timeLock === 0 ? 0 : timeDisplayLong(timeLock)}
+          {timeLock === 0 ? 0 : timeDisplay(timeLock)}
         </Text>
       </Line>
       <Line>
