@@ -8,6 +8,7 @@ export enum ConfirmVoteView {
 
 export interface DepositPoolModalProps extends InjectedModalProps {
   pool: Pool
+  chainId: number
   account: string
   onSuccess: () => void
 }

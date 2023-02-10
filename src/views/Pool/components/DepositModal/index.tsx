@@ -15,6 +15,8 @@ import { ethers } from 'ethers'
 import { useBalance } from 'wagmi'
 import { formatBigNumber } from 'utils/formatBalance'
 import { DepositPoolModalProps } from './type'
+import { formatNumber } from 'views/Pools2'
+
 // STYLE
 const InputArea = styled.div`
   display: flex;
@@ -111,6 +113,7 @@ const StyledInput = styled(Input)`
 const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>> = ({
   pool,
   account,
+  chainId,
   onDismiss,
   onSuccess,
 }) => {
@@ -221,16 +224,22 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
           />
           <span style={{ color: '#2CE0D5', fontWeight: 600 }}>$</span>
           <span style={{ color: '#2CE0D5' }}>{' ~ '}</span>
-          <CountUp
-            start={0}
-            preserveValue
-            delay={0}
-            end={Number(pool.minLock / pool.rateBNB2USD)}
-            decimals={2}
-            duration={0.5}
-            style={{ color: '#2CE0D5', fontWeight: 400 }}
-          />{' '}
-          <img src={images.logoMatic} alt="" width="12px" /> to{' '}
+          {String(pool.minLock / pool.rateBNB2USD).indexOf('e') !== -1 ? (
+            <span style={{ color: '#2CE0D5', fontWeight: 400 }}>
+              {formatNumber(Number(pool.minLock / pool.rateBNB2USD))}
+            </span>
+          ) : (
+            <CountUp
+              start={0}
+              preserveValue
+              delay={0}
+              end={Number(pool.minLock / pool.rateBNB2USD)}
+              decimals={2}
+              duration={0.5}
+              style={{ color: '#2CE0D5', fontWeight: 400 }}
+            />
+          )}{' '}
+          <img src={`/images/chains/${chainId}.png`} alt="logo" width="12px" /> to{' '}
           <CountUp
             start={0}
             preserveValue
@@ -242,16 +251,22 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
           ></CountUp>
           <span style={{ color: '#2CE0D5', fontWeight: 600 }}>$</span>
           <span style={{ color: '#2CE0D5' }}>{' ~ '}</span>
-          <CountUp
-            start={0}
-            preserveValue
-            delay={0}
-            end={Number(pool.maxLock / pool.rateBNB2USD)}
-            decimals={2}
-            duration={0.5}
-            style={{ color: '#2CE0D5', fontWeight: 400 }}
-          ></CountUp>{' '}
-          <img src={images.logoMatic} alt="" width="12px" />
+          {String(pool.maxLock / pool.rateBNB2USD).indexOf('e') !== -1 ? (
+            <span style={{ color: '#2CE0D5', fontWeight: 400 }}>
+              {formatNumber(Number(pool.maxLock / pool.rateBNB2USD))}
+            </span>
+          ) : (
+            <CountUp
+              start={0}
+              preserveValue
+              delay={0}
+              end={Number(pool.maxLock / pool.rateBNB2USD)}
+              decimals={2}
+              duration={0.5}
+              style={{ color: '#2CE0D5', fontWeight: 400 }}
+            />
+          )}{' '}
+          <img src={`/images/chains/${chainId}.png`} alt="logo" width="12px" />
         </span>
         <span className="bnb"></span>
         <UserBalance>
@@ -267,7 +282,7 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
                 duration={0.5}
               ></CountUp>
             }{' '}
-            <img src={images.logoMatic} alt="" width="12px" />
+            <img src={`/images/chains/${chainId}.png`} alt="logo" width="12px" />
             {'  ~'}
             {
               <CountUp

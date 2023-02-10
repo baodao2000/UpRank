@@ -139,7 +139,7 @@ const Pool = ({ poolId }) => {
         enable: pool.enable,
         maxLock: Number(formatEther(pool.maxLock)),
         minLock: Number(formatEther(pool.minLock)),
-        timeLock: pool.timeLock.toString(),
+        timeLock: 1095,
         totalLock: Number(formatEther(pool.totalLock)),
         pid: poolId,
         currentReward: Number(formatEther(currentReward)),
@@ -162,7 +162,7 @@ const Pool = ({ poolId }) => {
     getPool()
   }
   const [openDepositModal] = useModal(
-    <DepositPoolModal pool={poolInfo} onSuccess={handleSuccess} account={account} />,
+    <DepositPoolModal pool={poolInfo} onSuccess={handleSuccess} account={account} chainId={chainId} />,
     true,
   )
 

@@ -111,31 +111,32 @@ const ClaimPoolModal: React.FC<React.PropsWithChildren<ClaimPoolModalProps>> = (
       <Wrapper>
         <ClaimAmount>
           <Text fontSize="18px">Current reward:</Text>
-          <Text fontSize="16px">
+          <Text fontSize="16px" style={{ display: 'flex' }}>
             {
               <CountUp
                 separator=","
                 start={0}
                 preserveValue
                 delay={0}
-                end={Number(pool.currentReward / pool.rateBNB2USD)}
-                decimals={pool.currentReward === 0 ? 0 : 6}
+                end={Number(pool.currentReward * pool.rateBNB2USD)}
+                decimals={pool.currentReward === 0 ? 0 : 2}
                 duration={0.5}
               />
-            }{' '}
-            $ ~{' '}
-            {
+            }
+            $&ensp;~&ensp;
+            <div style={{ display: 'flex', alignItems: 'center' }}>
               <CountUp
                 separator=","
                 start={0}
                 preserveValue
                 delay={0}
                 end={Number(pool.currentReward)}
-                decimals={pool.currentReward === 0 ? 0 : 6}
+                decimals={pool.currentReward === 0 ? 0 : 2}
                 duration={0.5}
               />
-            }{' '}
-            {pool.unit}
+              &ensp;
+              <img src={`/images/chains/${chainId}.png`} alt="pool name" width={18} />
+            </div>
           </Text>
         </ClaimAmount>
         <StyledButton

@@ -163,6 +163,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
                       decimals={pool.userTotalLock > 0 ? 2 : 0}
                       duration={0.5}
                     />
+                    &ensp;
                     <img src={`/images/chains/${chainId}.png`} alt="pool name" width={18} />
                   </Text>
                 </AmountData>

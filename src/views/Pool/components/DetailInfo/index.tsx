@@ -167,7 +167,7 @@ const DetailInfoPool: React.FC<
                 preserveValue
                 delay={0}
                 end={Number(currentReward)}
-                decimals={totalReward > 0 ? 6 : 0}
+                decimals={totalReward > 0 ? 6 : 2}
                 duration={0.5}
               />{' '}
               <img src={`/images/chains/${chainId}.png`} alt="pool name" width={18} />
