@@ -8,27 +8,95 @@
       },
       {
         "internalType": "address",
-        "name": "_ceo",
+        "name": "gnosisSafeAddress",
         "type": "address"
       },
       {
         "internalType": "contract IPancakeRouter",
-        "name": "_pancakeRouteAddress",
+        "name": "pancakeRouteAddress",
         "type": "address"
       },
       {
         "internalType": "address",
-        "name": "_WBNBAddress",
+        "name": "_wBnbAddress",
         "type": "address"
       },
       {
         "internalType": "address",
-        "name": "_USDAddress",
+        "name": "_usdAddress",
         "type": "address"
       }
     ],
     "stateMutability": "nonpayable",
     "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "minLock",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "maxLock",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "currentInterest",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "bonusInterest",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "commPercent",
+        "type": "uint256"
+      }
+    ],
+    "name": "AddPool",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [],
+    "name": "AdminRequestVote",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [],
+    "name": "AdminRequestVoteConfig",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address payable",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "GetStuck",
+    "type": "event"
   },
   {
     "anonymous": false,
@@ -50,38 +118,204 @@
     "type": "event"
   },
   {
-    "inputs": [],
-    "name": "USD",
-    "outputs": [
+    "anonymous": false,
+    "inputs": [
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
+        "indexed": false,
+        "internalType": "uint256[]",
+        "name": "conditionMem",
+        "type": "uint256[]"
       }
     ],
-    "stateMutability": "view",
-    "type": "function"
+    "name": "SetConditionMemOnTree",
+    "type": "event"
   },
   {
-    "inputs": [],
-    "name": "WBNB",
-    "outputs": [
+    "anonymous": false,
+    "inputs": [
       {
-        "internalType": "address",
-        "name": "",
+        "indexed": false,
+        "internalType": "uint256[]",
+        "name": "conditionVolume",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "SetConditionVolumeOnTree",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "contract IRefferal",
+        "name": "iRefer",
         "type": "address"
       }
     ],
-    "stateMutability": "view",
-    "type": "function"
+    "name": "SetRefer",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "contract IPancakeRouter",
+        "name": "pancakeRouteAddress",
+        "type": "address"
+      }
+    ],
+    "name": "SetRoute",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "pid",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "enable",
+        "type": "bool"
+      }
+    ],
+    "name": "TogglePool",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "pid",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "commPercent",
+        "type": "uint256"
+      }
+    ],
+    "name": "UpdateCommPercent",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "pid",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "currentInterest",
+        "type": "uint256"
+      }
+    ],
+    "name": "UpdateInterestPool",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "pid",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "minLock",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "maxLock",
+        "type": "uint256"
+      }
+    ],
+    "name": "UpdateMinMaxPool",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "pid",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "minLock",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "maxLock",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "bonusInterest",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "enable",
+        "type": "bool"
+      }
+    ],
+    "name": "UpdatePool",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "result",
+        "type": "bool"
+      }
+    ],
+    "name": "VoteConfigEvent",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "result",
+        "type": "bool"
+      }
+    ],
+    "name": "VoteEvent",
+    "type": "event"
   },
   {
     "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "timeLock",
-        "type": "uint256"
-      },
       {
         "internalType": "uint256",
         "name": "minLock",
@@ -99,11 +333,46 @@
       },
       {
         "internalType": "uint256",
-        "name": "_commPercent",
+        "name": "bonusInterest",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "commPercent",
         "type": "uint256"
       }
     ],
     "name": "addPool",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "adminRequestVote",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "pid",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "voteType",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "adminRequestVoteConfig",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -120,7 +389,7 @@
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "usd",
+        "name": "_usd",
         "type": "uint256"
       }
     ],
@@ -142,12 +411,12 @@
   },
   {
     "inputs": [],
-    "name": "ceo",
+    "name": "canWD",
     "outputs": [
       {
-        "internalType": "address",
+        "internalType": "bool",
         "name": "",
-        "type": "address"
+        "type": "bool"
       }
     ],
     "stateMutability": "view",
@@ -271,7 +540,7 @@
     "inputs": [
       {
         "internalType": "uint256[]",
-        "name": "_pids",
+        "name": "pids",
         "type": "uint256[]"
       }
     ],
@@ -279,11 +548,6 @@
     "outputs": [
       {
         "components": [
-          {
-            "internalType": "uint256",
-            "name": "timeLock",
-            "type": "uint256"
-          },
           {
             "internalType": "uint256",
             "name": "minLock",
@@ -297,6 +561,11 @@
           {
             "internalType": "uint256",
             "name": "currentInterest",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "bonusInterest",
             "type": "uint256"
           },
           {
@@ -315,12 +584,12 @@
             "type": "uint256"
           }
         ],
-        "internalType": "struct PoolsMatic.Pool[]",
-        "name": "_pools",
+        "internalType": "struct Pools.Pool[]",
+        "name": "poolsInfo",
         "type": "tuple[]"
       }
     ],
-    "stateMutability": "view",
+    "stateMutability": "pure",
     "type": "function"
   },
   {
@@ -355,12 +624,12 @@
       },
       {
         "internalType": "uint256",
-        "name": "_limit",
+        "name": "limit",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "_skip",
+        "name": "skip",
         "type": "uint256"
       }
     ],
@@ -389,7 +658,7 @@
             "type": "uint256"
           }
         ],
-        "internalType": "struct PoolsMatic.Claim[]",
+        "internalType": "struct Pools.Claim[]",
         "name": "list",
         "type": "tuple[]"
       },
@@ -427,10 +696,23 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "gnosisSafe",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "contract IERC20",
-        "name": "_token",
+        "name": "token",
         "type": "address"
       }
     ],
@@ -478,6 +760,19 @@
   },
   {
     "inputs": [],
+    "name": "multiTimeInterest",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "owner",
     "outputs": [
       {
@@ -514,11 +809,6 @@
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "timeLock",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
         "name": "minLock",
         "type": "uint256"
       },
@@ -530,6 +820,11 @@
       {
         "internalType": "uint256",
         "name": "currentInterest",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "bonusInterest",
         "type": "uint256"
       },
       {
@@ -578,23 +873,49 @@
     "type": "function"
   },
   {
-    "inputs": [
+    "inputs": [],
+    "name": "requestVote",
+    "outputs": [
       {
-        "internalType": "address",
-        "name": "_ceo",
-        "type": "address"
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
-    "name": "setCeo",
-    "outputs": [],
-    "stateMutability": "nonpayable",
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "requestVoteConfigComm",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "requestVoteConfigInterest",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
       {
         "internalType": "uint256[]",
-        "name": "_conditionMemOnTree",
+        "name": "conditionMem",
         "type": "uint256[]"
       }
     ],
@@ -607,7 +928,7 @@
     "inputs": [
       {
         "internalType": "uint256[]",
-        "name": "_conditionVolumeOnTree",
+        "name": "conditionVolume",
         "type": "uint256[]"
       }
     ],
@@ -619,8 +940,21 @@
   {
     "inputs": [
       {
+        "internalType": "address",
+        "name": "gnosisSafeAddress",
+        "type": "address"
+      }
+    ],
+    "name": "setGnosisSafe",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "contract IRefferal",
-        "name": "_refer",
+        "name": "iRefer",
         "type": "address"
       }
     ],
@@ -633,7 +967,7 @@
     "inputs": [
       {
         "internalType": "contract IPancakeRouter",
-        "name": "_pancakeRouteAddress",
+        "name": "pancakeRouteAddress",
         "type": "address"
       }
     ],
@@ -792,11 +1126,6 @@
       },
       {
         "internalType": "uint256",
-        "name": "timeLock",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
         "name": "minLock",
         "type": "uint256"
       },
@@ -807,23 +1136,44 @@
       },
       {
         "internalType": "uint256",
-        "name": "currentInterest",
+        "name": "bonusInterest",
         "type": "uint256"
       },
       {
         "internalType": "bool",
         "name": "enable",
         "type": "bool"
-      },
-      {
-        "internalType": "uint256",
-        "name": "commPercent",
-        "type": "uint256"
       }
     ],
     "name": "updatePool",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "usd",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "usdTotalLock",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -876,6 +1226,73 @@
         "internalType": "address",
         "name": "",
         "type": "address"
+      }
+    ],
+    "name": "userTotalLock",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "userVote",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "userVoteConfig",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
       },
       {
         "internalType": "uint256",
@@ -898,6 +1315,11 @@
       {
         "internalType": "uint256",
         "name": "totalReward",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "remainReward",
         "type": "uint256"
       }
     ],
@@ -926,14 +1348,108 @@
   {
     "inputs": [
       {
+        "internalType": "bool",
+        "name": "result",
+        "type": "bool"
+      }
+    ],
+    "name": "vote",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "uint256",
-        "name": "pid",
+        "name": "voteType",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "result",
+        "type": "bool"
+      }
+    ],
+    "name": "voteConfig",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
         "type": "uint256"
       }
     ],
-    "name": "withdraw",
-    "outputs": [],
-    "stateMutability": "nonpayable",
+    "name": "voteConfigs",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "totalVote",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "pid",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "status",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "votes",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "totalVote",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "status",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "wBnb",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   }
 ]

@@ -70,7 +70,7 @@ function ConnectModal<T>({ login, onDismiss = () => null, displayCount = 3, t, w
 
   return (
     <ModalContainer $minWidth="320px">
-      <ModalHeader headerBackground={getThemeValue(theme, "colors.gradientBubblegum")}>
+      <ModalHeader headerBackground="linear-gradient(139.73deg, #313D5C 0%, #3D2A54 100%)">
         <ModalTitle>
           <Heading>{t("Connect Wallet")}</Heading>
         </ModalTitle>
