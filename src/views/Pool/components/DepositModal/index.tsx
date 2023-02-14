@@ -233,7 +233,7 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
               start={0}
               preserveValue
               delay={0}
-              end={Number(pool.minLock / pool.rateBNB2USD)}
+              end={Number(pool.minLock / pool.rateBNB2USD) + 0.01}
               decimals={2}
               duration={0.5}
               style={{ color: '#2CE0D5', fontWeight: 400 }}
@@ -298,7 +298,7 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
           </span>
         </UserBalance>
         <StyledInput
-          value={amount}
+          value={Number(amount) + 0.01}
           autoFocus={true}
           type="number"
           style={depositInput}
