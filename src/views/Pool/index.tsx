@@ -185,7 +185,7 @@ const Pool = ({ poolId }) => {
     <ClaimPoolModal account={account} onSuccess={handleSuccess} pool={poolInfo} />,
     true,
   )
-  const [openUnlockModal] = useModal(<WithDrawModal pool={poolInfo} onSuccess={handleSuccess} account={account} />)
+  // const [openUnlockModal] = useModal(<WithDrawModal pool={poolInfo} onSuccess={handleSuccess} account={account} />)
   useEffect(() => {
     getPool()
     checkRegisAccount()
@@ -241,7 +241,7 @@ const Pool = ({ poolId }) => {
               >
                 Claim
               </Button>
-              {isUnLockable && (
+              {/* {isUnLockable && (
                 <Button
                   variant="subtle"
                   width={['120px', '150px', '180px', '200px']}
@@ -250,7 +250,7 @@ const Pool = ({ poolId }) => {
                 >
                   Unlock
                 </Button>
-              )}
+              )} */}
             </ButtonArea>
           </Body>
         </>
