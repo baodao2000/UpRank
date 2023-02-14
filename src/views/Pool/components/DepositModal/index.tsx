@@ -16,6 +16,7 @@ import { useBalance } from 'wagmi'
 import { formatBigNumber } from 'utils/formatBalance'
 import { DepositPoolModalProps } from './type'
 import { formatNumber } from 'views/Pools2'
+import numeral from 'numeral'
 
 // STYLE
 const InputArea = styled.div`
@@ -127,7 +128,7 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
   const { theme } = useTheme()
   const minLockMatic = Number(pool.minLock / pool.rateBNB2USD).toFixed(2)
   const maxLockMatic = Number(pool.maxLock / pool.rateBNB2USD).toFixed(2)
-  const [amount, setAmount] = useState(minLockMatic)
+  const [amount, setAmount] = useState(numeral(Number(Number(minLockMatic).toFixed(2)) + 0.01).format('0,0.00'))
   const [isValidAmount, setIsValidAmount] = useState(true)
   const poolContract = usePoolsContract()
   const handleAmountChange = (e: any) => {
@@ -149,8 +150,8 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
     switch (per) {
       case 1: {
         setPerActive(1)
-        setAmount(minLockMatic)
-        checkAmount(Number(minLockMatic))
+        setAmount(numeral(Number(Number(minLockMatic).toFixed(2)) + 0.01).format('0,0.00'))
+        checkAmount(Number(numeral(Number(Number(minLockMatic).toFixed(2)) + 0.01).format('0,0.00')))
         break
       }
       case 25: {
@@ -298,12 +299,14 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
           </span>
         </UserBalance>
         <StyledInput
-          value={Number(amount) + 0.01}
+          value={amount}
           autoFocus={true}
           type="number"
           style={depositInput}
           onChange={handleAmountChange}
-          placeholder={`${(pool.minLock / pool.rateBNB2USD).toFixed(2)} ${pool.unit}`}
+          placeholder={`${numeral(Number((pool.minLock / pool.rateBNB2USD).toFixed(2)) + 0.01).format('0,0.00')} ${
+            pool.unit
+          }`}
         />
         <MinMaxButtons>
           <MinMax onClick={() => minMaxBalanceHandle(1)} className={perActive === 1 ? 'active' : ''}>
