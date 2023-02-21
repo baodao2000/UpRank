@@ -16,15 +16,15 @@ const Title = styled(Heading)`
   font-weight: 700;
   font-size: 24px;
   line-height: 25px;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 
   ${({ theme }) => theme.mediaQueries.md} {
     font-size: 40px;
     line-height: 46px;
   }
   ${({ theme }) => theme.mediaQueries.xl} {
-    font-size: 64px;
-    line-height: 60px;
+    font-size: 50px;
+    line-height: 58px;
   }
 `
 const StyledText = styled.p`
@@ -33,26 +33,29 @@ const StyledText = styled.p`
 `
 
 const TitleM = styled(Text)`
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 23px;
+  color: #ced8e1;
+  margin-top: 6px;
   text-align: center;
-  font-weight: 500;
-  font-size: 32px;
-  line-height: 39px;
-  margin-bottom: 5%;
-  margin-left: 20%;
-  margin-right: 20%;
-  @media screen and (max-width: 845px) {
-    margin-left: 10%;
-    margin-right: 10%;
-    font-size: 24px;
-    line-height: 28px;
-  }
-  @media screen and (max-width: 500px) {
-    margin-left: 2%;
-    margin-right: 2%;
-    font-size: 24px;
-    line-height: 28px;
+  margin-bottom: 30px;
+
+  ${({ theme }) => theme.mediaQueries.xl} {
+    font-size: 20px;
+    line-height: 23px;
   }
 `
+
+const TitleMb = styled(Text)`
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 23px;
+  color: #ced8e1;
+  text-align: center;
+  margin-bottom: 30px;
+`
+
 const Wrapper = styled.div`
   position: relative;
   z-index: 1;
@@ -297,14 +300,14 @@ const ButtonCustom = styled(Button)`
 
 const TextName = styled(Text)`
   font-weight: 700;
-  font-size: 20px;
+  font-size: 16px;
   line-height: 23px;
   margin-bottom: 6px;
   color: #9665ff;
   text-align: start;
 
   @media screen and (max-width: 820px) {
-    font-size: 20px;
+    font-size: 18px;
   }
 `
 
@@ -347,7 +350,7 @@ const Exchange = (props) => {
   const [count, setCount] = useState(3)
   const [deposit, setDeposit] = useState(1000)
   const [period, setPeriod] = useState({ old: 2, current: 2 })
-  const [percen, setPercen] = useState(0.075)
+  const [percen, setPercen] = useState(0.07)
   const [price, setPrice] = useState(1)
   // const [symbol, setSymbol] = useState()
   let Date = moment().format('MMMM Do YYYY')
@@ -366,27 +369,27 @@ const Exchange = (props) => {
   const checkPercen = (input) => {
     switch (true) {
       case input >= 100 && input <= 1000: {
-        setPercen(0.075)
+        setPercen(0.07)
         break
       }
       case input > 1000 && input <= 5000: {
-        setPercen(0.085)
+        setPercen(0.075)
         break
       }
       case input > 5000 && input <= 10000: {
-        setPercen(0.098)
+        setPercen(0.08)
         break
       }
       case input > 10000 && input <= 50000: {
-        setPercen(0.112)
+        setPercen(0.085)
         break
       }
       case input > 50000 && input <= 100000: {
-        setPercen(0.125)
+        setPercen(0.095)
         break
       }
       case input > 100000: {
-        setPercen(0.138)
+        setPercen(0.105)
         break
       }
       default:
@@ -413,10 +416,16 @@ const Exchange = (props) => {
       <Title className="showPc" color="mainColor">
         Calculate your crypto <StyledText>earnings</StyledText>
       </Title>
+      <TitleM className="showPc">
+        Enter an amount, pick a cryptocurrency, and select a time frame to find out how much interest you can earn.
+      </TitleM>
       <Table>
         <Title className="showMb" color="mainColor">
           Calculate your crypto <StyledText>earnings</StyledText>
         </Title>
+        <TitleMb className="showMb">
+          Enter an amount, pick a cryptocurrency, and select a time frame to find out how much interest you can earn.
+        </TitleMb>
         <ExchangePart>
           <div>
             <CryptoSelect>
@@ -480,10 +489,10 @@ const Exchange = (props) => {
             </Text>
           </div>
           <TextCustom color="mainColor">
-            Annual Percentage Yield (APY) as of {Date}. APY may change at any time before or after account is opened.
-            This calculator is for illustrative purposes only and may not apply to your individual circumstances.
-            Calculated values assume that principal and interest remain on deposit and are rounded to the nearest
-            dollar. All APY’s are subject to change.
+            Annual Percentage Yield (APY) as of the {Date}. The APY may vary before or after the account is created.
+            This calculator is solely for illustration purposes and may not apply to our specific situation. Calculated
+            figures are rounded to the closest dollar and assume that principle and interest stay on deposit. All
+            interest rates are subject to change.
           </TextCustom>
         </ExchangePart>
         <ChartPart>

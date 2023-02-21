@@ -79,8 +79,8 @@ const Title = styled(Heading)`
   }
   ${({ theme }) => theme.mediaQueries.xl} {
     margin-bottom: 40px;
-    font-size: 64px;
-    line-height: 60px;
+    font-size: 50px;
+    line-height: 58px;
     letter-spacing: 0.001em;
     text-align: start;
   }
@@ -92,7 +92,7 @@ const Content = styled.div`
   width: 100%;
 
   ${({ theme }) => theme.mediaQueries.md} {
-    width: 50%;
+    width: 55%;
   }
 `
 
@@ -227,26 +227,30 @@ const CryptoHome = ({ handleClick }) => {
     <Crypto>
       <Content data-aos="fade-right">
         <Title color="mainColor" className="title colorchange">
-          <StyledText>All-in-One</StyledText> for Your Crypto
+          {/* <StyledText>All-in-One</StyledText> for Your Crypto */}Why <StyledText>TrendyDefi?</StyledText>
         </Title>
         <ImageLeftMb flexDirection="column" alignItems="center">
           <img className="cyptophone" srcSet={images.phone} alt="" />
         </ImageLeftMb>
         <CustomSpan color="mainColor" className="colorchange">
           <img src={images.star} alt="" />
-          <span>Buy, send and swap tokens</span>
-        </CustomSpan>
-        <CustomSpan color="mainColor" className="colorchange">
-          <img src={images.star} alt="" />
-          <span>Earn Passive Income With Crypto</span>
-        </CustomSpan>
-        <CustomSpan color="mainColor" className="colorchange">
-          <img src={images.star} alt="" />
-          <span>Private & Secure</span>
-        </CustomSpan>
-        <CustomSpan color="mainColor" className="colorchange">
-          <img src={images.star} alt="" />
           <span>Exchange Instantly</span>
+        </CustomSpan>
+        <CustomSpan color="mainColor" className="colorchange">
+          <img src={images.star} alt="" />
+          <span>Highest Private & Secure</span>
+        </CustomSpan>
+        <CustomSpan color="mainColor" className="colorchange">
+          <img src={images.star} alt="" />
+          <span>Earn Passive Income</span>
+        </CustomSpan>
+        <CustomSpan color="mainColor" className="colorchange">
+          <img src={images.star} alt="" />
+          <span>Convenient</span>
+        </CustomSpan>
+        <CustomSpan color="mainColor" className="colorchange">
+          <img src={images.star} alt="" />
+          <span>Audited by Certik</span>
         </CustomSpan>
       </Content>
       <ImageLeft data-aos="fade-left" flexDirection="column" alignItems="center">

@@ -28,12 +28,12 @@ const ContentHead = styled.div`
   z-index: 1;
 
   ${({ theme }) => theme.mediaQueries.md} {
-    max-width: 50%;
+    max-width: 55%;
   }
 
   h2 {
     font-weight: 700;
-    font-size: 24px;
+    font-size: 20px;
     line-height: 25px;
     text-align: center;
     letter-spacing: 0.001em;
@@ -44,14 +44,14 @@ const ContentHead = styled.div`
     word-wrap: break-word;
 
     ${({ theme }) => theme.mediaQueries.md} {
-      font-size: 40px;
-      line-height: 46px;
+      font-size: 30px;
+      line-height: 36px;
       text-align: start;
       margin-bottom: 0;
     }
     ${({ theme }) => theme.mediaQueries.xl} {
-      font-size: 64px;
-      line-height: 60px;
+      font-size: 50px;
+      line-height: 58px;
       text-align: start;
     }
   }
@@ -151,8 +151,10 @@ const HeadHome = () => {
   return (
     <Head>
       <ContentHead data-aos="fade-up-right">
-        <h2>Buy & Sell Cryptocurrency in minutes.</h2>
-        <p>Join now on the largest cryptocurrency exchange in the world.</p>
+        <h2>
+          Trendy Defi<br></br> is an open network for <br></br>storing and moving money
+        </h2>
+        <p>Own your own data. Earn passive income with crypto.</p>
         <ImageShowMb data-aos="fade-up-left" src={images.coinHead} alt="" />
         <LinkToDownload>
           <ListImgButton>
