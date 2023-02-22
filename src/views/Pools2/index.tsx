@@ -27,6 +27,7 @@ import { formatEther } from '@ethersproject/units'
 import { bnb2Usd, shortenURL, timeDisplayLong, timeDisplay } from './util'
 import useActiveWeb3React from '../../hooks/useActiveWeb3React'
 import { ChainId, NATIVE } from '../../../packages/swap-sdk/src/constants'
+import Rank from './components/Rank'
 
 // ============= STYLED
 const Container = styled.div`
@@ -397,6 +398,7 @@ const Pools = () => {
               >
                 Connect successfully!
               </Text> */}
+              <Rank />
               <Text
                 fontSize={['22px', '22px', '36px', '40px', '50px', '60px']}
                 fontWeight="600"

@@ -485,7 +485,7 @@ const Exchange = (props) => {
               />
             </InputContainer>
             <Text style={{ color: '#9665FF', textAlign: 'start', fontFamily: 'Helvetica, sans-serif' }}>
-              approx. {numeral(deposit * price).format('0,0.00')} {` `} MATIC/USD
+              approx. {numeral(deposit / price).format('0,0.00')} {` `} MATIC/USD
             </Text>
           </div>
           <TextCustom color="mainColor">

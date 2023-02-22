@@ -65,11 +65,11 @@ const UserMenu = () => {
           {t('Recent Transactions')}
           {hasPendingTransactions && <RefreshIcon spin />}
         </UserMenuItem>
-        <UserMenuItem>
+        {/* <UserMenuItem>
           <NextLink href="/referral" passHref>
             {t('Referral')}
           </NextLink>
-        </UserMenuItem>
+        </UserMenuItem> */}
         <UserMenuDivider />
         {/* <NextLink href={`/profile/${account?.toLowerCase()}`} passHref> */}
         {/*   <UserMenuItem as="a" disabled={isWrongNetwork || chainId !== ChainId.BSC}> */}

@@ -4,20 +4,7 @@ import { Box, Flex } from "../Box";
 import SocialLinks from "./Components/SocialLinks";
 
 export const StyledFooter = styled(Flex)`
-  position: relative;
   background: rgba(12, 12, 12, 0.25);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  z-index: 2;
-  p {
-    margin-top: 24px;
-  }
-
-  img {
-    width: 100%;
-    height: auto;
-  }
 `;
 
 export const StyledList = styled.ul`
@@ -34,11 +21,11 @@ export const StyledListItem = styled.li`
   margin-bottom: 8px;
   text-transform: capitalize;
 
-  &:first-child {
+  /* &:first-child {
     color: ${darkColors.secondary};
     font-weight: 600;
     text-transform: uppercase;
-  }
+  } */
 `;
 
 export const StyledIconMobileContainer = styled(Box)`
