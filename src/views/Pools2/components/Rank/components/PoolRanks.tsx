@@ -10,6 +10,18 @@ const ListPoolRanks = styled.div`
   grid-row-gap: 30px;
 `
 
+export const ImageRank = styled.img`
+  @media screen and (min-width: 1024px) {
+    width: 80px;
+  }
+  @media (min-width: 740px) and (max-width: 1023px) {
+    width: 60px;
+  }
+  @media (max-width: 739px) {
+    width: 50px;
+  }
+`
+
 const CardPoolRanks = styled(Card)`
   width: 345px;
   height: auto;
@@ -24,6 +36,7 @@ const CardHead = styled.div`
   justify-content: flex-start;
   align-items: center;
   gap: 15px;
+  margin-bottom: 16px;
 `
 
 const HeadLeft = styled.div``
@@ -38,6 +51,9 @@ const TitleHeadRight = styled(Heading)`
   align-items: center;
   text-transform: capitalize;
   color: inherit;
+  @media (max-width: 739px) {
+    font-size: 22px;
+  }
 `
 
 const MinMaxPrice = styled.div`
@@ -75,6 +91,10 @@ const Label = styled.span`
   align-items: center;
   text-transform: capitalize;
   color: #e6e6e6;
+
+  @media (max-width: 739px) {
+    font-size: 14px;
+  }
 `
 
 const Value = styled.span`
@@ -85,6 +105,10 @@ const Value = styled.span`
   align-items: center;
   text-transform: capitalize;
   color: #e6e6e6;
+
+  @media (max-width: 739px) {
+    font-size: 14px;
+  }
 `
 
 const BorderCard = styled.div`
@@ -113,13 +137,13 @@ const PoolRanks = ({ data }) => {
   const getColor = (title) => {
     switch (title) {
       case 'Silver':
-        return '#ffffff99'
+        return '#e3e4ea'
       case 'Gold':
         return '#FBD397'
       case 'Titanium':
-        return '#DBEEFE'
+        return '#70b1cc'
       case 'Platinum':
-        return '#DBEEFE'
+        return '#d2d4dd'
       case 'Diamond':
         return '#85FCF5'
       default:
@@ -132,21 +156,26 @@ const PoolRanks = ({ data }) => {
         <CardPoolRanks key={index}>
           <CardHead>
             <HeadLeft>
-              <img src={item.image} alt="" />
+              <ImageRank src={item.image} alt="" />
             </HeadLeft>
             <HeadRight style={{ color: getColor(item.title) }}>
               <TitleHeadRight>{item.title}</TitleHeadRight>
-              <progress id="file" value={item.process} max={item.max} style={{ margin: '4px 0' }} />
+              <progress
+                className="file"
+                value={item.process}
+                max={item.max}
+                style={{ margin: '4px 0', accentColor: getColor(item.title) }}
+              />
               <MinMaxPrice>
-                <MinMaxItem>{item.min}</MinMaxItem>
-                <MinMaxItem>{item.max}</MinMaxItem>
+                <MinMaxItem>{item.min}$</MinMaxItem>
+                <MinMaxItem>{item.max}$</MinMaxItem>
               </MinMaxPrice>
             </HeadRight>
           </CardHead>
           <CardBody>
             <ItemInfoCard>
               <Label>Total:</Label>
-              <Value>{item.total}</Value>
+              <Value>{item.total}$</Value>
             </ItemInfoCard>
             <ItemInfoCard>
               <Label>Current Reward:</Label>
@@ -159,7 +188,7 @@ const PoolRanks = ({ data }) => {
             <BorderCard />
             <ItemInfoCard>
               <Label>Your reward:</Label>
-              <Value>{item.total}</Value>
+              <Value>{item.total}$</Value>
             </ItemInfoCard>
             <div style={{ textAlign: 'center', marginTop: 20 }}>
               <StyledButtonRank>Claim</StyledButtonRank>

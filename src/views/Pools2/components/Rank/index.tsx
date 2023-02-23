@@ -1,15 +1,14 @@
 import styled from 'styled-components'
-import { Heading, Flex, Image, Text, Link } from '@pancakeswap/uikit'
-import PoolRanks from './components/PoolRanks'
+import { Heading, Flex, Text, Link } from '@pancakeswap/uikit'
+import PoolRanks, { ImageRank } from './components/PoolRanks'
 
 const Wrapper = styled.div`
   width: 100%;
   margin-bottom: 90px;
 `
 
-const StyledTitleRank = styled(Heading)`
+const StyledTitleRank = styled(Text)`
   font-weight: 700;
-  font-size: 50px;
   line-height: 100%;
   text-transform: capitalize;
   color: #00f0e1;
@@ -86,9 +85,9 @@ const Rank = () => {
   return (
     <Wrapper>
       <BlockPoolRanks>
-        <StyledTitleRank>
+        <StyledTitleRank fontSize={['22px', '22px', '36px', '40px', '50px', '60px']}>
           Pool Rewards
-          <img src={`/images/pools/${yourRank}.svg`} alt="" style={{ marginLeft: 10 }} />
+          <ImageRank src={`/images/pools/${yourRank}.svg`} alt="" style={{ marginLeft: 10 }} />
         </StyledTitleRank>
         <PoolRanks data={poolRanks} />
       </BlockPoolRanks>

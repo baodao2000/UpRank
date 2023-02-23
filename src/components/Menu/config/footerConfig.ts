@@ -47,22 +47,33 @@ export const footerLinks: (t: ContextApi['t']) => FooterLinkType[] = (t) => [
       {
         label: 'Twitter',
         href: 'https://github.com/pancakeswap',
+        image: '/images/pools/twitter.svg',
       },
       {
         label: t('Facebook'),
         href: 'https://docs.pancakeswap.finance',
+        image: '/images/pools/facebook.svg',
       },
       {
         label: t('Telegram'),
         href: 'https://docs.pancakeswap.finance/code/bug-bounty',
+        image: '/images/pools/telegram.svg',
       },
+    ],
+  },
+  {
+    label: t('Social'),
+    items: [
       {
         label: t('Medium'),
-        href: 'https://docs.pancakeswap.finance/help/faq#is-pancakeswap-safe-has-pancakeswap-been-audited',
+        href: 'https://docs.pancakeswap.finance/contact-us',
+        isHighlighted: true,
+        image: '/images/pools/medium.svg',
       },
       {
         label: t('Youtube'),
-        href: 'https://docs.pancakeswap.finance/hiring/become-a-chef',
+        href: 'https://docs.pancakeswap.finance/brand',
+        image: '/images/pools/youtube.svg',
       },
     ],
   },

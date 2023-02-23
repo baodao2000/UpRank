@@ -10,6 +10,7 @@ import Crypto from './components/CryptoHome'
 import StepBlock from './components/StepBlock'
 import Insurance from './components/Insurance'
 import Covered from './components/Covered'
+import Transparency from './components/Transparency'
 
 const Wrapper = styled.div`
   font-style: normal;
@@ -90,6 +91,7 @@ const HomePage: React.FC<React.PropsWithChildren> = () => {
           <StepBlock />
           <Insurance />
           <Covered />
+          <Transparency />
         </Container>
       </Wrapper>
     </>

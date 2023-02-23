@@ -24,7 +24,7 @@ const Icon: React.FC<React.PropsWithChildren<SvgProps>> = (props) => {
           width="29.627"
           height="29.9466"
           filterUnits="userSpaceOnUse"
-          colorInterpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
           <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
