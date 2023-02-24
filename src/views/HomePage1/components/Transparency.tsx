@@ -5,19 +5,6 @@ import images from 'configs/images'
 const Wrapper = styled.div`
   max-width: 1152px;
   margin: 0 auto;
-  padding-bottom: 50px;
-  .block {
-    margin-top: 120px;
-    @media screen and (max-width: 1024px) {
-      margin-top: 100px;
-    }
-    @media screen and (max-width: 820px) {
-      margin-top: 80px;
-    }
-    @media screen and (max-width: 414px) {
-      margin-top: 60px;
-    }
-  }
 `
 
 const Title = styled(Heading)`
@@ -105,18 +92,20 @@ const Transparency = () => {
     {
       image: images.trans2,
       title: 'User are in full control',
-      description: 'Using the DAO mechanism to vote on the monthly profit',
+      description:
+        'Users have authority over their money, allowing them to deal safely without the need for confirmation from a third party.',
     },
     {
       image: images.trans3,
-      title: 'User are in full control',
-      description: 'Using the DAO mechanism to vote on the monthly profit',
+      title: 'Audited by Certik',
+      description:
+        'TrendyDefi is audited by CertiK, Audits Platform for Industry-Leading Security. The Dev team is only permitted to adjust the interest rate depending on user vote results.',
     },
   ]
   return (
     <Wrapper className="block">
       <Title>Transparency & Security</Title>
-      <ListTransparency>
+      <ListTransparency data-aos="flip-up">
         {data.map((item, index) => (
           <CardTransparency key={index}>
             <WrapperImage>

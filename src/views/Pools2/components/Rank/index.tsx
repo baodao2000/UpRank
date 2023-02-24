@@ -85,7 +85,7 @@ const Rank = () => {
   return (
     <Wrapper>
       <BlockPoolRanks>
-        <StyledTitleRank fontSize={['22px', '22px', '36px', '40px', '50px', '60px']}>
+        <StyledTitleRank fontSize={['30px', '30px', '36px', '40px', '50px', '60px']}>
           Pool Rewards
           <ImageRank src={`/images/pools/${yourRank}.svg`} alt="" style={{ marginLeft: 10 }} />
         </StyledTitleRank>

@@ -14,11 +14,8 @@ export const ImageRank = styled.img`
   @media screen and (min-width: 1024px) {
     width: 80px;
   }
-  @media (min-width: 740px) and (max-width: 1023px) {
-    width: 60px;
-  }
-  @media (max-width: 739px) {
-    width: 50px;
+  @media (max-width: 1023px) {
+    width: 70px;
   }
 `
 

@@ -66,7 +66,6 @@ const CoveredList = styled.div`
   // background: url(${images.bgcovered}) no-repeat;
   // background-attachment: fixed, scroll;
   // background-size: cover;
-  padding-bottom: 48px;
   gap: 30px;
   row-gap: 50px;
   padding-left: 10%;

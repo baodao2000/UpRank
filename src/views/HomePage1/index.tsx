@@ -11,10 +11,13 @@ import StepBlock from './components/StepBlock'
 import Insurance from './components/Insurance'
 import Covered from './components/Covered'
 import Transparency from './components/Transparency'
+import Tranditional from './components/Tranditional'
+import RoadMap from './components/RoadMap'
 
 const Wrapper = styled.div`
   font-style: normal;
   background-color: #13171b;
+  margin-bottom: 48px;
 `
 
 const Container = styled.div`
@@ -92,6 +95,8 @@ const HomePage: React.FC<React.PropsWithChildren> = () => {
           <Insurance />
           <Covered />
           <Transparency />
+          <Tranditional />
+          <RoadMap />
         </Container>
       </Wrapper>
     </>
