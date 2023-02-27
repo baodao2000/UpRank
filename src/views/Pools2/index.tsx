@@ -28,6 +28,7 @@ import { bnb2Usd, shortenURL, timeDisplayLong, timeDisplay } from './util'
 import useActiveWeb3React from '../../hooks/useActiveWeb3React'
 import { ChainId, NATIVE } from '../../../packages/swap-sdk/src/constants'
 import Rank from './components/Rank'
+import numeral from 'numeral'
 
 // ============= STYLED
 const Container = styled.div`
@@ -297,9 +298,40 @@ const LineText = styled.div`
   text-align: center;
 `
 
-export const formatNumber = (number) => {
-  const numberFormated = number.toString().substr(0, 6) + number.toString().slice(-4)
-  return numberFormated
+export const getRankImage = (index) => {
+  let obj = {
+    img: '',
+    title: '',
+  }
+  switch (index) {
+    case 0:
+      obj.img = '/images/pools/bronze.svg'
+      obj.title = 'Bronze'
+      break
+    case 1:
+      obj.img = '/images/pools/silver.svg'
+      obj.title = 'Silver'
+      break
+    case 2:
+      obj.img = '/images/pools/gold.svg'
+      obj.title = 'Gold'
+      break
+    case 3:
+      obj.img = '/images/pools/titanium.svg'
+      obj.title = 'Titanium'
+      break
+    case 4:
+      obj.img = '/images/pools/platinum.svg'
+      obj.title = 'Platinum'
+      break
+    case 5:
+      obj.img = '/images/pools/diamond.svg'
+      obj.title = 'Diamond'
+      break
+    default:
+      break
+  }
+  return obj
 }
 // STYLED
 
@@ -313,8 +345,11 @@ const Pools = () => {
   const { toastSuccess, toastError } = useToast()
   const { callWithMarketGasPrice } = useCallWithMarketGasPrice()
   const poolContract = usePoolsContract()
+  const [ranks, setRanks] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [rateBnbUsd, setRateBnbUsd] = useState(1)
+  const [userRank, setUserRank] = useState(0)
+  const [userClaimed, setUserClaimed] = useState(false)
   const { isConfirming, handleConfirm } = useConfirmTransaction({
     onConfirm: () => {
       return callWithMarketGasPrice(poolContract, 'claimComm', [account])
@@ -324,6 +359,7 @@ const Pools = () => {
       onSuccess()
     },
   })
+  const indexRank = [1, 2, 3, 4, 5]
 
   const getCommission = async () => {
     if (account) {
@@ -335,10 +371,40 @@ const Pools = () => {
     }
   }
 
+  const getInfoRank = async () => {
+    const rank = await getPoolContract.userRank(account)
+    const months = await getPoolContract.getMonths()
+    const isClaimed = await getPoolContract.userRankRewardClaimed(account, Number(months.toString()))
+    const arr = await Promise.all(
+      indexRank.map(async (item) => {
+        const rank = await getPoolContract.rankRewards(item)
+
+        return {
+          image: getRankImage(item).img,
+          title: getRankImage(item).title,
+          currentReward: rank.remainInMonth.toString(),
+          total: numeral(formatEther(rank.total)).format('0,0.0000'),
+          min: numeral(formatEther(rank.total)).format('0,0.0000') || 0,
+          max: Number(formatEther(rank.minStart)),
+          member: rank.totalMember.toString(),
+          yourReward:
+            Number(rank.rewardInMonth.toString()) && Number(rank.totalMember.toString())
+              ? Number(rank.rewardInMonth.toString()) / Number(rank.totalMember.toString())
+              : 0,
+        }
+      }),
+    )
+    setUserRank(Number(rank.toString()))
+    setRanks(arr)
+    setUserClaimed(isClaimed)
+  }
+
   const getPools = async (ids: number[]) => {
     try {
       const rateBnbUsd = await getPoolContract.bnbPrice()
       const pools = ids.map((item) => getPoolContract.pools(item))
+
+      await getInfoRank()
 
       setRateBnbUsd(Number(formatEther(rateBnbUsd[0])) / Number(formatEther(rateBnbUsd[1])))
       const newPoolInfo = await Promise.all(
@@ -376,6 +442,10 @@ const Pools = () => {
   const onSuccess = () => {
     getCommission()
   }
+
+  const onSuccessRank = () => {
+    getInfoRank()
+  }
   useEffect(() => {
     if (!account) return
     getCommission()
@@ -391,14 +461,7 @@ const Pools = () => {
         <>
           <PageHeader background="none">
             <Flex flex="1" flexDirection="column" mr={['8px', 0]} alignItems="center">
-              {/* <Text
-                fontSize={['22px', '22px', '36px', '40px', '50px', '60px']}
-                fontWeight="600"
-                style={{ color: '#7A42F1' }}
-              >
-                Connect successfully!
-              </Text> */}
-              <Rank />
+              <Rank ranks={ranks} userRank={userRank} onSuccess={onSuccessRank} userIsClaim={userClaimed} />
               <Text
                 fontSize={['22px', '22px', '36px', '40px', '50px', '60px']}
                 fontWeight="600"
@@ -543,20 +606,16 @@ const Pools = () => {
                               $ {` ~`}&ensp;
                               {
                                 <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                                  {String(i.minLock / i.rateBNB2USD).indexOf('e') !== -1 ? (
-                                    formatNumber(i.minLock / i.rateBNB2USD)
-                                  ) : (
-                                    <CountUp
-                                      separator=","
-                                      style={{ color: `${pools[r]?.tagColor}` }}
-                                      start={0}
-                                      preserveValue
-                                      delay={0}
-                                      end={i.minLock / i.rateBNB2USD}
-                                      decimals={2}
-                                      duration={1}
-                                    />
-                                  )}
+                                  <CountUp
+                                    separator=","
+                                    style={{ color: `${pools[r]?.tagColor}` }}
+                                    start={0}
+                                    preserveValue
+                                    delay={0}
+                                    end={i.minLock / i.rateBNB2USD}
+                                    decimals={2}
+                                    duration={1}
+                                  />
                                   <img src={`/images/chains/${chainId}.png`} alt="" width="16px" />
                                 </div>
                               }{' '}
@@ -669,20 +728,16 @@ const Pools = () => {
                               $ {` ~ `}&ensp;
                               {
                                 <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                                  {String(i.maxLock / i.rateBNB2USD).indexOf('e') !== -1 ? (
-                                    formatNumber(i.maxLock / i.rateBNB2USD)
-                                  ) : (
-                                    <CountUp
-                                      separator=","
-                                      style={{ color: `${pools[r]?.tagColor}` }}
-                                      start={0}
-                                      preserveValue
-                                      delay={0}
-                                      end={i.maxLock / i.rateBNB2USD}
-                                      decimals={2}
-                                      duration={1}
-                                    />
-                                  )}
+                                  <CountUp
+                                    separator=","
+                                    style={{ color: `${pools[r]?.tagColor}` }}
+                                    start={0}
+                                    preserveValue
+                                    delay={0}
+                                    end={i.maxLock / i.rateBNB2USD}
+                                    decimals={2}
+                                    duration={1}
+                                  />
                                   <img src={`/images/chains/${chainId}.png`} alt="" width="16px" />
                                 </div>
                               }{' '}
@@ -697,7 +752,7 @@ const Pools = () => {
                               }}
                               className="value"
                             >
-                              {timeDisplayLong(i.timeLock) ? timeDisplayLong(i.timeLock * 86400) : '0'}
+                              {timeDisplayLong(i.timeLock) ? timeDisplayLong(i.timeLock * 57600) : '0'}
                             </span>
                           </Line>
                           <Line>

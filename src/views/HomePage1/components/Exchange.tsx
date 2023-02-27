@@ -536,7 +536,7 @@ const Exchange = (props) => {
               </ButtonCustom>
             </Column> */}
             <Column>
-              {period.current >= 2 ? <img src={images.chart1up} alt="" /> : <img src={images.chart1down} alt="" />}
+              {period.current >= 2 ? <img src={images.chart4up} alt="" /> : <img src={images.chart1down} alt="" />}
               <ButtonCustom
                 className={period.current === 2 ? 'active' : ''}
                 variant="secondary"
@@ -549,7 +549,7 @@ const Exchange = (props) => {
                 2 year
               </ButtonCustom>
             </Column>
-            <Column>
+            {/* <Column>
               {period.current >= 3 ? <img src={images.chart2up} alt="" /> : <img src={images.chart2down} alt="" />}
               <ButtonCustom
                 className={period.current === 3 ? 'active' : ''}
@@ -562,8 +562,8 @@ const Exchange = (props) => {
               >
                 3 year
               </ButtonCustom>
-            </Column>
-            <Column>
+            </Column> */}
+            {/* <Column>
               {period.current >= 4 ? <img src={images.chart3up} alt="" /> : <img src={images.chart3down} alt="" />}
               <ButtonCustom
                 className={period.current === 4 ? 'active' : ''}
@@ -576,7 +576,7 @@ const Exchange = (props) => {
               >
                 4 year
               </ButtonCustom>
-            </Column>
+            </Column> */}
           </Chart>
         </ChartPart>
       </Table>

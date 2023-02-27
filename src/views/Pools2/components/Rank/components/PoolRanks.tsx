@@ -1,5 +1,13 @@
 import styled from 'styled-components'
-import { Heading, Flex, Text, Card, Button } from '@pancakeswap/uikit'
+import { Heading, Flex, Text, Card, Button, useToast } from '@pancakeswap/uikit'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import { ThreeDots } from 'views/Pool/components/DepositModal'
+import useConfirmTransaction from 'hooks/useConfirmTransaction'
+import { useCallWithMarketGasPrice } from 'hooks/useCallWithMarketGasPrice'
+import { usePoolsContract } from 'hooks/useContract'
+import { ToastDescriptionWithTx } from 'components/Toast'
+import { ethers } from 'ethers'
+import { timeDisplayLong } from 'views/Pools2/util'
 
 const ListPoolRanks = styled.div`
   display: flex;
@@ -15,7 +23,7 @@ export const ImageRank = styled.img`
     width: 80px;
   }
   @media (max-width: 1023px) {
-    width: 70px;
+    width: 60px;
   }
 `
 
@@ -57,6 +65,7 @@ const MinMaxPrice = styled.div`
   display: flex;
   justify-content: space-between;
   color: inherit;
+  gap: 6px;
 `
 
 const MinMaxItem = styled.span`
@@ -67,6 +76,7 @@ const MinMaxItem = styled.span`
   align-items: center;
   text-transform: capitalize;
   color: inherit;
+  gap: 6px;
 `
 
 const CardBody = styled.div``
@@ -102,6 +112,7 @@ const Value = styled.span`
   align-items: center;
   text-transform: capitalize;
   color: #e6e6e6;
+  gap: 6px;
 
   @media (max-width: 739px) {
     font-size: 14px;
@@ -130,7 +141,24 @@ const StyledButtonRank = styled(Button)`
   border-radius: 22.5px;
 `
 
-const PoolRanks = ({ data }) => {
+const PoolRanks = ({ data, onSuccess, userRank, userIsClaim }) => {
+  const { toastSuccess, toastError } = useToast()
+  const { account, chainId } = useActiveWeb3React()
+  const poolContract = usePoolsContract()
+  const { callWithMarketGasPrice } = useCallWithMarketGasPrice()
+  const { isConfirming, handleConfirm } = useConfirmTransaction({
+    onConfirm: () => {
+      return callWithMarketGasPrice(poolContract, 'claimRankRewardMonthly', [account])
+    },
+    onSuccess: async ({ receipt }) => {
+      toastSuccess(
+        'Claim reward commission successfully !',
+        <ToastDescriptionWithTx txHash={receipt.transactionHash} />,
+      )
+      onSuccess()
+    },
+  })
+
   const getColor = (title) => {
     switch (title) {
       case 'Silver':
@@ -159,7 +187,7 @@ const PoolRanks = ({ data }) => {
               <TitleHeadRight>{item.title}</TitleHeadRight>
               <progress
                 className="file"
-                value={item.process}
+                value={item.total}
                 max={item.max}
                 style={{ margin: '4px 0', accentColor: getColor(item.title) }}
               />
@@ -176,7 +204,7 @@ const PoolRanks = ({ data }) => {
             </ItemInfoCard>
             <ItemInfoCard>
               <Label>Current Reward:</Label>
-              <Value>{item.currentReward}%</Value>
+              <Value>{item.currentReward}$</Value>
             </ItemInfoCard>
             <ItemInfoCard>
               <Label>Member:</Label>
@@ -185,10 +213,23 @@ const PoolRanks = ({ data }) => {
             <BorderCard />
             <ItemInfoCard>
               <Label>Your reward:</Label>
-              <Value>{item.total}$</Value>
+              <Value>{`${item.yourReward}`}$</Value>
             </ItemInfoCard>
             <div style={{ textAlign: 'center', marginTop: 20 }}>
-              <StyledButtonRank>Claim</StyledButtonRank>
+              <StyledButtonRank
+                disabled={userRank === index + 1 && !userIsClaim ? false : true}
+                onClick={handleConfirm}
+              >
+                {isConfirming ? (
+                  <ThreeDots className="loading">
+                    Claiming<span>.</span>
+                    <span>.</span>
+                    <span>.</span>
+                  </ThreeDots>
+                ) : (
+                  'Claim'
+                )}
+              </StyledButtonRank>
             </div>
           </CardBody>
         </CardPoolRanks>

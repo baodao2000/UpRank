@@ -15,7 +15,6 @@ import { ethers } from 'ethers'
 import { useBalance } from 'wagmi'
 import { formatBigNumber } from 'utils/formatBalance'
 import { DepositPoolModalProps } from './type'
-import { formatNumber } from 'views/Pools2'
 import numeral from 'numeral'
 
 // STYLE
@@ -38,7 +37,7 @@ const depositModal = {}
 const depositInput = {
   borderRadius: '10px',
 }
-const ThreeDots = styled.p`
+export const ThreeDots = styled.p`
   @keyframes blinkdot {
     0% {
       opacity: 0.2;
@@ -225,21 +224,15 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
           />
           <span style={{ color: '#2CE0D5', fontWeight: 600 }}>$</span>
           <span style={{ color: '#2CE0D5' }}>{' ~ '}</span>
-          {String(pool.minLock / pool.rateBNB2USD).indexOf('e') !== -1 ? (
-            <span style={{ color: '#2CE0D5', fontWeight: 400 }}>
-              {formatNumber(Number(pool.minLock / pool.rateBNB2USD))}
-            </span>
-          ) : (
-            <CountUp
-              start={0}
-              preserveValue
-              delay={0}
-              end={Number(pool.minLock / pool.rateBNB2USD) + 0.01}
-              decimals={2}
-              duration={0.5}
-              style={{ color: '#2CE0D5', fontWeight: 400 }}
-            />
-          )}{' '}
+          <CountUp
+            start={0}
+            preserveValue
+            delay={0}
+            end={Number(pool.minLock / pool.rateBNB2USD) + 0.01}
+            decimals={2}
+            duration={0.5}
+            style={{ color: '#2CE0D5', fontWeight: 400 }}
+          />{' '}
           <img src={`/images/chains/${chainId}.png`} alt="logo" width="12px" /> to{' '}
           <CountUp
             start={0}
@@ -252,21 +245,15 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
           ></CountUp>
           <span style={{ color: '#2CE0D5', fontWeight: 600 }}>$</span>
           <span style={{ color: '#2CE0D5' }}>{' ~ '}</span>
-          {String(pool.maxLock / pool.rateBNB2USD).indexOf('e') !== -1 ? (
-            <span style={{ color: '#2CE0D5', fontWeight: 400 }}>
-              {formatNumber(Number(pool.maxLock / pool.rateBNB2USD))}
-            </span>
-          ) : (
-            <CountUp
-              start={0}
-              preserveValue
-              delay={0}
-              end={Number(pool.maxLock / pool.rateBNB2USD)}
-              decimals={2}
-              duration={0.5}
-              style={{ color: '#2CE0D5', fontWeight: 400 }}
-            />
-          )}{' '}
+          <CountUp
+            start={0}
+            preserveValue
+            delay={0}
+            end={Number(pool.maxLock / pool.rateBNB2USD)}
+            decimals={2}
+            duration={0.5}
+            style={{ color: '#2CE0D5', fontWeight: 400 }}
+          />{' '}
           <img src={`/images/chains/${chainId}.png`} alt="logo" width="12px" />
         </span>
         <span className="bnb"></span>

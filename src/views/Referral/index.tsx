@@ -1,9 +1,9 @@
 import styled from 'styled-components'
 import { Card, Heading, Text, Flex, Button, useToast } from '@pancakeswap/uikit'
-import React from 'react'
+import React, { useState } from 'react'
 import { Tooltip } from 'react-tooltip'
 import 'react-tooltip/dist/react-tooltip.css'
-import { getContract } from 'utils/contractHelpers'
+import { getContract, getPoolsContract } from 'utils/contractHelpers'
 import addresses from 'config/constants/contracts'
 import refferalAbi from 'config/abi/refferal.json'
 import { useDispatch } from 'react-redux'
@@ -176,8 +176,10 @@ const Referral = () => {
   const [modalIsOpen, setModalIsOpen] = React.useState(true)
   // const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId;
   const CHAIN_ID = Number(process.env.NEXT_PUBLIC_DEFAULT_CHAIN)
+  const getPoolContract = getPoolsContract(CHAIN_ID)
   const refferCT = getContract({ address: addresses.refferal[CHAIN_ID], abi: refferalAbi, chainId: CHAIN_ID, signer })
   const [userIsRegister, setUserIsRegister] = React.useState(false)
+  const [interest, setInterest] = React.useState(0)
 
   React.useEffect(() => {
     const checkUserRegister = async () => {
@@ -195,11 +197,21 @@ const Referral = () => {
     }
   }, [account, userIsRegister])
 
+  React.useEffect(() => {
+    getRefer()
+  }, [])
+
   const getLinkRef = () => {
     const param = window.location.origin
     const text = `${param}?ref=${account}`
 
     return text
+  }
+
+  const getRefer = async () => {
+    const pool = await getPoolContract.pools(5)
+    const interest = Number(pool.commPercent.toString()) * 0.000001 * 100
+    setInterest(interest)
   }
 
   const onRegister = async () => {
@@ -277,7 +289,7 @@ const Referral = () => {
     <ReferralPage>
       <CardWidth>
         <StyledHead>Referral</StyledHead>
-        <StyledSubtitle>Refer a friend and get reward together up to 25%</StyledSubtitle>
+        <StyledSubtitle>Refer a friend and get reward together up to {interest}%</StyledSubtitle>
         <GroupLinkRef>
           <StyledLabelLinkRef>My Referral Link</StyledLabelLinkRef>
           <WrapperLinkRef>
