@@ -167,7 +167,7 @@ const DetailInfoPool: React.FC<
                 preserveValue
                 delay={0}
                 end={Number(currentReward)}
-                decimals={totalReward > 0 ? 6 : 2}
+                decimals={totalReward > 0 ? 4 : 2}
                 duration={0.5}
               />{' '}
               <img src={`/images/chains/${chainId}.png`} alt="pool name" width={18} />
@@ -208,7 +208,7 @@ const DetailInfoPool: React.FC<
                 preserveValue
                 delay={0}
                 end={Number(totalReward)}
-                decimals={totalReward > 0 ? 6 : 0}
+                decimals={totalReward > 0 ? 4 : 0}
                 duration={0.5}
               />{' '}
               <img src={`/images/chains/${chainId}.png`} alt="pool name" width={18} />
@@ -238,7 +238,7 @@ const DetailInfoPool: React.FC<
               preserveValue
               delay={0}
               end={Number(totalLock)}
-              decimals={totalLock > 0 ? 2 : 0}
+              decimals={totalLock > 0 ? 4 : 0}
               duration={0.5}
               style={{ fontWeight: 600 }}
             />

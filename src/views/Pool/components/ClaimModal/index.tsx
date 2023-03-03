@@ -131,7 +131,7 @@ const ClaimPoolModal: React.FC<React.PropsWithChildren<ClaimPoolModalProps>> = (
                 preserveValue
                 delay={0}
                 end={Number(pool.currentReward)}
-                decimals={pool.currentReward === 0 ? 0 : 2}
+                decimals={pool.currentReward === 0 ? 0 : 4}
                 duration={0.5}
               />
               &ensp;

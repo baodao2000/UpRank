@@ -125,9 +125,12 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
   const library = useWeb3LibraryContext()
   const { toastSuccess, toastError } = useToast()
   const { theme } = useTheme()
-  const minLockMatic = Number(pool.minLock / pool.rateBNB2USD).toFixed(2)
-  const maxLockMatic = Number(pool.maxLock / pool.rateBNB2USD).toFixed(2)
-  const [amount, setAmount] = useState(numeral(Number(Number(minLockMatic).toFixed(2)) + 0.01).format('0,0.00'))
+  const minLockMatic =
+    chainId === 137
+      ? Number(Number(pool.minLock / pool.rateBNB2USD) + 0.01)
+      : Number(Number(pool.minLock / pool.rateBNB2USD) + 0.0001)
+  const maxLockMatic = Number(pool.maxLock / pool.rateBNB2USD).toFixed(4)
+  const [amount, setAmount] = useState(minLockMatic.toFixed(4))
   const [isValidAmount, setIsValidAmount] = useState(true)
   const poolContract = usePoolsContract()
   const handleAmountChange = (e: any) => {
@@ -137,7 +140,7 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
   const [perActive, setPerActive] = useState(0)
   const { data, isFetched } = useBalance({ addressOrName: account })
   const userBalance = isFetched && data && data.value ? formatBigNumber(data.value, 4) : 0
-  const checkAmount = (value: number) => {
+  const checkAmount = (value: any) => {
     if (
       value > Number((pool.maxLock / pool.rateBNB2USD).toFixed(2)) ||
       value < Number((pool.minLock / pool.rateBNB2USD).toFixed(2))
@@ -149,8 +152,8 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
     switch (per) {
       case 1: {
         setPerActive(1)
-        setAmount(numeral(Number(Number(minLockMatic).toFixed(2)) + 0.01).format('0,0.00'))
-        checkAmount(Number(numeral(Number(Number(minLockMatic).toFixed(2)) + 0.01).format('0,0.00')))
+        setAmount(minLockMatic.toFixed(4))
+        checkAmount(minLockMatic.toFixed(4))
         break
       }
       case 25: {
@@ -228,8 +231,8 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
             start={0}
             preserveValue
             delay={0}
-            end={Number(pool.minLock / pool.rateBNB2USD) + 0.01}
-            decimals={2}
+            end={minLockMatic}
+            decimals={4}
             duration={0.5}
             style={{ color: '#2CE0D5', fontWeight: 400 }}
           />{' '}
@@ -250,7 +253,7 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
             preserveValue
             delay={0}
             end={Number(pool.maxLock / pool.rateBNB2USD)}
-            decimals={2}
+            decimals={4}
             duration={0.5}
             style={{ color: '#2CE0D5', fontWeight: 400 }}
           />{' '}
@@ -291,9 +294,7 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
           type="number"
           style={depositInput}
           onChange={handleAmountChange}
-          placeholder={`${numeral(Number((pool.minLock / pool.rateBNB2USD).toFixed(2)) + 0.01).format('0,0.00')} ${
-            pool.unit
-          }`}
+          placeholder={`${minLockMatic.toFixed(4)} ${pool.unit}`}
         />
         <MinMaxButtons>
           <MinMax onClick={() => minMaxBalanceHandle(1)} className={perActive === 1 ? 'active' : ''}>

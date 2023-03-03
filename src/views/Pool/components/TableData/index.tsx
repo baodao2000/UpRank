@@ -160,7 +160,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
                       preserveValue
                       delay={0}
                       end={pool.userTotalLock}
-                      decimals={pool.userTotalLock > 0 ? 2 : 0}
+                      decimals={pool.userTotalLock > 0 ? 4 : 0}
                       duration={0.5}
                     />
                     &ensp;
@@ -197,7 +197,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
                       preserveValue
                       delay={0}
                       end={pool.currentReward}
-                      decimals={pool.currentReward > 0 ? 2 : 0}
+                      decimals={pool.currentReward > 0 ? 4 : 0}
                       duration={0.5}
                     />
                     <img src={`/images/chains/${chainId}.png`} alt="pool name" width={18} style={{ marginLeft: 6 }} />
@@ -253,7 +253,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
                           preserveValue
                           delay={0}
                           end={claimHistory.totalLock}
-                          decimals={claimHistory.totalLock > 0 ? 2 : 0}
+                          decimals={claimHistory.totalLock > 0 ? 4 : 0}
                           duration={0.5}
                         />
                         {pool.unit}

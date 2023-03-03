@@ -371,7 +371,7 @@ const Pools = () => {
     }
   }
 
-  const getInfoRank = async () => {
+  const getInfoRank = async (rateBNB2USD) => {
     const rank = await getPoolContract.userRank(account)
     const months = await getPoolContract.getMonths()
     const isClaimed = await getPoolContract.userRankRewardClaimed(account, Number(months.toString()))
@@ -382,14 +382,14 @@ const Pools = () => {
         return {
           image: getRankImage(item).img,
           title: getRankImage(item).title,
-          currentReward: rank.remainInMonth.toString(),
-          total: numeral(formatEther(rank.total)).format('0,0.0000'),
-          min: numeral(formatEther(rank.total)).format('0,0.0000') || 0,
+          currentReward: formatEther(rank.remainInMonth.toString()),
+          total: Number(Number(formatEther(rank.total)) * rateBNB2USD).toFixed(4),
+          min: Number(Number(formatEther(rank.total)) * rateBNB2USD).toFixed(4),
           max: Number(formatEther(rank.minStart)),
           member: rank.totalMember.toString(),
           yourReward:
-            Number(rank.rewardInMonth.toString()) && Number(rank.totalMember.toString())
-              ? Number(rank.rewardInMonth.toString()) / Number(rank.totalMember.toString())
+            Number(formatEther(rank.rewardInMonth.toString())) && Number(rank.totalMember.toString())
+              ? Number(formatEther(rank.rewardInMonth.toString())) / Number(rank.totalMember.toString())
               : 0,
         }
       }),
@@ -404,7 +404,7 @@ const Pools = () => {
       const rateBnbUsd = await getPoolContract.bnbPrice()
       const pools = ids.map((item) => getPoolContract.pools(item))
 
-      await getInfoRank()
+      await getInfoRank(Number(formatEther(rateBnbUsd[0])) / Number(formatEther(rateBnbUsd[1])))
 
       setRateBnbUsd(Number(formatEther(rateBnbUsd[0])) / Number(formatEther(rateBnbUsd[1])))
       const newPoolInfo = await Promise.all(
@@ -444,7 +444,7 @@ const Pools = () => {
   }
 
   const onSuccessRank = () => {
-    getInfoRank()
+    getInfoRank(rateBnbUsd)
   }
   useEffect(() => {
     if (!account) return
@@ -487,7 +487,7 @@ const Pools = () => {
                     preserveValue
                     delay={0}
                     end={Number(balance)}
-                    decimals={2}
+                    decimals={4}
                     duration={0.5}
                   />
                 }
@@ -613,7 +613,7 @@ const Pools = () => {
                                     preserveValue
                                     delay={0}
                                     end={i.minLock / i.rateBNB2USD}
-                                    decimals={2}
+                                    decimals={4}
                                     duration={1}
                                   />
                                   <img src={`/images/chains/${chainId}.png`} alt="" width="16px" />
@@ -685,7 +685,7 @@ const Pools = () => {
                                       preserveValue
                                       delay={0}
                                       end={Number(i.totalLock)}
-                                      decimals={2}
+                                      decimals={4}
                                       duration={1}
                                       style={{
                                         color: `${pools[r]?.tagColor}`,
@@ -735,7 +735,7 @@ const Pools = () => {
                                     preserveValue
                                     delay={0}
                                     end={i.maxLock / i.rateBNB2USD}
-                                    decimals={2}
+                                    decimals={4}
                                     duration={1}
                                   />
                                   <img src={`/images/chains/${chainId}.png`} alt="" width="16px" />
@@ -792,7 +792,7 @@ const Pools = () => {
                                       preserveValue
                                       delay={0}
                                       end={Number(i.yourLock)}
-                                      decimals={2}
+                                      decimals={4}
                                       duration={1}
                                       style={{
                                         color: `${pools[r]?.tagColor}`,
