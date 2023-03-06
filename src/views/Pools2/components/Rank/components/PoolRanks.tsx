@@ -14,26 +14,29 @@ const ListPoolRanks = styled.div`
   align-items: stretch;
   justify-content: space-evenly;
   flex-wrap: wrap;
-  grid-column-gap: 30px;
+  grid-column-gap: 20px;
   grid-row-gap: 30px;
 `
 
 export const ImageRank = styled.img`
   @media screen and (min-width: 1024px) {
-    width: 80px;
+    width: 50px;
   }
   @media (max-width: 1023px) {
-    width: 60px;
+    width: 40px;
   }
 `
 
-const CardPoolRanks = styled(Card)`
-  width: 345px;
+const CardPoolRanks = styled.div`
+  width: auto;
   height: auto;
   background: linear-gradient(153.15deg, #391e67 8.57%, #c4cff6 100%);
   box-shadow: 6px 10px 25px rgba(0, 0, 0, 0.1), inset 0px 4px 16px rgba(255, 233, 190, 0.63);
   border-radius: 20px;
-  padding: 20px;
+  padding: 14px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `
 
 const CardHead = styled.div`
@@ -41,7 +44,7 @@ const CardHead = styled.div`
   justify-content: flex-start;
   align-items: center;
   gap: 15px;
-  margin-bottom: 16px;
+  margin-bottom: 10px;
 `
 
 const HeadLeft = styled.div``
@@ -50,14 +53,14 @@ const HeadRight = styled.div``
 
 const TitleHeadRight = styled(Heading)`
   font-weight: 700;
-  font-size: 32px;
+  font-size: 20px;
   line-height: 120%;
   display: flex;
   align-items: center;
   text-transform: capitalize;
   color: inherit;
   @media (max-width: 739px) {
-    font-size: 22px;
+    font-size: 20px;
   }
 `
 
@@ -70,7 +73,7 @@ const MinMaxPrice = styled.div`
 
 const MinMaxItem = styled.span`
   font-weight: 700;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 100%;
   display: flex;
   align-items: center;
@@ -87,12 +90,12 @@ const ItemInfoCard = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 6px;
 `
 
 const Label = styled.span`
   font-weight: 700;
-  font-size: 18px;
+  font-size: 12px;
   line-height: 100%;
   display: flex;
   align-items: center;
@@ -100,13 +103,13 @@ const Label = styled.span`
   color: #e6e6e6;
 
   @media (max-width: 739px) {
-    font-size: 14px;
+    font-size: 12px;
   }
 `
 
 const Value = styled.span`
   font-weight: 700;
-  font-size: 18px;
+  font-size: 12px;
   line-height: 100%;
   display: flex;
   align-items: center;
@@ -115,19 +118,18 @@ const Value = styled.span`
   gap: 6px;
 
   @media (max-width: 739px) {
-    font-size: 14px;
+    font-size: 12px;
   }
 `
 
 const BorderCard = styled.div`
   border: 1px solid #595959;
-  margin-top: 10px;
-  margin-bottom: 15px;
+  margin: 8px 0;
 `
 
 const StyledButtonRank = styled(Button)`
-  width: 143px;
-  height: 40px;
+  width: 103px;
+  height: 30px;
   background: linear-gradient(
     178.36deg,
     #5c4a8a 1.4%,
@@ -139,6 +141,7 @@ const StyledButtonRank = styled(Button)`
   box-shadow: 4px 4px 25px rgba(227, 227, 227, 0.25), 0px 4px 8px rgba(0, 0, 0, 0.25),
     inset 0px 4px 4px rgba(236, 236, 236, 0.25);
   border-radius: 22.5px;
+  font-size: 12px;
 `
 
 const PoolRanks = ({ data, onSuccess, userRank, userIsClaim }) => {
@@ -189,7 +192,7 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim }) => {
                 className="file"
                 value={item.total}
                 max={item.max}
-                style={{ margin: '4px 0', accentColor: getColor(item.title) }}
+                style={{ margin: '4px 0', accentColor: getColor(item.title), width: 130 }}
               />
               <MinMaxPrice>
                 <MinMaxItem>{item.min}$</MinMaxItem>
@@ -215,23 +218,20 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim }) => {
               <Label>Your reward:</Label>
               <Value>{`${item.yourReward}`}$</Value>
             </ItemInfoCard>
-            <div style={{ textAlign: 'center', marginTop: 20 }}>
-              <StyledButtonRank
-                disabled={userRank === index + 1 && !userIsClaim ? false : true}
-                onClick={handleConfirm}
-              >
-                {isConfirming ? (
-                  <ThreeDots className="loading">
-                    Claiming<span>.</span>
-                    <span>.</span>
-                    <span>.</span>
-                  </ThreeDots>
-                ) : (
-                  'Claim'
-                )}
-              </StyledButtonRank>
-            </div>
           </CardBody>
+          <div style={{ textAlign: 'center', marginTop: 8 }}>
+            <StyledButtonRank disabled={userRank === index + 1 && !userIsClaim ? false : true} onClick={handleConfirm}>
+              {isConfirming ? (
+                <ThreeDots className="loading">
+                  Claiming<span>.</span>
+                  <span>.</span>
+                  <span>.</span>
+                </ThreeDots>
+              ) : (
+                'Claim'
+              )}
+            </StyledButtonRank>
+          </div>
         </CardPoolRanks>
       ))}
     </ListPoolRanks>

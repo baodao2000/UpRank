@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Card, Heading, Text, Flex, Button, useToast } from '@pancakeswap/uikit'
+import { Heading, Text, Flex, Button, useToast } from '@pancakeswap/uikit'
 import React, { useState } from 'react'
 import { Tooltip } from 'react-tooltip'
 import 'react-tooltip/dist/react-tooltip.css'
@@ -11,35 +11,52 @@ import { setRefLink } from 'state/referral'
 import { useSigner } from 'wagmi'
 import truncateHash from '@pancakeswap/utils/truncateHash'
 import { useWeb3React } from '../../../packages/wagmi/src/useWeb3React'
+import moment from 'moment'
+import LoadingSection from 'views/Predictions/components/LoadingSection'
+import { formatEther } from '@ethersproject/units'
+import { NATIVE } from '../../../packages/swap-sdk/src/constants'
+
+const Wrapper = styled.div`
+  width: 100%;
+  max-width: 1500px;
+  height: auto;
+  min-height: 500px;
+  margin-left: auto;
+  margin-right: auto;
+`
 
 const ReferralPage = styled.div`
   display: flex;
-  width: 100%;
-  max-width: 1335px;
-  height: 100%;
-  margin: 0 auto;
+  flex-wrap: wrap;
   position: relative;
   justify-content: center;
-  flex-direction: column;
-  margin-bottom: 32px;
-  padding: 0 30px;
+  margin-top: 32px;
+  padding: 0 20px;
+  gap: 20px;
+`
+
+const CardReferral = styled.div`
+  max-width: 800px;
+  width: 100%;
+  height: auto;
+  padding: 15px;
+  margin-bottom: 30px;
+  border-radius: 20px;
+  background: linear-gradient(153.15deg, rgb(124, 7, 216) 8.57%, rgba(129, 69, 255, 0.02) 100%);
 
   ${({ theme }) => theme.mediaQueries.md} {
-    flex-direction: row;
-    align-items: center;
-    flex-wrap: wrap;
-    padding: 16px 32px;
-    margin-bottom: 0;
+    padding: 30px 37px;
   }
 `
 
-const CardWidth = styled(Card)`
+const CardInfoUser = styled.div`
+  max-width: 600px;
   width: 100%;
   height: auto;
-  max-height: 360px;
-  padding: 24px;
+  padding: 15px;
   margin-bottom: 30px;
-  background: linear-gradient(239.08deg, #f3dda8 11.04%, #ffae3d 92.61%);
+  border-radius: 20px;
+  background: linear-gradient(153.15deg, rgb(124, 7, 216) 8.57%, rgba(129, 69, 255, 0.02) 100%);
 
   ${({ theme }) => theme.mediaQueries.md} {
     padding: 30px 37px;
@@ -49,7 +66,7 @@ const CardWidth = styled(Card)`
 const StyledHead = styled(Heading)`
   text-align: center;
   font-weight: 700;
-  color: #1060ec;
+  color: #00f0e1;
   font-size: 24px;
   line-height: 29px;
 
@@ -60,36 +77,29 @@ const StyledHead = styled(Heading)`
 `
 
 const StyledSubtitle = styled(Text)`
-  color: #1060ec;
+  color: #e6e6e6;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 20px;
   line-height: 144.5%;
   text-align: center;
-
-  ${({ theme }) => theme.mediaQueries.md} {
-    font-size: 32px;
-  }
 `
 
-const GroupLinkRef = styled(Flex)`
+const GroupLinkRef = styled.div`
   flex-direction: column;
   align-items: center;
+  display: flex;
 `
 
 const WrapperLinkRef = styled.div`
   position: relative;
   width: 100%;
-
-  ${({ theme }) => theme.mediaQueries.md} {
-    width: 584px;
-  }
 `
 
 const StyledLabelLinkRef = styled.label`
   font-weight: 600;
   font-size: 24px;
   line-height: 144.5%;
-  color: #1060ec;
+  color: #e6e6e6;
   text-align: center;
   display: block;
   margin: 20px 0 12px 0;
@@ -101,11 +111,11 @@ const StyledLabelLinkRef = styled.label`
 
 const StyledLink = styled.div`
   width: 100%;
-  background: linear-gradient(135deg, #105eec 0%, #061428 100%);
+  background: #00f0e1;
   border-radius: 10px;
   border: none;
   outline: none;
-  color: #ffffff;
+  color: black;
   font-size: 18px;
   padding: 10px 10px 10px 50px;
   min-height: 34px;
@@ -116,20 +126,13 @@ const StyledLink = styled.div`
 `
 
 const StyledButton = styled(Button)`
-  background: linear-gradient(135deg, #105eec 0%, #061428 100%);
+  background: rgb(217, 217, 217);
   border-radius: 8px;
   font-weight: 800;
-  color: #ffffff;
+  color: rgb(98, 22, 176);
   margin-top: 30px;
-  width: 100%;
   font-size: 16px;
   line-height: 17px;
-
-  ${({ theme }) => theme.mediaQueries.md} {
-    width: 343px;
-    font-size: 32px;
-    line-height: 39px;
-  }
 `
 
 const StyledIconRef = styled.img`
@@ -149,16 +152,42 @@ const StyledIconRef = styled.img`
 
 const ShowLinkRefPc = styled.span`
   display: none;
-  ${({ theme }) => theme.mediaQueries.md} {
+  word-break: break-all;
+  ${({ theme }) => theme.mediaQueries.sm} {
     display: block;
   }
 `
 
 const ShowLinkRefMobile = styled.span`
   display: block;
-  ${({ theme }) => theme.mediaQueries.md} {
+  word-break: break-all;
+  ${({ theme }) => theme.mediaQueries.sm} {
     display: none;
   }
+`
+
+const BlockInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+`
+
+const InfoItem = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  color: #e6e6e6;
+`
+
+const Label = styled.div`
+  font-weight: 700;
+  margin-right: 10px;
+  font-size: 14px;
+`
+
+const Value = styled.div`
+  word-break: break-all;
+  font-size: 14px;
 `
 
 const Referral = () => {
@@ -168,6 +197,7 @@ const Referral = () => {
   const dispatch = useDispatch()
   const { toastSuccess, toastError } = useToast()
   const [loading, setLoading] = React.useState(false)
+  const [loadingPage, setLoadingPage] = React.useState(true)
   const { search } = window.location
   const query = new URLSearchParams(search)
   const referBy = query.get('ref')
@@ -180,8 +210,41 @@ const Referral = () => {
   const refferCT = getContract({ address: addresses.refferal[CHAIN_ID], abi: refferalAbi, chainId: CHAIN_ID, signer })
   const [userIsRegister, setUserIsRegister] = React.useState(false)
   const [interest, setInterest] = React.useState(0)
+  const unit = chainId && NATIVE[chainId].symbol
+  const [userInfos, setUserInfo] = React.useState({
+    refferBy: '',
+    date: 0,
+    totalReffer: '',
+    totalRefer7: '',
+    directStaked: '',
+    totalStaked7: '',
+    totalComms: '',
+  })
 
-  React.useEffect(() => {
+  const getUserInfo = async () => {
+    if (!account) {
+      return
+    }
+    const infos = await Promise.all([
+      refferCT.userInfos(account),
+      getPoolContract.directStaked(account),
+      getPoolContract.volumeOntree(account),
+      getPoolContract.totalComms(account),
+    ])
+
+    const user = {
+      refferBy: infos[0].refferBy.toString(),
+      date: Number(infos[0].dateTime.toString()) * 1000,
+      totalReffer: infos[0].totalRefer.toString(),
+      totalRefer7: infos[0].totalRefer7.toString(),
+      directStaked: infos[1].toString(),
+      totalStaked7: formatEther(infos[2]),
+      totalComms: formatEther(infos[3].toString()),
+    }
+    setUserInfo(user)
+  }
+
+  const getData = () => {
     const checkUserRegister = async () => {
       if (account) {
         const isRegister = await refferCT.isReferrer(account)
@@ -189,17 +252,20 @@ const Referral = () => {
       }
     }
     checkUserRegister()
+    getRefer()
+    getUserInfo()
 
     if (userIsRegister && account) {
       setLinkRef(getLinkRef())
     } else {
       setLinkRef('')
     }
-  }, [account, userIsRegister])
+    setLoadingPage(false)
+  }
 
   React.useEffect(() => {
-    getRefer()
-  }, [])
+    getData()
+  }, [account, userIsRegister, userInfos])
 
   const getLinkRef = () => {
     const param = window.location.origin
@@ -210,10 +276,9 @@ const Referral = () => {
 
   const getRefer = async () => {
     const pool = await getPoolContract.pools(5)
-    const interest = Number(pool.commPercent.toString()) * 0.000001 * 100
-    setInterest(interest)
+    const interest = Number(Number(pool.commPercent.toString()) * 0.000001 * 100).toFixed(2)
+    setInterest(Number(interest))
   }
-
   const onRegister = async () => {
     try {
       if (referBy) {
@@ -222,17 +287,21 @@ const Referral = () => {
           dispatch(setRefLink(`${baseRefUrl}${account}`))
           toastSuccess('Congratulations, you have successfully registered!')
           setLinkRef(getLinkRef())
+          setLoadingPage(true)
+          getData()
         } else {
           toastError('Please try again. Confirm the transaction and make sure you are paying enough gas!')
         }
       } else {
-        const ref = localStorage.getItem('saveAdd')
+        const ref = JSON.parse(localStorage.getItem('saveAdd'))
         if (ref?.includes('0x')) {
           const txReceipt = await refferCT.register(ref)
           if (txReceipt?.hash) {
             dispatch(setRefLink(`${baseRefUrl}${account}`))
             toastSuccess('Congratulations, you have successfully registered!')
             setLinkRef(getLinkRef())
+            setLoadingPage(true)
+            getData()
           } else {
             toastError('Please try again. Confirm the transaction and make sure you are paying enough gas!')
           }
@@ -243,6 +312,8 @@ const Referral = () => {
             dispatch(setRefLink(`${baseRefUrl}${account}`))
             toastSuccess('Congratulations, you have successfully registered!')
             setLinkRef(getLinkRef())
+            setLoadingPage(true)
+            getData()
           } else {
             toastError('Please try again. Confirm the transaction and make sure you are paying enough gas!')
           }
@@ -286,34 +357,78 @@ const Referral = () => {
   }
 
   return (
-    <ReferralPage>
-      <CardWidth>
-        <StyledHead>Referral</StyledHead>
-        <StyledSubtitle>Refer a friend and get reward together up to {interest}%</StyledSubtitle>
-        <GroupLinkRef>
-          <StyledLabelLinkRef>My Referral Link</StyledLabelLinkRef>
-          <WrapperLinkRef>
-            <StyledIconRef
-              id="iconRef"
-              src="/images/referral/ref-icon.png"
-              onClick={handleRef}
-              onMouseLeave={handleLeave}
-            />
-            <Tooltip
-              anchorId="iconRef"
-              content={userIsRegister ? (showCopied ? 'Copied' : 'Copy') : 'Please Register'}
-            />
-            <StyledLink>
-              <ShowLinkRefPc>{formatLinkRef(linkRef, 50, 4)}</ShowLinkRefPc>
-              <ShowLinkRefMobile>{formatLinkRef(linkRef, 20, 4)}</ShowLinkRefMobile>
-            </StyledLink>
-          </WrapperLinkRef>
-          <StyledButton onClick={onRegister} disabled={userIsRegister ? true : false}>
-            Register
-          </StyledButton>
-        </GroupLinkRef>
-      </CardWidth>
-    </ReferralPage>
+    <>
+      {loadingPage ? (
+        <LoadingSection />
+      ) : (
+        <Wrapper>
+          <ReferralPage>
+            <CardReferral>
+              <StyledHead>Referral</StyledHead>
+              <StyledSubtitle>Refer a friend and get reward together up to {interest}%</StyledSubtitle>
+              <GroupLinkRef>
+                <StyledLabelLinkRef>My Referral Link</StyledLabelLinkRef>
+                <WrapperLinkRef>
+                  <StyledIconRef
+                    id="iconRef"
+                    src="/images/referral/ref-icon.png"
+                    onClick={handleRef}
+                    onMouseLeave={handleLeave}
+                  />
+                  <Tooltip
+                    anchorId="iconRef"
+                    content={userIsRegister ? (showCopied ? 'Copied' : 'Copy') : 'Please Register'}
+                  />
+                  <StyledLink>
+                    <ShowLinkRefPc>{formatLinkRef(linkRef, 50, 4)}</ShowLinkRefPc>
+                    <ShowLinkRefMobile>{formatLinkRef(linkRef, 20, 4)}</ShowLinkRefMobile>
+                  </StyledLink>
+                </WrapperLinkRef>
+                <StyledButton onClick={onRegister} disabled={userIsRegister ? true : false}>
+                  Register
+                </StyledButton>
+              </GroupLinkRef>
+            </CardReferral>
+            <CardInfoUser>
+              <StyledHead>Info User</StyledHead>
+              <BlockInfo>
+                <InfoItem>
+                  <Label>Reffer by:</Label>
+                  <Value>{userInfos.refferBy}</Value>
+                </InfoItem>
+                <InfoItem>
+                  <Label>Date refferd:</Label>
+                  <Value>{userInfos.date === 0 ? 0 : moment(Number(userInfos.date)).format('MMM Do YYYY')}</Value>
+                </InfoItem>
+                <InfoItem>
+                  <Label>Total reffer:</Label>
+                  <Value>{userInfos.totalReffer}</Value>
+                </InfoItem>
+                <InfoItem>
+                  <Label>Total reffer 7 level:</Label>
+                  <Value>{userInfos.totalRefer7}</Value>
+                </InfoItem>
+                <InfoItem>
+                  <Label>Direct staked:</Label>
+                  <Value>{userInfos.directStaked}</Value>
+                </InfoItem>
+                <InfoItem>
+                  <Label>Total 7 level staked:</Label>
+                  <Value>{userInfos.totalStaked7}$</Value>
+                </InfoItem>
+                <InfoItem>
+                  <Label>Total commission:</Label>
+                  <Value>
+                    {userInfos.totalComms}
+                    {unit}
+                  </Value>
+                </InfoItem>
+              </BlockInfo>
+            </CardInfoUser>
+          </ReferralPage>
+        </Wrapper>
+      )}
+    </>
   )
 }
 

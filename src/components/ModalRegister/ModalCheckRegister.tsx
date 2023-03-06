@@ -1,5 +1,5 @@
 import { Button, Modal, Text, Grid, InjectedModalProps, useToast } from '@pancakeswap/uikit'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { getContract } from 'utils/contractHelpers'
 import addresses from 'config/constants/contracts'
 import refferalAbi from 'config/abi/refferal.json'
@@ -25,6 +25,12 @@ export const ModalCheckRegister: React.FC<React.PropsWithChildren<RegistersModal
   // const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId;
   const CHAIN_ID = Number(process.env.NEXT_PUBLIC_DEFAULT_CHAIN)
   const refferCT = getContract({ address: addresses.refferal[CHAIN_ID], abi: refferalAbi, chainId: CHAIN_ID, signer })
+
+  const saveRef = () => {
+    if (referBy) {
+      localStorage.setItem('saveAdd', JSON.stringify(referBy))
+    }
+  }
 
   const onRegister = async () => {
     try {
@@ -67,6 +73,10 @@ export const ModalCheckRegister: React.FC<React.PropsWithChildren<RegistersModal
       onDismiss()
     }
   }
+
+  useEffect(() => {
+    saveRef()
+  })
 
   return (
     <Modal title="Register" onDismiss={onDismiss}>

@@ -5,6 +5,7 @@ import PoolRanks, { ImageRank } from './components/PoolRanks'
 import { getRankImage } from 'views/Pools2'
 
 const Wrapper = styled.div`
+  max-width: 900px;
   width: 100%;
   margin-bottom: 90px;
 `
@@ -30,7 +31,7 @@ const Rank = ({ userRank, ranks, onSuccess, userIsClaim }) => {
     <>
       <Wrapper>
         <BlockPoolRanks>
-          <StyledTitleRank fontSize={['30px', '30px', '36px', '40px', '50px', '60px']}>
+          <StyledTitleRank fontSize={['30px', '30px', '36px', '40px', '48px', '52px']}>
             Pool Rewards
             <ImageRank src={getRankImage(userRank).img} alt="" style={{ marginLeft: 10 }} />
           </StyledTitleRank>
