@@ -142,7 +142,7 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
   const userBalance = isFetched && data && data.value ? formatBigNumber(data.value, 4) : 0
   const checkAmount = (value: any) => {
     if (
-      value > Number((pool.maxLock / pool.rateBNB2USD).toFixed(4)) ||
+      // value > Number((pool.maxLock / pool.rateBNB2USD).toFixed(4)) ||
       value < Number((pool.minLock / pool.rateBNB2USD).toFixed(4))
     ) {
       setIsValidAmount(false)
@@ -180,8 +180,8 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
         //   setAmount(maxLockMatic)
         //   checkAmount(Number(maxLockMatic))
         // } else {
-          setAmount(Number(userBalance).toFixed(4))
-          checkAmount(Number(userBalance))
+        setAmount((Number(userBalance) - 0.009).toFixed(4))
+        checkAmount(Number(userBalance))
         // }
         break
       }
