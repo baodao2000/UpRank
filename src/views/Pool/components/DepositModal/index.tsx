@@ -142,8 +142,8 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
   const userBalance = isFetched && data && data.value ? formatBigNumber(data.value, 4) : 0
   const checkAmount = (value: any) => {
     if (
-      value > Number((pool.maxLock / pool.rateBNB2USD).toFixed(2)) ||
-      value < Number((pool.minLock / pool.rateBNB2USD).toFixed(2))
+      value > Number((pool.maxLock / pool.rateBNB2USD).toFixed(4)) ||
+      value < Number((pool.minLock / pool.rateBNB2USD).toFixed(4))
     ) {
       setIsValidAmount(false)
     } else setIsValidAmount(true)
