@@ -51,7 +51,7 @@ export const footerLinks: (t: ContextApi['t']) => FooterLinkType[] = (t) => [
       },
       {
         label: t('Facebook'),
-        // href: 'https://docs.pancakeswap.finance',
+        href: 'https://www.facebook.com/trendydefi',
         image: '/images/pools/facebook.svg',
       },
       {
@@ -66,13 +66,13 @@ export const footerLinks: (t: ContextApi['t']) => FooterLinkType[] = (t) => [
     items: [
       {
         label: t('Medium'),
-        // href: 'https://docs.pancakeswap.finance/contact-us',
+        href: 'https://medium.com/@trendydefi',
         isHighlighted: true,
         image: '/images/pools/medium.svg',
       },
       {
         label: t('Youtube'),
-        // href: 'https://docs.pancakeswap.finance/brand',
+        href: 'https://www.youtube.com/@defitrendy',
         image: '/images/pools/youtube.svg',
       },
     ],
