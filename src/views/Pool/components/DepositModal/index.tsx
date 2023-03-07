@@ -176,13 +176,13 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
       }
       case 100: {
         setPerActive(100)
-        if (Number(userBalance) > Number(maxLockMatic)) {
-          setAmount(maxLockMatic)
-          checkAmount(Number(maxLockMatic))
-        } else {
+        // if (Number(userBalance) > Number(maxLockMatic)) {
+        //   setAmount(maxLockMatic)
+        //   checkAmount(Number(maxLockMatic))
+        // } else {
           setAmount(Number(userBalance).toFixed(4))
           checkAmount(Number(userBalance))
-        }
+        // }
         break
       }
       default: {
