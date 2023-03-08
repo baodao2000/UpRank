@@ -21,8 +21,10 @@ const Wrapper = styled.div`
   max-width: 1500px;
   height: auto;
   min-height: 500px;
+  margin-top: 30px;
   margin-left: auto;
   margin-right: auto;
+  padding: 0 20px;
 `
 
 const ReferralPage = styled.div`
@@ -31,16 +33,15 @@ const ReferralPage = styled.div`
   position: relative;
   justify-content: center;
   margin-top: 32px;
-  padding: 0 20px;
   gap: 20px;
 `
 
-const CardReferral = styled.div`
-  max-width: 800px;
+const CardRegister = styled.div`
   width: 100%;
+  max-width: 1000px;
   height: auto;
   padding: 15px;
-  margin-bottom: 30px;
+  margin: 0 auto 30px auto;
   border-radius: 20px;
   background: linear-gradient(153.15deg, rgb(124, 7, 216) 8.57%, rgba(129, 69, 255, 0.02) 100%);
 
@@ -49,8 +50,25 @@ const CardReferral = styled.div`
   }
 `
 
-const CardInfoUser = styled.div`
+const CardReferral = styled.div`
   max-width: 600px;
+  width: 100%;
+  height: auto;
+  padding: 15px;
+  margin-bottom: 30px;
+  border-radius: 20px;
+  background: linear-gradient(153.15deg, rgb(124, 7, 216) 8.57%, rgba(129, 69, 255, 0.02) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    padding: 30px 37px;
+  }
+`
+
+const CardInfoUser = styled.div`
+  max-width: 800px;
   width: 100%;
   height: auto;
   padding: 15px;
@@ -92,6 +110,7 @@ const GroupLinkRef = styled.div`
 
 const WrapperLinkRef = styled.div`
   position: relative;
+  max-width: 650px;
   width: 100%;
 `
 
@@ -169,7 +188,7 @@ const ShowLinkRefMobile = styled.span`
 const BlockInfo = styled.div`
   display: flex;
   flex-direction: column;
-  row-gap: 16px;
+  row-gap: 10px;
 `
 
 const InfoItem = styled.div`
@@ -177,6 +196,15 @@ const InfoItem = styled.div`
   justify-content: space-between;
   width: 100%;
   color: #e6e6e6;
+`
+
+const ChildItem = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  color: #e6e6e6;
+  font-size: 14px;
+  word-break: break-all;
 `
 
 const Label = styled.div`
@@ -188,6 +216,27 @@ const Label = styled.div`
 const Value = styled.div`
   word-break: break-all;
   font-size: 14px;
+`
+
+const GroupChangePage = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 10px;
+`
+
+const ButtonChangePage = styled.button`
+  background: linear-gradient(
+    178.36deg,
+    #5c4a8a 1.4%,
+    #d2cbef 1.41%,
+    rgba(144, 126, 222, 0.62) 26.34%,
+    #7b6fef 71.12%,
+    #3c59f2 109.1%
+  );
+  border: none;
+  outline: none;
+  cursor: pointer;
 `
 
 const Referral = () => {
@@ -210,6 +259,9 @@ const Referral = () => {
   const refferCT = getContract({ address: addresses.refferal[CHAIN_ID], abi: refferalAbi, chainId: CHAIN_ID, signer })
   const [userIsRegister, setUserIsRegister] = React.useState(false)
   const [interest, setInterest] = React.useState(0)
+  const [listChild, setListChild] = React.useState([])
+  const [countPage, setCountPage] = React.useState(0)
+  const [activePage, setActivePage] = React.useState(0)
   const unit = chainId && NATIVE[chainId].symbol
   const [userInfos, setUserInfo] = React.useState({
     refferBy: '',
@@ -220,6 +272,35 @@ const Referral = () => {
     totalStaked7: '',
     totalComms: '',
   })
+
+  const getTotalRefferChild = async (page) => {
+    if (!account) {
+      return
+    }
+    const limit = 5
+    const data = await refferCT.getTotalUserByUp(account, limit, page)
+    const countPage = Math.round(Number(data.totalItem.toString()) / limit)
+    const arr = data.list.map((item) => item.user)
+    setCountPage(countPage)
+    setListChild(arr)
+  }
+
+  const handleClickPage = (index) => {
+    const limit = 5
+    const skip = index * limit
+    getTotalRefferChild(skip)
+    setActivePage(index)
+  }
+
+  const handleChangePage = (index) => {
+    if (typeof Number(index) !== 'number') {
+      return
+    }
+    const limit = 5
+    const skip = index * limit
+    getTotalRefferChild(skip)
+    setActivePage(Number(index))
+  }
 
   const getUserInfo = async () => {
     if (!account) {
@@ -244,6 +325,44 @@ const Referral = () => {
     setUserInfo(user)
   }
 
+  const getButtonChangePage = (limitButton) => {
+    let arr = []
+    const style = { background: '#00f0e1', color: 'black' }
+    if (countPage === 1) {
+      return null
+    }
+    if (countPage >= 4) {
+      for (let i = 0; i < limitButton; i++) {
+        arr.push(
+          <ButtonChangePage key={i} onClick={() => handleClickPage(i)} style={activePage === i ? style : {}}>
+            {i}
+          </ButtonChangePage>,
+        )
+      }
+      arr.push(
+        <input key={'a'} type="number" style={{ width: '40px' }} onChange={(e) => handleChangePage(e.target.value)} />,
+      )
+      arr.push(
+        <ButtonChangePage
+          key={countPage}
+          style={activePage === countPage - 1 ? style : {}}
+          onClick={() => handleClickPage(countPage - 1)}
+        >
+          {countPage - 1}
+        </ButtonChangePage>,
+      )
+    } else {
+      for (let i = 0; i < countPage; i++) {
+        arr.push(
+          <ButtonChangePage key={i} style={activePage === i ? style : {}} onClick={() => handleClickPage(i)}>
+            {i}
+          </ButtonChangePage>,
+        )
+      }
+    }
+    return arr
+  }
+
   const getData = () => {
     const checkUserRegister = async () => {
       if (account) {
@@ -266,6 +385,10 @@ const Referral = () => {
   React.useEffect(() => {
     getData()
   }, [account, userIsRegister, userInfos])
+
+  React.useEffect(() => {
+    getTotalRefferChild(0)
+  }, [account])
 
   const getLinkRef = () => {
     const param = window.location.origin
@@ -362,33 +485,33 @@ const Referral = () => {
         <LoadingSection />
       ) : (
         <Wrapper>
+          <CardRegister>
+            <StyledHead>Referral</StyledHead>
+            <StyledSubtitle>Refer a friend and get reward together up to {interest}%</StyledSubtitle>
+            <GroupLinkRef>
+              <StyledLabelLinkRef>My Referral Link</StyledLabelLinkRef>
+              <WrapperLinkRef>
+                <StyledIconRef
+                  id="iconRef"
+                  src="/images/referral/ref-icon.png"
+                  onClick={handleRef}
+                  onMouseLeave={handleLeave}
+                />
+                <Tooltip
+                  anchorId="iconRef"
+                  content={userIsRegister ? (showCopied ? 'Copied' : 'Copy') : 'Please Register'}
+                />
+                <StyledLink>
+                  <ShowLinkRefPc>{formatLinkRef(linkRef, 50, 4)}</ShowLinkRefPc>
+                  <ShowLinkRefMobile>{formatLinkRef(linkRef, 20, 4)}</ShowLinkRefMobile>
+                </StyledLink>
+              </WrapperLinkRef>
+              <StyledButton onClick={onRegister} disabled={userIsRegister ? true : false}>
+                Register
+              </StyledButton>
+            </GroupLinkRef>
+          </CardRegister>
           <ReferralPage>
-            <CardReferral>
-              <StyledHead>Referral</StyledHead>
-              <StyledSubtitle>Refer a friend and get reward together up to {interest}%</StyledSubtitle>
-              <GroupLinkRef>
-                <StyledLabelLinkRef>My Referral Link</StyledLabelLinkRef>
-                <WrapperLinkRef>
-                  <StyledIconRef
-                    id="iconRef"
-                    src="/images/referral/ref-icon.png"
-                    onClick={handleRef}
-                    onMouseLeave={handleLeave}
-                  />
-                  <Tooltip
-                    anchorId="iconRef"
-                    content={userIsRegister ? (showCopied ? 'Copied' : 'Copy') : 'Please Register'}
-                  />
-                  <StyledLink>
-                    <ShowLinkRefPc>{formatLinkRef(linkRef, 50, 4)}</ShowLinkRefPc>
-                    <ShowLinkRefMobile>{formatLinkRef(linkRef, 20, 4)}</ShowLinkRefMobile>
-                  </StyledLink>
-                </WrapperLinkRef>
-                <StyledButton onClick={onRegister} disabled={userIsRegister ? true : false}>
-                  Register
-                </StyledButton>
-              </GroupLinkRef>
-            </CardReferral>
             <CardInfoUser>
               <StyledHead>Info User</StyledHead>
               <BlockInfo>
@@ -425,6 +548,15 @@ const Referral = () => {
                 </InfoItem>
               </BlockInfo>
             </CardInfoUser>
+            <CardReferral>
+              <StyledHead>List Child User</StyledHead>
+              <BlockInfo>
+                {listChild.map((item, index) => (
+                  <ChildItem key={index}>{item}</ChildItem>
+                ))}
+              </BlockInfo>
+              <GroupChangePage>{getButtonChangePage(2)}</GroupChangePage>
+            </CardReferral>
           </ReferralPage>
         </Wrapper>
       )}
