@@ -15,6 +15,7 @@ import moment from 'moment'
 import LoadingSection from 'views/Predictions/components/LoadingSection'
 import { formatEther } from '@ethersproject/units'
 import { NATIVE } from '../../../packages/swap-sdk/src/constants'
+import { ThreeDots } from 'views/Pool/components/DepositModal'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -25,6 +26,17 @@ const Wrapper = styled.div`
   margin-left: auto;
   margin-right: auto;
   padding: 0 20px;
+  table,
+  th,
+  td {
+    border: 1px solid #e7e3eb;
+    border-collapse: collapse;
+  }
+  th,
+  td {
+    padding: 10px;
+    text-align: center;
+  }
 `
 
 const ReferralPage = styled.div`
@@ -34,14 +46,14 @@ const ReferralPage = styled.div`
   justify-content: center;
   margin-top: 32px;
   gap: 20px;
+  margin-bottom: 30px;
 `
 
 const CardRegister = styled.div`
+  max-width: 800px;
   width: 100%;
-  max-width: 1000px;
   height: auto;
   padding: 15px;
-  margin: 0 auto 30px auto;
   border-radius: 20px;
   background: linear-gradient(153.15deg, rgb(124, 7, 216) 8.57%, rgba(129, 69, 255, 0.02) 100%);
 
@@ -51,16 +63,18 @@ const CardRegister = styled.div`
 `
 
 const CardReferral = styled.div`
-  max-width: 600px;
+  max-width: 1000px;
+  min-height: 300px;
   width: 100%;
+  margin: 0 auto 30px auto;
   height: auto;
   padding: 15px;
-  margin-bottom: 30px;
   border-radius: 20px;
   background: linear-gradient(153.15deg, rgb(124, 7, 216) 8.57%, rgba(129, 69, 255, 0.02) 100%);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  color: #e6e6e6;
 
   ${({ theme }) => theme.mediaQueries.md} {
     padding: 30px 37px;
@@ -68,11 +82,10 @@ const CardReferral = styled.div`
 `
 
 const CardInfoUser = styled.div`
-  max-width: 800px;
+  max-width: 600px;
   width: 100%;
   height: auto;
   padding: 15px;
-  margin-bottom: 30px;
   border-radius: 20px;
   background: linear-gradient(153.15deg, rgb(124, 7, 216) 8.57%, rgba(129, 69, 255, 0.02) 100%);
 
@@ -198,12 +211,11 @@ const InfoItem = styled.div`
   color: #e6e6e6;
 `
 
-const ChildItem = styled.div`
-  display: flex;
-  justify-content: center;
+const Table = styled.table`
   width: 100%;
-  color: #e6e6e6;
-  font-size: 14px;
+`
+
+const ChildItem = styled.tr`
   word-break: break-all;
 `
 
@@ -247,6 +259,7 @@ const Referral = () => {
   const { toastSuccess, toastError } = useToast()
   const [loading, setLoading] = React.useState(false)
   const [loadingPage, setLoadingPage] = React.useState(true)
+  const [loadingTable, setLoadingTable] = React.useState(true)
   const { search } = window.location
   const query = new URLSearchParams(search)
   const referBy = query.get('ref')
@@ -262,6 +275,7 @@ const Referral = () => {
   const [listChild, setListChild] = React.useState([])
   const [countPage, setCountPage] = React.useState(0)
   const [activePage, setActivePage] = React.useState(0)
+  const [acountChild, setAccountChild] = React.useState([account])
   const unit = chainId && NATIVE[chainId].symbol
   const [userInfos, setUserInfo] = React.useState({
     refferBy: '',
@@ -273,23 +287,41 @@ const Referral = () => {
     totalComms: '',
   })
 
-  const getTotalRefferChild = async (page) => {
+  const getTotalRefferChild = async (page, accountChild) => {
     if (!account) {
       return
     }
+    setLoadingTable(true)
     const limit = 5
-    const data = await refferCT.getTotalUserByUp(account, limit, page)
+    const data = await refferCT.getTotalUserByUp(accountChild ? accountChild : account, limit, page)
     const countPage = Math.round(Number(data.totalItem.toString()) / limit)
     const arr = data.list.map((item) => item.user)
+    const list = await Promise.all(
+      arr.map(async (item) => {
+        const volume = await getPoolContract.volumeOntree(item)
+        const locked = await getPoolContract.userTotalLock(item)
+        return {
+          account: item,
+          volume: formatEther(volume),
+          locked: locked.toString(),
+        }
+      }),
+    )
     setCountPage(countPage)
-    setListChild(arr)
+    setListChild(list)
+    setLoadingTable(false)
   }
 
   const handleClickPage = (index) => {
     const limit = 5
     const skip = index * limit
-    getTotalRefferChild(skip)
+    getTotalRefferChild(skip, acountChild[acountChild.length - 1])
     setActivePage(index)
+  }
+
+  const handleChangeChild = (accountB) => {
+    getTotalRefferChild(0, accountB)
+    setAccountChild([...acountChild, accountB])
   }
 
   const handleChangePage = (index) => {
@@ -298,7 +330,7 @@ const Referral = () => {
     }
     const limit = 5
     const skip = index * limit
-    getTotalRefferChild(skip)
+    getTotalRefferChild(skip, acountChild[acountChild.length - 1])
     setActivePage(Number(index))
   }
 
@@ -382,12 +414,19 @@ const Referral = () => {
     setLoadingPage(false)
   }
 
+  const handleBack = () => {
+    const newArr = [...acountChild]
+    newArr.pop()
+    setAccountChild(newArr)
+    getTotalRefferChild(0, newArr[newArr.length - 1])
+  }
+
   React.useEffect(() => {
     getData()
   }, [account, userIsRegister, userInfos])
 
   React.useEffect(() => {
-    getTotalRefferChild(0)
+    getTotalRefferChild(0, account)
   }, [account])
 
   const getLinkRef = () => {
@@ -485,33 +524,33 @@ const Referral = () => {
         <LoadingSection />
       ) : (
         <Wrapper>
-          <CardRegister>
-            <StyledHead>Referral</StyledHead>
-            <StyledSubtitle>Refer a friend and get reward together up to {interest}%</StyledSubtitle>
-            <GroupLinkRef>
-              <StyledLabelLinkRef>My Referral Link</StyledLabelLinkRef>
-              <WrapperLinkRef>
-                <StyledIconRef
-                  id="iconRef"
-                  src="/images/referral/ref-icon.png"
-                  onClick={handleRef}
-                  onMouseLeave={handleLeave}
-                />
-                <Tooltip
-                  anchorId="iconRef"
-                  content={userIsRegister ? (showCopied ? 'Copied' : 'Copy') : 'Please Register'}
-                />
-                <StyledLink>
-                  <ShowLinkRefPc>{formatLinkRef(linkRef, 50, 4)}</ShowLinkRefPc>
-                  <ShowLinkRefMobile>{formatLinkRef(linkRef, 20, 4)}</ShowLinkRefMobile>
-                </StyledLink>
-              </WrapperLinkRef>
-              <StyledButton onClick={onRegister} disabled={userIsRegister ? true : false}>
-                Register
-              </StyledButton>
-            </GroupLinkRef>
-          </CardRegister>
           <ReferralPage>
+            <CardRegister>
+              <StyledHead>Referral</StyledHead>
+              <StyledSubtitle>Refer a friend and get reward together up to {interest}%</StyledSubtitle>
+              <GroupLinkRef>
+                <StyledLabelLinkRef>My Referral Link</StyledLabelLinkRef>
+                <WrapperLinkRef>
+                  <StyledIconRef
+                    id="iconRef"
+                    src="/images/referral/ref-icon.png"
+                    onClick={handleRef}
+                    onMouseLeave={handleLeave}
+                  />
+                  <Tooltip
+                    anchorId="iconRef"
+                    content={userIsRegister ? (showCopied ? 'Copied' : 'Copy') : 'Please Register'}
+                  />
+                  <StyledLink>
+                    <ShowLinkRefPc>{formatLinkRef(linkRef, 50, 4)}</ShowLinkRefPc>
+                    <ShowLinkRefMobile>{formatLinkRef(linkRef, 20, 4)}</ShowLinkRefMobile>
+                  </StyledLink>
+                </WrapperLinkRef>
+                <StyledButton onClick={onRegister} disabled={userIsRegister ? true : false}>
+                  Register
+                </StyledButton>
+              </GroupLinkRef>
+            </CardRegister>
             <CardInfoUser>
               <StyledHead>Info User</StyledHead>
               <BlockInfo>
@@ -548,16 +587,45 @@ const Referral = () => {
                 </InfoItem>
               </BlockInfo>
             </CardInfoUser>
-            <CardReferral>
-              <StyledHead>List Child User</StyledHead>
-              <BlockInfo>
-                {listChild.map((item, index) => (
-                  <ChildItem key={index}>{item}</ChildItem>
-                ))}
-              </BlockInfo>
-              <GroupChangePage>{getButtonChangePage(2)}</GroupChangePage>
-            </CardReferral>
           </ReferralPage>
+          <CardReferral>
+            <StyledHead>List Child User</StyledHead>
+            {loadingTable ? (
+              <ThreeDots style={{ textAlign: 'center' }} className="loading">
+                Loading
+                <span>.</span>
+                <span>.</span>
+                <span>.</span>
+              </ThreeDots>
+            ) : (
+              <Table>
+                <tr>
+                  <th>Child</th>
+                  <th>Volumn</th>
+                  <th>Blocked</th>
+                </tr>
+                {listChild.map((item, index) => (
+                  <ChildItem key={index}>
+                    <td>
+                      <div onClick={() => handleChangeChild(item.account)} style={{ cursor: 'pointer' }}>
+                        {item.account}
+                      </div>
+                    </td>
+                    <td>{item.volume}$</td>
+                    <td>{item.locked}</td>
+                  </ChildItem>
+                ))}
+              </Table>
+            )}
+            <GroupChangePage>
+              {acountChild.length > 1 ? (
+                <button type="button" onClick={handleBack}>
+                  Back
+                </button>
+              ) : null}
+              {getButtonChangePage(2)}
+            </GroupChangePage>
+          </CardReferral>
         </Wrapper>
       )}
     </>
