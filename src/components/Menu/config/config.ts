@@ -100,6 +100,13 @@ const config: (
       icon: PoolIcon,
       items: [].map((item) => addMenuItemSupported(item, chainId)),
     },
+    {
+      label: t('Referral'),
+      href: '/referral',
+      showItemsOnMobile: false,
+      icon: NftIcon,
+      items: [].map((item) => addMenuItemSupported(item, chainId)),
+    },
     // {
     //   label: t('Dao'),
     //   href: '/dao',
