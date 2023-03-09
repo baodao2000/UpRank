@@ -26,10 +26,9 @@ const Wrapper = styled.div`
   margin-left: auto;
   margin-right: auto;
   padding: 0 20px;
-  table,
-  th,
-  td {
-    border: 1px solid #e7e3eb;
+  th {
+    border-top: 1px solid #e7e3eb;
+    border-bottom: 1px solid #e7e3eb;
     border-collapse: collapse;
   }
   th,
@@ -303,7 +302,7 @@ const Referral = () => {
         return {
           account: item,
           volume: formatEther(volume),
-          locked: locked.toString(),
+          locked: formatEther(locked),
         }
       }),
     )
@@ -602,12 +601,15 @@ const Referral = () => {
                 <tr>
                   <th>Child</th>
                   <th>Volumn</th>
-                  <th>Blocked</th>
+                  <th>Locked</th>
                 </tr>
                 {listChild.map((item, index) => (
                   <ChildItem key={index}>
                     <td>
-                      <div onClick={() => handleChangeChild(item.account)} style={{ cursor: 'pointer' }}>
+                      <div
+                        onClick={() => handleChangeChild(item.account)}
+                        style={{ cursor: 'pointer', color: '#00f0e1', textDecoration: 'underline' }}
+                      >
                         {item.account}
                       </div>
                     </td>
