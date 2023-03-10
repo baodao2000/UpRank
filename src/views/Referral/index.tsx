@@ -641,7 +641,7 @@ const Referral = () => {
                     F{acountChild.length - 1}: {truncateHash(acountChild[acountChild.length - 1], 6, 2)}
                   </StyledLinkAccount>
                   <StyledItemChild>Total: {totalItemChild} children</StyledItemChild>
-                  <StyledItemChild>Total 7 Level: {total7Level}</StyledItemChild>
+                  <StyledItemChild>Total refer downline: {total7Level}</StyledItemChild>
                 </Flex>
                 <Table>
                   <tr>
