@@ -29,7 +29,7 @@ export const Wallet: React.FC<React.PropsWithChildren> = () => {
         installed: typeof window !== "undefined" && Boolean(window.ethereum?.isMetaMask),
         connectorId: ConnectorNames.MetaMask,
         priority: 1,
-        href: "https://metamask.app.link/dapp/mygamer.org/",
+        href: "https://metamask.app.link/dapp/trendydefi.com/",
       },
       {
         title: "Binance Wallet",

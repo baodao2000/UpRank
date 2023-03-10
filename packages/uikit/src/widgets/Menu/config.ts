@@ -161,7 +161,7 @@ export const userMenulinks: DropdownMenuItems[] = [
   },
   {
     type: DropdownMenuItemType.EXTERNAL_LINK,
-    href: "https://mygamer.org",
+    href: "https://trendydefi.com",
     label: "Link",
   },
   {
