@@ -99,6 +99,7 @@ const StyledHead = styled(Heading)`
   color: #00f0e1;
   font-size: 24px;
   line-height: 29px;
+  margin-bottom: 20px;
 
   ${({ theme }) => theme.mediaQueries.md} {
     font-size: 48px;
@@ -250,6 +251,28 @@ const ButtonChangePage = styled.button`
   cursor: pointer;
 `
 
+const StyledItemChild = styled.span`
+  font-size: 12px;
+  margin-bottom: 10px;
+  font-weight: 600;
+
+  ${({ theme }) => theme.mediaQueries.sm} {
+    font-size: 14px;
+  }
+`
+
+const StyledLinkAccount = styled.a`
+  font-size: 12px;
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: #00f0e1;
+  text-decoration: underline;
+
+  ${({ theme }) => theme.mediaQueries.sm} {
+    font-size: 14px;
+  }
+`
+
 const Referral = () => {
   const [linkRef, setLinkRef] = React.useState('')
   const [showCopied, setShowCopied] = React.useState(false)
@@ -274,7 +297,9 @@ const Referral = () => {
   const [listChild, setListChild] = React.useState([])
   const [countPage, setCountPage] = React.useState(0)
   const [activePage, setActivePage] = React.useState(0)
+  const [totalItemChild, setTotalItemChild] = React.useState(0)
   const [acountChild, setAccountChild] = React.useState([account])
+  const [total7Level, setTotal7Level] = React.useState(0)
   const unit = chainId && NATIVE[chainId].symbol
   const [userInfos, setUserInfo] = React.useState({
     refferBy: '',
@@ -292,21 +317,26 @@ const Referral = () => {
     }
     setLoadingTable(true)
     const limit = 5
-    const data = await refferCT.getTotalUserByUp(accountChild ? accountChild : account, limit, page)
-    const countPage = Math.round(Number(data.totalItem.toString()) / limit)
-    const arr = data.list.map((item) => item.user)
+    const data = await Promise.all([
+      refferCT.getTotalUserByUp(accountChild ? accountChild : account, limit, page),
+      refferCT.userInfos(accountChild ? accountChild : account),
+    ])
+    const countPage = Math.round(Number(data[0].totalItem.toString()) / limit)
+    const arr = data[0].list.map((item) => item.user)
     const list = await Promise.all(
       arr.map(async (item) => {
-        const volume = await getPoolContract.volumeOntree(item)
-        const locked = await getPoolContract.userTotalLock(item)
+        const dataItem = await Promise.all([getPoolContract.volumeOntree(item), getPoolContract.userTotalLock(item)])
+
         return {
           account: item,
-          volume: formatEther(volume),
-          locked: formatEther(locked),
+          volume: formatEther(dataItem[0]),
+          locked: formatEther(dataItem[1]),
         }
       }),
     )
+    setTotalItemChild(Number(data[0].totalItem.toString()))
     setCountPage(countPage)
+    setTotal7Level(data[1].totalRefer7.toString())
     setListChild(list)
     setLoadingTable(false)
   }
@@ -321,6 +351,7 @@ const Referral = () => {
   const handleChangeChild = (accountB) => {
     getTotalRefferChild(0, accountB)
     setAccountChild([...acountChild, accountB])
+    setActivePage(0)
   }
 
   const handleChangePage = (index) => {
@@ -395,6 +426,9 @@ const Referral = () => {
   }
 
   const getData = () => {
+    if (!account) {
+      return
+    }
     const checkUserRegister = async () => {
       if (account) {
         const isRegister = await refferCT.isReferrer(account)
@@ -597,31 +631,44 @@ const Referral = () => {
                 <span>.</span>
               </ThreeDots>
             ) : (
-              <Table>
-                <tr>
-                  <th>Child</th>
-                  <th>Volumn</th>
-                  <th>Locked</th>
-                </tr>
-                {listChild.map((item, index) => (
-                  <ChildItem key={index}>
-                    <td>
-                      <div
-                        onClick={() => handleChangeChild(item.account)}
-                        style={{ cursor: 'pointer', color: '#00f0e1', textDecoration: 'underline' }}
-                      >
-                        {item.account}
-                      </div>
-                    </td>
-                    <td>{item.volume}$</td>
-                    <td>{item.locked}</td>
-                  </ChildItem>
-                ))}
-              </Table>
+              <>
+                <Flex justifyContent="space-between">
+                  <StyledLinkAccount
+                    rel="noreferrer"
+                    target="_blank"
+                    href={`https://testnet.bscscan.com/address/${acountChild[acountChild.length - 1]}`}
+                  >
+                    F{acountChild.length - 1}: {truncateHash(acountChild[acountChild.length - 1], 6, 2)}
+                  </StyledLinkAccount>
+                  <StyledItemChild>Total: {totalItemChild} children</StyledItemChild>
+                  <StyledItemChild>Total 7 Level: {total7Level}</StyledItemChild>
+                </Flex>
+                <Table>
+                  <tr>
+                    <th>Child</th>
+                    <th>Volumn</th>
+                    <th>Locked</th>
+                  </tr>
+                  {listChild.map((item, index) => (
+                    <ChildItem key={index}>
+                      <td>
+                        <div
+                          onClick={() => handleChangeChild(item.account)}
+                          style={{ cursor: 'pointer', color: '#00f0e1', textDecoration: 'underline' }}
+                        >
+                          {item.account}
+                        </div>
+                      </td>
+                      <td>{item.volume}$</td>
+                      <td>{item.locked}</td>
+                    </ChildItem>
+                  ))}
+                </Table>
+              </>
             )}
             <GroupChangePage>
               {acountChild.length > 1 ? (
-                <button type="button" onClick={handleBack}>
+                <button type="button" onClick={handleBack} style={{ color: 'black' }}>
                   Back
                 </button>
               ) : null}
