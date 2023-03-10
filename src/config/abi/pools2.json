@@ -1,31 +1,11 @@
 [
   {
     "inputs": [
-      {
-        "internalType": "contract IRefferal",
-        "name": "_refer",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "gnosisSafeAddress",
-        "type": "address"
-      },
-      {
-        "internalType": "contract IPancakeRouter",
-        "name": "pancakeRouteAddress",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_wBnbAddress",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_usdAddress",
-        "type": "address"
-      }
+      { "internalType": "contract IRefferal", "name": "_refer", "type": "address" },
+      { "internalType": "address", "name": "gnosisSafeAddress", "type": "address" },
+      { "internalType": "contract IPancakeRouter", "name": "pancakeRouteAddress", "type": "address" },
+      { "internalType": "address", "name": "_wBnbAddress", "type": "address" },
+      { "internalType": "address", "name": "_usdAddress", "type": "address" }
     ],
     "stateMutability": "nonpayable",
     "type": "constructor"
@@ -33,67 +13,22 @@
   {
     "anonymous": false,
     "inputs": [
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "minLock",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "maxLock",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "currentInterest",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "bonusInterest",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "commPercent",
-        "type": "uint256"
-      }
+      { "indexed": false, "internalType": "uint256", "name": "minLock", "type": "uint256" },
+      { "indexed": false, "internalType": "uint256", "name": "maxLock", "type": "uint256" },
+      { "indexed": false, "internalType": "uint256", "name": "currentInterest", "type": "uint256" },
+      { "indexed": false, "internalType": "uint256", "name": "bonusInterest", "type": "uint256" },
+      { "indexed": false, "internalType": "uint256", "name": "commPercent", "type": "uint256" }
     ],
     "name": "AddPool",
     "type": "event"
   },
-  {
-    "anonymous": false,
-    "inputs": [],
-    "name": "AdminRequestVote",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [],
-    "name": "AdminRequestVoteConfig",
-    "type": "event"
-  },
+  { "anonymous": false, "inputs": [], "name": "AdminRequestVote", "type": "event" },
+  { "anonymous": false, "inputs": [], "name": "AdminRequestVoteConfig", "type": "event" },
   {
     "anonymous": false,
     "inputs": [
-      {
-        "indexed": false,
-        "internalType": "address payable",
-        "name": "user",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
+      { "indexed": false, "internalType": "address payable", "name": "user", "type": "address" },
+      { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }
     ],
     "name": "GetStuck",
     "type": "event"
@@ -101,70 +36,34 @@
   {
     "anonymous": false,
     "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "previousOwner",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "newOwner",
-        "type": "address"
-      }
+      { "indexed": true, "internalType": "address", "name": "previousOwner", "type": "address" },
+      { "indexed": true, "internalType": "address", "name": "newOwner", "type": "address" }
     ],
     "name": "OwnershipTransferred",
     "type": "event"
   },
   {
     "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "uint256[]",
-        "name": "conditionMem",
-        "type": "uint256[]"
-      }
-    ],
+    "inputs": [{ "indexed": false, "internalType": "uint256[]", "name": "conditionMem", "type": "uint256[]" }],
     "name": "SetConditionMemOnTree",
     "type": "event"
   },
   {
     "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "uint256[]",
-        "name": "conditionVolume",
-        "type": "uint256[]"
-      }
-    ],
+    "inputs": [{ "indexed": false, "internalType": "uint256[]", "name": "conditionVolume", "type": "uint256[]" }],
     "name": "SetConditionVolumeOnTree",
     "type": "event"
   },
   {
     "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "contract IRefferal",
-        "name": "iRefer",
-        "type": "address"
-      }
-    ],
+    "inputs": [{ "indexed": false, "internalType": "contract IRefferal", "name": "iRefer", "type": "address" }],
     "name": "SetRefer",
     "type": "event"
   },
   {
     "anonymous": false,
     "inputs": [
-      {
-        "indexed": false,
-        "internalType": "contract IPancakeRouter",
-        "name": "pancakeRouteAddress",
-        "type": "address"
-      }
+      { "indexed": false, "internalType": "contract IPancakeRouter", "name": "pancakeRouteAddress", "type": "address" }
     ],
     "name": "SetRoute",
     "type": "event"
@@ -172,18 +71,8 @@
   {
     "anonymous": false,
     "inputs": [
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "pid",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "bool",
-        "name": "enable",
-        "type": "bool"
-      }
+      { "indexed": false, "internalType": "uint256", "name": "pid", "type": "uint256" },
+      { "indexed": false, "internalType": "bool", "name": "enable", "type": "bool" }
     ],
     "name": "TogglePool",
     "type": "event"
@@ -191,18 +80,8 @@
   {
     "anonymous": false,
     "inputs": [
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "pid",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "commPercent",
-        "type": "uint256"
-      }
+      { "indexed": false, "internalType": "uint256", "name": "pid", "type": "uint256" },
+      { "indexed": false, "internalType": "uint256", "name": "commPercent", "type": "uint256" }
     ],
     "name": "UpdateCommPercent",
     "type": "event"
@@ -210,18 +89,8 @@
   {
     "anonymous": false,
     "inputs": [
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "pid",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "currentInterest",
-        "type": "uint256"
-      }
+      { "indexed": false, "internalType": "uint256", "name": "pid", "type": "uint256" },
+      { "indexed": false, "internalType": "uint256", "name": "currentInterest", "type": "uint256" }
     ],
     "name": "UpdateInterestPool",
     "type": "event"
@@ -229,24 +98,9 @@
   {
     "anonymous": false,
     "inputs": [
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "pid",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "minLock",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "maxLock",
-        "type": "uint256"
-      }
+      { "indexed": false, "internalType": "uint256", "name": "pid", "type": "uint256" },
+      { "indexed": false, "internalType": "uint256", "name": "minLock", "type": "uint256" },
+      { "indexed": false, "internalType": "uint256", "name": "maxLock", "type": "uint256" }
     ],
     "name": "UpdateMinMaxPool",
     "type": "event"
@@ -254,123 +108,46 @@
   {
     "anonymous": false,
     "inputs": [
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "pid",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "minLock",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "maxLock",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "bonusInterest",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "bool",
-        "name": "enable",
-        "type": "bool"
-      }
+      { "indexed": false, "internalType": "uint256", "name": "pid", "type": "uint256" },
+      { "indexed": false, "internalType": "uint256", "name": "minLock", "type": "uint256" },
+      { "indexed": false, "internalType": "uint256", "name": "maxLock", "type": "uint256" },
+      { "indexed": false, "internalType": "uint256", "name": "bonusInterest", "type": "uint256" },
+      { "indexed": false, "internalType": "bool", "name": "enable", "type": "bool" }
     ],
     "name": "UpdatePool",
     "type": "event"
   },
   {
     "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "bool",
-        "name": "result",
-        "type": "bool"
-      }
-    ],
+    "inputs": [{ "indexed": false, "internalType": "bool", "name": "result", "type": "bool" }],
     "name": "VoteConfigEvent",
     "type": "event"
   },
   {
     "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "bool",
-        "name": "result",
-        "type": "bool"
-      }
-    ],
+    "inputs": [{ "indexed": false, "internalType": "bool", "name": "result", "type": "bool" }],
     "name": "VoteEvent",
     "type": "event"
   },
   {
     "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "minLock",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "maxLock",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "currentInterest",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "bonusInterest",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "commPercent",
-        "type": "uint256"
-      }
+      { "internalType": "uint256", "name": "minLock", "type": "uint256" },
+      { "internalType": "uint256", "name": "maxLock", "type": "uint256" },
+      { "internalType": "uint256", "name": "currentInterest", "type": "uint256" },
+      { "internalType": "uint256", "name": "bonusInterest", "type": "uint256" },
+      { "internalType": "uint256", "name": "commPercent", "type": "uint256" }
     ],
     "name": "addPool",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
-  {
-    "inputs": [],
-    "name": "adminRequestVote",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
+  { "inputs": [], "name": "adminRequestVote", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
   {
     "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "pid",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "voteType",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
+      { "internalType": "uint256", "name": "pid", "type": "uint256" },
+      { "internalType": "uint256", "name": "voteType", "type": "uint256" },
+      { "internalType": "uint256", "name": "amount", "type": "uint256" }
     ],
     "name": "adminRequestVoteConfig",
     "outputs": [],
@@ -378,213 +155,124 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
+    "inputs": [{ "internalType": "uint256", "name": "amount", "type": "uint256" }],
     "name": "bnb2USD",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "_usd",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [{ "internalType": "uint256", "name": "_usd", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "bnbPrice",
-    "outputs": [
-      {
-        "internalType": "uint256[]",
-        "name": "amounts",
-        "type": "uint256[]"
-      }
-    ],
+    "outputs": [{ "internalType": "uint256[]", "name": "amounts", "type": "uint256[]" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "canWD",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "name": "childs",
     "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
+      { "internalType": "uint256", "name": "direct", "type": "uint256" },
+      { "internalType": "uint256", "name": "downLine", "type": "uint256" }
     ],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address payable",
-        "name": "to",
-        "type": "address"
-      }
-    ],
+    "inputs": [{ "internalType": "address payable", "name": "to", "type": "address" }],
     "name": "claimComm",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "pid",
-        "type": "uint256"
-      }
-    ],
+    "inputs": [{ "internalType": "uint256", "name": "rid", "type": "uint256" }],
+    "name": "claimRankRewardMonthly",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "pid", "type": "uint256" }],
     "name": "claimReward",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "name": "conditionMemOnTree",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "name": "conditionVolumeOnTree",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "pid",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "user",
-        "type": "address"
-      }
+      { "internalType": "uint256", "name": "pid", "type": "uint256" },
+      { "internalType": "address", "name": "user", "type": "address" }
     ],
     "name": "currentReward",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "pid",
-        "type": "uint256"
-      }
-    ],
+    "inputs": [{ "internalType": "uint256", "name": "pid", "type": "uint256" }],
     "name": "deposit",
     "outputs": [],
     "stateMutability": "payable",
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "getDays",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "name": "directStaked",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256[]",
-        "name": "pids",
-        "type": "uint256[]"
-      }
-    ],
+    "inputs": [],
+    "name": "getDays",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getMonths",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256[]", "name": "pids", "type": "uint256[]" }],
     "name": "getPools",
     "outputs": [
       {
         "components": [
-          {
-            "internalType": "uint256",
-            "name": "minLock",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "maxLock",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "currentInterest",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "bonusInterest",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "totalLock",
-            "type": "uint256"
-          },
-          {
-            "internalType": "bool",
-            "name": "enable",
-            "type": "bool"
-          },
-          {
-            "internalType": "uint256",
-            "name": "commPercent",
-            "type": "uint256"
-          }
+          { "internalType": "uint256", "name": "minLock", "type": "uint256" },
+          { "internalType": "uint256", "name": "maxLock", "type": "uint256" },
+          { "internalType": "uint256", "name": "currentInterest", "type": "uint256" },
+          { "internalType": "uint256", "name": "bonusInterest", "type": "uint256" },
+          { "internalType": "uint256", "name": "totalLock", "type": "uint256" },
+          { "internalType": "bool", "name": "enable", "type": "bool" },
+          { "internalType": "uint256", "name": "commPercent", "type": "uint256" }
         ],
-        "internalType": "struct Pools.Pool[]",
+        "internalType": "struct PoolsMatic.Pool[]",
         "name": "poolsInfo",
         "type": "tuple[]"
       }
@@ -594,16 +282,8 @@
   },
   {
     "inputs": [
-      {
-        "internalType": "address payable",
-        "name": "user",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
+      { "internalType": "address payable", "name": "user", "type": "address" },
+      { "internalType": "uint256", "name": "amount", "type": "uint256" }
     ],
     "name": "getStuck",
     "outputs": [],
@@ -612,110 +292,49 @@
   },
   {
     "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "pid",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "user",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "limit",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "skip",
-        "type": "uint256"
-      }
+      { "internalType": "uint256", "name": "pid", "type": "uint256" },
+      { "internalType": "address", "name": "user", "type": "address" },
+      { "internalType": "uint256", "name": "limit", "type": "uint256" },
+      { "internalType": "uint256", "name": "skip", "type": "uint256" }
     ],
     "name": "getUsersClaimed",
     "outputs": [
       {
         "components": [
-          {
-            "internalType": "uint256",
-            "name": "date",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "amount",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "totalLock",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "interrest",
-            "type": "uint256"
-          }
+          { "internalType": "uint256", "name": "date", "type": "uint256" },
+          { "internalType": "uint256", "name": "amount", "type": "uint256" },
+          { "internalType": "uint256", "name": "totalLock", "type": "uint256" },
+          { "internalType": "uint256", "name": "interrest", "type": "uint256" }
         ],
-        "internalType": "struct Pools.Claim[]",
+        "internalType": "struct PoolsMatic.Claim[]",
         "name": "list",
         "type": "tuple[]"
       },
-      {
-        "internalType": "uint256",
-        "name": "totalItem",
-        "type": "uint256"
-      }
+      { "internalType": "uint256", "name": "totalItem", "type": "uint256" }
     ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "pid",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "user",
-        "type": "address"
-      }
+      { "internalType": "uint256", "name": "pid", "type": "uint256" },
+      { "internalType": "address", "name": "user", "type": "address" }
     ],
     "name": "getUsersClaimedLength",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "length",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [{ "internalType": "uint256", "name": "length", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },
+  { "inputs": [], "name": "giveRankRewardMonthly", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
   {
     "inputs": [],
     "name": "gnosisSafe",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "contract IERC20",
-        "name": "token",
-        "type": "address"
-      }
-    ],
+    "inputs": [{ "internalType": "contract IERC20", "name": "token", "type": "address" }],
     "name": "inCaseTokensGetStuck",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -724,36 +343,23 @@
   {
     "inputs": [],
     "name": "interestDecimal",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "pid",
-        "type": "uint256"
-      }
-    ],
+    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "name": "lineStaked",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "pid", "type": "uint256" }],
     "name": "minMaxUSD2BNB",
     "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "_min",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_max",
-        "type": "uint256"
-      }
+      { "internalType": "uint256", "name": "_min", "type": "uint256" },
+      { "internalType": "uint256", "name": "_max", "type": "uint256" }
     ],
     "stateMutability": "view",
     "type": "function"
@@ -761,216 +367,119 @@
   {
     "inputs": [],
     "name": "multiTimeInterest",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "owner",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "pancakeRouter",
-    "outputs": [
-      {
-        "internalType": "contract IPancakeRouter",
-        "name": "",
-        "type": "address"
-      }
-    ],
+    "outputs": [{ "internalType": "contract IPancakeRouter", "name": "", "type": "address" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "name": "pools",
     "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "minLock",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "maxLock",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "currentInterest",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "bonusInterest",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "totalLock",
-        "type": "uint256"
-      },
-      {
-        "internalType": "bool",
-        "name": "enable",
-        "type": "bool"
-      },
-      {
-        "internalType": "uint256",
-        "name": "commPercent",
-        "type": "uint256"
-      }
+      { "internalType": "uint256", "name": "minLock", "type": "uint256" },
+      { "internalType": "uint256", "name": "maxLock", "type": "uint256" },
+      { "internalType": "uint256", "name": "currentInterest", "type": "uint256" },
+      { "internalType": "uint256", "name": "bonusInterest", "type": "uint256" },
+      { "internalType": "uint256", "name": "totalLock", "type": "uint256" },
+      { "internalType": "bool", "name": "enable", "type": "bool" },
+      { "internalType": "uint256", "name": "commPercent", "type": "uint256" }
     ],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "name": "remainComm",
+    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "name": "rankR",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "name": "rankRewards",
     "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+      { "internalType": "uint256", "name": "minStart", "type": "uint256" },
+      { "internalType": "uint256", "name": "stakingPercent", "type": "uint256" },
+      { "internalType": "uint256", "name": "total", "type": "uint256" },
+      { "internalType": "uint256", "name": "totalMember", "type": "uint256" },
+      { "internalType": "uint256", "name": "rewardInMonth", "type": "uint256" },
+      { "internalType": "uint256", "name": "remainInMonth", "type": "uint256" }
     ],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "renounceOwnership",
-    "outputs": [],
-    "stateMutability": "nonpayable",
+    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "name": "remainComm",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
     "type": "function"
   },
+  { "inputs": [], "name": "renounceOwnership", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
   {
     "inputs": [],
     "name": "requestVote",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "requestVoteConfigComm",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "requestVoteConfigInterest",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256[]",
-        "name": "conditionMem",
-        "type": "uint256[]"
-      }
-    ],
+    "inputs": [{ "internalType": "uint256[]", "name": "conditionMem", "type": "uint256[]" }],
     "name": "setConditionMemOnTree",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256[]",
-        "name": "conditionVolume",
-        "type": "uint256[]"
-      }
-    ],
+    "inputs": [{ "internalType": "uint256[]", "name": "conditionVolume", "type": "uint256[]" }],
     "name": "setConditionVolumeOnTree",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "gnosisSafeAddress",
-        "type": "address"
-      }
-    ],
+    "inputs": [{ "internalType": "address", "name": "gnosisSafeAddress", "type": "address" }],
     "name": "setGnosisSafe",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "contract IRefferal",
-        "name": "iRefer",
-        "type": "address"
-      }
-    ],
+    "inputs": [{ "internalType": "contract IRefferal", "name": "iRefer", "type": "address" }],
     "name": "setRefer",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "contract IPancakeRouter",
-        "name": "pancakeRouteAddress",
-        "type": "address"
-      }
-    ],
+    "inputs": [{ "internalType": "contract IPancakeRouter", "name": "pancakeRouteAddress", "type": "address" }],
     "name": "setRoute",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -979,28 +488,14 @@
   {
     "inputs": [],
     "name": "taxPercent",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "pid",
-        "type": "uint256"
-      },
-      {
-        "internalType": "bool",
-        "name": "enable",
-        "type": "bool"
-      }
+      { "internalType": "uint256", "name": "pid", "type": "uint256" },
+      { "internalType": "bool", "name": "enable", "type": "bool" }
     ],
     "name": "togglePool",
     "outputs": [],
@@ -1008,51 +503,21 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
+    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
     "name": "totalComms",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
+    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
     "name": "totalRewards",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "newOwner",
-        "type": "address"
-      }
-    ],
+    "inputs": [{ "internalType": "address", "name": "newOwner", "type": "address" }],
     "name": "transferOwnership",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -1060,16 +525,8 @@
   },
   {
     "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "pid",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "commPercent",
-        "type": "uint256"
-      }
+      { "internalType": "uint256", "name": "pid", "type": "uint256" },
+      { "internalType": "uint256", "name": "commPercent", "type": "uint256" }
     ],
     "name": "updateCommPercent",
     "outputs": [],
@@ -1078,16 +535,8 @@
   },
   {
     "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "pid",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "currentInterest",
-        "type": "uint256"
-      }
+      { "internalType": "uint256", "name": "pid", "type": "uint256" },
+      { "internalType": "uint256", "name": "currentInterest", "type": "uint256" }
     ],
     "name": "updateInterestPool",
     "outputs": [],
@@ -1096,21 +545,9 @@
   },
   {
     "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "pid",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "minLock",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "maxLock",
-        "type": "uint256"
-      }
+      { "internalType": "uint256", "name": "pid", "type": "uint256" },
+      { "internalType": "uint256", "name": "minLock", "type": "uint256" },
+      { "internalType": "uint256", "name": "maxLock", "type": "uint256" }
     ],
     "name": "updateMinMaxPool",
     "outputs": [],
@@ -1119,31 +556,11 @@
   },
   {
     "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "pid",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "minLock",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "maxLock",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "bonusInterest",
-        "type": "uint256"
-      },
-      {
-        "internalType": "bool",
-        "name": "enable",
-        "type": "bool"
-      }
+      { "internalType": "uint256", "name": "pid", "type": "uint256" },
+      { "internalType": "uint256", "name": "minLock", "type": "uint256" },
+      { "internalType": "uint256", "name": "maxLock", "type": "uint256" },
+      { "internalType": "uint256", "name": "bonusInterest", "type": "uint256" },
+      { "internalType": "bool", "name": "enable", "type": "bool" }
     ],
     "name": "updatePool",
     "outputs": [],
@@ -1153,206 +570,91 @@
   {
     "inputs": [],
     "name": "usd",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "usdTotalLock",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+      { "internalType": "address", "name": "", "type": "address" },
+      { "internalType": "uint256", "name": "", "type": "uint256" },
+      { "internalType": "uint256", "name": "", "type": "uint256" }
     ],
     "name": "userClaimed",
     "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "date",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "totalLock",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "interrest",
-        "type": "uint256"
-      }
+      { "internalType": "uint256", "name": "date", "type": "uint256" },
+      { "internalType": "uint256", "name": "amount", "type": "uint256" },
+      { "internalType": "uint256", "name": "totalLock", "type": "uint256" },
+      { "internalType": "uint256", "name": "interrest", "type": "uint256" }
     ],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
+    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "name": "userRank",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
     "name": "userTotalLock",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+      { "internalType": "address", "name": "", "type": "address" },
+      { "internalType": "uint256", "name": "", "type": "uint256" }
     ],
     "name": "userVote",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+      { "internalType": "address", "name": "", "type": "address" },
+      { "internalType": "uint256", "name": "", "type": "uint256" }
     ],
     "name": "userVoteConfig",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+      { "internalType": "address", "name": "", "type": "address" },
+      { "internalType": "uint256", "name": "", "type": "uint256" }
     ],
     "name": "users",
     "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "totalLock",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "startTime",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "totalReward",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "remainReward",
-        "type": "uint256"
-      }
+      { "internalType": "uint256", "name": "totalLock", "type": "uint256" },
+      { "internalType": "uint256", "name": "startTime", "type": "uint256" },
+      { "internalType": "uint256", "name": "totalReward", "type": "uint256" },
+      { "internalType": "uint256", "name": "remainReward", "type": "uint256" }
     ],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
+    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
     "name": "volumeOntree",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "bool",
-        "name": "result",
-        "type": "bool"
-      }
-    ],
+    "inputs": [{ "internalType": "bool", "name": "result", "type": "bool" }],
     "name": "vote",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -1360,16 +662,8 @@
   },
   {
     "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "voteType",
-        "type": "uint256"
-      },
-      {
-        "internalType": "bool",
-        "name": "result",
-        "type": "bool"
-      }
+      { "internalType": "uint256", "name": "voteType", "type": "uint256" },
+      { "internalType": "bool", "name": "result", "type": "bool" }
     ],
     "name": "voteConfig",
     "outputs": [],
@@ -1378,63 +672,25 @@
   },
   {
     "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+      { "internalType": "uint256", "name": "", "type": "uint256" },
+      { "internalType": "uint256", "name": "", "type": "uint256" }
     ],
     "name": "voteConfigs",
     "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "totalVote",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "pid",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "status",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
+      { "internalType": "uint256", "name": "totalVote", "type": "uint256" },
+      { "internalType": "uint256", "name": "pid", "type": "uint256" },
+      { "internalType": "uint256", "name": "status", "type": "uint256" },
+      { "internalType": "uint256", "name": "amount", "type": "uint256" }
     ],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "name": "votes",
     "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "totalVote",
-        "type": "uint256"
-      },
-      {
-        "internalType": "bool",
-        "name": "status",
-        "type": "bool"
-      }
+      { "internalType": "uint256", "name": "totalVote", "type": "uint256" },
+      { "internalType": "bool", "name": "status", "type": "bool" }
     ],
     "stateMutability": "view",
     "type": "function"
@@ -1442,13 +698,7 @@
   {
     "inputs": [],
     "name": "wBnb",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
     "stateMutability": "view",
     "type": "function"
   }
