@@ -298,7 +298,12 @@ const Referral = () => {
   const [countPage, setCountPage] = React.useState(0)
   const [activePage, setActivePage] = React.useState(0)
   const [totalItemChild, setTotalItemChild] = React.useState(0)
-  const [acountChild, setAccountChild] = React.useState([account])
+  const [acountChild, setAccountChild] = React.useState(() => {
+    if (account) {
+      return [account]
+    }
+    return []
+  })
   const [total7Level, setTotal7Level] = React.useState(0)
   const unit = chainId && NATIVE[chainId].symbol
   const [userInfos, setUserInfo] = React.useState({
@@ -307,8 +312,8 @@ const Referral = () => {
     totalReffer: '',
     totalRefer7: '',
     directStaked: '',
-    totalStaked7: '',
-    totalComms: '',
+    totalStaked7: 0,
+    totalComms: 0,
   })
 
   const getTotalRefferChild = async (page, accountChild) => {
@@ -329,8 +334,8 @@ const Referral = () => {
 
         return {
           account: item,
-          volume: formatEther(dataItem[0]),
-          locked: formatEther(dataItem[1]),
+          volume: Number(formatEther(dataItem[0])).toFixed(3),
+          locked: Number(formatEther(dataItem[1])).toFixed(3),
         }
       }),
     )
@@ -372,7 +377,7 @@ const Referral = () => {
       refferCT.userInfos(account),
       getPoolContract.directStaked(account),
       getPoolContract.volumeOntree(account),
-      getPoolContract.totalComms(account),
+      getPoolContract.remainComm(account),
     ])
 
     const user = {
@@ -381,8 +386,8 @@ const Referral = () => {
       totalReffer: infos[0].totalRefer.toString(),
       totalRefer7: infos[0].totalRefer7.toString(),
       directStaked: infos[1].toString(),
-      totalStaked7: formatEther(infos[2]),
-      totalComms: formatEther(infos[3].toString()),
+      totalStaked7: Number(Number(formatEther(infos[2])).toFixed(3)),
+      totalComms: Number(Number(formatEther(infos[3]).toString()).toFixed(3)),
     }
     setUserInfo(user)
   }
@@ -461,6 +466,12 @@ const Referral = () => {
   React.useEffect(() => {
     getTotalRefferChild(0, account)
   }, [account])
+
+  React.useEffect(() => {
+    if (!acountChild.length && account) {
+      setAccountChild([...acountChild, account])
+    }
+  })
 
   const getLinkRef = () => {
     const param = window.location.origin
@@ -622,7 +633,7 @@ const Referral = () => {
             </CardInfoUser>
           </ReferralPage>
           <CardReferral>
-            <StyledHead>List Child User</StyledHead>
+            <StyledHead>Friends list</StyledHead>
             {loadingTable ? (
               <ThreeDots style={{ textAlign: 'center' }} className="loading">
                 Loading
@@ -640,12 +651,14 @@ const Referral = () => {
                   >
                     F{acountChild.length - 1}: {truncateHash(acountChild[acountChild.length - 1], 6, 2)}
                   </StyledLinkAccount>
-                  <StyledItemChild>Total: {totalItemChild} children</StyledItemChild>
+                  <StyledItemChild>
+                    Total of F{acountChild.length}: {totalItemChild}
+                  </StyledItemChild>
                   <StyledItemChild>Total refer downline: {total7Level}</StyledItemChild>
                 </Flex>
                 <Table>
                   <tr>
-                    <th>Child</th>
+                    <th>Friends</th>
                     <th>Volumn</th>
                     <th>Locked</th>
                   </tr>

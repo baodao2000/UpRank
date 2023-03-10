@@ -8,7 +8,7 @@ import BigNumber from 'bignumber.js'
 import { isMobile } from 'react-device-detect'
 import { formatEther } from '@ethersproject/units'
 import { getBlockExploreLink, getBlockExploreName } from 'utils'
-import { shortenURL } from 'views/Pools2/util'
+import { shortenURL, timeDisplayLong } from 'views/Pools2/util'
 import moment from 'moment'
 import { ModalCheckRegister } from 'components/ModalRegister/ModalCheckRegister'
 import { ModalRegister } from 'components/ModalRegister'
@@ -92,10 +92,19 @@ const StyledButton = styled(Button)`
   color: white;
 `
 
+const NoteDeposit = styled.span`
+  color: #444040;
+  background: #ffffcc;
+  max-width: 600px;
+  padding: 16px;
+  border-radius: 10px;
+`
+
 const Pool = ({ poolId }) => {
   const { account, chainId, chain } = useActiveWeb3React()
   const [isLoading, setIsLoading] = useState(true)
   const [isRef, setIsRef] = useState(false)
+  const [now, setNow] = useState(0)
   const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId
   const getPoolContract = getPoolsContract(CHAIN_ID)
   const refferCT = getContract({
@@ -123,6 +132,31 @@ const Pool = ({ poolId }) => {
     minUSD2BNB: 0,
     maxUSD2BNB: 0,
   })
+
+  const getNoteDeposit = () => {
+    let note
+    if (chainId === 97 && now - poolInfo.startTime < 3600) {
+      note = (
+        <NoteDeposit>
+          Please note: after <b style={{ textDecoration: 'underline' }}>{timeDisplayLong(3600)}</b> days of deposit, you
+          can&apos;t add more to this pool. If you would like to stake more, you can stake a different wallet or a
+          different pool.
+        </NoteDeposit>
+      )
+    } else if (chainId === 137 && now - poolInfo.startTime < 604800) {
+      note = (
+        <NoteDeposit>
+          Please note: after <b style={{ textDecoration: 'underline' }}>{timeDisplayLong(604800)}</b> days of deposit,
+          you can&apos;t add more to this pool. If you would like to stake more, you can stake a different wallet or a
+          different pool.
+        </NoteDeposit>
+      )
+    } else {
+      note = null
+    }
+    return note
+  }
+
   const [isUnLockable, setIsUnLockable] = useState(false)
   const [openModalCheckRegisterModal] = useModal(<ModalCheckRegister />, false, false, 'removeModalCheckRegister')
 
@@ -191,6 +225,12 @@ const Pool = ({ poolId }) => {
     checkRegisAccount()
   }, [account])
 
+  useEffect(() => {
+    setInterval(() => {
+      setNow(moment().unix())
+    }, 1000)
+  }, [])
+
   return (
     <PoolDetail>
       {' '}
@@ -221,6 +261,7 @@ const Pool = ({ poolId }) => {
           </PageHeader>
           <Body>
             <DetailInfoPool poolInfo={poolInfo} />
+            {getNoteDeposit()}
             <TableDataPool pool={poolInfo} userClaimedLength={poolInfo.userClaimedLength} />
             <ButtonArea>
               <Button
@@ -228,6 +269,7 @@ const Pool = ({ poolId }) => {
                 width={['120px', '150px', '180px', '200px']}
                 onClick={() => handleOpenDepositModal()}
                 scale={isMobile ? 'sm' : 'md'}
+                disabled={chainId === 97 ? now - poolInfo.startTime < 3600 : now - poolInfo.startTime < 604800}
               >
                 Deposit
               </Button>

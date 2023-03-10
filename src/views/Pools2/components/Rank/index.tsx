@@ -7,7 +7,7 @@ import { getRankImage } from 'views/Pools2'
 const Wrapper = styled.div`
   max-width: 900px;
   width: 100%;
-  margin-bottom: 90px;
+  margin-bottom: 40px;
 `
 
 const StyledTitleRank = styled(Text)`

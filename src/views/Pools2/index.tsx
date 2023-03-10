@@ -3,10 +3,10 @@ import PageHeader from 'components/PageHeader'
 import styled from 'styled-components'
 import images from 'configs/images'
 import contracts from 'config/constants/contracts'
-import { getPoolsContract } from 'utils/contractHelpers'
+import { getContract, getPoolsContract } from 'utils/contractHelpers'
 import { getBlockExploreLink } from 'utils'
 import { trendyColors } from 'style/trendyTheme'
-import { useBalance } from 'wagmi'
+import { useBalance, useSigner } from 'wagmi'
 import { setRateType } from 'state/limitOrders/actions'
 import CountUp from 'react-countup'
 import CircleLoader from 'components/Loader/CircleLoader'
@@ -29,6 +29,7 @@ import useActiveWeb3React from '../../hooks/useActiveWeb3React'
 import { ChainId, NATIVE } from '../../../packages/swap-sdk/src/constants'
 import Rank from './components/Rank'
 import numeral from 'numeral'
+import refferalAbi from 'config/abi/refferal.json'
 
 // ============= STYLED
 const Container = styled.div`
@@ -292,6 +293,11 @@ const TitelandIcon = styled.div`
     gap: 5px;
   }
 `
+const LinkReffer = styled.a`
+  margin-left: 6px;
+  text-decoration: underline;
+  color: #00f0e1;
+`
 const Lineleft = styled.div``
 const Lineright = styled.div``
 const LineText = styled.div`
@@ -345,10 +351,13 @@ const Pools = () => {
   const { toastSuccess, toastError } = useToast()
   const { callWithMarketGasPrice } = useCallWithMarketGasPrice()
   const poolContract = usePoolsContract()
+  const [userRegister, setUserRegister] = useState(false)
+  const { data: signer } = useSigner()
   const [ranks, setRanks] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [rateBnbUsd, setRateBnbUsd] = useState(1)
   const [userRank, setUserRank] = useState(0)
+  const refferCT = getContract({ address: contracts.refferal[CHAIN_ID], abi: refferalAbi, chainId: CHAIN_ID, signer })
   const [userClaimed, setUserClaimed] = useState(false)
   const { isConfirming, handleConfirm } = useConfirmTransaction({
     onConfirm: () => {
@@ -369,6 +378,21 @@ const Pools = () => {
     } else {
       setRemainCommission(0)
     }
+  }
+
+  const getLinkReferral = () => {
+    if (!account) {
+      return null
+    }
+    const param = window.location.origin
+    let linkRef
+
+    if (userRegister) {
+      linkRef = `${param}?ref=${account}`
+    } else {
+      linkRef = `${param}/referral`
+    }
+    return linkRef
   }
 
   const getInfoRank = async (rateBNB2USD) => {
@@ -403,6 +427,7 @@ const Pools = () => {
     try {
       const rateBnbUsd = await getPoolContract.bnbPrice()
       const pools = ids.map((item) => getPoolContract.pools(item))
+      const isRegister = await refferCT.isReferrer(account)
 
       await getInfoRank(Number(formatEther(rateBnbUsd[0])) / Number(formatEther(rateBnbUsd[1])))
 
@@ -424,7 +449,7 @@ const Pools = () => {
           }
         }),
       )
-
+      setUserRegister(isRegister)
       setArr(newPoolInfo)
       setIsLoading(false)
     } catch (e) {
@@ -462,6 +487,14 @@ const Pools = () => {
           <PageHeader background="none">
             <Flex flex="1" flexDirection="column" mr={['8px', 0]} alignItems="center">
               <Rank ranks={ranks} userRank={userRank} onSuccess={onSuccessRank} userIsClaim={userClaimed} />
+              <Text
+                fontSize={['14px', '14px', '18px', '22px', '22px', '26px']}
+                fontWeight="600"
+                style={{ color: '#C5C5C5', textAlign: 'center', maxWidth: 700, margin: '30px 0' }}
+              >
+                These Pool Rewards are only for Referral. Let invite your friends and get our rewards
+                <LinkReffer href={getLinkReferral()}>[LINK]</LinkReffer>
+              </Text>
               <Text
                 fontSize={['22px', '22px', '36px', '40px', '50px', '60px']}
                 fontWeight="600"
