@@ -93,8 +93,8 @@ const StyledButton = styled(Button)`
 `
 
 const NoteDeposit = styled.span`
-  color: #444040;
-  background: #ffffcc;
+  color: #fff;
+  //background: #ffffcc;
   max-width: 600px;
   padding: 16px;
   border-radius: 10px;
@@ -138,17 +138,21 @@ const Pool = ({ poolId }) => {
     if (chainId === 97 && now - poolInfo.startTime < 3600) {
       note = (
         <NoteDeposit>
-          Please note: after <b style={{ textDecoration: 'underline' }}>{timeDisplayLong(3600)}</b> days of deposit, you
-          can&apos;t add more to this pool. If you would like to stake more, you can stake a different wallet or a
-          different pool.
+          <i>
+            <b>Please note:</b> after <b style={{ textDecoration: 'underline' }}>{timeDisplayLong(3600)}</b> days of
+            deposit, you can&apos;t add more to this pool. If you would like to stake more, you can stake a different
+            wallet or a different pool.
+          </i>
         </NoteDeposit>
       )
     } else if (chainId === 137 && now - poolInfo.startTime < 604800) {
       note = (
         <NoteDeposit>
-          Please note: after <b style={{ textDecoration: 'underline' }}>{timeDisplayLong(604800)}</b> days of deposit,
-          you can&apos;t add more to this pool. If you would like to stake more, you can stake a different wallet or a
-          different pool.
+          <i>
+            <b>Please note:</b> after <b style={{ textDecoration: 'underline' }}>{timeDisplayLong(604800)}</b> days of
+            deposit, you can&apos;t add more to this pool. If you would like to stake more, you can stake a different
+            wallet or a different pool.
+          </i>
         </NoteDeposit>
       )
     } else {
