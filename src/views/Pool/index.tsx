@@ -269,7 +269,7 @@ const Pool = ({ poolId }) => {
                 width={['120px', '150px', '180px', '200px']}
                 onClick={() => handleOpenDepositModal()}
                 scale={isMobile ? 'sm' : 'md'}
-                disabled={chainId === 97 ? now - poolInfo.startTime < 3600 : now - poolInfo.startTime < 604800}
+                disabled={chainId === 97 ? now - poolInfo.startTime > 3600 : now - poolInfo.startTime > 604800}
               >
                 Deposit
               </Button>
