@@ -1,4 +1,4 @@
-import { Button, Modal, Text, Grid, InjectedModalProps, useToast } from '@pancakeswap/uikit'
+import { Button, Modal, Text, Grid, InjectedModalProps, useToast, Input } from '@pancakeswap/uikit'
 import { useState, useEffect } from 'react'
 import { getContract } from 'utils/contractHelpers'
 import addresses from 'config/constants/contracts'
@@ -8,9 +8,15 @@ import { setRefLink } from 'state/referral'
 import { useSigner } from 'wagmi'
 import { InjectedProps } from '@pancakeswap/uikit/src/widgets/Modal/types'
 import { useWeb3React } from '../../../packages/wagmi/src/useWeb3React'
+import styled from 'styled-components'
 
 interface RegistersModalProps extends InjectedProps {}
 
+const StyledInput = styled(Input)`
+  outline: none;
+  border: 3px solid #009571;
+  borderradius: '10px';
+`
 export const ModalCheckRegister: React.FC<React.PropsWithChildren<RegistersModalProps>> = ({ onDismiss }) => {
   const { account, chainId } = useWeb3React()
   const dispatch = useDispatch()
@@ -21,7 +27,8 @@ export const ModalCheckRegister: React.FC<React.PropsWithChildren<RegistersModal
   const referBy = query.get('ref')
   const baseRefUrl = `${window.location.origin}homepage?ref=`
   const { data: signer } = useSigner()
-  const [modalIsOpen, setModalIsOpen] = useState(true)
+  const [referByWallet, setReferByWallet] = useState(referBy)
+  const [showError, setShowError] = useState(false)
   // const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId;
   const CHAIN_ID = Number(process.env.NEXT_PUBLIC_DEFAULT_CHAIN)
   const refferCT = getContract({ address: addresses.refferal[CHAIN_ID], abi: refferalAbi, chainId: CHAIN_ID, signer })
@@ -31,7 +38,17 @@ export const ModalCheckRegister: React.FC<React.PropsWithChildren<RegistersModal
       localStorage.setItem('saveAdd', JSON.stringify(referBy))
     }
   }
-
+  const validateReferByWallet = async (e) => {
+    setShowError(false)
+    setReferByWallet(e.target.value)
+    try {
+      const isRefer = await refferCT.isReferrer(e.target.value)
+      console.log(isRefer)
+      if (!isRefer) setShowError(true)
+    } catch (e) {
+      setShowError(true)
+    }
+  }
   const onRegister = async () => {
     try {
       setLoading(true)
@@ -88,8 +105,10 @@ export const ModalCheckRegister: React.FC<React.PropsWithChildren<RegistersModal
         </Text>
       </Grid>
       <br />
+      <StyledInput value={referByWallet} autoFocus={true} onChange={validateReferByWallet} placeholder={`refer by`} />
+      {showError && <span style={{ color: 'red' }}>Invalid refer</span>}
       <br />
-      <Button disabled={loading} onClick={onRegister}>
+      <Button disabled={loading || showError} onClick={onRegister}>
         {loading === true ? 'Register' : 'Register Now'}
       </Button>
     </Modal>

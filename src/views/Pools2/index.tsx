@@ -385,13 +385,13 @@ const Pools = () => {
       return null
     }
     const param = window.location.origin
-    let linkRef
+    let linkRef = `${param}/referral`
 
-    if (userRegister) {
-      linkRef = `${param}?ref=${account}`
-    } else {
-      linkRef = `${param}/referral`
-    }
+    // if (userRegister) {
+    //   linkRef = `${param}?ref=${account}`
+    // } else {
+    //   linkRef = `${param}/referral`
+    // }
     return linkRef
   }
 
