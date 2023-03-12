@@ -206,9 +206,10 @@ const Pool = ({ poolId }) => {
 
   // ===> check to open registration modal
   const handleOpenDepositModal = () => {
-    if (isRef === true) {
-      openModalCheckRegisterModal()
-    } else openDepositModal()
+    // if (isRef === true) {
+    //   openModalCheckRegisterModal()
+    // } else openDepositModal()
+    openDepositModal()
   }
 
   // ===> handle when click Deposit Button
