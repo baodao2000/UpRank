@@ -58,7 +58,7 @@ export const ModalCheckRegister: React.FC<React.PropsWithChildren<RegistersModal
     try {
       setLoading(true)
       if (referBy) {
-        const txReceipt = await refferCT.register(referBy, myCode)
+        const txReceipt = await refferCT.register(referByWallet, myCode)
         if (txReceipt?.hash) {
           dispatch(setRefLink(`${baseRefUrl}${account}`))
           toastSuccess('Congratulations, you have successfully registered!')
@@ -68,7 +68,7 @@ export const ModalCheckRegister: React.FC<React.PropsWithChildren<RegistersModal
       } else {
         const ref = localStorage.getItem('saveAdd')
         if (ref?.includes('0x')) {
-          const txReceipt = await refferCT.register(ref, myCode)
+          const txReceipt = await refferCT.register(referByWallet, myCode)
           if (txReceipt?.hash) {
             dispatch(setRefLink(`${baseRefUrl}${account}`))
             toastSuccess('Congratulations, you have successfully registered!')

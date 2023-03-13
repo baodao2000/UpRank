@@ -402,7 +402,6 @@ const Pools = () => {
     const arr = await Promise.all(
       indexRank.map(async (item) => {
         const rank = await getPoolContract.rankRewards(item)
-
         return {
           image: getRankImage(item).img,
           title: getRankImage(item).title,

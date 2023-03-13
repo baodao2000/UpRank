@@ -505,7 +505,8 @@ const Referral = () => {
 
   const getLinkRef = () => {
     const param = window.location.origin
-    const text = `${param}?ref=${account}`
+    const text = `${param}?ref=${account.slice(account.length - 6, account.length).toLocaleLowerCase()}`
+    console.log(param)
 
     return text
   }
@@ -518,7 +519,8 @@ const Referral = () => {
   const onRegister = async () => {
     try {
       if (referBy) {
-        const txReceipt = await refferCT.register(referBy, myCode)
+        const userInfosByCode = await refferCT.userInfosByCode(referBy.toLowerCase())
+        const txReceipt = await refferCT.register(userInfosByCode, myCode)
         if (txReceipt?.hash) {
           dispatch(setRefLink(`${baseRefUrl}${account}`))
           toastSuccess('Congratulations, you have successfully registered!')
@@ -531,7 +533,8 @@ const Referral = () => {
       } else {
         const ref = JSON.parse(localStorage.getItem('saveAdd'))
         if (ref?.includes('0x')) {
-          const txReceipt = await refferCT.register(ref, myCode)
+          const userInfosByCode = await refferCT.userInfosByCode(ref.toLowerCase())
+          const txReceipt = await refferCT.register(userInfosByCode, myCode)
           if (txReceipt?.hash) {
             dispatch(setRefLink(`${baseRefUrl}${account}`))
             toastSuccess('Congratulations, you have successfully registered!')
