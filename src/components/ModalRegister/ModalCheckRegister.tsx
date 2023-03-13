@@ -28,6 +28,9 @@ export const ModalCheckRegister: React.FC<React.PropsWithChildren<RegistersModal
   const baseRefUrl = `${window.location.origin}homepage?ref=`
   const { data: signer } = useSigner()
   const [referByWallet, setReferByWallet] = useState(referBy)
+  const [referCode, setReferCode] = useState('')
+  const [myCode, setMyCode] = useState('')
+
   const [showError, setShowError] = useState(false)
   // const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId;
   const CHAIN_ID = Number(process.env.NEXT_PUBLIC_DEFAULT_CHAIN)
@@ -40,11 +43,13 @@ export const ModalCheckRegister: React.FC<React.PropsWithChildren<RegistersModal
   }
   const validateReferByWallet = async (e) => {
     setShowError(false)
-    setReferByWallet(e.target.value)
+    setReferCode(e.target.value)
     try {
-      const isRefer = await refferCT.isReferrer(e.target.value)
-      console.log(isRefer)
-      if (!isRefer) setShowError(true)
+      const code = e.target.value
+
+      const userInfosByCode = await refferCT.userInfosByCode(code.toLowerCase())
+      if (userInfosByCode.user === '0x0000000000000000000000000000000000000000') setShowError(true)
+      else setReferByWallet(userInfosByCode.user)
     } catch (e) {
       setShowError(true)
     }
@@ -53,7 +58,7 @@ export const ModalCheckRegister: React.FC<React.PropsWithChildren<RegistersModal
     try {
       setLoading(true)
       if (referBy) {
-        const txReceipt = await refferCT.register(referBy)
+        const txReceipt = await refferCT.register(referBy, myCode)
         if (txReceipt?.hash) {
           dispatch(setRefLink(`${baseRefUrl}${account}`))
           toastSuccess('Congratulations, you have successfully registered!')
@@ -63,7 +68,7 @@ export const ModalCheckRegister: React.FC<React.PropsWithChildren<RegistersModal
       } else {
         const ref = localStorage.getItem('saveAdd')
         if (ref?.includes('0x')) {
-          const txReceipt = await refferCT.register(ref)
+          const txReceipt = await refferCT.register(ref, myCode)
           if (txReceipt?.hash) {
             dispatch(setRefLink(`${baseRefUrl}${account}`))
             toastSuccess('Congratulations, you have successfully registered!')
@@ -72,7 +77,7 @@ export const ModalCheckRegister: React.FC<React.PropsWithChildren<RegistersModal
           }
         } else {
           const owner = await refferCT.owner()
-          const txReceipt = await refferCT.register(owner)
+          const txReceipt = await refferCT.register(referByWallet, myCode)
           if (txReceipt?.hash) {
             dispatch(setRefLink(`${baseRefUrl}${account}`))
             toastSuccess('Congratulations, you have successfully registered!')
@@ -94,6 +99,9 @@ export const ModalCheckRegister: React.FC<React.PropsWithChildren<RegistersModal
   useEffect(() => {
     saveRef()
   })
+  useEffect(() => {
+    setMyCode(account.slice(account.length - 6, account.length).toLocaleLowerCase())
+  }, [account])
 
   return (
     <Modal title="Register" onDismiss={onDismiss}>
@@ -105,7 +113,7 @@ export const ModalCheckRegister: React.FC<React.PropsWithChildren<RegistersModal
         </Text>
       </Grid>
       <br />
-      <StyledInput value={referByWallet} autoFocus={true} onChange={validateReferByWallet} placeholder={`refer by`} />
+      <StyledInput value={referCode} autoFocus={true} onChange={validateReferByWallet} placeholder={`refer code`} />
       {showError && <span style={{ color: 'red' }}>Invalid refer</span>}
       <br />
       <Button disabled={loading || showError} onClick={onRegister}>

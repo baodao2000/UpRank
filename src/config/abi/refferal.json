@@ -20,7 +20,8 @@
           { "internalType": "uint256", "name": "dateTime", "type": "uint256" },
           { "internalType": "uint256", "name": "totalRefer", "type": "uint256" },
           { "internalType": "uint256", "name": "totalRefer7", "type": "uint256" },
-          { "internalType": "bool", "name": "top10Refer", "type": "bool" }
+          { "internalType": "bool", "name": "top10Refer", "type": "bool" },
+          { "internalType": "string", "name": "code", "type": "string" }
         ],
         "internalType": "struct Refferal.Refer[]",
         "name": "list",
@@ -45,7 +46,8 @@
           { "internalType": "uint256", "name": "dateTime", "type": "uint256" },
           { "internalType": "uint256", "name": "totalRefer", "type": "uint256" },
           { "internalType": "uint256", "name": "totalRefer7", "type": "uint256" },
-          { "internalType": "bool", "name": "top10Refer", "type": "bool" }
+          { "internalType": "bool", "name": "top10Refer", "type": "bool" },
+          { "internalType": "string", "name": "code", "type": "string" }
         ],
         "internalType": "struct Refferal.Refer[]",
         "name": "list",
@@ -70,7 +72,8 @@
           { "internalType": "uint256", "name": "dateTime", "type": "uint256" },
           { "internalType": "uint256", "name": "totalRefer", "type": "uint256" },
           { "internalType": "uint256", "name": "totalRefer7", "type": "uint256" },
-          { "internalType": "bool", "name": "top10Refer", "type": "bool" }
+          { "internalType": "bool", "name": "top10Refer", "type": "bool" },
+          { "internalType": "string", "name": "code", "type": "string" }
         ],
         "internalType": "struct Refferal.Refer[]",
         "name": "list",
@@ -121,13 +124,17 @@
       { "internalType": "uint256", "name": "dateTime", "type": "uint256" },
       { "internalType": "uint256", "name": "totalRefer", "type": "uint256" },
       { "internalType": "uint256", "name": "totalRefer7", "type": "uint256" },
-      { "internalType": "bool", "name": "top10Refer", "type": "bool" }
+      { "internalType": "bool", "name": "top10Refer", "type": "bool" },
+      { "internalType": "string", "name": "code", "type": "string" }
     ],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "address", "name": "_refferrer", "type": "address" }],
+    "inputs": [
+      { "internalType": "address", "name": "_refferrer", "type": "address" },
+      { "internalType": "string", "name": "code", "type": "string" }
+    ],
     "name": "register",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -168,7 +175,23 @@
       { "internalType": "uint256", "name": "dateTime", "type": "uint256" },
       { "internalType": "uint256", "name": "totalRefer", "type": "uint256" },
       { "internalType": "uint256", "name": "totalRefer7", "type": "uint256" },
-      { "internalType": "bool", "name": "top10Refer", "type": "bool" }
+      { "internalType": "bool", "name": "top10Refer", "type": "bool" },
+      { "internalType": "string", "name": "code", "type": "string" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "string", "name": "", "type": "string" }],
+    "name": "userInfosByCode",
+    "outputs": [
+      { "internalType": "address", "name": "user", "type": "address" },
+      { "internalType": "address", "name": "refferBy", "type": "address" },
+      { "internalType": "uint256", "name": "dateTime", "type": "uint256" },
+      { "internalType": "uint256", "name": "totalRefer", "type": "uint256" },
+      { "internalType": "uint256", "name": "totalRefer7", "type": "uint256" },
+      { "internalType": "bool", "name": "top10Refer", "type": "bool" },
+      { "internalType": "string", "name": "code", "type": "string" }
     ],
     "stateMutability": "view",
     "type": "function"
@@ -182,7 +205,8 @@
       { "internalType": "uint256", "name": "dateTime", "type": "uint256" },
       { "internalType": "uint256", "name": "totalRefer", "type": "uint256" },
       { "internalType": "uint256", "name": "totalRefer7", "type": "uint256" },
-      { "internalType": "bool", "name": "top10Refer", "type": "bool" }
+      { "internalType": "bool", "name": "top10Refer", "type": "bool" },
+      { "internalType": "string", "name": "code", "type": "string" }
     ],
     "stateMutability": "view",
     "type": "function"
