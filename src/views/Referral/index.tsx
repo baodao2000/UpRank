@@ -122,9 +122,13 @@ const GroupLinkRef = styled.div`
 `
 
 const WrapperLinkRef = styled.div`
+  display: flex;
   position: relative;
+  flex-wrap: wrap;
+  justify-content: space-around;
   max-width: 650px;
   width: 100%;
+  gap: 20px;
 `
 
 const StyledLabelLinkRef = styled.label`
@@ -143,6 +147,28 @@ const StyledLabelLinkRef = styled.label`
 
 const StyledLink = styled.div`
   width: 100%;
+  max-width: 450px;
+  background: #00f0e1;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  color: black;
+  font-size: 18px;
+  padding: 10px 10px;
+  min-height: 34px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  row-gap: 20px;
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    min-height: 44px;
+  }
+`
+
+const StyledLinkCode = styled.div`
+  width: 100%;
+  max-width: 150px;
   background: #00f0e1;
   border-radius: 10px;
   border: none;
@@ -641,6 +667,8 @@ const Referral = () => {
                       <ShowLinkRefPc>{formatLinkRef(linkRef, 50, 4)}</ShowLinkRefPc>
                       <ShowLinkRefMobile>{formatLinkRef(linkRef, 20, 4)}</ShowLinkRefMobile>
                     </LinkItem>
+                  </StyledLink>
+                  <StyledLinkCode>
                     <LinkItem>
                       <StyledIconRef
                         id="iconCode"
@@ -660,7 +688,7 @@ const Referral = () => {
                           account.slice(account.length - 6, account.length).toLocaleLowerCase()}
                       </span>
                     </LinkItem>
-                  </StyledLink>
+                  </StyledLinkCode>
                 </WrapperLinkRef>
                 {showInput && !userIsRegister && (
                   <StyledInput
