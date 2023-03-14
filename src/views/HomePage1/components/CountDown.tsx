@@ -1,4 +1,5 @@
 import React from 'react'
+import moment from 'moment'
 import styled from 'styled-components'
 import { timeDisplayLong } from 'views/Pools2/util'
 import { Heading } from '@pancakeswap/uikit'
@@ -61,7 +62,7 @@ const StringCountDown = styled.div`
 `
 
 const CountDown = () => {
-  const [countDown, setCountDown] = React.useState(304802)
+  const [countDown, setCountDown] = React.useState(1679220000 - moment().unix())
   React.useEffect(() => {
     const timerId = setInterval(() => {
       setCountDown((prev) => prev - 1)
