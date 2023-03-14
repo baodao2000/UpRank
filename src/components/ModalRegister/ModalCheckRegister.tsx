@@ -30,8 +30,8 @@ export const ModalCheckRegister: React.FC<React.PropsWithChildren<RegistersModal
   const [referByWallet, setReferByWallet] = useState(referBy)
   const [referCode, setReferCode] = useState('')
   const [myCode, setMyCode] = useState('')
-
-  const [showError, setShowError] = useState(false)
+  const [showInput, setShowInput] = useState(false)
+  const [showError, setShowError] = useState(true)
   // const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId;
   const CHAIN_ID = Number(process.env.NEXT_PUBLIC_DEFAULT_CHAIN)
   const refferCT = getContract({ address: addresses.refferal[CHAIN_ID], abi: refferalAbi, chainId: CHAIN_ID, signer })
@@ -42,23 +42,28 @@ export const ModalCheckRegister: React.FC<React.PropsWithChildren<RegistersModal
     }
   }
   const validateReferByWallet = async (e) => {
-    setShowError(false)
     setReferCode(e.target.value)
-    try {
-      const code = e.target.value
+    const code = e.target.value
 
-      const userInfosByCode = await refferCT.userInfosByCode(code.toLowerCase())
-      if (userInfosByCode.user === '0x0000000000000000000000000000000000000000') setShowError(true)
-      else setReferByWallet(userInfosByCode.user)
-    } catch (e) {
-      setShowError(true)
+    const userInfosByCode = await refferCT.userInfosByCode(code.toLowerCase())
+    if (userInfosByCode.user === '0x0000000000000000000000000000000000000000') setShowError(true)
+    else {
+      setShowError(false)
+      setReferByWallet(userInfosByCode.user)
+    }
+  }
+  const isShowInput = () => {
+    const ref = localStorage.getItem('saveAdd')
+    if (!referBy && !ref) {
+      setShowInput(true)
     }
   }
   const onRegister = async () => {
     try {
       setLoading(true)
       if (referBy) {
-        const txReceipt = await refferCT.register(referByWallet, myCode)
+        const userInfosByCode = await refferCT.userInfosByCode(referBy.toLowerCase())
+        const txReceipt = await refferCT.register(userInfosByCode.user, myCode)
         if (txReceipt?.hash) {
           dispatch(setRefLink(`${baseRefUrl}${account}`))
           toastSuccess('Congratulations, you have successfully registered!')
@@ -68,7 +73,8 @@ export const ModalCheckRegister: React.FC<React.PropsWithChildren<RegistersModal
       } else {
         const ref = localStorage.getItem('saveAdd')
         if (ref?.includes('0x')) {
-          const txReceipt = await refferCT.register(referByWallet, myCode)
+          const userInfosByCode = await refferCT.userInfosByCode(ref.toLowerCase())
+          const txReceipt = await refferCT.register(userInfosByCode.user, myCode)
           if (txReceipt?.hash) {
             dispatch(setRefLink(`${baseRefUrl}${account}`))
             toastSuccess('Congratulations, you have successfully registered!')
@@ -98,6 +104,7 @@ export const ModalCheckRegister: React.FC<React.PropsWithChildren<RegistersModal
 
   useEffect(() => {
     saveRef()
+    isShowInput()
   })
   useEffect(() => {
     setMyCode(account.slice(account.length - 6, account.length).toLocaleLowerCase())
@@ -113,12 +120,20 @@ export const ModalCheckRegister: React.FC<React.PropsWithChildren<RegistersModal
         </Text>
       </Grid>
       <br />
-      <StyledInput value={referCode} autoFocus={true} onChange={validateReferByWallet} placeholder={`refer code`} />
-      {showError && <span style={{ color: 'red' }}>Invalid refer</span>}
+      {showInput && (
+        <StyledInput value={referCode} autoFocus={true} onChange={validateReferByWallet} placeholder={`refer code`} />
+      )}
+      {showError && showInput && referCode && <span style={{ color: 'red' }}>Invalid refer</span>}
       <br />
-      <Button disabled={loading || showError} onClick={onRegister}>
-        {loading === true ? 'Register' : 'Register Now'}
-      </Button>
+      {showInput ? (
+        <Button disabled={loading || showError} onClick={onRegister}>
+          {loading === true ? 'Register' : 'Register Now'}
+        </Button>
+      ) : (
+        <Button disabled={loading} onClick={onRegister}>
+          {loading === true ? 'Register' : 'Register Now'}
+        </Button>
+      )}
     </Modal>
   )
 }

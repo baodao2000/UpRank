@@ -308,8 +308,9 @@ const Referral = () => {
   const [myCode, setMyCode] = useState('')
   const [referByWallet, setReferByWallet] = useState(referBy)
   const [referCode, setReferCode] = useState('')
-  const [showError, setShowError] = useState(false)
+  const [showError, setShowError] = useState(true)
   const [totalItemChild, setTotalItemChild] = React.useState(0)
+  const [showInput, setShowInput] = useState(false)
   const [acountChild, setAccountChild] = React.useState(() => {
     if (account) {
       return [account]
@@ -359,16 +360,14 @@ const Referral = () => {
   }
 
   const validateReferByWallet = async (e) => {
-    setShowError(false)
     setReferCode(e.target.value)
-    try {
-      const code = e.target.value
+    const code = e.target.value
 
-      const userInfosByCode = await refferCT.userInfosByCode(code.toLowerCase())
-      if (userInfosByCode.user === '0x0000000000000000000000000000000000000000') setShowError(true)
-      else setReferByWallet(userInfosByCode.user)
-    } catch (e) {
-      setShowError(true)
+    const userInfosByCode = await refferCT.userInfosByCode(code.toLowerCase())
+    if (userInfosByCode.user === '0x0000000000000000000000000000000000000000') setShowError(true)
+    else {
+      setShowError(false)
+      setReferByWallet(userInfosByCode.user)
     }
   }
 
@@ -501,12 +500,12 @@ const Referral = () => {
     if (!acountChild.length && account) {
       setAccountChild([...acountChild, account])
     }
+    isShowInput()
   })
 
   const getLinkRef = () => {
     const param = window.location.origin
     const text = `${param}?ref=${account.slice(account.length - 6, account.length).toLocaleLowerCase()}`
-    console.log(param)
 
     return text
   }
@@ -520,7 +519,7 @@ const Referral = () => {
     try {
       if (referBy) {
         const userInfosByCode = await refferCT.userInfosByCode(referBy.toLowerCase())
-        const txReceipt = await refferCT.register(userInfosByCode, myCode)
+        const txReceipt = await refferCT.register(userInfosByCode.user, myCode)
         if (txReceipt?.hash) {
           dispatch(setRefLink(`${baseRefUrl}${account}`))
           toastSuccess('Congratulations, you have successfully registered!')
@@ -534,7 +533,7 @@ const Referral = () => {
         const ref = JSON.parse(localStorage.getItem('saveAdd'))
         if (ref?.includes('0x')) {
           const userInfosByCode = await refferCT.userInfosByCode(ref.toLowerCase())
-          const txReceipt = await refferCT.register(userInfosByCode, myCode)
+          const txReceipt = await refferCT.register(userInfosByCode.user, myCode)
           if (txReceipt?.hash) {
             dispatch(setRefLink(`${baseRefUrl}${account}`))
             toastSuccess('Congratulations, you have successfully registered!')
@@ -582,6 +581,13 @@ const Referral = () => {
     }
   }
 
+  const isShowInput = () => {
+    const ref = localStorage.getItem('saveAdd')
+    if (!referBy && !ref) {
+      setShowInput(true)
+    }
+  }
+
   const handleLeave = () => {
     setTimeout(() => {
       setShowCopied(false)
@@ -623,16 +629,24 @@ const Referral = () => {
                     <ShowLinkRefMobile>{formatLinkRef(linkRef, 20, 4)}</ShowLinkRefMobile>
                   </StyledLink>
                 </WrapperLinkRef>
-                <StyledInput
-                  value={referCode}
-                  autoFocus={true}
-                  onChange={validateReferByWallet}
-                  placeholder={`refer code`}
-                />
-                {showError && <span style={{ color: 'red' }}>Invalid refer</span>}
-                <StyledButton onClick={onRegister} disabled={userIsRegister || showError ? true : false}>
-                  Register
-                </StyledButton>
+                {showInput && !userIsRegister && (
+                  <StyledInput
+                    value={referCode}
+                    autoFocus={true}
+                    onChange={validateReferByWallet}
+                    placeholder={`refer code`}
+                  />
+                )}
+                {showError && showInput && referCode && <span style={{ color: 'red' }}>Invalid refer</span>}
+                {showInput ? (
+                  <StyledButton onClick={onRegister} disabled={userIsRegister || showError}>
+                    Register
+                  </StyledButton>
+                ) : (
+                  <StyledButton onClick={onRegister} disabled={userIsRegister}>
+                    Register
+                  </StyledButton>
+                )}
               </GroupLinkRef>
             </CardRegister>
             <CardInfoUser>
