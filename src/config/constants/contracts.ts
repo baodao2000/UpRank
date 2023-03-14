@@ -21,7 +21,7 @@ export default {
   multiCall: multicallAddresses,
   refferal: {
     56: '0x9Aa12B0853a8AEF18744A30BAB11c8DF6D83d5CF',
-    97: '0x53D1F15659E9df631076BaA281c785d5e8963181',
+    97: '0x1A4cbd295674bfA5686FA27d0A26B8fa53Ca0da8',
     137: '0xfAB7689862c459e33a2192DdAd27d5c4a8A2a0C2',
   },
   pools: {

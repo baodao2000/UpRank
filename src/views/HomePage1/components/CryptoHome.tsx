@@ -224,7 +224,7 @@ const CustomSpan = styled(Text)`
 
 const CryptoHome = ({ handleClick }) => {
   return (
-    <Crypto>
+    <Crypto className="block">
       <Content data-aos="fade-right">
         <Title color="mainColor" className="title colorchange">
           {/* <StyledText>All-in-One</StyledText> for Your Crypto */}Why <StyledText>TrendyDefi?</StyledText>

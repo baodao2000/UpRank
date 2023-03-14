@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Heading, Text, Flex, Button, useToast } from '@pancakeswap/uikit'
+import { Heading, Text, Flex, Button, useToast, Input } from '@pancakeswap/uikit'
 import React, { useState } from 'react'
 import { Tooltip } from 'react-tooltip'
 import 'react-tooltip/dist/react-tooltip.css'
@@ -122,9 +122,13 @@ const GroupLinkRef = styled.div`
 `
 
 const WrapperLinkRef = styled.div`
+  display: flex;
   position: relative;
+  flex-wrap: wrap;
+  justify-content: space-around;
   max-width: 650px;
   width: 100%;
+  gap: 20px;
 `
 
 const StyledLabelLinkRef = styled.label`
@@ -143,14 +147,40 @@ const StyledLabelLinkRef = styled.label`
 
 const StyledLink = styled.div`
   width: 100%;
+  max-width: 450px;
   background: #00f0e1;
   border-radius: 10px;
   border: none;
   outline: none;
   color: black;
   font-size: 18px;
-  padding: 10px 10px 10px 50px;
+  padding: 10px 10px;
   min-height: 34px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  row-gap: 20px;
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    min-height: 44px;
+  }
+`
+
+const StyledLinkCode = styled.div`
+  width: 100%;
+  max-width: 150px;
+  background: #00f0e1;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  color: black;
+  font-size: 18px;
+  padding: 10px 10px;
+  min-height: 34px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  row-gap: 20px;
 
   ${({ theme }) => theme.mediaQueries.md} {
     min-height: 44px;
@@ -170,16 +200,7 @@ const StyledButton = styled(Button)`
 const StyledIconRef = styled.img`
   width: 20px;
   height: 20px;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  left: 10px;
   cursor: pointer;
-
-  ${({ theme }) => theme.mediaQueries.md} {
-    width: 30px;
-    height: 30px;
-  }
 `
 
 const ShowLinkRefPc = styled.span`
@@ -273,6 +294,29 @@ const StyledLinkAccount = styled.a`
   }
 `
 
+const StyledInput = styled(Input)`
+  outline: none;
+  border: 3px solid #009571;
+  border-radius: '10px';
+  margin-top: 10px;
+  max-width: 200px;
+`
+
+const LinkItem = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 6px;
+`
+
+export const copyText = (text) => {
+  const el = document.createElement('textarea')
+  el.value = text
+  document.body.appendChild(el)
+  el.select()
+  document.execCommand('copy')
+  document.body.removeChild(el)
+}
+
 const Referral = () => {
   const [linkRef, setLinkRef] = React.useState('')
   const [showCopied, setShowCopied] = React.useState(false)
@@ -297,7 +341,12 @@ const Referral = () => {
   const [listChild, setListChild] = React.useState([])
   const [countPage, setCountPage] = React.useState(0)
   const [activePage, setActivePage] = React.useState(0)
+  const [myCode, setMyCode] = useState('')
+  const [referByWallet, setReferByWallet] = useState(referBy)
+  const [referCode, setReferCode] = useState('')
+  const [showError, setShowError] = useState(true)
   const [totalItemChild, setTotalItemChild] = React.useState(0)
+  const [showInput, setShowInput] = useState(false)
   const [acountChild, setAccountChild] = React.useState(() => {
     if (account) {
       return [account]
@@ -344,6 +393,18 @@ const Referral = () => {
     setTotal7Level(data[1].totalRefer7.toString())
     setListChild(list)
     setLoadingTable(false)
+  }
+
+  const validateReferByWallet = async (e) => {
+    setReferCode(e.target.value)
+    const code = e.target.value
+
+    const userInfosByCode = await refferCT.userInfosByCode(code.toLowerCase())
+    if (userInfosByCode.user === '0x0000000000000000000000000000000000000000') setShowError(true)
+    else {
+      setShowError(false)
+      setReferByWallet(userInfosByCode.user)
+    }
   }
 
   const handleClickPage = (index) => {
@@ -464,18 +525,23 @@ const Referral = () => {
   }, [account, userIsRegister, userInfos])
 
   React.useEffect(() => {
+    if (!account) {
+      return
+    }
     getTotalRefferChild(0, account)
+    setMyCode(account.slice(account.length - 6, account.length).toLocaleLowerCase())
   }, [account])
 
   React.useEffect(() => {
     if (!acountChild.length && account) {
       setAccountChild([...acountChild, account])
     }
+    isShowInput()
   })
 
   const getLinkRef = () => {
     const param = window.location.origin
-    const text = `${param}?ref=${account}`
+    const text = `${param}?ref=${account.slice(account.length - 6, account.length).toLocaleLowerCase()}`
 
     return text
   }
@@ -488,7 +554,8 @@ const Referral = () => {
   const onRegister = async () => {
     try {
       if (referBy) {
-        const txReceipt = await refferCT.register(referBy)
+        const userInfosByCode = await refferCT.userInfosByCode(referBy.toLowerCase())
+        const txReceipt = await refferCT.register(userInfosByCode.user, myCode)
         if (txReceipt?.hash) {
           dispatch(setRefLink(`${baseRefUrl}${account}`))
           toastSuccess('Congratulations, you have successfully registered!')
@@ -501,7 +568,8 @@ const Referral = () => {
       } else {
         const ref = JSON.parse(localStorage.getItem('saveAdd'))
         if (ref?.includes('0x')) {
-          const txReceipt = await refferCT.register(ref)
+          const userInfosByCode = await refferCT.userInfosByCode(ref.toLowerCase())
+          const txReceipt = await refferCT.register(userInfosByCode.user, myCode)
           if (txReceipt?.hash) {
             dispatch(setRefLink(`${baseRefUrl}${account}`))
             toastSuccess('Congratulations, you have successfully registered!')
@@ -513,7 +581,7 @@ const Referral = () => {
           }
         } else {
           const owner = await refferCT.owner()
-          const txReceipt = await refferCT.register(owner)
+          const txReceipt = await refferCT.register(referByWallet, myCode)
           if (txReceipt?.hash) {
             dispatch(setRefLink(`${baseRefUrl}${account}`))
             toastSuccess('Congratulations, you have successfully registered!')
@@ -536,16 +604,20 @@ const Referral = () => {
   const handleRef = () => {
     if (userIsRegister) {
       const text = getLinkRef()
-      const copyText = (text) => {
-        const el = document.createElement('textarea')
-        el.value = text
-        document.body.appendChild(el)
-        el.select()
-        document.execCommand('copy')
-        document.body.removeChild(el)
-      }
       copyText(text)
       setShowCopied(true)
+    }
+  }
+
+  const handleCode = (text) => {
+    copyText(text)
+    setShowCopied(true)
+  }
+
+  const isShowInput = () => {
+    const ref = localStorage.getItem('saveAdd')
+    if (!referBy && !ref) {
+      setShowInput(true)
     }
   }
 
@@ -575,24 +647,62 @@ const Referral = () => {
               <GroupLinkRef>
                 <StyledLabelLinkRef>My Referral Link</StyledLabelLinkRef>
                 <WrapperLinkRef>
-                  <StyledIconRef
-                    id="iconRef"
-                    src="/images/referral/ref-icon.png"
-                    onClick={handleRef}
-                    onMouseLeave={handleLeave}
-                  />
-                  <Tooltip
-                    anchorId="iconRef"
-                    content={userIsRegister ? (showCopied ? 'Copied' : 'Copy') : 'Please Register'}
-                  />
                   <StyledLink>
-                    <ShowLinkRefPc>{formatLinkRef(linkRef, 50, 4)}</ShowLinkRefPc>
-                    <ShowLinkRefMobile>{formatLinkRef(linkRef, 20, 4)}</ShowLinkRefMobile>
+                    <LinkItem>
+                      <StyledIconRef
+                        id="iconRef"
+                        src="/images/referral/copy.svg"
+                        onClick={handleRef}
+                        onMouseLeave={handleLeave}
+                      />
+                      <Tooltip
+                        anchorId="iconRef"
+                        content={userIsRegister ? (showCopied ? 'Copied' : 'Copy') : 'Please Register'}
+                      />
+                      <ShowLinkRefPc>{formatLinkRef(linkRef, 50, 4)}</ShowLinkRefPc>
+                      <ShowLinkRefMobile>{formatLinkRef(linkRef, 20, 4)}</ShowLinkRefMobile>
+                    </LinkItem>
                   </StyledLink>
+                  <StyledLinkCode>
+                    <LinkItem>
+                      <StyledIconRef
+                        id="iconCode"
+                        src="/images/referral/copy.svg"
+                        onClick={() =>
+                          handleCode(account.slice(account.length - 6, account.length).toLocaleLowerCase())
+                        }
+                        onMouseLeave={handleLeave}
+                      />
+                      <Tooltip
+                        anchorId="iconCode"
+                        content={userIsRegister ? (showCopied ? 'Copied' : 'Copy') : 'Please Register'}
+                      />
+                      <span>
+                        {userIsRegister &&
+                          account &&
+                          account.slice(account.length - 6, account.length).toLocaleLowerCase()}
+                      </span>
+                    </LinkItem>
+                  </StyledLinkCode>
                 </WrapperLinkRef>
-                <StyledButton onClick={onRegister} disabled={userIsRegister ? true : false}>
-                  Register
-                </StyledButton>
+                {showInput && !userIsRegister && (
+                  <StyledInput
+                    value={referCode}
+                    autoFocus={true}
+                    onChange={validateReferByWallet}
+                    placeholder={`refer code`}
+                  />
+                )}
+                {showError && showInput && referCode && <span style={{ color: 'red' }}>Invalid code</span>}
+                {showInput ? (
+                  <StyledButton onClick={onRegister} disabled={userIsRegister || showError}>
+                    Register
+                  </StyledButton>
+                ) : (
+                  <StyledButton onClick={onRegister} disabled={userIsRegister}>
+                    Register
+                  </StyledButton>
+                )}
               </GroupLinkRef>
             </CardRegister>
             <CardInfoUser>

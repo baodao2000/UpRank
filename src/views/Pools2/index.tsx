@@ -396,19 +396,21 @@ const Pools = () => {
   }
 
   const getInfoRank = async (rateBNB2USD) => {
-    const rank = await getPoolContract.userRank(account)
     const months = await getPoolContract.getMonths()
-    const isClaimed = await getPoolContract.userRankRewardClaimed(account, Number(months.toString()))
+
+    const infoRank = await Promise.all([
+      getPoolContract.userRank(account),
+      getPoolContract.userRankRewardClaimed(account, Number(months.toString())),
+    ])
     const arr = await Promise.all(
       indexRank.map(async (item) => {
         const rank = await getPoolContract.rankRewards(item)
-
         return {
           image: getRankImage(item).img,
           title: getRankImage(item).title,
           currentReward: formatEther(rank.remainInMonth.toString()),
-          total: Number(Number(formatEther(rank.total)) * rateBNB2USD).toFixed(4),
-          min: Number(Number(formatEther(rank.total)) * rateBNB2USD).toFixed(4),
+          total: Number(Number(formatEther(rank.total)) * rateBNB2USD).toFixed(3),
+          min: Number(Number(formatEther(rank.total)) * rateBNB2USD).toFixed(3),
           max: Number(formatEther(rank.minStart)),
           member: rank.totalMember.toString(),
           yourReward:
@@ -418,38 +420,34 @@ const Pools = () => {
         }
       }),
     )
-    setUserRank(Number(rank.toString()))
+    setUserRank(Number(infoRank[0].toString()))
     setRanks(arr)
-    setUserClaimed(isClaimed)
+    setUserClaimed(infoRank[1])
   }
 
   const getPools = async (ids: number[]) => {
     try {
-      const rateBnbUsd = await getPoolContract.bnbPrice()
+      const rateAndRegister = await Promise.all([getPoolContract.bnbPrice(), refferCT.isReferrer(account)])
       const pools = ids.map((item) => getPoolContract.pools(item))
-      const isRegister = await refferCT.isReferrer(account)
+      await getInfoRank(Number(formatEther(rateAndRegister[0][0])) / Number(formatEther(rateAndRegister[0][1])))
 
-      await getInfoRank(Number(formatEther(rateBnbUsd[0])) / Number(formatEther(rateBnbUsd[1])))
-
-      setRateBnbUsd(Number(formatEther(rateBnbUsd[0])) / Number(formatEther(rateBnbUsd[1])))
+      setRateBnbUsd(Number(formatEther(rateAndRegister[0][0])) / Number(formatEther(rateAndRegister[0][1])))
       const newPoolInfo = await Promise.all(
         pools.map(async (item, id) => {
-          let userLock = await getPoolContract.users(account, id)
-          const pool = await item
-
+          const userLockAndPool = await Promise.all([getPoolContract.users(account, id), item])
           return {
-            currentInterest: ((Number(pool.currentInterest.toString()) / 10000) * 365).toFixed(2),
-            enable: pool.enable,
-            maxLock: formatEther(pool.maxLock),
-            minLock: formatEther(pool.minLock),
+            currentInterest: ((Number(userLockAndPool[1].currentInterest.toString()) / 10000) * 365).toFixed(2),
+            enable: userLockAndPool[1].enable,
+            maxLock: formatEther(userLockAndPool[1].maxLock),
+            minLock: formatEther(userLockAndPool[1].minLock),
             timeLock: 1095,
-            totalLock: formatEther(pool.totalLock),
-            rateBNB2USD: Number(formatEther(rateBnbUsd[0])) / Number(formatEther(rateBnbUsd[1])),
-            yourLock: Number(formatEther(userLock.totalLock)),
+            totalLock: formatEther(userLockAndPool[1].totalLock),
+            rateBNB2USD: Number(formatEther(rateAndRegister[0][0])) / Number(formatEther(rateAndRegister[0][1])),
+            yourLock: Number(formatEther(userLockAndPool[0].totalLock)),
           }
         }),
       )
-      setUserRegister(isRegister)
+      setUserRegister(rateAndRegister[1])
       setArr(newPoolInfo)
       setIsLoading(false)
     } catch (e) {
@@ -533,7 +531,7 @@ const Pools = () => {
                   className="value"
                   style={{ color: '#C5C5C5' }}
                 >
-                  Your Commission: {remainCommission} {unit}
+                  Your Commission: {remainCommission.toFixed(6)} {unit}
                 </Text>
               </LineText>
               <Text style={{ color: '#C5C5C5' }} ellipsis={true}>

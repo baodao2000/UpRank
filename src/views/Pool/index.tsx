@@ -135,21 +135,21 @@ const Pool = ({ poolId }) => {
 
   const getNoteDeposit = () => {
     let note
-    if (chainId === 97 && now - poolInfo.startTime < 3600) {
+    if (chainId === 97 && now - poolInfo.startTime > 3600) {
       note = (
         <NoteDeposit>
           <i>
-            <b>Please note:</b> after <b style={{ textDecoration: 'underline' }}>{timeDisplayLong(3600)}</b> days of
-            deposit, you can&apos;t add more to this pool. If you would like to stake more, you can stake a different
-            wallet or a different pool.
+            <b>Please note:</b> after <b style={{ textDecoration: 'underline' }}>{timeDisplayLong(3600)}</b> of deposit,
+            you can&apos;t add more to this pool. If you would like to stake more, you can stake a different wallet or a
+            different pool.
           </i>
         </NoteDeposit>
       )
-    } else if (chainId === 137 && now - poolInfo.startTime < 604800) {
+    } else if (chainId === 137 && now - poolInfo.startTime > 604800) {
       note = (
         <NoteDeposit>
           <i>
-            <b>Please note:</b> after <b style={{ textDecoration: 'underline' }}>{timeDisplayLong(604800)}</b> days of
+            <b>Please note:</b> after <b style={{ textDecoration: 'underline' }}>{timeDisplayLong(604800)}</b> of
             deposit, you can&apos;t add more to this pool. If you would like to stake more, you can stake a different
             wallet or a different pool.
           </i>
