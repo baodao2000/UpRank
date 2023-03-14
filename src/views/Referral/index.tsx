@@ -201,11 +201,6 @@ const StyledIconRef = styled.img`
   width: 20px;
   height: 20px;
   cursor: pointer;
-
-  ${({ theme }) => theme.mediaQueries.md} {
-    width: 30px;
-    height: 30px;
-  }
 `
 
 const ShowLinkRefPc = styled.span`
@@ -656,7 +651,7 @@ const Referral = () => {
                     <LinkItem>
                       <StyledIconRef
                         id="iconRef"
-                        src="/images/referral/ref-icon.png"
+                        src="/images/referral/copy.svg"
                         onClick={handleRef}
                         onMouseLeave={handleLeave}
                       />
@@ -672,7 +667,7 @@ const Referral = () => {
                     <LinkItem>
                       <StyledIconRef
                         id="iconCode"
-                        src="/images/referral/ref-icon.png"
+                        src="/images/referral/copy.svg"
                         onClick={() =>
                           handleCode(account.slice(account.length - 6, account.length).toLocaleLowerCase())
                         }

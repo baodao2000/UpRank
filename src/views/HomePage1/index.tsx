@@ -13,6 +13,7 @@ import Covered from './components/Covered'
 import Transparency from './components/Transparency'
 import Tranditional from './components/Tranditional'
 import RoadMap from './components/RoadMap'
+import CountDown from './components/CountDown'
 
 const Wrapper = styled.div`
   font-style: normal;
@@ -87,6 +88,7 @@ const HomePage: React.FC<React.PropsWithChildren> = () => {
         <Container>
           <StyledBackground src={images.bgTrendy} />
           <HeadHome />
+          <CountDown />
           <Crypto handleClick={handleClick} />
           <div ref={ref}>
             <Exchange data-aos="fade-up" />
