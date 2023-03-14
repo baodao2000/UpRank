@@ -149,8 +149,12 @@ const StyledLink = styled.div`
   outline: none;
   color: black;
   font-size: 18px;
-  padding: 10px 10px 10px 50px;
+  padding: 10px 10px;
   min-height: 34px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  row-gap: 20px;
 
   ${({ theme }) => theme.mediaQueries.md} {
     min-height: 44px;
@@ -170,10 +174,6 @@ const StyledButton = styled(Button)`
 const StyledIconRef = styled.img`
   width: 20px;
   height: 20px;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  left: 10px;
   cursor: pointer;
 
   ${({ theme }) => theme.mediaQueries.md} {
@@ -278,8 +278,23 @@ const StyledInput = styled(Input)`
   border: 3px solid #009571;
   border-radius: '10px';
   margin-top: 10px;
-  max-width: 650px;
+  max-width: 200px;
 `
+
+const LinkItem = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 6px;
+`
+
+export const copyText = (text) => {
+  const el = document.createElement('textarea')
+  el.value = text
+  document.body.appendChild(el)
+  el.select()
+  document.execCommand('copy')
+  document.body.removeChild(el)
+}
 
 const Referral = () => {
   const [linkRef, setLinkRef] = React.useState('')
@@ -568,17 +583,14 @@ const Referral = () => {
   const handleRef = () => {
     if (userIsRegister) {
       const text = getLinkRef()
-      const copyText = (text) => {
-        const el = document.createElement('textarea')
-        el.value = text
-        document.body.appendChild(el)
-        el.select()
-        document.execCommand('copy')
-        document.body.removeChild(el)
-      }
       copyText(text)
       setShowCopied(true)
     }
+  }
+
+  const handleCode = (text) => {
+    copyText(text)
+    setShowCopied(true)
   }
 
   const isShowInput = () => {
@@ -614,19 +626,40 @@ const Referral = () => {
               <GroupLinkRef>
                 <StyledLabelLinkRef>My Referral Link</StyledLabelLinkRef>
                 <WrapperLinkRef>
-                  <StyledIconRef
-                    id="iconRef"
-                    src="/images/referral/ref-icon.png"
-                    onClick={handleRef}
-                    onMouseLeave={handleLeave}
-                  />
-                  <Tooltip
-                    anchorId="iconRef"
-                    content={userIsRegister ? (showCopied ? 'Copied' : 'Copy') : 'Please Register'}
-                  />
                   <StyledLink>
-                    <ShowLinkRefPc>{formatLinkRef(linkRef, 50, 4)}</ShowLinkRefPc>
-                    <ShowLinkRefMobile>{formatLinkRef(linkRef, 20, 4)}</ShowLinkRefMobile>
+                    <LinkItem>
+                      <StyledIconRef
+                        id="iconRef"
+                        src="/images/referral/ref-icon.png"
+                        onClick={handleRef}
+                        onMouseLeave={handleLeave}
+                      />
+                      <Tooltip
+                        anchorId="iconRef"
+                        content={userIsRegister ? (showCopied ? 'Copied' : 'Copy') : 'Please Register'}
+                      />
+                      <ShowLinkRefPc>{formatLinkRef(linkRef, 50, 4)}</ShowLinkRefPc>
+                      <ShowLinkRefMobile>{formatLinkRef(linkRef, 20, 4)}</ShowLinkRefMobile>
+                    </LinkItem>
+                    <LinkItem>
+                      <StyledIconRef
+                        id="iconCode"
+                        src="/images/referral/ref-icon.png"
+                        onClick={() =>
+                          handleCode(account.slice(account.length - 6, account.length).toLocaleLowerCase())
+                        }
+                        onMouseLeave={handleLeave}
+                      />
+                      <Tooltip
+                        anchorId="iconCode"
+                        content={userIsRegister ? (showCopied ? 'Copied' : 'Copy') : 'Please Register'}
+                      />
+                      <span>
+                        {userIsRegister &&
+                          account &&
+                          account.slice(account.length - 6, account.length).toLocaleLowerCase()}
+                      </span>
+                    </LinkItem>
                   </StyledLink>
                 </WrapperLinkRef>
                 {showInput && !userIsRegister && (
@@ -637,7 +670,7 @@ const Referral = () => {
                     placeholder={`refer code`}
                   />
                 )}
-                {showError && showInput && referCode && <span style={{ color: 'red' }}>Invalid refer</span>}
+                {showError && showInput && referCode && <span style={{ color: 'red' }}>Invalid code</span>}
                 {showInput ? (
                   <StyledButton onClick={onRegister} disabled={userIsRegister || showError}>
                     Register

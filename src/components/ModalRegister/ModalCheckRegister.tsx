@@ -15,7 +15,7 @@ interface RegistersModalProps extends InjectedProps {}
 const StyledInput = styled(Input)`
   outline: none;
   border: 3px solid #009571;
-  borderradius: '10px';
+  border-radius: 10px;
 `
 export const ModalCheckRegister: React.FC<React.PropsWithChildren<RegistersModalProps>> = ({ onDismiss }) => {
   const { account, chainId } = useWeb3React()
@@ -123,7 +123,7 @@ export const ModalCheckRegister: React.FC<React.PropsWithChildren<RegistersModal
       {showInput && (
         <StyledInput value={referCode} autoFocus={true} onChange={validateReferByWallet} placeholder={`refer code`} />
       )}
-      {showError && showInput && referCode && <span style={{ color: 'red' }}>Invalid refer</span>}
+      {showError && showInput && referCode && <span style={{ color: 'red' }}>Invalid code</span>}
       <br />
       {showInput ? (
         <Button disabled={loading || showError} onClick={onRegister}>
