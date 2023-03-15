@@ -2,36 +2,13 @@
   {
     "inputs": [
       { "internalType": "contract IRefferal", "name": "_refer", "type": "address" },
-      { "internalType": "address", "name": "gnosisSafeAddress", "type": "address" },
-      { "internalType": "contract IPancakeRouter", "name": "pancakeRouteAddress", "type": "address" },
-      { "internalType": "address", "name": "_wBnbAddress", "type": "address" },
-      { "internalType": "address", "name": "_usdAddress", "type": "address" }
+      { "internalType": "address", "name": "_ceo", "type": "address" },
+      { "internalType": "contract IPancakeRouter", "name": "_pancakeRouteAddress", "type": "address" },
+      { "internalType": "address", "name": "_WBNBAddress", "type": "address" },
+      { "internalType": "address", "name": "_USDAddress", "type": "address" }
     ],
     "stateMutability": "nonpayable",
     "type": "constructor"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      { "indexed": false, "internalType": "uint256", "name": "minLock", "type": "uint256" },
-      { "indexed": false, "internalType": "uint256", "name": "maxLock", "type": "uint256" },
-      { "indexed": false, "internalType": "uint256", "name": "currentInterest", "type": "uint256" },
-      { "indexed": false, "internalType": "uint256", "name": "bonusInterest", "type": "uint256" },
-      { "indexed": false, "internalType": "uint256", "name": "commPercent", "type": "uint256" }
-    ],
-    "name": "AddPool",
-    "type": "event"
-  },
-  { "anonymous": false, "inputs": [], "name": "AdminRequestVote", "type": "event" },
-  { "anonymous": false, "inputs": [], "name": "AdminRequestVoteConfig", "type": "event" },
-  {
-    "anonymous": false,
-    "inputs": [
-      { "indexed": false, "internalType": "address payable", "name": "user", "type": "address" },
-      { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }
-    ],
-    "name": "GetStuck",
-    "type": "event"
   },
   {
     "anonymous": false,
@@ -43,113 +20,28 @@
     "type": "event"
   },
   {
-    "anonymous": false,
-    "inputs": [{ "indexed": false, "internalType": "uint256[]", "name": "conditionMem", "type": "uint256[]" }],
-    "name": "SetConditionMemOnTree",
-    "type": "event"
+    "inputs": [],
+    "name": "USD",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    "anonymous": false,
-    "inputs": [{ "indexed": false, "internalType": "uint256[]", "name": "conditionVolume", "type": "uint256[]" }],
-    "name": "SetConditionVolumeOnTree",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [{ "indexed": false, "internalType": "contract IRefferal", "name": "iRefer", "type": "address" }],
-    "name": "SetRefer",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      { "indexed": false, "internalType": "contract IPancakeRouter", "name": "pancakeRouteAddress", "type": "address" }
-    ],
-    "name": "SetRoute",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      { "indexed": false, "internalType": "uint256", "name": "pid", "type": "uint256" },
-      { "indexed": false, "internalType": "bool", "name": "enable", "type": "bool" }
-    ],
-    "name": "TogglePool",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      { "indexed": false, "internalType": "uint256", "name": "pid", "type": "uint256" },
-      { "indexed": false, "internalType": "uint256", "name": "commPercent", "type": "uint256" }
-    ],
-    "name": "UpdateCommPercent",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      { "indexed": false, "internalType": "uint256", "name": "pid", "type": "uint256" },
-      { "indexed": false, "internalType": "uint256", "name": "currentInterest", "type": "uint256" }
-    ],
-    "name": "UpdateInterestPool",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      { "indexed": false, "internalType": "uint256", "name": "pid", "type": "uint256" },
-      { "indexed": false, "internalType": "uint256", "name": "minLock", "type": "uint256" },
-      { "indexed": false, "internalType": "uint256", "name": "maxLock", "type": "uint256" }
-    ],
-    "name": "UpdateMinMaxPool",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      { "indexed": false, "internalType": "uint256", "name": "pid", "type": "uint256" },
-      { "indexed": false, "internalType": "uint256", "name": "minLock", "type": "uint256" },
-      { "indexed": false, "internalType": "uint256", "name": "maxLock", "type": "uint256" },
-      { "indexed": false, "internalType": "uint256", "name": "bonusInterest", "type": "uint256" },
-      { "indexed": false, "internalType": "bool", "name": "enable", "type": "bool" }
-    ],
-    "name": "UpdatePool",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [{ "indexed": false, "internalType": "bool", "name": "result", "type": "bool" }],
-    "name": "VoteConfigEvent",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [{ "indexed": false, "internalType": "bool", "name": "result", "type": "bool" }],
-    "name": "VoteEvent",
-    "type": "event"
+    "inputs": [],
+    "name": "WBNB",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
   },
   {
     "inputs": [
+      { "internalType": "uint256", "name": "timeLock", "type": "uint256" },
       { "internalType": "uint256", "name": "minLock", "type": "uint256" },
       { "internalType": "uint256", "name": "maxLock", "type": "uint256" },
       { "internalType": "uint256", "name": "currentInterest", "type": "uint256" },
-      { "internalType": "uint256", "name": "bonusInterest", "type": "uint256" },
-      { "internalType": "uint256", "name": "commPercent", "type": "uint256" }
+      { "internalType": "uint256", "name": "_commPercent", "type": "uint256" }
     ],
     "name": "addPool",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  { "inputs": [], "name": "adminRequestVote", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
-  {
-    "inputs": [
-      { "internalType": "uint256", "name": "pid", "type": "uint256" },
-      { "internalType": "uint256", "name": "voteType", "type": "uint256" },
-      { "internalType": "uint256", "name": "amount", "type": "uint256" }
-    ],
-    "name": "adminRequestVoteConfig",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -157,7 +49,7 @@
   {
     "inputs": [{ "internalType": "uint256", "name": "amount", "type": "uint256" }],
     "name": "bnb2USD",
-    "outputs": [{ "internalType": "uint256", "name": "_usd", "type": "uint256" }],
+    "outputs": [{ "internalType": "uint256", "name": "usd", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },
@@ -170,31 +62,14 @@
   },
   {
     "inputs": [],
-    "name": "canWD",
-    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
-    "name": "childs",
-    "outputs": [
-      { "internalType": "uint256", "name": "direct", "type": "uint256" },
-      { "internalType": "uint256", "name": "downLine", "type": "uint256" }
-    ],
+    "name": "ceo",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [{ "internalType": "address payable", "name": "to", "type": "address" }],
     "name": "claimComm",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [{ "internalType": "uint256", "name": "rid", "type": "uint256" }],
-    "name": "claimRankRewardMonthly",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -238,13 +113,6 @@
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
-    "name": "directStaked",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [],
     "name": "getDays",
     "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
@@ -252,32 +120,25 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "getMonths",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [{ "internalType": "uint256[]", "name": "pids", "type": "uint256[]" }],
+    "inputs": [{ "internalType": "uint256[]", "name": "_pids", "type": "uint256[]" }],
     "name": "getPools",
     "outputs": [
       {
         "components": [
+          { "internalType": "uint256", "name": "timeLock", "type": "uint256" },
           { "internalType": "uint256", "name": "minLock", "type": "uint256" },
           { "internalType": "uint256", "name": "maxLock", "type": "uint256" },
           { "internalType": "uint256", "name": "currentInterest", "type": "uint256" },
-          { "internalType": "uint256", "name": "bonusInterest", "type": "uint256" },
           { "internalType": "uint256", "name": "totalLock", "type": "uint256" },
           { "internalType": "bool", "name": "enable", "type": "bool" },
           { "internalType": "uint256", "name": "commPercent", "type": "uint256" }
         ],
-        "internalType": "struct PoolsMatic.Pool[]",
-        "name": "poolsInfo",
+        "internalType": "struct Pools.Pool[]",
+        "name": "_pools",
         "type": "tuple[]"
       }
     ],
-    "stateMutability": "pure",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -294,8 +155,8 @@
     "inputs": [
       { "internalType": "uint256", "name": "pid", "type": "uint256" },
       { "internalType": "address", "name": "user", "type": "address" },
-      { "internalType": "uint256", "name": "limit", "type": "uint256" },
-      { "internalType": "uint256", "name": "skip", "type": "uint256" }
+      { "internalType": "uint256", "name": "_limit", "type": "uint256" },
+      { "internalType": "uint256", "name": "_skip", "type": "uint256" }
     ],
     "name": "getUsersClaimed",
     "outputs": [
@@ -306,7 +167,7 @@
           { "internalType": "uint256", "name": "totalLock", "type": "uint256" },
           { "internalType": "uint256", "name": "interrest", "type": "uint256" }
         ],
-        "internalType": "struct PoolsMatic.Claim[]",
+        "internalType": "struct Pools.Claim[]",
         "name": "list",
         "type": "tuple[]"
       },
@@ -325,23 +186,8 @@
     "stateMutability": "view",
     "type": "function"
   },
-  { "inputs": [], "name": "giveRankRewardMonthly", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
   {
-    "inputs": [],
-    "name": "giveRankRewardTime",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "gnosisSafe",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [{ "internalType": "contract IERC20", "name": "token", "type": "address" }],
+    "inputs": [{ "internalType": "contract IERC20", "name": "_token", "type": "address" }],
     "name": "inCaseTokensGetStuck",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -355,26 +201,12 @@
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
-    "name": "lineStaked",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [{ "internalType": "uint256", "name": "pid", "type": "uint256" }],
     "name": "minMaxUSD2BNB",
     "outputs": [
       { "internalType": "uint256", "name": "_min", "type": "uint256" },
       { "internalType": "uint256", "name": "_max", "type": "uint256" }
     ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "multiTimeInterest",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },
@@ -396,35 +228,14 @@
     "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "name": "pools",
     "outputs": [
+      { "internalType": "uint256", "name": "timeLock", "type": "uint256" },
       { "internalType": "uint256", "name": "minLock", "type": "uint256" },
       { "internalType": "uint256", "name": "maxLock", "type": "uint256" },
       { "internalType": "uint256", "name": "currentInterest", "type": "uint256" },
-      { "internalType": "uint256", "name": "bonusInterest", "type": "uint256" },
       { "internalType": "uint256", "name": "totalLock", "type": "uint256" },
       { "internalType": "bool", "name": "enable", "type": "bool" },
       { "internalType": "uint256", "name": "commPercent", "type": "uint256" }
     ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-    "name": "rankRewards",
-    "outputs": [
-      { "internalType": "uint256", "name": "minStart", "type": "uint256" },
-      { "internalType": "uint256", "name": "stakingPercent", "type": "uint256" },
-      { "internalType": "uint256", "name": "total", "type": "uint256" },
-      { "internalType": "uint256", "name": "totalMember", "type": "uint256" },
-      { "internalType": "uint256", "name": "rewardInMonth", "type": "uint256" },
-      { "internalType": "uint256", "name": "remainInMonth", "type": "uint256" }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "refer",
-    "outputs": [{ "internalType": "contract IRefferal", "name": "", "type": "address" }],
     "stateMutability": "view",
     "type": "function"
   },
@@ -437,57 +248,29 @@
   },
   { "inputs": [], "name": "renounceOwnership", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
   {
-    "inputs": [],
-    "name": "requestVote",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-    "stateMutability": "view",
+    "inputs": [{ "internalType": "address", "name": "_ceo", "type": "address" }],
+    "name": "setCeo",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "requestVoteConfigComm",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "requestVoteConfigInterest",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [{ "internalType": "uint256[]", "name": "conditionMem", "type": "uint256[]" }],
+    "inputs": [{ "internalType": "uint256[]", "name": "_conditionMemOnTree", "type": "uint256[]" }],
     "name": "setConditionMemOnTree",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "uint256[]", "name": "conditionVolume", "type": "uint256[]" }],
+    "inputs": [{ "internalType": "uint256[]", "name": "_conditionVolumeOnTree", "type": "uint256[]" }],
     "name": "setConditionVolumeOnTree",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "address", "name": "gnosisSafeAddress", "type": "address" }],
-    "name": "setGnosisSafe",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [{ "internalType": "contract IRefferal", "name": "iRefer", "type": "address" }],
+    "inputs": [{ "internalType": "contract IRefferal", "name": "_refer", "type": "address" }],
     "name": "setRefer",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [{ "internalType": "contract IPancakeRouter", "name": "pancakeRouteAddress", "type": "address" }],
-    "name": "setRoute",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -507,20 +290,6 @@
     "name": "togglePool",
     "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
-    "name": "totalComms",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
-    "name": "totalRewards",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -564,28 +333,16 @@
   {
     "inputs": [
       { "internalType": "uint256", "name": "pid", "type": "uint256" },
+      { "internalType": "uint256", "name": "timeLock", "type": "uint256" },
       { "internalType": "uint256", "name": "minLock", "type": "uint256" },
       { "internalType": "uint256", "name": "maxLock", "type": "uint256" },
-      { "internalType": "uint256", "name": "bonusInterest", "type": "uint256" },
-      { "internalType": "bool", "name": "enable", "type": "bool" }
+      { "internalType": "uint256", "name": "currentInterest", "type": "uint256" },
+      { "internalType": "bool", "name": "enable", "type": "bool" },
+      { "internalType": "uint256", "name": "commPercent", "type": "uint256" }
     ],
     "name": "updatePool",
     "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "usd",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "usdTotalLock",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -605,51 +362,6 @@
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
-    "name": "userRank",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      { "internalType": "address", "name": "", "type": "address" },
-      { "internalType": "uint256", "name": "", "type": "uint256" }
-    ],
-    "name": "userRankRewardClaimed",
-    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
-    "name": "userTotalLock",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      { "internalType": "address", "name": "", "type": "address" },
-      { "internalType": "uint256", "name": "", "type": "uint256" }
-    ],
-    "name": "userVote",
-    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      { "internalType": "address", "name": "", "type": "address" },
-      { "internalType": "uint256", "name": "", "type": "uint256" },
-      { "internalType": "uint256", "name": "", "type": "uint256" }
-    ],
-    "name": "userVoteConfig",
-    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       { "internalType": "address", "name": "", "type": "address" },
       { "internalType": "uint256", "name": "", "type": "uint256" }
@@ -658,8 +370,7 @@
     "outputs": [
       { "internalType": "uint256", "name": "totalLock", "type": "uint256" },
       { "internalType": "uint256", "name": "startTime", "type": "uint256" },
-      { "internalType": "uint256", "name": "totalReward", "type": "uint256" },
-      { "internalType": "uint256", "name": "remainReward", "type": "uint256" }
+      { "internalType": "uint256", "name": "totalReward", "type": "uint256" }
     ],
     "stateMutability": "view",
     "type": "function"
@@ -672,52 +383,10 @@
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "bool", "name": "result", "type": "bool" }],
-    "name": "vote",
+    "inputs": [{ "internalType": "uint256", "name": "pid", "type": "uint256" }],
+    "name": "withdraw",
     "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      { "internalType": "uint256", "name": "voteType", "type": "uint256" },
-      { "internalType": "bool", "name": "result", "type": "bool" }
-    ],
-    "name": "voteConfig",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      { "internalType": "uint256", "name": "", "type": "uint256" },
-      { "internalType": "uint256", "name": "", "type": "uint256" }
-    ],
-    "name": "voteConfigs",
-    "outputs": [
-      { "internalType": "uint256", "name": "totalVote", "type": "uint256" },
-      { "internalType": "uint256", "name": "pid", "type": "uint256" },
-      { "internalType": "uint256", "name": "status", "type": "uint256" },
-      { "internalType": "uint256", "name": "amount", "type": "uint256" }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-    "name": "votes",
-    "outputs": [
-      { "internalType": "uint256", "name": "totalVote", "type": "uint256" },
-      { "internalType": "bool", "name": "status", "type": "bool" }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "wBnb",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
-    "stateMutability": "view",
     "type": "function"
   }
 ]
