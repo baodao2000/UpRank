@@ -190,7 +190,7 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim }) => {
               <TitleHeadRight>{item.title}</TitleHeadRight>
               <progress
                 className="file"
-                value={item.total.replace('.', '')}
+                value={item.total}
                 max={item.max}
                 style={{ margin: '4px 0', accentColor: getColor(item.title), width: 130 }}
               />
