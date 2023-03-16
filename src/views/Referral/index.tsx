@@ -374,7 +374,7 @@ const Referral = () => {
       refferCT.getTotalUserByUp(accountChild ? accountChild : account, limit, page),
       refferCT.userInfos(accountChild ? accountChild : account),
     ])
-    const countPage = Math.round(Number(data[0].totalItem.toString()) / limit)
+    const countPage = Math.ceil(Number(data[0].totalItem.toString()) / limit)
     const arr = data[0].list.map((item) => item.user)
     const list = await Promise.all(
       arr.map(async (item) => {
