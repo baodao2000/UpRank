@@ -498,7 +498,7 @@ const Pools = () => {
       ) : (
         <>
           {countDown > 0 ? (
-            <CountDown />
+            <CountDown title="Beta version" />
           ) : (
             <>
               <PageHeader background="none">

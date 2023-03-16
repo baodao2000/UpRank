@@ -61,7 +61,7 @@ const StringCountDown = styled.div`
   }
 `
 
-const CountDown = () => {
+const CountDown = ({ title }) => {
   const [countDown, setCountDown] = React.useState(1679220000 - moment().unix())
   React.useEffect(() => {
     const timerId = setInterval(() => {
@@ -75,6 +75,11 @@ const CountDown = () => {
     <>
       {countDown !== 0 ? (
         <Wrapper>
+          {title && (
+            <Title color="mainColor" data-aos="fade-left">
+              {title}
+            </Title>
+          )}
           <Title color="mainColor" data-aos="fade-left">
             Pool stake start in
           </Title>

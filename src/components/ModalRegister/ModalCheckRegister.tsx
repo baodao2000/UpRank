@@ -30,8 +30,7 @@ export const ModalCheckRegister: React.FC<React.PropsWithChildren<RegistersModal
   const [referByWallet, setReferByWallet] = useState(referBy)
   const [referCode, setReferCode] = useState('')
   const [myCode, setMyCode] = useState('')
-  const [showInput, setShowInput] = useState(false)
-  const [showError, setShowError] = useState(true)
+  const [showError, setShowError] = useState(false)
   // const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId;
   const CHAIN_ID = Number(process.env.NEXT_PUBLIC_DEFAULT_CHAIN)
   const refferCT = getContract({ address: addresses.refferal[CHAIN_ID], abi: refferalAbi, chainId: CHAIN_ID, signer })
@@ -52,10 +51,24 @@ export const ModalCheckRegister: React.FC<React.PropsWithChildren<RegistersModal
       setReferByWallet(userInfosByCode.user)
     }
   }
-  const isShowInput = () => {
-    const ref = localStorage.getItem('saveAdd')
-    if (!referBy && !ref) {
-      setShowInput(true)
+  const getRefferCode = async () => {
+    if (referBy) {
+      const userReferBy = await refferCT.userInfosByCode(referBy.toLowerCase())
+      if (userReferBy.user === '0x0000000000000000000000000000000000000000') {
+        setShowError(true)
+      } else {
+        setReferCode(referBy.slice(referBy?.length - 6, referBy?.length).toLocaleLowerCase())
+      }
+    } else {
+      const ref = localStorage.getItem('saveAdd')
+      if (JSON.parse(ref)) {
+        const userReferByLocal = await refferCT.userInfosByCode(JSON.parse(ref).toLowerCase())
+        if (userReferByLocal.user === '0x0000000000000000000000000000000000000000') {
+          setShowError(true)
+        } else {
+          setReferCode(JSON.parse(ref).toLocaleLowerCase())
+        }
+      }
     }
   }
   const onRegister = async () => {
@@ -72,8 +85,8 @@ export const ModalCheckRegister: React.FC<React.PropsWithChildren<RegistersModal
         }
       } else {
         const ref = localStorage.getItem('saveAdd')
-        if (ref?.includes('0x')) {
-          const userInfosByCode = await refferCT.userInfosByCode(ref.toLowerCase())
+        if (JSON.parse(ref)?.includes('0x')) {
+          const userInfosByCode = await refferCT.userInfosByCode(JSON.parse(ref)?.toLowerCase())
           const txReceipt = await refferCT.register(userInfosByCode.user, myCode)
           if (txReceipt?.hash) {
             dispatch(setRefLink(`${baseRefUrl}${account}`))
@@ -104,10 +117,10 @@ export const ModalCheckRegister: React.FC<React.PropsWithChildren<RegistersModal
 
   useEffect(() => {
     saveRef()
-    isShowInput()
-  })
+    getRefferCode()
+  }, [account])
   useEffect(() => {
-    setMyCode(account.slice(account.length - 6, account.length).toLocaleLowerCase())
+    setMyCode(account.slice(account?.length - 6, account?.length).toLocaleLowerCase())
   }, [account])
 
   return (
@@ -120,20 +133,12 @@ export const ModalCheckRegister: React.FC<React.PropsWithChildren<RegistersModal
         </Text>
       </Grid>
       <br />
-      {showInput && (
-        <StyledInput value={referCode} autoFocus={true} onChange={validateReferByWallet} placeholder={`refer code`} />
-      )}
-      {showError && showInput && referCode && <span style={{ color: 'red' }}>Invalid code</span>}
+      <StyledInput value={referCode} autoFocus={true} onChange={validateReferByWallet} placeholder={`refer code`} />
+      {showError && referCode && <span style={{ color: 'red' }}>Invalid code</span>}
       <br />
-      {showInput ? (
-        <Button disabled={loading || showError} onClick={onRegister}>
-          {loading === true ? 'Register' : 'Register Now'}
-        </Button>
-      ) : (
-        <Button disabled={loading} onClick={onRegister}>
-          {loading === true ? 'Register' : 'Register Now'}
-        </Button>
-      )}
+      <Button disabled={loading || referCode === '' || showError} onClick={onRegister}>
+        {loading === true ? 'Register' : 'Register Now'}
+      </Button>
     </Modal>
   )
 }

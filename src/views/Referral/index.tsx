@@ -346,7 +346,6 @@ const Referral = () => {
   const [referCode, setReferCode] = useState('')
   const [showError, setShowError] = useState(true)
   const [totalItemChild, setTotalItemChild] = React.useState(0)
-  const [showInput, setShowInput] = useState(false)
   const [acountChild, setAccountChild] = React.useState(() => {
     if (account) {
       return [account]
@@ -530,13 +529,13 @@ const Referral = () => {
     }
     getTotalRefferChild(0, account)
     setMyCode(account.slice(account.length - 6, account.length).toLocaleLowerCase())
+    getRefferCode()
   }, [account])
 
   React.useEffect(() => {
     if (!acountChild.length && account) {
       setAccountChild([...acountChild, account])
     }
-    isShowInput()
   })
 
   const getLinkRef = () => {
@@ -544,6 +543,28 @@ const Referral = () => {
     const text = `${param}?ref=${account.slice(account.length - 6, account.length).toLocaleLowerCase()}`
 
     return text
+  }
+
+  const getRefferCode = async () => {
+    if (referBy) {
+      const userReferBy = await refferCT.userInfosByCode(referBy.toLowerCase())
+      if (userReferBy.user === '0x0000000000000000000000000000000000000000') {
+        setShowError(true)
+      } else {
+        setReferCode(referBy.slice(referBy?.length - 6, referBy?.length).toLocaleLowerCase())
+      }
+    } else {
+      const ref = localStorage.getItem('saveAdd')
+      if (JSON.parse(ref)) {
+        const userReferByLocal = await refferCT.userInfosByCode(JSON.parse(ref).toLowerCase())
+        if (userReferByLocal.user === '0x0000000000000000000000000000000000000000') {
+          setShowError(true)
+        } else {
+          setReferCode(JSON.parse(ref).toLocaleLowerCase())
+          setShowError(false)
+        }
+      }
+    }
   }
 
   const getRefer = async () => {
@@ -614,13 +635,6 @@ const Referral = () => {
     setShowCopied(true)
   }
 
-  const isShowInput = () => {
-    const ref = localStorage.getItem('saveAdd')
-    if (!referBy && !ref) {
-      setShowInput(true)
-    }
-  }
-
   const handleLeave = () => {
     setTimeout(() => {
       setShowCopied(false)
@@ -685,7 +699,7 @@ const Referral = () => {
                     </LinkItem>
                   </StyledLinkCode>
                 </WrapperLinkRef>
-                {showInput && !userIsRegister && (
+                {!userIsRegister && (
                   <StyledInput
                     value={referCode}
                     autoFocus={true}
@@ -693,16 +707,10 @@ const Referral = () => {
                     placeholder={`refer code`}
                   />
                 )}
-                {showError && showInput && referCode && <span style={{ color: 'red' }}>Invalid code</span>}
-                {showInput ? (
-                  <StyledButton onClick={onRegister} disabled={userIsRegister || showError}>
-                    Register
-                  </StyledButton>
-                ) : (
-                  <StyledButton onClick={onRegister} disabled={userIsRegister}>
-                    Register
-                  </StyledButton>
-                )}
+                {showError && referCode && <span style={{ color: 'red' }}>Invalid code</span>}
+                <StyledButton onClick={onRegister} disabled={userIsRegister || showError}>
+                  Register
+                </StyledButton>
               </GroupLinkRef>
             </CardRegister>
             <CardInfoUser>
