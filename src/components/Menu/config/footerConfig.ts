@@ -72,7 +72,7 @@ export const footerLinks: (t: ContextApi['t']) => FooterLinkType[] = (t) => [
       {
         label: 'Audit by Certik',
         // href: 'https://polygon.technology',
-        image: '/images/chains/certik.png',
+        image: '/images/chains/certik-logo.png',
       },
       {
         label: t('Medium'),

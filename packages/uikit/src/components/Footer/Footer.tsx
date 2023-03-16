@@ -25,6 +25,7 @@ import images from "../../../../../src/configs/images";
 
 const FooterItem = styled(StyledListItem)`
   display: flex;
+  align-items: center;
   justify-content: flex-start;
 `;
 
