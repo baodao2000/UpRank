@@ -135,13 +135,17 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
         {items?.map((item) => (
           <StyledList key={item.label}>
             {/* <StyledListItem>{item.label}</StyledListItem> */}
-            {item.items?.map(({ label, href, image, isHighlighted = false }) => (
+            {item.items?.map(({ label, href, image, isHighlighted = false, border }) => (
               <FooterItem key={href}>
-                {image && (
-                  <div style={{ width: 36, display: "flex", alignItems: "center" }}>
-                    <img src={image} style={{ marginRight: 12, width: 28 }} />
-                  </div>
-                )}
+                {image &&
+                  (border ? (
+                    <img
+                      src={image}
+                      style={{ marginRight: 12, width: 24, background: "#3b4858", borderRadius: "50%", fill: "black" }}
+                    />
+                  ) : (
+                    <img src={image} style={{ marginRight: 12, width: 24 }} />
+                  ))}
                 {href ? (
                   <Link
                     data-theme="dark"
