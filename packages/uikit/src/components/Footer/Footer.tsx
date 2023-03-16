@@ -137,8 +137,8 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
             {item.items?.map(({ label, href, image, isHighlighted = false }) => (
               <FooterItem key={href}>
                 {image && (
-                  <div style={{ width: 34 }}>
-                    <img src={image} style={{ marginRight: 12 }} />
+                  <div style={{ width: 36, display: "flex", alignItems: "center" }}>
+                    <img src={image} style={{ marginRight: 12, width: 28 }} />
                   </div>
                 )}
                 {href ? (

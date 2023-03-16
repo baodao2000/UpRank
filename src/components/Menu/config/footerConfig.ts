@@ -45,6 +45,11 @@ export const footerLinks: (t: ContextApi['t']) => FooterLinkType[] = (t) => [
     label: t('Developers'),
     items: [
       {
+        label: 'Support on Polygon',
+        href: 'https://polygon.technology',
+        image: '/images/pools/matic.png',
+      },
+      {
         label: 'Twitter',
         href: 'https://twitter.com/TrendyDefi',
         image: '/images/pools/twitter.svg',
@@ -64,6 +69,11 @@ export const footerLinks: (t: ContextApi['t']) => FooterLinkType[] = (t) => [
   {
     label: t('Social'),
     items: [
+      {
+        label: 'Audit by Certik',
+        // href: 'https://polygon.technology',
+        image: '/images/chains/certik.png',
+      },
       {
         label: t('Medium'),
         href: 'https://medium.com/@trendydefi',
