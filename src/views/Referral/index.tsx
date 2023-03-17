@@ -378,12 +378,16 @@ const Referral = () => {
     const arr = data[0].list.map((item) => item.user)
     const list = await Promise.all(
       arr.map(async (item) => {
-        const dataItem = await Promise.all([getPoolContract.volumeOntree(item), getPoolContract.userTotalLock(item)])
-
+        const dataItem = await Promise.all([
+          getPoolContract.volumeOntree(item),
+          getPoolContract.userTotalLock(item),
+          refferCT.userInfos(item),
+        ])
         return {
           account: item,
           volume: Number(formatEther(dataItem[0])).toFixed(3),
           locked: Number(formatEther(dataItem[1])).toFixed(3),
+          child: Number(dataItem[2].totalRefer7.toString()),
         }
       }),
     )
@@ -729,7 +733,7 @@ const Referral = () => {
                   <Value>{userInfos.totalReffer}</Value>
                 </InfoItem>
                 <InfoItem>
-                  <Label>Total reffer 7 level:</Label>
+                  <Label>Total reffer downline:</Label>
                   <Value>{userInfos.totalRefer7}</Value>
                 </InfoItem>
                 <InfoItem>
@@ -785,9 +789,18 @@ const Referral = () => {
                       <td>
                         <div
                           onClick={() => handleChangeChild(item.account)}
-                          style={{ cursor: 'pointer', color: '#00f0e1', textDecoration: 'underline' }}
+                          style={{
+                            cursor: 'pointer',
+                            color: item.child > 0 ? 'gold' : '#00f0e1',
+                            textDecoration: 'underline',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 4,
+                            justifyContent: 'center',
+                          }}
                         >
                           {item.account}
+                          {item.child > 0 && <img src="/images/referral/plus.png" style={{ fill: 'white' }} />}
                         </div>
                       </td>
                       <td>{item.volume}$</td>
