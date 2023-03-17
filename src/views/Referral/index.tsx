@@ -534,13 +534,12 @@ const Referral = () => {
     getTotalRefferChild(0, account)
     setMyCode(account.slice(account.length - 6, account.length).toLocaleLowerCase())
     getRefferCode()
-  }, [account])
-
-  React.useEffect(() => {
     if (!acountChild.length && account) {
       setAccountChild([...acountChild, account])
+    } else {
+      setAccountChild([account])
     }
-  })
+  }, [account])
 
   const getLinkRef = () => {
     const param = window.location.origin
