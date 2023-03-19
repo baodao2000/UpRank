@@ -62,7 +62,7 @@ const StringCountDown = styled.div`
 `
 
 const CountDown = ({ title }) => {
-  const [countDown, setCountDown] = React.useState(1679220000 - moment().unix())
+  const [countDown, setCountDown] = React.useState(1679306400 - moment().unix())
   React.useEffect(() => {
     const timerId = setInterval(() => {
       setCountDown((prev) => prev - 1)
