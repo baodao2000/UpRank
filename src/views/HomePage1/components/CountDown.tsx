@@ -20,7 +20,7 @@ const Title = styled(Heading)`
   ${({ theme }) => theme.mediaQueries.md} {
     font-size: 40px;
     line-height: 46px;
-    text-align: start;
+    text-align: center;
   }
 
   ${({ theme }) => theme.mediaQueries.xl} {
