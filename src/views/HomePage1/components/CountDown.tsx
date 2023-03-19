@@ -77,19 +77,12 @@ const CountDown = ({ title }) => {
         <Wrapper>
           {title && (
             <Title color="mainColor" data-aos="fade-left">
-              {title}
+              The launch of Trendy DeFi will be delayed due to awaiting audit results from Certik
             </Title>
           )}
           <Title color="mainColor" data-aos="fade-left">
-            Pool stake start in
+            We apologize for this inconvenience
           </Title>
-          <BlockCountDown data-aos="fade-right">
-            {timeDisplayLong(countDown)
-              .split(' ')
-              .map((item) =>
-                Number(item) ? <NumberCountDown>{item}</NumberCountDown> : <StringCountDown>{item}</StringCountDown>,
-              )}
-          </BlockCountDown>
         </Wrapper>
       ) : null}
     </>
