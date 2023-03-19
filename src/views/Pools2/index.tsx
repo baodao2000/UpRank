@@ -498,7 +498,7 @@ const Pools = () => {
       ) : (
         <>
           {countDown > 0 ? (
-            <CountDown title="Wait for Certik report, [Beta version] will ready in" />
+            <CountDown title="Wait for Certik report, [Beta version]" />
           ) : (
             <>
               <PageHeader background="none">
