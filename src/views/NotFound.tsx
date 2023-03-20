@@ -18,7 +18,7 @@ const NotFound = ({ statusCode = 404 }: { statusCode?: number }) => {
   return (
     <Page>
       <StyledNotFound>
-        <LogoIcon width="64px" mb="8px" />
+        <img src="/images/logo-mobile.png" alt="" className="mobile-icon" width="64px" style={{ marginBottom: 8 }} />
         <Heading scale="xxl">{statusCode}</Heading>
         <Text mb="16px">{t('Oops, page not found.')}</Text>
         <Link href="/" passHref>
