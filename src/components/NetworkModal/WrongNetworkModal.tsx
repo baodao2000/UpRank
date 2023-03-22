@@ -31,7 +31,7 @@ export function WrongNetworkModal({ currentChain, onDismiss }: { currentChain: C
           {t('You are under %network% now, please switch the network to continue.', { network: chain?.name ?? '' })}
         </Text>
         <div style={{ textAlign: 'center' }}>
-          <LogoMobile width={184} />
+          <img src="/images/logo-mobile.png" alt="" className="mobile-icon" />
         </div>
         <Message variant="warning" icon={false} p="8px 12px">
           <MessageText>
