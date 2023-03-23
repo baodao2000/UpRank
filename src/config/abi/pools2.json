@@ -142,7 +142,6 @@
     "stateMutability": "nonpayable",
     "type": "function"
   },
-  { "inputs": [], "name": "adminRequestVote", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
   {
     "inputs": [
       { "internalType": "uint256", "name": "pid", "type": "uint256" },
@@ -165,13 +164,6 @@
     "inputs": [],
     "name": "bnbPrice",
     "outputs": [{ "internalType": "uint256[]", "name": "amounts", "type": "uint256[]" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "canWD",
-    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
     "stateMutability": "view",
     "type": "function"
   },
@@ -278,16 +270,6 @@
       }
     ],
     "stateMutability": "pure",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      { "internalType": "address payable", "name": "user", "type": "address" },
-      { "internalType": "uint256", "name": "amount", "type": "uint256" }
-    ],
-    "name": "getStuck",
-    "outputs": [],
-    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -436,13 +418,6 @@
     "type": "function"
   },
   { "inputs": [], "name": "renounceOwnership", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
-  {
-    "inputs": [],
-    "name": "requestVote",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
   {
     "inputs": [],
     "name": "requestVoteConfigComm",
@@ -669,13 +644,6 @@
     "name": "volumeOntree",
     "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [{ "internalType": "bool", "name": "result", "type": "bool" }],
-    "name": "vote",
-    "outputs": [],
-    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
