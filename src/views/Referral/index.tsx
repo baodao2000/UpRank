@@ -12,7 +12,7 @@ import { useSigner } from 'wagmi'
 import truncateHash from '@pancakeswap/utils/truncateHash'
 import { useWeb3React } from '../../../packages/wagmi/src/useWeb3React'
 import moment from 'moment'
-import LoadingSection from 'views/Predictions/components/LoadingSection'
+import TrendyPageLoader from 'components/Loader/TrendyPageLoader'
 import { formatEther } from '@ethersproject/units'
 import { NATIVE } from '../../../packages/swap-sdk/src/constants'
 import { ThreeDots } from 'views/Pool/components/DepositModal'
@@ -654,7 +654,7 @@ const Referral = () => {
   return (
     <>
       {loadingPage ? (
-        <LoadingSection />
+        <TrendyPageLoader />
       ) : (
         <Wrapper>
           <ReferralPage>

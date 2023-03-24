@@ -481,7 +481,7 @@ const Pools = () => {
     getPools([0, 1, 2, 3, 4, 5])
   }, [account])
 
-  const [countDown, setCountDown] = useState(1679580000 - moment().unix())
+  const [countDown, setCountDown] = useState(1680217455 - moment().unix())
   useEffect(() => {
     const timerId = setInterval(() => {
       setCountDown((prev) => prev - 1)
