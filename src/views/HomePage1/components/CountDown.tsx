@@ -62,7 +62,7 @@ const StringCountDown = styled.div`
 `
 
 const CountDown = ({ title }) => {
-  const [countDown, setCountDown] = React.useState(1679580000 - moment().unix())
+  const [countDown, setCountDown] = React.useState(1679997600 - moment().unix())
   React.useEffect(() => {
     const timerId = setInterval(() => {
       setCountDown((prev) => prev - 1)
@@ -77,12 +77,19 @@ const CountDown = ({ title }) => {
         <Wrapper>
           {title && (
             <Title color="mainColor" data-aos="fade-left">
-              The launch of Trendy DeFi will be delayed due to awaiting audit results from Certik
+              {title}
             </Title>
           )}
           <Title color="mainColor" data-aos="fade-left">
-            We apologize for this inconvenience
+            Pool stake start in
           </Title>
+          <BlockCountDown data-aos="fade-right">
+            {timeDisplayLong(countDown)
+              .split(' ')
+              .map((item) =>
+                Number(item) ? <NumberCountDown>{item}</NumberCountDown> : <StringCountDown>{item}</StringCountDown>,
+              )}
+          </BlockCountDown>
         </Wrapper>
       ) : null}
     </>

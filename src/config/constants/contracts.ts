@@ -26,7 +26,7 @@ export default {
   },
   pools: {
     97: '0x60029EC916478B03D13E682EC354dEe73732f5f8',
-    137: '0x37cA8922079Fb67d0121F03Bf18F3d62F6f84c46',
+    137: '0x849ACE7457cae40cd9B0e2C253bdb23357ecb523',
     56: '',
   },
   sow: {

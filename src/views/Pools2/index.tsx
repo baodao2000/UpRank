@@ -481,7 +481,7 @@ const Pools = () => {
     getPools([0, 1, 2, 3, 4, 5])
   }, [account])
 
-  const [countDown, setCountDown] = useState(1679580000 - moment().unix())
+  const [countDown, setCountDown] = useState(1679997600 - moment().unix())
   useEffect(() => {
     const timerId = setInterval(() => {
       setCountDown((prev) => prev - 1)
@@ -498,7 +498,7 @@ const Pools = () => {
       ) : (
         <>
           {countDown > 0 ? (
-            <CountDown title="Wait for Certik report, [Beta version]" />
+            <CountDown title="[Beta version]" />
           ) : (
             <>
               <PageHeader background="none">
