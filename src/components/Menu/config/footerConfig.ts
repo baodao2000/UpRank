@@ -16,7 +16,7 @@ export const footerLinks: (t: ContextApi['t']) => FooterLinkType[] = (t) => [
       },
       {
         label: t('Documentation'),
-        // href: 'https://medium.com/pancakeswap',
+        href: 'https://trendydefi.com/TrendyDefi-Whitepaper.pdf',
       },
     ],
   },
