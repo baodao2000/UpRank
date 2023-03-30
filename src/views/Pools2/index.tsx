@@ -3,15 +3,11 @@ import PageHeader from 'components/PageHeader'
 import styled from 'styled-components'
 import images from 'configs/images'
 import contracts from 'config/constants/contracts'
-import { getContract, getPoolsContract } from 'utils/contractHelpers'
+import { getPoolsContract } from 'utils/contractHelpers'
 import { getBlockExploreLink } from 'utils'
 import { trendyColors } from 'style/trendyTheme'
 import { useBalance, useSigner } from 'wagmi'
-import { setRateType } from 'state/limitOrders/actions'
 import CountUp from 'react-countup'
-import CircleLoader from 'components/Loader/CircleLoader'
-import Dots from 'components/Loader/Dots'
-import PageLoader from 'components/Loader/PageLoader'
 import TrendyPageLoader from 'components/Loader/TrendyPageLoader'
 import { ToastDescriptionWithTx } from 'components/Toast'
 import useConfirmTransaction from 'hooks/useConfirmTransaction'
@@ -24,12 +20,10 @@ import { formatBigNumber } from 'utils/formatBalance'
 import { poolBaseUrl } from 'views/Pools/constants'
 import Link from 'next/link'
 import { formatEther } from '@ethersproject/units'
-import { bnb2Usd, shortenURL, timeDisplayLong, timeDisplay } from './util'
+import { shortenURL, timeDisplayLong } from './util'
 import useActiveWeb3React from '../../hooks/useActiveWeb3React'
 import { ChainId, NATIVE } from '../../../packages/swap-sdk/src/constants'
 import Rank from './components/Rank'
-import numeral from 'numeral'
-import refferalAbi from 'config/abi/refferal.json'
 import moment from 'moment'
 import CountDown from 'views/HomePage1/components/CountDown'
 
@@ -146,25 +140,6 @@ const pools = [
     totalLock: '',
     logo: images.logoMatic,
   },
-
-  // {
-  //   key: 6,
-  //   name: "BUSD",
-  //   totalReward: "100,000,000",
-  //   rewardPerFlag: "10,000",
-  //   timeEnd: "24:00:00",
-  //   logo: images.logoBusd,
-  //   backgroundColor: "180deg, #F3DDA8 0%, #FFAE3D 100%",
-  // },
-  // {
-  //   key: 7,
-  //   name: "BTC",
-  //   totalReward: "100,000,000",
-  //   rewardPerFlag: "10,000",
-  //   timeEnd: "24:00:00",
-  //   logo: images.logoBtc,
-  //   backgroundColor: "180deg, #F9BAAD 0%, #EF7752 100%",
-  // },
 ]
 
 const Card = styled.div`
@@ -357,13 +332,11 @@ const Pools = () => {
   const { toastSuccess, toastError } = useToast()
   const { callWithMarketGasPrice } = useCallWithMarketGasPrice()
   const poolContract = usePoolsContract()
-  const [userRegister, setUserRegister] = useState(false)
   const { data: signer } = useSigner()
   const [ranks, setRanks] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [rateBnbUsd, setRateBnbUsd] = useState(1)
   const [userRank, setUserRank] = useState(0)
-  const refferCT = getContract({ address: contracts.refferal[CHAIN_ID], abi: refferalAbi, chainId: CHAIN_ID, signer })
   const [userClaimed, setUserClaimed] = useState(false)
   const { isConfirming, handleConfirm } = useConfirmTransaction({
     onConfirm: () => {
@@ -392,12 +365,6 @@ const Pools = () => {
     }
     const param = window.location.origin
     let linkRef = `${param}/referral`
-
-    // if (userRegister) {
-    //   linkRef = `${param}?ref=${account}`
-    // } else {
-    //   linkRef = `${param}/referral`
-    // }
     return linkRef
   }
 
@@ -433,11 +400,11 @@ const Pools = () => {
 
   const getPools = async (ids: number[]) => {
     try {
-      const rateAndRegister = await Promise.all([getPoolContract.bnbPrice(), refferCT.isReferrer(account)])
+      const bnbPrice = await getPoolContract.bnbPrice()
       const pools = ids.map((item) => getPoolContract.pools(item))
-      await getInfoRank(Number(formatEther(rateAndRegister[0][0])) / Number(formatEther(rateAndRegister[0][1])))
+      await getInfoRank(Number(formatEther(bnbPrice[0])) / Number(formatEther(bnbPrice[1])))
 
-      setRateBnbUsd(Number(formatEther(rateAndRegister[0][0])) / Number(formatEther(rateAndRegister[0][1])))
+      setRateBnbUsd(Number(formatEther(bnbPrice[0])) / Number(formatEther(bnbPrice[1])))
       const newPoolInfo = await Promise.all(
         pools.map(async (item, id) => {
           const userLockAndPool = await Promise.all([getPoolContract.users(account, id), item])
@@ -448,12 +415,11 @@ const Pools = () => {
             minLock: formatEther(userLockAndPool[1].minLock),
             timeLock: 1095,
             totalLock: formatEther(userLockAndPool[1].totalLock),
-            rateBNB2USD: Number(formatEther(rateAndRegister[0][0])) / Number(formatEther(rateAndRegister[0][1])),
+            rateBNB2USD: Number(formatEther(bnbPrice[0])) / Number(formatEther(bnbPrice[1])),
             yourLock: Number(formatEther(userLockAndPool[0].totalLock)),
           }
         }),
       )
-      setUserRegister(rateAndRegister[1])
       setArr(newPoolInfo)
       setIsLoading(false)
     } catch (e) {
