@@ -31,7 +31,7 @@ const Rank = ({ userRank, ranks, onSuccess, userIsClaim }) => {
     <>
       <Wrapper>
         <BlockPoolRanks>
-          <StyledTitleRank fontSize={['30px', '30px', '36px', '40px', '48px', '52px']}>
+          <StyledTitleRank fontSize={['30px', '30px', '36px', '40px', '48px', '48px']}>
             Pool Rewards
             <ImageRank src={getRankImage(userRank).img} alt="" style={{ marginLeft: 10 }} />
           </StyledTitleRank>

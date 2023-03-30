@@ -503,15 +503,6 @@ const Pools = () => {
             <>
               <PageHeader background="none">
                 <Flex flex="1" flexDirection="column" mr={['8px', 0]} alignItems="center">
-                  <Rank ranks={ranks} userRank={userRank} onSuccess={onSuccessRank} userIsClaim={userClaimed} />
-                  <Text
-                    fontSize={['14px', '14px', '18px', '22px', '22px', '26px']}
-                    fontWeight="600"
-                    style={{ color: '#C5C5C5', textAlign: 'center', maxWidth: 700, margin: '30px 0' }}
-                  >
-                    These Pool Rewards are only for Referral. Let invite your friends and get our rewards
-                    <LinkReffer href={getLinkReferral()}>[LINK]</LinkReffer>
-                  </Text>
                   <Text
                     fontSize={['22px', '22px', '36px', '40px', '50px', '60px']}
                     fontWeight="600"
@@ -543,7 +534,15 @@ const Pools = () => {
                     }
                     {unit}
                   </Text>
-
+                  <Rank ranks={ranks} userRank={userRank} onSuccess={onSuccessRank} userIsClaim={userClaimed} />
+                  <Text
+                    fontSize={['14px', '14px', '18px', '22px', '22px', '26px']}
+                    fontWeight="600"
+                    style={{ color: '#C5C5C5', textAlign: 'center', maxWidth: 700, margin: '30px 0' }}
+                  >
+                    These Pool Rewards are only for Referral. Let invite your friends and get our rewards
+                    <LinkReffer href={getLinkReferral()}>[LINK]</LinkReffer>
+                  </Text>
                   <LineText className="commission">
                     <Text
                       fontSize={['14px', '16px', '18px', '24px', '26px']}
