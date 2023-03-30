@@ -470,7 +470,7 @@ const Pools = () => {
                 <Flex flex="1" flexDirection="column" mr={['8px', 0]} alignItems="center">
                   <Text
                     fontSize={['22px', '22px', '36px', '40px', '50px', '60px']}
-                    fontWeight="600"
+                    fontWeight="500"
                     style={{ color: '#C5C5C5', textAlign: 'center' }}
                   >
                     Total Lock:{' '}
@@ -483,6 +483,7 @@ const Pools = () => {
                         end={Number(balance) * rateBnbUsd}
                         decimals={2}
                         duration={0.5}
+                        style={{ color: 'green', fontWeight: 700 }}
                       />
                     }
                     {'$ ~ '}
@@ -495,6 +496,7 @@ const Pools = () => {
                         end={Number(balance)}
                         decimals={4}
                         duration={0.5}
+                        style={{ color: 'gold', fontWeight: 700 }}
                       />
                     }
                     {unit}

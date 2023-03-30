@@ -23,8 +23,8 @@ const GlobalStyle = createGlobalStyle`
     font-weight: 500;
   }
   @font-face {
-    font-family: 'Helvetica';
-    src: url("/assets/fonts/Helvetica-Bold.ttf");
+    font-family: Helvetica, sans-serif;
+    src: url("/assets/fonts/Helvetica-BoldOblique.ttf");
     font-weight: 700;
   }
   @font-face {
