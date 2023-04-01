@@ -99,7 +99,7 @@ const ContentHeadRight = styled.div`
     ${({ theme }) => theme.mediaQueries.xl} {
       font-size: 20px;
       line-height: 25px;
-      text-align: start;
+      text-align: center;
     }
   }
 `
