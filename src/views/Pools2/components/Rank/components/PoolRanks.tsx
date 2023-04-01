@@ -165,17 +165,17 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim }) => {
   const getColor = (title) => {
     switch (title) {
       case 'Silver':
-        return '#e3e4ea'
+        return '#ffc700'
       case 'Gold':
-        return '#FBD397'
+        return '#ffc700'
       case 'Titanium':
-        return '#70b1cc'
+        return '#ffc700'
       case 'Platinum':
-        return '#d2d4dd'
+        return '#ffc700'
       case 'Diamond':
-        return '#85FCF5'
+        return '#ffc700'
       default:
-        return '#ffffff99'
+        return '#ffc700'
     }
   }
   return (

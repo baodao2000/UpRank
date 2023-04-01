@@ -137,19 +137,6 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
                 <Text fontSize={responsiveTextSize}>0</Text>
               ) : (
                 <AmountData>
-                  <Text fontSize={responsiveTextSize}>
-                    ~
-                    <CountUp
-                      start={0}
-                      preserveValue
-                      delay={0}
-                      end={pool.userTotalLock * pool.rateBNB2USD}
-                      decimals={pool.userTotalLock > 0 ? 2 : 0}
-                      duration={0.5}
-                      style={{ marginRight: 6 }}
-                    />
-                    $
-                  </Text>
                   <Text
                     fontSize={responsiveTextSizeBNB}
                     style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}
