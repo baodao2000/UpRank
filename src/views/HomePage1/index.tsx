@@ -88,7 +88,6 @@ const HomePage: React.FC<React.PropsWithChildren> = () => {
         <Container>
           <StyledBackground src={images.bgTrendy} />
           <HeadHome />
-          <CountDown title="" />
           <Crypto handleClick={handleClick} />
           <div ref={ref}>
             <Exchange data-aos="fade-up" />

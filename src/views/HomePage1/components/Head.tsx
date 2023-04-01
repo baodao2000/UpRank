@@ -70,11 +70,44 @@ const ContentHead = styled.div`
     }
   }
 `
+const ContentHeadRight = styled.div`
+  width: 100%;
+  z-index: 1;
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    max-width: 55%;
+  }
+
+  h5 {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 25px;
+    text-align: center;
+    letter-spacing: 0.001em;
+    text-transform: uppercase;
+    color: #816bf2;
+    text-align: center;
+    margin: 20px;
+    word-wrap: break-word;
+
+    ${({ theme }) => theme.mediaQueries.md} {
+      font-size: 30px;
+      line-height: 36px;
+      text-align: start;
+      margin-bottom: 0;
+    }
+    ${({ theme }) => theme.mediaQueries.xl} {
+      font-size: 20px;
+      line-height: 25px;
+      text-align: start;
+    }
+  }
+`
 
 const ImageHead = styled.img`
   width: 100%;
   display: none;
-  max-width: 715px;
+  max-width: 515px;
   margin: 0 auto;
 
   ${({ theme }) => theme.mediaQueries.md} {
@@ -181,9 +214,10 @@ const HeadHome = () => {
           </ListImgButtonMb>
         </LinkToDownload>
       </ContentHead>
-      <div>
+      <ContentHeadRight data-aos="fade-up-right">
         <ImageHead data-aos="fade-up-left" src={images.coinHead} alt="" />
-      </div>
+        <h5>Stake Matic, you can earn an ARP of 85.1% up to 127.75%. Start staking now to maximize your earnings!</h5>
+      </ContentHeadRight>
     </Head>
   )
 }
