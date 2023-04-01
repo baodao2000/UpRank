@@ -462,399 +462,396 @@ const Pools = () => {
         <TrendyPageLoader />
       ) : (
         <>
-          {countDown > 0 ? (
-            <CountDown title="[Beta version]" />
-          ) : (
-            <>
-              <PageHeader background="none">
-                <Flex flex="1" flexDirection="column" mr={['8px', 0]} alignItems="center">
-                  <Text
-                    fontSize={['22px', '22px', '36px', '40px', '50px', '60px']}
-                    fontWeight="500"
-                    style={{ color: '#C5C5C5', textAlign: 'center' }}
+          <PageHeader background="none">
+            <Flex flex="1" flexDirection="column" mr={['8px', 0]} alignItems="center">
+              <Text
+                fontSize={['22px', '22px', '36px', '40px', '50px', '60px']}
+                fontWeight="500"
+                style={{ color: '#C5C5C5', textAlign: 'center' }}
+              >
+                Total Lock:{' '}
+                {
+                  <CountUp
+                    separator=","
+                    start={0}
+                    preserveValue
+                    delay={0}
+                    end={Number(balance) * rateBnbUsd}
+                    decimals={2}
+                    duration={0.5}
+                    style={{ color: 'green', fontWeight: 700 }}
+                  />
+                }
+                {'$ ~ '}
+                {
+                  <CountUp
+                    separator=","
+                    start={0}
+                    preserveValue
+                    delay={0}
+                    end={Number(balance)}
+                    decimals={4}
+                    duration={0.5}
+                    style={{ color: 'gold', fontWeight: 700 }}
+                  />
+                }
+                {unit}
+              </Text>
+            </Flex>
+          </PageHeader>
+          <Body>
+            <PoolsList>
+              {arr.map((i, r) => {
+                return (
+                  <Card
+                    key={r}
+                    style={{
+                      background: `linear-gradient(153.15deg, #7C07D8 8.57%, rgba(129, 69, 255, 0.02) 100%)`,
+                    }}
                   >
-                    Total Lock:{' '}
-                    {
-                      <CountUp
-                        separator=","
-                        start={0}
-                        preserveValue
-                        delay={0}
-                        end={Number(balance) * rateBnbUsd}
-                        decimals={2}
-                        duration={0.5}
-                        style={{ color: 'green', fontWeight: 700 }}
-                      />
-                    }
-                    {'$ ~ '}
-                    {
-                      <CountUp
-                        separator=","
-                        start={0}
-                        preserveValue
-                        delay={0}
-                        end={Number(balance)}
-                        decimals={4}
-                        duration={0.5}
-                        style={{ color: 'gold', fontWeight: 700 }}
-                      />
-                    }
-                    {unit}
-                  </Text>
-                  <Rank ranks={ranks} userRank={userRank} onSuccess={onSuccessRank} userIsClaim={userClaimed} />
-                  <Text
-                    fontSize={['14px', '14px', '18px', '22px', '22px', '26px']}
-                    fontWeight="600"
-                    style={{ color: '#C5C5C5', textAlign: 'center', maxWidth: 700, margin: '30px 0' }}
-                  >
-                    These Pool Rewards are only for Referral. Let invite your friends and get our rewards
-                    <LinkReffer href={getLinkReferral()}>[LINK]</LinkReffer>
-                  </Text>
-                  <LineText className="commission">
-                    <Text
-                      fontSize={['14px', '16px', '18px', '24px', '26px']}
-                      className="value"
-                      style={{ color: '#C5C5C5' }}
-                    >
-                      Your Commission: {remainCommission.toFixed(6)} {unit}
-                    </Text>
-                  </LineText>
-                  <Text style={{ color: '#C5C5C5' }} ellipsis={true}>
-                    <LinkExternal
-                      fontSize={['14px', '16px', '18px', '20px', '22px']}
-                      href={getBlockExploreLink(contracts.pools[CHAIN_ID], 'address', CHAIN_ID)}
-                      ellipsis={true}
-                      style={{ color: '#00F0E1' }}
-                      color="#00F0E1"
-                    >
-                      {shortenURL(`Contract: ${contracts.pools[CHAIN_ID]}`, 35)}
-                    </LinkExternal>
-                  </Text>
-                  <Button
-                    style={{ color: '#6216B0', backgroundColor: '#D9D9D9' }}
-                    marginTop={'30px'}
-                    ml={['6px', '1em']}
-                    variant="primary"
-                    width={['90px', '80px', '150px']}
-                    p={['6px', '0 8px', '10px']}
-                    scale="md"
-                    display={isMobile ? 'none' : 'block'}
-                    onClick={handleConfirm}
-                    disabled={!isClaimableCommission}
-                  >
-                    {isConfirming ? (
-                      <ThreeDots className="loading">
-                        Claiming<span>.</span>
-                        <span>.</span>
-                        <span>.</span>
-                      </ThreeDots>
-                    ) : (
-                      'Claim'
-                    )}
-                  </Button>
-                  <Button
-                    style={{ color: '#6216B0', backgroundColor: '#D9D9D9' }}
-                    marginTop={'30px'}
-                    ml={['6px', '1em']}
-                    variant="primary"
-                    width={['90px', '80px', '150px']}
-                    p={['6px', '0 8px', '10px']}
-                    scale="sm"
-                    display={isMobile ? 'block' : 'none'}
-                    onClick={handleConfirm}
-                    disabled={!isClaimableCommission}
-                  >
-                    {isConfirming ? (
-                      <ThreeDots className="loading">
-                        Claiming<span>.</span>
-                        <span>.</span>
-                        <span>.</span>
-                      </ThreeDots>
-                    ) : (
-                      'Claim'
-                    )}
-                  </Button>
-                </Flex>
-              </PageHeader>
-
-              <Body>
-                <PoolsList>
-                  {arr.map((i, r) => {
-                    return (
-                      <Card
-                        key={r}
-                        style={{
-                          background: `linear-gradient(153.15deg, #7C07D8 8.57%, rgba(129, 69, 255, 0.02) 100%)`,
-                        }}
-                      >
-                        <LogoAndName>
-                          <img src={`/images/chains/${chainId}.png`} alt="logo" />
-                          <span>{unit}</span>
-                        </LogoAndName>
-                        <Info>
-                          <Reward>
-                            <Lineleft>
-                              <Line>
-                                <TitelandIcon>
-                                  <span className="label">Min Stake</span>
-                                </TitelandIcon>
-                                <span
-                                  className="value"
+                    <LogoAndName>
+                      <img src={`/images/chains/${chainId}.png`} alt="logo" />
+                      <span>{unit}</span>
+                    </LogoAndName>
+                    <Info>
+                      <Reward>
+                        <Lineleft>
+                          <Line>
+                            <TitelandIcon>
+                              <span className="label">Min Stake</span>
+                            </TitelandIcon>
+                            <span
+                              className="value"
+                              style={{
+                                color: `${pools[r]?.tagColor}`,
+                                marginBottom: 10,
+                                display: 'flex',
+                                flexWrap: 'wrap',
+                              }}
+                            >
+                              {
+                                <CountUp
+                                  separator=","
+                                  style={{ color: `${pools[r]?.tagColor}` }}
+                                  start={0}
+                                  preserveValue
+                                  delay={0}
+                                  end={Number(i.minLock)}
+                                  decimals={0}
+                                  duration={1}
+                                />
+                              }
+                              $ {` ~`}&ensp;
+                              {
+                                <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                                  <CountUp
+                                    separator=","
+                                    style={{ color: `${pools[r]?.tagColor}` }}
+                                    start={0}
+                                    preserveValue
+                                    delay={0}
+                                    end={i.minLock / i.rateBNB2USD}
+                                    decimals={4}
+                                    duration={1}
+                                  />
+                                  <img src={`/images/chains/${chainId}.png`} alt="" width="16px" />
+                                </div>
+                              }{' '}
+                            </span>
+                          </Line>
+                          <Line>
+                            <span style={{ fontWeight: 400, fontSize: 14 }}>Interest</span>
+                            <span
+                              style={{
+                                color: `${pools[r]?.tagColor}`,
+                                marginBottom: 10,
+                              }}
+                              className="value"
+                            >
+                              {
+                                <CountUp
+                                  start={0}
+                                  preserveValue
+                                  delay={0}
+                                  end={Number(i.currentInterest)}
+                                  decimals={2}
+                                  duration={1}
                                   style={{
+                                    borderRadius: '4px',
                                     color: `${pools[r]?.tagColor}`,
-                                    marginBottom: 10,
-                                    display: 'flex',
-                                    flexWrap: 'wrap',
                                   }}
-                                >
-                                  {
+                                />
+                              }{' '}
+                              %
+                            </span>
+                          </Line>
+                          <Line>
+                            <TitelandIcon>
+                              <span className="label">Total Lock</span>
+                            </TitelandIcon>
+
+                            <TitelandIcon>
+                              <span
+                                style={{
+                                  color: `${pools[r]?.tagColor}`,
+                                  marginBottom: 10,
+                                  display: 'flex',
+                                  flexWrap: 'wrap',
+                                }}
+                                className="value"
+                              >
+                                {
+                                  <CountUp
+                                    separator=","
+                                    start={0}
+                                    preserveValue
+                                    delay={0}
+                                    end={Number(i.totalLock * i.rateBNB2USD)}
+                                    decimals={2}
+                                    duration={1}
+                                    style={{
+                                      color: `${pools[r]?.tagColor}`,
+                                    }}
+                                  />
+                                }
+                                $ {` ~ `}&ensp;
+                                {
+                                  <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                                     <CountUp
                                       separator=","
-                                      style={{ color: `${pools[r]?.tagColor}` }}
                                       start={0}
                                       preserveValue
                                       delay={0}
-                                      end={Number(i.minLock)}
-                                      decimals={0}
-                                      duration={1}
-                                    />
-                                  }
-                                  $ {` ~`}&ensp;
-                                  {
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                                      <CountUp
-                                        separator=","
-                                        style={{ color: `${pools[r]?.tagColor}` }}
-                                        start={0}
-                                        preserveValue
-                                        delay={0}
-                                        end={i.minLock / i.rateBNB2USD}
-                                        decimals={4}
-                                        duration={1}
-                                      />
-                                      <img src={`/images/chains/${chainId}.png`} alt="" width="16px" />
-                                    </div>
-                                  }{' '}
-                                </span>
-                              </Line>
-                              <Line>
-                                <span style={{ fontWeight: 400, fontSize: 14 }}>Interest</span>
-                                <span
-                                  style={{
-                                    color: `${pools[r]?.tagColor}`,
-                                    marginBottom: 10,
-                                  }}
-                                  className="value"
-                                >
-                                  {
-                                    <CountUp
-                                      start={0}
-                                      preserveValue
-                                      delay={0}
-                                      end={Number(i.currentInterest)}
-                                      decimals={2}
+                                      end={Number(i.totalLock)}
+                                      decimals={4}
                                       duration={1}
                                       style={{
-                                        borderRadius: '4px',
                                         color: `${pools[r]?.tagColor}`,
                                       }}
                                     />
-                                  }{' '}
-                                  %
-                                </span>
-                              </Line>
-                              <Line>
-                                <TitelandIcon>
-                                  <span className="label">Total Lock</span>
-                                </TitelandIcon>
+                                    <img src={`/images/chains/${chainId}.png`} alt="" width="16px" />
+                                  </div>
+                                }
+                                {` `}
+                              </span>
+                            </TitelandIcon>
+                          </Line>
+                        </Lineleft>
+                        <Lineright>
+                          <Line>
+                            <TitelandIcon>
+                              <span className="label">Max Stake</span>
+                            </TitelandIcon>
+                            <span
+                              className="value"
+                              style={{
+                                color: `${pools[r]?.tagColor}`,
+                                marginBottom: 10,
+                                display: 'flex',
+                                flexWrap: 'wrap',
+                              }}
+                            >
+                              {
+                                <CountUp
+                                  separator=","
+                                  style={{ color: `${pools[r]?.tagColor}` }}
+                                  start={0}
+                                  preserveValue
+                                  delay={0}
+                                  end={Number(i.maxLock)}
+                                  decimals={0}
+                                  duration={1}
+                                />
+                              }
+                              $ {` ~ `}&ensp;
+                              {
+                                <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                                  <CountUp
+                                    separator=","
+                                    style={{ color: `${pools[r]?.tagColor}` }}
+                                    start={0}
+                                    preserveValue
+                                    delay={0}
+                                    end={i.maxLock / i.rateBNB2USD}
+                                    decimals={4}
+                                    duration={1}
+                                  />
+                                  <img src={`/images/chains/${chainId}.png`} alt="" width="16px" />
+                                </div>
+                              }{' '}
+                            </span>
+                          </Line>
+                          <Line>
+                            <span style={{ fontWeight: 400, fontSize: 14 }}>Time Lock</span>
+                            <span
+                              style={{
+                                color: `${pools[r]?.tagColor}`,
+                                marginBottom: 10,
+                              }}
+                              className="value"
+                            >
+                              {timeDisplayLong(i.timeLock) ? timeDisplayLong(i.timeLock * 57600) : '0'}
+                            </span>
+                          </Line>
+                          <Line>
+                            <TitelandIcon>
+                              <span className="label">Your Lock</span>
+                            </TitelandIcon>
 
-                                <TitelandIcon>
-                                  <span
+                            <TitelandIcon>
+                              <span
+                                style={{
+                                  color: `${pools[r]?.tagColor}`,
+                                  display: 'flex',
+                                  flexWrap: 'wrap',
+                                }}
+                                className="value"
+                              >
+                                {
+                                  <CountUp
+                                    separator=","
+                                    start={0}
+                                    preserveValue
+                                    delay={0}
+                                    end={Number(i.yourLock * i.rateBNB2USD)}
+                                    decimals={2}
+                                    duration={1}
                                     style={{
                                       color: `${pools[r]?.tagColor}`,
-                                      marginBottom: 10,
-                                      display: 'flex',
-                                      flexWrap: 'wrap',
                                     }}
-                                    className="value"
-                                  >
-                                    {
-                                      <CountUp
-                                        separator=","
-                                        start={0}
-                                        preserveValue
-                                        delay={0}
-                                        end={Number(i.totalLock * i.rateBNB2USD)}
-                                        decimals={2}
-                                        duration={1}
-                                        style={{
-                                          color: `${pools[r]?.tagColor}`,
-                                        }}
-                                      />
-                                    }
-                                    $ {` ~ `}&ensp;
-                                    {
-                                      <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                                        <CountUp
-                                          separator=","
-                                          start={0}
-                                          preserveValue
-                                          delay={0}
-                                          end={Number(i.totalLock)}
-                                          decimals={4}
-                                          duration={1}
-                                          style={{
-                                            color: `${pools[r]?.tagColor}`,
-                                          }}
-                                        />
-                                        <img src={`/images/chains/${chainId}.png`} alt="" width="16px" />
-                                      </div>
-                                    }
-                                    {` `}
-                                  </span>
-                                </TitelandIcon>
-                              </Line>
-                            </Lineleft>
-                            <Lineright>
-                              <Line>
-                                <TitelandIcon>
-                                  <span className="label">Max Stake</span>
-                                </TitelandIcon>
-                                <span
-                                  className="value"
-                                  style={{
-                                    color: `${pools[r]?.tagColor}`,
-                                    marginBottom: 10,
-                                    display: 'flex',
-                                    flexWrap: 'wrap',
-                                  }}
-                                >
-                                  {
+                                  />
+                                }
+                                $ {` ~ `}&ensp;
+                                {
+                                  <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                                     <CountUp
                                       separator=","
-                                      style={{ color: `${pools[r]?.tagColor}` }}
                                       start={0}
                                       preserveValue
                                       delay={0}
-                                      end={Number(i.maxLock)}
-                                      decimals={0}
+                                      end={Number(i.yourLock)}
+                                      decimals={4}
                                       duration={1}
+                                      style={{
+                                        color: `${pools[r]?.tagColor}`,
+                                      }}
                                     />
-                                  }
-                                  $ {` ~ `}&ensp;
-                                  {
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                                      <CountUp
-                                        separator=","
-                                        style={{ color: `${pools[r]?.tagColor}` }}
-                                        start={0}
-                                        preserveValue
-                                        delay={0}
-                                        end={i.maxLock / i.rateBNB2USD}
-                                        decimals={4}
-                                        duration={1}
-                                      />
-                                      <img src={`/images/chains/${chainId}.png`} alt="" width="16px" />
-                                    </div>
-                                  }{' '}
-                                </span>
-                              </Line>
-                              <Line>
-                                <span style={{ fontWeight: 400, fontSize: 14 }}>Time Lock</span>
-                                <span
-                                  style={{
-                                    color: `${pools[r]?.tagColor}`,
-                                    marginBottom: 10,
-                                  }}
-                                  className="value"
-                                >
-                                  {timeDisplayLong(i.timeLock) ? timeDisplayLong(i.timeLock * 57600) : '0'}
-                                </span>
-                              </Line>
-                              <Line>
-                                <TitelandIcon>
-                                  <span className="label">Your Lock</span>
-                                </TitelandIcon>
-
-                                <TitelandIcon>
-                                  <span
-                                    style={{
-                                      color: `${pools[r]?.tagColor}`,
-                                      display: 'flex',
-                                      flexWrap: 'wrap',
-                                    }}
-                                    className="value"
-                                  >
-                                    {
-                                      <CountUp
-                                        separator=","
-                                        start={0}
-                                        preserveValue
-                                        delay={0}
-                                        end={Number(i.yourLock * i.rateBNB2USD)}
-                                        decimals={2}
-                                        duration={1}
-                                        style={{
-                                          color: `${pools[r]?.tagColor}`,
-                                        }}
-                                      />
-                                    }
-                                    $ {` ~ `}&ensp;
-                                    {
-                                      <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                                        <CountUp
-                                          separator=","
-                                          start={0}
-                                          preserveValue
-                                          delay={0}
-                                          end={Number(i.yourLock)}
-                                          decimals={4}
-                                          duration={1}
-                                          style={{
-                                            color: `${pools[r]?.tagColor}`,
-                                          }}
-                                        />
-                                        <img src={`/images/chains/${chainId}.png`} alt="" width="16px" />
-                                      </div>
-                                    }
-                                    {` `}
-                                  </span>
-                                </TitelandIcon>
-                              </Line>
-                            </Lineright>
-                          </Reward>
-                          <Time></Time>
-                        </Info>
-                        <Link href={`${poolBaseUrl}/${r}?chainId=${CHAIN_ID}`}>
-                          {isMobile ? (
-                            <Button
-                              style={{ color: '#6216B0', backgroundColor: '#D9D9D9' }}
-                              variant="primary"
-                              width={'180px'}
-                              padding="1em"
-                              scale="sm"
-                            >
-                              Detail
-                            </Button>
-                          ) : (
-                            <Button
-                              style={{ color: '#6216B0', backgroundColor: '#D9D9D9' }}
-                              variant="primary"
-                              width={'180px'}
-                              padding="1em"
-                              scale="md"
-                            >
-                              Detail
-                            </Button>
-                          )}
-                        </Link>
-                      </Card>
-                    )
-                  })}
-                </PoolsList>
-              </Body>
-            </>
-          )}
+                                    <img src={`/images/chains/${chainId}.png`} alt="" width="16px" />
+                                  </div>
+                                }
+                                {` `}
+                              </span>
+                            </TitelandIcon>
+                          </Line>
+                        </Lineright>
+                      </Reward>
+                      <Time></Time>
+                    </Info>
+                    <Link href={`${poolBaseUrl}/${r}?chainId=${CHAIN_ID}`}>
+                      {isMobile ? (
+                        <Button
+                          style={{ color: '#6216B0', backgroundColor: '#D9D9D9' }}
+                          variant="primary"
+                          width={'180px'}
+                          padding="1em"
+                          scale="sm"
+                        >
+                          Detail
+                        </Button>
+                      ) : (
+                        <Button
+                          style={{ color: '#6216B0', backgroundColor: '#D9D9D9' }}
+                          variant="primary"
+                          width={'180px'}
+                          padding="1em"
+                          scale="md"
+                        >
+                          Detail
+                        </Button>
+                      )}
+                    </Link>
+                  </Card>
+                )
+              })}
+            </PoolsList>
+          </Body>
+          <PageHeader background="none">
+            <Flex flex="1" flexDirection="column" mr={['8px', 0]} alignItems="center">
+              <Text
+                fontSize={['14px', '14px', '18px', '22px', '22px', '26px']}
+                fontWeight="600"
+                style={{ color: '#C5C5C5', textAlign: 'center', maxWidth: 700, margin: '30px 0' }}
+              >
+                These Pool Rewards are only for Referral. Let invite your friends and get our rewards
+                <LinkReffer href={getLinkReferral()}>[LINK]</LinkReffer>
+              </Text>
+              <LineText className="commission">
+                <Text
+                  fontSize={['14px', '16px', '18px', '24px', '26px']}
+                  className="value"
+                  style={{ color: '#C5C5C5' }}
+                >
+                  Your Commission: {remainCommission.toFixed(6)} {unit}
+                </Text>
+              </LineText>
+              <Text style={{ color: '#C5C5C5' }} ellipsis={true}>
+                <LinkExternal
+                  fontSize={['14px', '16px', '18px', '20px', '22px']}
+                  href={getBlockExploreLink(contracts.pools[CHAIN_ID], 'address', CHAIN_ID)}
+                  ellipsis={true}
+                  style={{ color: '#00F0E1' }}
+                  color="#00F0E1"
+                >
+                  {shortenURL(`Contract: ${contracts.pools[CHAIN_ID]}`, 35)}
+                </LinkExternal>
+              </Text>
+              <Button
+                style={{ color: '#6216B0', backgroundColor: '#D9D9D9' }}
+                marginTop={'30px'}
+                ml={['6px', '1em']}
+                variant="primary"
+                width={['90px', '80px', '150px']}
+                p={['6px', '0 8px', '10px']}
+                scale="md"
+                display={isMobile ? 'none' : 'block'}
+                onClick={handleConfirm}
+                disabled={!isClaimableCommission}
+              >
+                {isConfirming ? (
+                  <ThreeDots className="loading">
+                    Claiming<span>.</span>
+                    <span>.</span>
+                    <span>.</span>
+                  </ThreeDots>
+                ) : (
+                  'Claim'
+                )}
+              </Button>
+              <Button
+                style={{ color: '#6216B0', backgroundColor: '#D9D9D9' }}
+                marginTop={'30px'}
+                ml={['6px', '1em']}
+                variant="primary"
+                width={['90px', '80px', '150px']}
+                p={['6px', '0 8px', '10px']}
+                scale="sm"
+                display={isMobile ? 'block' : 'none'}
+                onClick={handleConfirm}
+                disabled={!isClaimableCommission}
+              >
+                {isConfirming ? (
+                  <ThreeDots className="loading">
+                    Claiming<span>.</span>
+                    <span>.</span>
+                    <span>.</span>
+                  </ThreeDots>
+                ) : (
+                  'Claim'
+                )}
+              </Button>
+              <Rank ranks={ranks} userRank={userRank} onSuccess={onSuccessRank} userIsClaim={userClaimed} />
+            </Flex>
+          </PageHeader>
         </>
       )}
     </Container>

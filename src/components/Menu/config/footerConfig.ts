@@ -60,6 +60,11 @@ export const footerLinks: (t: ContextApi['t']) => FooterLinkType[] = (t) => [
         href: 'https://t.me/trendydefi',
         image: '/images/pools/telegram.svg',
       },
+      {
+        label: t('Global Community'),
+        href: 'https://t.me/trendydefiglobal',
+        image: '/images/pools/telegram.svg',
+      },
     ],
   },
   {
