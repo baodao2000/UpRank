@@ -105,18 +105,17 @@ const ContentHeadRight = styled.div`
 `
 
 const ImageHead = styled.img`
-  width: 100%;
+  width: 45% !important;
   display: none;
   max-width: 515px;
   margin: 0 auto;
-
   ${({ theme }) => theme.mediaQueries.md} {
     display: block;
   }
 `
 
 const ImageShowMb = styled.img`
-  width: 100%;
+  width: 80% !important;
   display: block;
   max-width: 715px;
   margin: 0 auto;

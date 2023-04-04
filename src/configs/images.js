@@ -18,7 +18,7 @@ const images = {
   person: '/images/homepage/person.png',
   galaxy: '/images/homepage/galaxy.png',
   star: '/images/homepage/star.png',
-  coinHead: '/images/homepage/Layer4.png',
+  coinHead: '/images/homepage/asf.png',
   phone: '/images/homepage/phone.png',
   downloadIOS: '/images/homepage/download_apple.png',
   downloadAPK: '/images/homepage/download_apk.png',
