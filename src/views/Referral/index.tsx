@@ -591,8 +591,8 @@ const Referral = () => {
         }
       } else {
         const ref = JSON.parse(localStorage.getItem('saveAdd'))
-        if (ref?.includes('0x')) {
-          const userInfosByCode = await refferCT.userInfosByCode(ref.toLowerCase())
+        if (ref) {
+          const userInfosByCode = await refferCT.userInfosByCode(ref?.toLowerCase())
           const txReceipt = await refferCT.register(userInfosByCode.user, myCode)
           if (txReceipt?.hash) {
             dispatch(setRefLink(`${baseRefUrl}${account}`))

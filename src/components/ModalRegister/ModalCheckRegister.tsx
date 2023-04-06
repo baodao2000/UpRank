@@ -85,7 +85,7 @@ export const ModalCheckRegister: React.FC<React.PropsWithChildren<RegistersModal
         }
       } else {
         const ref = localStorage.getItem('saveAdd')
-        if (JSON.parse(ref)?.includes('0x')) {
+        if (JSON.parse(ref)) {
           const userInfosByCode = await refferCT.userInfosByCode(JSON.parse(ref)?.toLowerCase())
           const txReceipt = await refferCT.register(userInfosByCode.user, myCode)
           if (txReceipt?.hash) {
