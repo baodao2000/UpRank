@@ -193,7 +193,7 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
     onConfirm: () => {
       return callWithGasPrice(poolContract, 'deposit', [pool.pid], {
         value: ethers.utils.parseUnits(amount.toString(), 'ether').toString(),
-        // gasLimit: vaultPoolConfig[pool.vaultKey].gasLimit,
+        gasLimit: '1000000',
       })
       // return callWithMarketGasPrice(poolContract, 'deposit', [pool.pid], {
       //   value: ethers.utils.parseUnits(amount.toString(), 'ether').toString(),

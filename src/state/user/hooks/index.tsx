@@ -414,6 +414,7 @@ export function useGasPrice(): string {
     return userGas
   }
   if (chainId === ChainId.MATIC) {
+    // console.log('1111', (Number(userGas) * 100).toString())
     return (Number(userGas) * 2).toString()
   }
   if (chainId === ChainId.BSC_TESTNET) {
