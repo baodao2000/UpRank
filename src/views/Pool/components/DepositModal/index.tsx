@@ -8,6 +8,7 @@ import styled from 'styled-components'
 import { trendyColors } from 'style/trendyTheme'
 import useConfirmTransaction from 'hooks/useConfirmTransaction'
 import { useCallWithMarketGasPrice } from 'hooks/useCallWithMarketGasPrice'
+import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
 import { usePoolsContract } from 'hooks/useContract'
 import { ToastDescriptionWithTx } from 'components/Toast'
 import CountUp from 'react-countup'
@@ -16,6 +17,7 @@ import { useBalance } from 'wagmi'
 import { formatBigNumber } from 'utils/formatBalance'
 import { DepositPoolModalProps } from './type'
 import numeral from 'numeral'
+import { vaultPoolConfig } from '../../../../config/constants/pools'
 
 // STYLE
 const InputArea = styled.div`
@@ -118,11 +120,9 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
   onSuccess,
 }) => {
   const { callWithMarketGasPrice } = useCallWithMarketGasPrice()
-  const [modalIsOpen, setModalIsOpen] = useState(true)
-  const [isPending, setIsPending] = useState(false)
+  const { callWithGasPrice } = useCallWithGasPrice()
   const [confirmedTxHash, setConfirmedTxHash] = useState('')
   const { t } = useTranslation()
-  const library = useWeb3LibraryContext()
   const { toastSuccess, toastError } = useToast()
   const { theme } = useTheme()
   const minLockMatic =
@@ -191,9 +191,13 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
   }
   const { isConfirming, handleConfirm } = useConfirmTransaction({
     onConfirm: () => {
-      return callWithMarketGasPrice(poolContract, 'deposit', [pool.pid], {
+      return callWithGasPrice(poolContract, 'deposit', [pool.pid], {
         value: ethers.utils.parseUnits(amount.toString(), 'ether').toString(),
+        // gasLimit: vaultPoolConfig[pool.vaultKey].gasLimit,
       })
+      // return callWithMarketGasPrice(poolContract, 'deposit', [pool.pid], {
+      //   value: ethers.utils.parseUnits(amount.toString(), 'ether').toString(),
+      // })
     },
     onSuccess: async ({ receipt }) => {
       setConfirmedTxHash(receipt.transactionHash)
