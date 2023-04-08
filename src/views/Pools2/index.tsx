@@ -357,8 +357,9 @@ const Pools = () => {
       const comm2 = await getPoolV2Contract.remainComm(account)
       setCommission(Number(formatEther(comm)))
       setCommission2(Number(formatEther(comm2)))
-      setRemainCommission(Number(formatEther(comm)) + Number(formatEther(comm2)))
-      setIsClaimableCommission(remainCommission > 0)
+      const commRemain = Number(formatEther(comm)) + Number(formatEther(comm2))
+      setRemainCommission(commRemain)
+      setIsClaimableCommission(commRemain > 0)
     } else {
       setRemainCommission(0)
     }
