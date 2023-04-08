@@ -31,7 +31,7 @@ export default {
   },
   poolsV2: {
     97: '0x60029EC916478B03D13E682EC354dEe73732f5f8',
-    137: '0x7E984dd140B1019Ae8739d86734300004C66f665',
+    137: '0x76763fD3723b0E8B552d9AaaF93BcC78cD999e8b',
     56: '',
   },
   sow: {
