@@ -103,6 +103,7 @@ const DetailInfoPool: React.FC<
   const startTime = poolInfo.startTime
   const rateBNB2USD = poolInfo.rateBNB2USD
   const [now, setNow] = useState(moment().unix())
+  // console.log(poolInfo)
   useEffect(() => {
     setInterval(() => {
       setNow(moment().unix())

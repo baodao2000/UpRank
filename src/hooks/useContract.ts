@@ -58,6 +58,7 @@ import {
   getTradingCompetitionContractMobox,
   getTradingCompetitionContractMoD,
   getPoolsContract,
+  getPoolsV2Contract,
 } from 'utils/contractHelpers'
 import { useSigner } from 'wagmi'
 
@@ -370,4 +371,9 @@ export const usePoolsContract = () => {
   const { chainId } = useActiveChainId()
   const { data: signer } = useSigner()
   return useMemo(() => getPoolsContract(chainId, signer), [chainId, signer])
+}
+export const usePoolsV2Contract = () => {
+  const { chainId } = useActiveChainId()
+  const { data: signer } = useSigner()
+  return useMemo(() => getPoolsV2Contract(chainId, signer), [chainId, signer])
 }

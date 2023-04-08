@@ -9,7 +9,7 @@ import { trendyColors } from 'style/trendyTheme'
 import useConfirmTransaction from 'hooks/useConfirmTransaction'
 import { useCallWithMarketGasPrice } from 'hooks/useCallWithMarketGasPrice'
 import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
-import { usePoolsContract } from 'hooks/useContract'
+import { usePoolsContract, usePoolsV2Contract } from 'hooks/useContract'
 import { ToastDescriptionWithTx } from 'components/Toast'
 import CountUp from 'react-countup'
 import { ethers } from 'ethers'
@@ -132,7 +132,7 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
   const maxLockMatic = Number(pool.maxLock / pool.rateBNB2USD).toFixed(4)
   const [amount, setAmount] = useState(minLockMatic.toFixed(4))
   const [isValidAmount, setIsValidAmount] = useState(true)
-  const poolContract = usePoolsContract()
+  const poolContract = usePoolsV2Contract()
   const handleAmountChange = (e: any) => {
     setAmount(e.target.value)
     checkAmount(e.target.value)

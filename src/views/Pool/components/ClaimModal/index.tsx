@@ -8,7 +8,7 @@ import styled from 'styled-components'
 import { trendyColors } from 'style/trendyTheme'
 import useConfirmTransaction from 'hooks/useConfirmTransaction'
 import { useCallWithMarketGasPrice } from 'hooks/useCallWithMarketGasPrice'
-import { usePoolsContract } from 'hooks/useContract'
+import { usePoolsContract, usePoolsV2Contract } from 'hooks/useContract'
 import { ToastDescriptionWithTx } from 'components/Toast'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { ChainId } from '../../../../../packages/swap-sdk/src/constants'
@@ -67,28 +67,23 @@ const Error = styled.span`
 
 const ClaimPoolModal: React.FC<React.PropsWithChildren<ClaimPoolModalProps>> = ({
   pool,
+  isV2,
   account,
   onDismiss,
   onSuccess,
 }) => {
   const { callWithMarketGasPrice } = useCallWithMarketGasPrice()
-  const [modalIsOpen, setModalIsOpen] = useState(true)
-  const [isPending, setIsPending] = useState(false)
   const [confirmedTxHash, setConfirmedTxHash] = useState('')
   const { t } = useTranslation()
-  const library = useWeb3LibraryContext()
   const { toastSuccess, toastError } = useToast()
-  const { theme } = useTheme()
-  const [amount, setAmount] = useState(0)
   const [isValidAmount, setIsValidAmount] = useState(true)
   const poolContract = usePoolsContract()
+  const poolV2Contract = usePoolsV2Contract()
   const { chainId } = useActiveWeb3React()
-  const isETHW = chainId === ChainId.ETHW
-  const unit = isETHW ? 'ETHW' : 'tBNB'
 
   const { isConfirming, handleConfirm } = useConfirmTransaction({
     onConfirm: () => {
-      return callWithMarketGasPrice(poolContract, 'claimReward', [pool.pid])
+      return callWithMarketGasPrice(isV2 ? poolV2Contract : poolContract, 'claimReward', [pool.pid])
     },
     onSuccess: async ({ receipt }) => {
       setConfirmedTxHash(receipt.transactionHash)

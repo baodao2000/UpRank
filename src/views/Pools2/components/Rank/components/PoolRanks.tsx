@@ -4,7 +4,7 @@ import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { ThreeDots } from 'views/Pool/components/DepositModal'
 import useConfirmTransaction from 'hooks/useConfirmTransaction'
 import { useCallWithMarketGasPrice } from 'hooks/useCallWithMarketGasPrice'
-import { usePoolsContract } from 'hooks/useContract'
+import { usePoolsV2Contract } from 'hooks/useContract'
 import { ToastDescriptionWithTx } from 'components/Toast'
 import { ethers } from 'ethers'
 import { timeDisplayLong } from 'views/Pools2/util'
@@ -147,7 +147,7 @@ const StyledButtonRank = styled(Button)`
 const PoolRanks = ({ data, onSuccess, userRank, userIsClaim }) => {
   const { toastSuccess, toastError } = useToast()
   const { account, chainId } = useActiveWeb3React()
-  const poolContract = usePoolsContract()
+  const poolContract = usePoolsV2Contract()
   const { callWithMarketGasPrice } = useCallWithMarketGasPrice()
   const { isConfirming, handleConfirm } = useConfirmTransaction({
     onConfirm: () => {

@@ -125,3 +125,6 @@ export const getBCakeFarmBoosterProxyFactoryAddress = () => {
 export const getPoolsAddress = (chainId?: number) => {
   return getAddress(addresses.pools, chainId)
 }
+export const getPoolsV2Address = (chainId?: number) => {
+  return getAddress(addresses.poolsV2, chainId)
+}

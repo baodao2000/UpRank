@@ -3,7 +3,7 @@ import PageHeader from 'components/PageHeader'
 import styled from 'styled-components'
 import images from 'configs/images'
 import contracts from 'config/constants/contracts'
-import { getPoolsContract } from 'utils/contractHelpers'
+import { getPoolsContract, getPoolsV2Contract } from 'utils/contractHelpers'
 import { getBlockExploreLink } from 'utils'
 import { trendyColors } from 'style/trendyTheme'
 import { useBalance, useSigner } from 'wagmi'
@@ -12,7 +12,7 @@ import TrendyPageLoader from 'components/Loader/TrendyPageLoader'
 import { ToastDescriptionWithTx } from 'components/Toast'
 import useConfirmTransaction from 'hooks/useConfirmTransaction'
 import { useCallWithMarketGasPrice } from 'hooks/useCallWithMarketGasPrice'
-import { usePoolsContract } from 'hooks/useContract'
+import { usePoolsContract, usePoolsV2Contract } from 'hooks/useContract'
 import { PageMeta } from 'components/Layout/Page'
 import { isMobile } from 'react-device-detect'
 import { useState, useEffect } from 'react'
@@ -25,7 +25,6 @@ import useActiveWeb3React from '../../hooks/useActiveWeb3React'
 import { ChainId, NATIVE } from '../../../packages/swap-sdk/src/constants'
 import Rank from './components/Rank'
 import moment from 'moment'
-import CountDown from 'views/HomePage1/components/CountDown'
 
 // ============= STYLED
 const Container = styled.div`
@@ -326,12 +325,16 @@ const Pools = () => {
   const { account, chainId } = useActiveWeb3React()
   const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId
   const getPoolContract = getPoolsContract(CHAIN_ID)
+  const getPoolV2Contract = getPoolsV2Contract(CHAIN_ID)
   const [arr, setArr] = useState([])
   const [remainCommission, setRemainCommission] = useState(0)
+  const [commission, setCommission] = useState(0)
+  const [commission2, setCommission2] = useState(0)
   const [isClaimableCommission, setIsClaimableCommission] = useState(false)
   const { toastSuccess, toastError } = useToast()
   const { callWithMarketGasPrice } = useCallWithMarketGasPrice()
   const poolContract = usePoolsContract()
+  const poolV2Contract = usePoolsV2Contract()
   const [ranks, setRanks] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [rateBnbUsd, setRateBnbUsd] = useState(1)
@@ -339,7 +342,7 @@ const Pools = () => {
   const [userClaimed, setUserClaimed] = useState(false)
   const { isConfirming, handleConfirm } = useConfirmTransaction({
     onConfirm: () => {
-      return callWithMarketGasPrice(poolContract, 'claimComm', [account])
+      return callWithMarketGasPrice(commission > 0 ? poolContract : poolV2Contract, 'claimComm', [account])
     },
     onSuccess: async ({ receipt }) => {
       toastSuccess('Claim commission successfully !', <ToastDescriptionWithTx txHash={receipt.transactionHash} />)
@@ -351,8 +354,11 @@ const Pools = () => {
   const getCommission = async () => {
     if (account) {
       const comm = await getPoolContract.remainComm(account)
-      setRemainCommission(Number(formatEther(comm)))
-      setIsClaimableCommission(comm > 0)
+      const comm2 = await getPoolV2Contract.remainComm(account)
+      setCommission(Number(formatEther(comm)))
+      setCommission2(Number(formatEther(comm2)))
+      setRemainCommission(Number(formatEther(comm)) + Number(formatEther(comm2)))
+      setIsClaimableCommission(remainCommission > 0)
     } else {
       setRemainCommission(0)
     }
@@ -371,12 +377,12 @@ const Pools = () => {
     const months = await getPoolContract.getMonths()
 
     const infoRank = await Promise.all([
-      getPoolContract.userRank(account),
-      getPoolContract.userRankRewardClaimed(account, Number(months.toString())),
+      getPoolV2Contract.userRank(account),
+      getPoolV2Contract.userRankRewardClaimed(account, Number(months.toString())),
     ])
     const arr = await Promise.all(
       indexRank.map(async (item) => {
-        const rank = await getPoolContract.rankRewards(item)
+        const rank = await getPoolV2Contract.rankRewards(item)
         return {
           image: getRankImage(item).img,
           title: getRankImage(item).title,
@@ -401,21 +407,23 @@ const Pools = () => {
     try {
       const bnbPrice = await getPoolContract.bnbPrice()
       const pools = ids.map((item) => getPoolContract.pools(item))
+      const pools2 = ids.map((item) => getPoolV2Contract.pools(item))
       await getInfoRank(Number(formatEther(bnbPrice[0])) / Number(formatEther(bnbPrice[1])))
 
       setRateBnbUsd(Number(formatEther(bnbPrice[0])) / Number(formatEther(bnbPrice[1])))
       const newPoolInfo = await Promise.all(
         pools.map(async (item, id) => {
           const userLockAndPool = await Promise.all([getPoolContract.users(account, id), item])
+          const userLockAndPool2 = await Promise.all([getPoolV2Contract.users(account, id), pools2[id]])
           return {
-            currentInterest: ((Number(userLockAndPool[1].currentInterest.toString()) / 10000) * 365).toFixed(2),
-            enable: userLockAndPool[1].enable,
-            maxLock: formatEther(userLockAndPool[1].maxLock),
-            minLock: formatEther(userLockAndPool[1].minLock),
+            currentInterest: ((Number(userLockAndPool2[1].currentInterest.toString()) / 10000) * 365).toFixed(2),
+            enable: userLockAndPool2[1].enable,
+            maxLock: formatEther(userLockAndPool2[1].maxLock),
+            minLock: formatEther(userLockAndPool2[1].minLock),
             timeLock: 1095,
-            totalLock: formatEther(userLockAndPool[1].totalLock),
+            totalLock: formatEther(userLockAndPool[1].totalLock.add(userLockAndPool2[1].totalLock)),
             rateBNB2USD: Number(formatEther(bnbPrice[0])) / Number(formatEther(bnbPrice[1])),
-            yourLock: Number(formatEther(userLockAndPool[0].totalLock)),
+            yourLock: Number(formatEther(userLockAndPool[0].totalLock + userLockAndPool2[0].totalLock)),
           }
         }),
       )
@@ -430,7 +438,13 @@ const Pools = () => {
   const { data, isFetched } = useBalance({
     addressOrName: contracts.pools[CHAIN_ID],
   })
-  const balance = isFetched && data && data.value ? formatBigNumber(data.value, 6) : 0
+  const { data: data2, isFetched: isFetched2 } = useBalance({
+    addressOrName: contracts.poolsV2[CHAIN_ID],
+  })
+  const balance =
+    isFetched && data && data.value && isFetched2 && data2 && data2.value
+      ? formatBigNumber(data.value.add(data2.value), 6)
+      : 0
   const unit = NATIVE[chainId].symbol
 
   const onSuccess = () => {
@@ -797,12 +811,12 @@ const Pools = () => {
               <Text style={{ color: '#C5C5C5' }} ellipsis={true}>
                 <LinkExternal
                   fontSize={['14px', '16px', '18px', '20px', '22px']}
-                  href={getBlockExploreLink(contracts.pools[CHAIN_ID], 'address', CHAIN_ID)}
+                  href={getBlockExploreLink(contracts.poolsV2[CHAIN_ID], 'address', CHAIN_ID)}
                   ellipsis={true}
                   style={{ color: '#00F0E1' }}
                   color="#00F0E1"
                 >
-                  {shortenURL(`Contract: ${contracts.pools[CHAIN_ID]}`, 35)}
+                  {shortenURL(`Contract: ${contracts.poolsV2[CHAIN_ID]}`, 35)}
                 </LinkExternal>
               </Text>
               <Button

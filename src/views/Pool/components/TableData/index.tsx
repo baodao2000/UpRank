@@ -79,8 +79,9 @@ const AmountData = styled.div`
 const responsiveTextSize = ['11px', '12px', '16px', '18px', '20px']
 const responsiveTextSizeBNB = ['9px', '10px', '12px', '14px', '16px']
 const responsiveTextSizeHeader = ['16px', '18px', '22px', '26px', '30px']
-const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength: number }>> = ({
+const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength: number; pool2: Pool }>> = ({
   pool,
+  pool2,
   userClaimedLength,
   ...props
 }) => {
@@ -115,7 +116,91 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
   const renderClaimHistory = () => {
     return (
       <>
-        {pool.totalLock > 0 && (
+        {pool2.userTotalLock > 0 && (
+          <tr>
+            <Td textAlign={'left'}>
+              <Text fontSize={responsiveTextSize}>Total</Text>
+            </Td>
+            <Td textAlign={'center'}>
+              <Text fontSize={responsiveTextSize}>
+                <CountUp
+                  start={0}
+                  preserveValue
+                  delay={0}
+                  end={Number(pool2.currentInterest)}
+                  decimals={2}
+                  duration={0.5}
+                ></CountUp>
+              </Text>
+            </Td>
+            <Td textAlign={'right'}>
+              {pool2.userTotalLock === 0 ? (
+                <Text fontSize={responsiveTextSize}>0</Text>
+              ) : (
+                <AmountData>
+                  <Text
+                    fontSize={responsiveTextSizeBNB}
+                    style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}
+                  >
+                    ~
+                    <CountUp
+                      start={0}
+                      preserveValue
+                      delay={0}
+                      end={pool2.userTotalLock}
+                      decimals={pool2.userTotalLock > 0 ? 4 : 0}
+                      duration={0.5}
+                    />
+                    &ensp;
+                    <img src={`/images/chains/${chainId}.png`} alt="pool name" width={18} />
+                  </Text>
+                </AmountData>
+              )}
+            </Td>
+            <Td textAlign={'right'}>
+              {pool2.currentReward === 0 ? (
+                <Text fontSize={responsiveTextSize}>0</Text>
+              ) : (
+                <AmountData>
+                  <Text fontSize={responsiveTextSize}>
+                    ~
+                    <CountUp
+                      start={0}
+                      preserveValue
+                      delay={0}
+                      end={pool2.currentReward * pool2.rateBNB2USD}
+                      decimals={pool2.currentReward > 0 ? 2 : 0}
+                      duration={0.5}
+                      style={{ marginRight: 6 }}
+                    />
+                    $
+                  </Text>
+                  <Text
+                    fontSize={responsiveTextSizeBNB}
+                    style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}
+                  >
+                    ~
+                    <CountUp
+                      start={0}
+                      preserveValue
+                      delay={0}
+                      end={pool2.currentReward}
+                      decimals={pool2.currentReward > 0 ? 4 : 0}
+                      duration={0.5}
+                    />
+                    <img src={`/images/chains/${chainId}.png`} alt="pool name" width={18} style={{ marginLeft: 6 }} />
+                  </Text>
+                </AmountData>
+              )}
+            </Td>
+            <Td textAlign={'center'}>
+              <Text fontSize={responsiveTextSize}>
+                <span>{pool2.currentReward <= 0 ? 'Waiting' : 'Claimable'}</span>
+              </Text>
+            </Td>
+          </tr>
+        )}
+        {pool.userTotalLock > 0 && (
           <tr>
             <Td textAlign={'left'}>
               <Text fontSize={responsiveTextSize}>Total</Text>
