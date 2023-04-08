@@ -3,7 +3,7 @@ import { Heading, Text, Flex, Button, useToast, Input } from '@pancakeswap/uikit
 import React, { useState } from 'react'
 import { Tooltip } from 'react-tooltip'
 import 'react-tooltip/dist/react-tooltip.css'
-import { getContract, getPoolsContract } from 'utils/contractHelpers'
+import { getContract, getPoolsContract, getPoolsV2Contract } from 'utils/contractHelpers'
 import addresses from 'config/constants/contracts'
 import refferalAbi from 'config/abi/refferal.json'
 import { useDispatch } from 'react-redux'
@@ -16,6 +16,7 @@ import TrendyPageLoader from 'components/Loader/TrendyPageLoader'
 import { formatEther } from '@ethersproject/units'
 import { NATIVE } from '../../../packages/swap-sdk/src/constants'
 import { ThreeDots } from 'views/Pool/components/DepositModal'
+import CountUp from 'react-countup'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -335,6 +336,7 @@ const Referral = () => {
   // const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId;
   const CHAIN_ID = Number(process.env.NEXT_PUBLIC_DEFAULT_CHAIN)
   const getPoolContract = getPoolsContract(CHAIN_ID)
+  const getPoolV2Contract = getPoolsV2Contract(CHAIN_ID)
   const refferCT = getContract({ address: addresses.refferal[CHAIN_ID], abi: refferalAbi, chainId: CHAIN_ID, signer })
   const [userIsRegister, setUserIsRegister] = React.useState(false)
   const [interest, setInterest] = React.useState(0)
@@ -383,10 +385,15 @@ const Referral = () => {
           getPoolContract.userTotalLock(item),
           refferCT.userInfos(item),
         ])
+        const dataItem2 = await Promise.all([
+          getPoolV2Contract.volumeOntree(item),
+          getPoolV2Contract.userTotalLock(item),
+          refferCT.userInfos(item),
+        ])
         return {
           account: item,
-          volume: Number(formatEther(dataItem[0])).toFixed(3),
-          locked: Number(formatEther(dataItem[1])).toFixed(3),
+          volume: Number(formatEther(dataItem[0].add(dataItem2[0]))).toFixed(3),
+          locked: Number(formatEther(dataItem[1].add(dataItem2[1]))).toFixed(3),
           child: Number(dataItem[2].totalRefer7.toString()),
         }
       }),
@@ -741,12 +748,31 @@ const Referral = () => {
                 </InfoItem>
                 <InfoItem>
                   <Label>Total 7 level staked:</Label>
-                  <Value>{userInfos.totalStaked7}$</Value>
+                  <Value>
+                    <CountUp
+                      separator=","
+                      start={0}
+                      preserveValue
+                      delay={0}
+                      end={userInfos.totalStaked7}
+                      decimals={3}
+                      duration={1}
+                    />
+                    $
+                  </Value>
                 </InfoItem>
                 <InfoItem>
                   <Label>Total commission:</Label>
                   <Value>
-                    {userInfos.totalComms}
+                    <CountUp
+                      separator=","
+                      start={0}
+                      preserveValue
+                      delay={0}
+                      end={userInfos.totalComms}
+                      decimals={3}
+                      duration={1}
+                    />
                     {unit}
                   </Value>
                 </InfoItem>
@@ -802,8 +828,29 @@ const Referral = () => {
                           {item.child > 0 && <img src="/images/referral/plus.png" style={{ fill: 'white' }} />}
                         </div>
                       </td>
-                      <td>{item.volume}$</td>
-                      <td>{item.locked}</td>
+                      <td>
+                        <CountUp
+                          separator=","
+                          start={0}
+                          preserveValue
+                          delay={0}
+                          end={item.volume}
+                          decimals={3}
+                          duration={1}
+                        />
+                        $
+                      </td>
+                      <td>
+                        <CountUp
+                          separator=","
+                          start={0}
+                          preserveValue
+                          delay={0}
+                          end={item.locked}
+                          decimals={3}
+                          duration={1}
+                        />
+                      </td>
                     </ChildItem>
                   ))}
                 </Table>
