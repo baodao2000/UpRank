@@ -338,7 +338,14 @@ const Pools = () => {
   const [ranks, setRanks] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [rateBnbUsd, setRateBnbUsd] = useState(1)
-  const [userRank, setUserRank] = useState(0)
+  const [userRank, setUserRank] = useState({
+    rank: 0,
+    image: '',
+    locked: 0,
+    volumnOnTree: 0,
+    direct: 0,
+    downline: 0,
+  })
   const [userClaimed, setUserClaimed] = useState(false)
   const { isConfirming, handleConfirm } = useConfirmTransaction({
     onConfirm: () => {
@@ -380,6 +387,9 @@ const Pools = () => {
     const infoRank = await Promise.all([
       getPoolV2Contract.userRank(account),
       getPoolV2Contract.userRankRewardClaimed(account, Number(months.toString())),
+      getPoolV2Contract.getUserTotalLock(account),
+      getPoolV2Contract.getVolumeOnTre(account),
+      getPoolV2Contract.childs(account),
     ])
     const arr = await Promise.all(
       indexRank.map(async (item) => {
@@ -399,7 +409,16 @@ const Pools = () => {
         }
       }),
     )
-    setUserRank(Number(infoRank[0].toString()))
+    setUserRank({
+      ...userRank,
+      rank: Number(infoRank[0]),
+      image: getRankImage(Number(infoRank[0])).img,
+      locked: Number(Number(formatEther(infoRank[2])).toFixed(3)),
+      volumnOnTree: Number(Number(formatEther(infoRank[3])).toFixed(3)),
+      direct: Number(infoRank[4].direct),
+      downline: Number(infoRank[4].downLine),
+    })
+
     setRanks(arr)
     setUserClaimed(infoRank[1])
   }
@@ -875,7 +894,7 @@ const Pools = () => {
                   'Claim'
                 )}
               </Button>
-              <Rank ranks={ranks} userRank={userRank} onSuccess={onSuccessRank} userIsClaim={userClaimed} />
+              <Rank unit={unit} ranks={ranks} userRank={userRank} onSuccess={onSuccessRank} userIsClaim={userClaimed} />
             </Flex>
           </PageHeader>
         </>

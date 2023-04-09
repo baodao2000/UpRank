@@ -22,7 +22,6 @@
     "name": "AddPool",
     "type": "event"
   },
-  { "anonymous": false, "inputs": [], "name": "AdminRequestVote", "type": "event" },
   { "anonymous": false, "inputs": [], "name": "AdminRequestVoteConfig", "type": "event" },
   {
     "anonymous": false,
@@ -199,6 +198,13 @@
     "type": "function"
   },
   {
+    "inputs": [{ "internalType": "uint256", "name": "pid", "type": "uint256" }],
+    "name": "claimRewardV1",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "name": "conditionMemOnTree",
     "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
@@ -223,6 +229,22 @@
     "type": "function"
   },
   {
+    "inputs": [
+      { "internalType": "uint256", "name": "_pid", "type": "uint256" },
+      { "internalType": "address", "name": "_user", "type": "address" }
+    ],
+    "name": "currentRewardV1",
+    "outputs": [
+      { "internalType": "uint256", "name": "rw", "type": "uint256" },
+      { "internalType": "uint256", "name": "startTime", "type": "uint256" },
+      { "internalType": "uint256", "name": "remainReward", "type": "uint256" },
+      { "internalType": "uint256", "name": "totalLock", "type": "uint256" },
+      { "internalType": "uint256", "name": "totalReward", "type": "uint256" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [{ "internalType": "uint256", "name": "pid", "type": "uint256" }],
     "name": "deposit",
     "outputs": [],
@@ -233,6 +255,23 @@
     "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
     "name": "directStaked",
     "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getChainID",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "user", "type": "address" }],
+    "name": "getChildren",
+    "outputs": [
+      { "internalType": "uint256", "name": "direct", "type": "uint256" },
+      { "internalType": "uint256", "name": "downLine", "type": "uint256" }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
@@ -264,12 +303,19 @@
           { "internalType": "bool", "name": "enable", "type": "bool" },
           { "internalType": "uint256", "name": "commPercent", "type": "uint256" }
         ],
-        "internalType": "struct PoolsMatic.Pool[]",
+        "internalType": "struct PoolsMaticV2.Pool[]",
         "name": "poolsInfo",
         "type": "tuple[]"
       }
     ],
     "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "user", "type": "address" }],
+    "name": "getUserTotalLock",
+    "outputs": [{ "internalType": "uint256", "name": "lock", "type": "uint256" }],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -288,7 +334,7 @@
           { "internalType": "uint256", "name": "totalLock", "type": "uint256" },
           { "internalType": "uint256", "name": "interrest", "type": "uint256" }
         ],
-        "internalType": "struct PoolsMatic.Claim[]",
+        "internalType": "struct PoolsMaticV2.Claim[]",
         "name": "list",
         "type": "tuple[]"
       },
@@ -304,6 +350,13 @@
     ],
     "name": "getUsersClaimedLength",
     "outputs": [{ "internalType": "uint256", "name": "length", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "user", "type": "address" }],
+    "name": "getVolumeOnTre",
+    "outputs": [{ "internalType": "uint256", "name": "volumn", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },
@@ -505,6 +558,7 @@
     "stateMutability": "nonpayable",
     "type": "function"
   },
+  { "inputs": [], "name": "upRank", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
   {
     "inputs": [
       { "internalType": "uint256", "name": "pid", "type": "uint256" },
@@ -580,6 +634,22 @@
     "type": "function"
   },
   {
+    "inputs": [
+      { "internalType": "address", "name": "", "type": "address" },
+      { "internalType": "uint256", "name": "", "type": "uint256" },
+      { "internalType": "uint256", "name": "", "type": "uint256" }
+    ],
+    "name": "userClaimedV1",
+    "outputs": [
+      { "internalType": "uint256", "name": "date", "type": "uint256" },
+      { "internalType": "uint256", "name": "amount", "type": "uint256" },
+      { "internalType": "uint256", "name": "totalLock", "type": "uint256" },
+      { "internalType": "uint256", "name": "interrest", "type": "uint256" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
     "name": "userRank",
     "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
@@ -606,16 +676,6 @@
   {
     "inputs": [
       { "internalType": "address", "name": "", "type": "address" },
-      { "internalType": "uint256", "name": "", "type": "uint256" }
-    ],
-    "name": "userVote",
-    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      { "internalType": "address", "name": "", "type": "address" },
       { "internalType": "uint256", "name": "", "type": "uint256" },
       { "internalType": "uint256", "name": "", "type": "uint256" }
     ],
@@ -630,6 +690,21 @@
       { "internalType": "uint256", "name": "", "type": "uint256" }
     ],
     "name": "users",
+    "outputs": [
+      { "internalType": "uint256", "name": "totalLock", "type": "uint256" },
+      { "internalType": "uint256", "name": "startTime", "type": "uint256" },
+      { "internalType": "uint256", "name": "totalReward", "type": "uint256" },
+      { "internalType": "uint256", "name": "remainReward", "type": "uint256" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "", "type": "address" },
+      { "internalType": "uint256", "name": "", "type": "uint256" }
+    ],
+    "name": "usersV1",
     "outputs": [
       { "internalType": "uint256", "name": "totalLock", "type": "uint256" },
       { "internalType": "uint256", "name": "startTime", "type": "uint256" },
