@@ -339,12 +339,21 @@ const Pool = ({ poolId }) => {
               <Heading scale="md" color="text">
                 <LinkExternal
                   fontSize={['14px', '16px', '18px', '20px', '22px']}
+                  href={getBlockExploreLink(contracts.pools[CHAIN_ID], 'address', CHAIN_ID)}
+                  ellipsis={true}
+                  color="#00F0E1"
+                  style={{ color: '#00F0E1' }}
+                >
+                  {shortenURL(`Root Contract 1: ${contracts.pools[CHAIN_ID]}`, 35)}
+                </LinkExternal>
+                <LinkExternal
+                  fontSize={['14px', '16px', '18px', '20px', '22px']}
                   href={getBlockExploreLink(contracts.poolsV2[CHAIN_ID], 'address', CHAIN_ID)}
                   ellipsis={true}
                   color="#00F0E1"
                   style={{ color: '#00F0E1' }}
                 >
-                  {shortenURL(`Contract: ${contracts.poolsV2[CHAIN_ID]}`, 35)}
+                  {shortenURL(`Root Contract 2: ${contracts.poolsV2[CHAIN_ID]}`, 35)}
                 </LinkExternal>
               </Heading>
             </Flex>

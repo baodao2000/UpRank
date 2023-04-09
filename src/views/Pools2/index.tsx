@@ -424,7 +424,7 @@ const Pools = () => {
             timeLock: 1095,
             totalLock: formatEther(userLockAndPool[1].totalLock.add(userLockAndPool2[1].totalLock)),
             rateBNB2USD: Number(formatEther(bnbPrice[0])) / Number(formatEther(bnbPrice[1])),
-            yourLock: Number(formatEther(userLockAndPool[0].totalLock + userLockAndPool2[0].totalLock)),
+            yourLock: Number(formatEther(userLockAndPool[0].totalLock.add(userLockAndPool2[0].totalLock))),
           }
         }),
       )
@@ -812,12 +812,23 @@ const Pools = () => {
               <Text style={{ color: '#C5C5C5' }} ellipsis={true}>
                 <LinkExternal
                   fontSize={['14px', '16px', '18px', '20px', '22px']}
+                  href={getBlockExploreLink(contracts.pools[CHAIN_ID], 'address', CHAIN_ID)}
+                  ellipsis={true}
+                  style={{ color: '#00F0E1' }}
+                  color="#00F0E1"
+                >
+                  {shortenURL(`Root Contract 1: ${contracts.pools[CHAIN_ID]}`, 35)}
+                </LinkExternal>
+              </Text>
+              <Text style={{ color: '#C5C5C5' }} ellipsis={true}>
+                <LinkExternal
+                  fontSize={['14px', '16px', '18px', '20px', '22px']}
                   href={getBlockExploreLink(contracts.poolsV2[CHAIN_ID], 'address', CHAIN_ID)}
                   ellipsis={true}
                   style={{ color: '#00F0E1' }}
                   color="#00F0E1"
                 >
-                  {shortenURL(`Contract: ${contracts.poolsV2[CHAIN_ID]}`, 35)}
+                  {shortenURL(`Root Contract 2: ${contracts.poolsV2[CHAIN_ID]}`, 35)}
                 </LinkExternal>
               </Text>
               <Button
