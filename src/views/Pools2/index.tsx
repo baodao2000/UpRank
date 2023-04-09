@@ -389,7 +389,7 @@ const Pools = () => {
       getPoolV2Contract.userRankRewardClaimed(account, Number(months.toString())),
       getPoolV2Contract.getUserTotalLock(account),
       getPoolV2Contract.getVolumeOnTre(account),
-      getPoolV2Contract.childs(account),
+      getPoolV2Contract.getChildren(account),
     ])
     const arr = await Promise.all(
       indexRank.map(async (item) => {

@@ -89,17 +89,25 @@ const ContentHeadRight = styled.div`
     text-align: center;
     margin: 20px;
     word-wrap: break-word;
-
+    display: block;
+    ${({ theme }) => theme.mediaQueries.xs} {
+      display: none;
+    }
+    ${({ theme }) => theme.mediaQueries.sm} {
+      display: none;
+    }
     ${({ theme }) => theme.mediaQueries.md} {
       font-size: 30px;
       line-height: 36px;
       text-align: start;
       margin-bottom: 0;
+      display: block;
     }
     ${({ theme }) => theme.mediaQueries.xl} {
       font-size: 20px;
       line-height: 25px;
       text-align: center;
+      display: block;
     }
   }
 `
@@ -119,6 +127,22 @@ const ImageShowMb = styled.img`
   display: block;
   max-width: 715px;
   margin: 0 auto;
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    display: none;
+  }
+`
+const H5ShowMb = styled.h5`
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 25px;
+  text-align: center;
+  letter-spacing: 0.001em;
+  text-transform: uppercase;
+  color: #816bf2;
+  text-align: center;
+  margin: 20px;
+  word-wrap: break-word;
 
   ${({ theme }) => theme.mediaQueries.md} {
     display: none;
@@ -187,6 +211,10 @@ const HeadHome = () => {
           Trendy Defi<br></br> is an open network for <br></br>storing and moving money
         </h2>
         <p>Own your own data. Earn passive income with crypto.</p>
+        <H5ShowMb>
+          Stake Matic, you can earn an ARP of <span style={{ color: 'green' }}>85.1%</span> up to{' '}
+          <span style={{ color: 'green' }}>127.75%</span>. Start staking now to maximize your earnings!
+        </H5ShowMb>
         <ImageShowMb data-aos="fade-up-left" src={images.coinHead} alt="" />
         <LinkToDownload>
           <ListImgButton>
@@ -215,7 +243,10 @@ const HeadHome = () => {
       </ContentHead>
       <ContentHeadRight data-aos="fade-up-right">
         <ImageHead data-aos="fade-up-left" src={images.coinHead} alt="" />
-        <h5>Stake Matic, you can earn an ARP of 85.1% up to 127.75%. Start staking now to maximize your earnings!</h5>
+        <h5>
+          Stake Matic, you can earn an ARP of <span style={{ color: 'green' }}>85.1%</span> up to{' '}
+          <span style={{ color: 'green' }}>127.75%</span>. Start staking now to maximize your earnings!
+        </h5>
       </ContentHeadRight>
     </Head>
   )
