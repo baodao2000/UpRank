@@ -74,37 +74,36 @@ export const ModalCheckRegister: React.FC<React.PropsWithChildren<RegistersModal
   const onRegister = async () => {
     try {
       setLoading(true)
-      if (referBy) {
-        const userInfosByCode = await refferCT.userInfosByCode(referBy.toLowerCase())
-        const txReceipt = await refferCT.register(userInfosByCode.user, myCode)
-        if (txReceipt?.hash) {
-          dispatch(setRefLink(`${baseRefUrl}${account}`))
-          toastSuccess('Congratulations, you have successfully registered!')
-        } else {
-          toastError('Please try again. Confirm the transaction and make sure you are paying enough gas!')
-        }
+      // if (referBy) {
+      //   const userInfosByCode = await refferCT.userInfosByCode(referBy.toLowerCase())
+      //   const txReceipt = await refferCT.register(userInfosByCode.user, myCode)
+      //   if (txReceipt?.hash) {
+      //     dispatch(setRefLink(`${baseRefUrl}${account}`))
+      //     toastSuccess('Congratulations, you have successfully registered!')
+      //   } else {
+      //     toastError('Please try again. Confirm the transaction and make sure you are paying enough gas!')
+      //   }
+      // } else {
+      //   const ref = localStorage.getItem('saveAdd')
+      //   if (JSON.parse(ref)) {
+      //     const userInfosByCode = await refferCT.userInfosByCode(JSON.parse(ref)?.toLowerCase())
+      //     const txReceipt = await refferCT.register(userInfosByCode.user, myCode)
+      //     if (txReceipt?.hash) {
+      //       dispatch(setRefLink(`${baseRefUrl}${account}`))
+      //       toastSuccess('Congratulations, you have successfully registered!')
+      //     } else {
+      //       toastError('Please try again. Confirm the transaction and make sure you are paying enough gas!')
+      //     }
+      //   } else {
+      const txReceipt = await refferCT.register(referByWallet, myCode)
+      if (txReceipt?.hash) {
+        dispatch(setRefLink(`${baseRefUrl}${account}`))
+        toastSuccess('Congratulations, you have successfully registered!')
       } else {
-        const ref = localStorage.getItem('saveAdd')
-        if (JSON.parse(ref)) {
-          const userInfosByCode = await refferCT.userInfosByCode(JSON.parse(ref)?.toLowerCase())
-          const txReceipt = await refferCT.register(userInfosByCode.user, myCode)
-          if (txReceipt?.hash) {
-            dispatch(setRefLink(`${baseRefUrl}${account}`))
-            toastSuccess('Congratulations, you have successfully registered!')
-          } else {
-            toastError('Please try again. Confirm the transaction and make sure you are paying enough gas!')
-          }
-        } else {
-          const owner = await refferCT.owner()
-          const txReceipt = await refferCT.register(referByWallet, myCode)
-          if (txReceipt?.hash) {
-            dispatch(setRefLink(`${baseRefUrl}${account}`))
-            toastSuccess('Congratulations, you have successfully registered!')
-          } else {
-            toastError('Please try again. Confirm the transaction and make sure you are paying enough gas!')
-          }
-        }
+        toastError('Please try again. Confirm the transaction and make sure you are paying enough gas!')
       }
+      // }
+      // }
       setLoading(false)
       onDismiss()
     } catch (error) {
