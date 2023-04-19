@@ -22,24 +22,30 @@ const ListPoolRanks = styled.div`
 
 export const ImageRank = styled.img`
   @media screen and (min-width: 1024px) {
-    width: 50px;
+    width: 75px;
   }
   @media (max-width: 1023px) {
-    width: 40px;
+    width: 60px;
   }
+`
+const CardNextRanks = styled.div`
+  min-width: 235px;
+  height: auto;
+  color: #fff;
+  background: #7a67ed;
+  /* box-shadow: 6px 10px 25px rgba(0, 0, 0, 0.1), inset 0px 4px 16px rgba(255, 233, 190, 0.63); */
+  border-radius: 20px;
+  padding: 14px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `
 const CardYourRanks = styled.div`
   min-width: 235px;
   height: auto;
   color: #fff;
-  background: linear-gradient(
-    152.42deg,
-    #3b1f8b 15.42%,
-    rgba(40, 97, 146, 0.865487) 72.38%,
-    rgba(3, 227, 160, 0.6) 98.08%,
-    #c4cff6 134.9%
-  );
-  box-shadow: 6px 10px 25px rgba(0, 0, 0, 0.1), inset 0px 4px 16px rgba(255, 233, 190, 0.63);
+  background: #3a3e41;
+  /* box-shadow: 6px 10px 25px rgba(0, 0, 0, 0.1), inset 0px 4px 16px rgba(255, 233, 190, 0.63); */
   border-radius: 20px;
   padding: 14px 20px;
   display: flex;
@@ -50,7 +56,7 @@ const CardPoolRanks = styled.div`
   width: auto;
   height: auto;
   color: #fff;
-  background: linear-gradient(153.15deg, #391e67 8.57%, #c4cff6 100%);
+  background: linear-gradient(244.16deg, #391e67 -21.5%, #c4cff6 104.65%);
   box-shadow: 6px 10px 25px rgba(0, 0, 0, 0.1), inset 0px 4px 16px rgba(255, 233, 190, 0.63);
   border-radius: 20px;
   padding: 14px 20px;
@@ -241,7 +247,7 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
   // console.log(userRank)
   return (
     <ListPoolRanks>
-      <CardYourRanks>
+      <CardNextRanks>
         <CardHead>
           <HeadLeft>
             <TitleHeadRight style={{ color: '#fff' }}>Your Rank</TitleHeadRight>
@@ -271,7 +277,7 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
           </ItemInfoCard>
         </CardBody>
         <div style={{ textAlign: 'center', marginTop: 8 }}></div>
-      </CardYourRanks>
+      </CardNextRanks>
       <CardYourRanks>
         <CardHead>
           <HeadLeft>
