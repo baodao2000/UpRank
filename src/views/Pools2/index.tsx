@@ -291,27 +291,27 @@ export const getRankImage = (index) => {
   }
   switch (index) {
     case 0:
-      obj.img = '/images/pools/bronze.svg'
+      obj.img = '/images/pools/bronze.svg?t=1'
       obj.title = 'Bronze'
       break
     case 1:
-      obj.img = '/images/pools/silver.svg'
+      obj.img = '/images/pools/silver.svg?t=1'
       obj.title = 'Silver'
       break
     case 2:
-      obj.img = '/images/pools/gold.svg'
+      obj.img = '/images/pools/gold.svg?t=1'
       obj.title = 'Gold'
       break
     case 3:
-      obj.img = '/images/pools/titanium.svg'
+      obj.img = '/images/pools/titanium.svg?t=1'
       obj.title = 'Titanium'
       break
     case 4:
-      obj.img = '/images/pools/platinum.svg'
+      obj.img = '/images/pools/platinum.svg?t=1'
       obj.title = 'Platinum'
       break
     case 5:
-      obj.img = '/images/pools/diamond.svg'
+      obj.img = '/images/pools/diamond.svg?t=1'
       obj.title = 'Diamond'
       break
     default:

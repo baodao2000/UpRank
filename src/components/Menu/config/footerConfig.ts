@@ -84,7 +84,7 @@ export const footerLinks: (t: ContextApi['t']) => FooterLinkType[] = (t) => [
       },
       {
         label: t('Youtube'),
-        href: 'https://www.youtube.com/@defitrendy',
+        href: 'https://www.youtube.com/@trendydefi',
         image: '/images/pools/youtube.svg',
       },
     ],

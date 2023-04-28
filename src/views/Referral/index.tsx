@@ -17,6 +17,7 @@ import { formatEther } from '@ethersproject/units'
 import { NATIVE } from '../../../packages/swap-sdk/src/constants'
 import { ThreeDots } from 'views/Pool/components/DepositModal'
 import CountUp from 'react-countup'
+import Child from './child'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -401,7 +402,7 @@ const Referral = () => {
     setTotalItemChild(Number(data[0].totalItem.toString()))
     setCountPage(countPage)
     setTotal7Level(data[1].totalRefer7.toString())
-    setListChild(list)
+    setListChild(list.map((l) => ({ ...l, showChild: false })))
     setLoadingTable(false)
   }
 
@@ -425,9 +426,15 @@ const Referral = () => {
   }
 
   const handleChangeChild = (accountB) => {
-    getTotalRefferChild(0, accountB)
-    setAccountChild([...acountChild, accountB])
-    setActivePage(0)
+    setListChild(
+      listChild.map((l) => {
+        if (l.account.toLowerCase() === accountB.toLowerCase()) l.showChild = !l.showChild
+        return l
+      }),
+    )
+    // getTotalRefferChild(0, accountB)
+    // setAccountChild([...acountChild, accountB])
+    // setActivePage(0)
   }
 
   const handleChangePage = (index) => {
@@ -584,33 +591,6 @@ const Referral = () => {
   }
   const onRegister = async () => {
     try {
-      // if (referBy) {
-      //   const userInfosByCode = await refferCT.userInfosByCode(referBy.toLowerCase())
-      //   const txReceipt = await refferCT.register(userInfosByCode.user, myCode)
-      //   if (txReceipt?.hash) {
-      //     dispatch(setRefLink(`${baseRefUrl}${account}`))
-      //     toastSuccess('Congratulations, you have successfully registered!')
-      //     setLinkRef(getLinkRef())
-      //     setLoadingPage(true)
-      //     getData()
-      //   } else {
-      //     toastError('Please try again. Confirm the transaction and make sure you are paying enough gas!')
-      //   }
-      // } else {
-      //   const ref = JSON.parse(localStorage.getItem('saveAdd'))
-      //   if (ref) {
-      //     const userInfosByCode = await refferCT.userInfosByCode(ref?.toLowerCase())
-      //     const txReceipt = await refferCT.register(userInfosByCode.user, myCode)
-      //     if (txReceipt?.hash) {
-      //       dispatch(setRefLink(`${baseRefUrl}${account}`))
-      //       toastSuccess('Congratulations, you have successfully registered!')
-      //       setLinkRef(getLinkRef())
-      //       setLoadingPage(true)
-      //       getData()
-      //     } else {
-      //       toastError('Please try again. Confirm the transaction and make sure you are paying enough gas!')
-      //     }
-      //   } else {
       const txReceipt = await refferCT.register(referByWallet, myCode)
       if (txReceipt?.hash) {
         dispatch(setRefLink(`${baseRefUrl}${account}`))
@@ -621,8 +601,6 @@ const Referral = () => {
       } else {
         toastError('Please try again. Confirm the transaction and make sure you are paying enough gas!')
       }
-      // }
-      // }
       setLoading(false)
     } catch (error) {
       console.log('onRegister error:', error)
@@ -809,48 +787,57 @@ const Referral = () => {
                     <th>Locked</th>
                   </tr>
                   {listChild.map((item, index) => (
-                    <ChildItem key={index}>
-                      <td>
-                        <div
-                          onClick={() => handleChangeChild(item.account)}
-                          style={{
-                            cursor: 'pointer',
-                            color: item.child > 0 ? 'gold' : '#00f0e1',
-                            textDecoration: 'underline',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: 4,
-                            justifyContent: 'center',
-                          }}
-                        >
-                          {item.account}
-                          {item.child > 0 && <img src="/images/referral/plus.png" style={{ fill: 'white' }} />}
-                        </div>
-                      </td>
-                      <td>
-                        <CountUp
-                          separator=","
-                          start={0}
-                          preserveValue
-                          delay={0}
-                          end={item.volume}
-                          decimals={3}
-                          duration={1}
-                        />
-                        $
-                      </td>
-                      <td>
-                        <CountUp
-                          separator=","
-                          start={0}
-                          preserveValue
-                          delay={0}
-                          end={item.locked}
-                          decimals={3}
-                          duration={1}
-                        />
-                      </td>
-                    </ChildItem>
+                    <>
+                      <ChildItem key={index}>
+                        <td>
+                          <div
+                            onClick={() => handleChangeChild(item.account)}
+                            style={{
+                              cursor: 'pointer',
+                              color: item.child > 0 ? 'gold' : '#00f0e1',
+                              textDecoration: 'underline',
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: 4,
+                              justifyContent: 'center',
+                            }}
+                          >
+                            {item.account.substring(0, 2)}...{item.account.substring(item.account.length - 4)}
+                            {item.child > 0 && <img src="/images/referral/plus.png" style={{ fill: 'white' }} />}
+                          </div>
+                        </td>
+                        <td>
+                          <CountUp
+                            separator=","
+                            start={0}
+                            preserveValue
+                            delay={0}
+                            end={item.volume}
+                            decimals={3}
+                            duration={1}
+                          />
+                          $
+                        </td>
+                        <td>
+                          <CountUp
+                            separator=","
+                            start={0}
+                            preserveValue
+                            delay={0}
+                            end={item.locked}
+                            decimals={3}
+                            duration={1}
+                          />
+                        </td>
+                      </ChildItem>
+                      {item.showChild && (
+                        <ChildItem key={index + '-' + index}>
+                          <td colSpan={3} style={{ padding: 0 }}>
+                            <Child referBy={item.account} />
+                          </td>
+                        </ChildItem>
+                      )}
+                    </>
                   ))}
                 </Table>
               </>
