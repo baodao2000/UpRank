@@ -27,7 +27,7 @@ export const ModalCheckRegister: React.FC<React.PropsWithChildren<RegistersModal
   const referBy = query.get('ref')
   const baseRefUrl = `${window.location.origin}homepage?ref=`
   const { data: signer } = useSigner()
-  const [referByWallet, setReferByWallet] = useState(referBy)
+  const [referByWallet, setReferByWallet] = useState(null)
   const [referCode, setReferCode] = useState('')
   const [myCode, setMyCode] = useState('')
   const [showError, setShowError] = useState(false)
@@ -95,6 +95,7 @@ export const ModalCheckRegister: React.FC<React.PropsWithChildren<RegistersModal
       //       toastError('Please try again. Confirm the transaction and make sure you are paying enough gas!')
       //     }
       //   } else {
+      console.log(referByWallet, myCode)
       const txReceipt = await refferCT.register(referByWallet, myCode)
       if (txReceipt?.hash) {
         dispatch(setRefLink(`${baseRefUrl}${account}`))
@@ -121,6 +122,21 @@ export const ModalCheckRegister: React.FC<React.PropsWithChildren<RegistersModal
   useEffect(() => {
     setMyCode(account.slice(account?.length - 6, account?.length).toLocaleLowerCase())
   }, [account])
+
+  useEffect(() => {
+    if (referBy) {
+      setReferCode(referBy)
+      const code = referBy
+
+      refferCT.userInfosByCode(code.toLowerCase()).then((userInfosByCode) => {
+        if (userInfosByCode.user === '0x0000000000000000000000000000000000000000') setShowError(true)
+        else {
+          setShowError(false)
+          setReferByWallet(userInfosByCode.user)
+        }
+      })
+    }
+  }, [])
 
   return (
     <Modal title="Register" onDismiss={onDismiss}>
