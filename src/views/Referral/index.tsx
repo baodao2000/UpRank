@@ -591,7 +591,14 @@ const Referral = () => {
   }
   const onRegister = async () => {
     try {
-      const txReceipt = await refferCT.register(referByWallet, myCode)
+      let referByW = referByWallet
+      if (!referByW) {
+        if (referCode) {
+          const userInfosByCode = await refferCT.userInfosByCode(referCode.toLowerCase())
+          referByW = userInfosByCode.user
+        }
+      }
+      const txReceipt = await refferCT.register(referByW, myCode)
       if (txReceipt?.hash) {
         dispatch(setRefLink(`${baseRefUrl}${account}`))
         toastSuccess('Congratulations, you have successfully registered!')
