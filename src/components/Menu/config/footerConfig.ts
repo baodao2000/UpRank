@@ -11,7 +11,7 @@ export const footerLinks: (t: ContextApi['t']) => FooterLinkType[] = (t) => [
         isHighlighted: true,
       },
       {
-        label: t('About us'),
+        label: t('Gitbook'),
         href: 'https://trendydefi.gitbook.io/trendy-defi',
       },
       {
@@ -75,6 +75,12 @@ export const footerLinks: (t: ContextApi['t']) => FooterLinkType[] = (t) => [
         href: 'https://trendydefi.com/REP-final.pdf',
         image: '/images/chains/certik-logo.png',
         border: true,
+      },
+      {
+        label: 'Github',
+        href: 'https://github.com/trendydefi',
+        image: '/images/pools/Github.png',
+        // border: true,
       },
       {
         label: t('Medium'),
