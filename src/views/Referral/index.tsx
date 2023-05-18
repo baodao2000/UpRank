@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Heading, Text, Flex, Button, useToast, Input } from '@pancakeswap/uikit'
+import { Heading, Text, Flex, Button, useToast, Input, LinkExternal } from '@pancakeswap/uikit'
 import React, { useState } from 'react'
 import { Tooltip } from 'react-tooltip'
 import 'react-tooltip/dist/react-tooltip.css'
@@ -18,6 +18,8 @@ import { NATIVE } from '../../../packages/swap-sdk/src/constants'
 import { ThreeDots } from 'views/Pool/components/DepositModal'
 import CountUp from 'react-countup'
 import Child from './child'
+import { shortenURL } from 'views/Pools2/util'
+import { getBlockExploreLink } from 'utils'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -51,6 +53,10 @@ const ReferralPage = styled.div`
 `
 
 const CardRegister = styled.div`
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 30px;
   max-width: 800px;
   width: 100%;
   height: auto;
@@ -83,7 +89,7 @@ const CardReferral = styled.div`
 `
 
 const CardInfoUser = styled.div`
-  max-width: 600px;
+  max-width: 400px;
   width: 100%;
   height: auto;
   padding: 15px;
@@ -122,6 +128,8 @@ const GroupLinkRef = styled.div`
   align-items: center;
   display: flex;
 `
+
+const GroupSearchByCode = styled.div``
 
 const WrapperLinkRef = styled.div`
   display: flex;
@@ -197,6 +205,18 @@ const StyledButton = styled(Button)`
   margin-top: 30px;
   font-size: 16px;
   line-height: 17px;
+`
+
+const StyledButtonSearch = styled(Button)`
+  background: rgb(217, 217, 217);
+  border-radius: 8px;
+  font-weight: 800;
+  color: rgb(98, 22, 176);
+  font-size: 16px;
+  line-height: 17px;
+  height: 35px;
+  max-width: 80px;
+  text-align: center;
 `
 
 const StyledIconRef = styled.img`
@@ -304,10 +324,31 @@ const StyledInput = styled(Input)`
   max-width: 200px;
 `
 
+const StyledInputSearch = styled(Input)`
+  outline: none;
+  border: 3px solid #009571;
+  border-radius: '10px';
+  max-width: 200px;
+`
+
 const LinkItem = styled.div`
   display: flex;
   align-items: center;
   gap: 6px;
+`
+
+const StyledHeadSearchUser = styled(Heading)`
+  text-align: center;
+  font-weight: 700;
+  color: #00f0e1;
+  font-size: 24px;
+  line-height: 29px;
+  margin-bottom: 20px;
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    font-size: 30px;
+    line-height: 59px;
+  }
 `
 
 export const copyText = (text) => {
@@ -348,6 +389,8 @@ const Referral = () => {
   const [referByWallet, setReferByWallet] = useState(referBy)
   const [referCode, setReferCode] = useState('')
   const [showError, setShowError] = useState(true)
+  const [userSearch, setUserSearch] = useState('')
+  const [resultSearch, setResultSearch] = useState('')
   const [totalItemChild, setTotalItemChild] = React.useState(0)
   const [acountChild, setAccountChild] = React.useState(() => {
     if (account) {
@@ -642,6 +685,33 @@ const Referral = () => {
     return linkRef
   }
 
+  const handleSearchUserCode = async () => {
+    const userInfosByCode = await refferCT.userInfosByCode(userSearch.toLowerCase())
+    if (userInfosByCode.user === '0x0000000000000000000000000000000000000000') {
+      setResultSearch('Invalid code')
+      return
+    }
+    setResultSearch(userInfosByCode.user)
+  }
+
+  const showResultSearch = () => {
+    if (resultSearch === '') return null
+    if (resultSearch === 'Invalid code')
+      return <p style={{ color: 'red', marginTop: 20, textAlign: 'center' }}>Invalid code</p>
+    return (
+      <Text style={{ color: '#C5C5C5', marginTop: 40 }} ellipsis={true}>
+        <LinkExternal
+          fontSize={['14px', '16px', '18px', '20px', '22px']}
+          href={getBlockExploreLink(resultSearch, 'address', CHAIN_ID)}
+          ellipsis={true}
+          style={{ color: '#00F0E1' }}
+          color="#00F0E1"
+        >
+          {shortenURL(`${resultSearch}`, 16)}
+        </LinkExternal>
+      </Text>
+    )
+  }
   return (
     <>
       {loadingPage ? (
@@ -650,9 +720,9 @@ const Referral = () => {
         <Wrapper>
           <ReferralPage>
             <CardRegister>
-              <StyledHead>Referral</StyledHead>
-              <StyledSubtitle>Refer a friend and get reward together up to {interest}%</StyledSubtitle>
               <GroupLinkRef>
+                <StyledHead>Referral</StyledHead>
+                <StyledSubtitle>Refer a friend and get reward together up to {interest}%</StyledSubtitle>
                 <StyledLabelLinkRef>My Referral Link</StyledLabelLinkRef>
                 <WrapperLinkRef>
                   <StyledLink>
@@ -706,6 +776,19 @@ const Referral = () => {
                   Register
                 </StyledButton>
               </GroupLinkRef>
+              <GroupSearchByCode>
+                <StyledHeadSearchUser>Search By Code</StyledHeadSearchUser>
+                <StyledInputSearch
+                  value={userSearch}
+                  autoFocus={true}
+                  onChange={(e) => setUserSearch(e.target.value)}
+                  placeholder={`Enter code`}
+                />
+                <div style={{ textAlign: 'center', marginTop: 16 }}>
+                  <StyledButtonSearch onClick={handleSearchUserCode}>Search</StyledButtonSearch>
+                </div>
+                {showResultSearch()}
+              </GroupSearchByCode>
             </CardRegister>
             <CardInfoUser>
               <StyledHead>Info User</StyledHead>
