@@ -212,7 +212,7 @@ const HeadHome = () => {
         </h2>
         <p>Own your own data. Earn passive income with crypto.</p>
         <H5ShowMb>
-          Stake Matic, you can earn an ARP of <span style={{ color: 'green' }}>85.1%</span> up to{' '}
+          Stake Matic, you can earn an APR of <span style={{ color: 'green' }}>85.1%</span> up to{' '}
           <span style={{ color: 'green' }}>127.75%</span>. Start staking now to maximize your earnings!
         </H5ShowMb>
         <ImageShowMb data-aos="fade-up-left" src={images.coinHead} alt="" />
@@ -244,7 +244,7 @@ const HeadHome = () => {
       <ContentHeadRight data-aos="fade-up-right">
         <ImageHead data-aos="fade-up-left" src={images.coinHead} alt="" />
         <h5>
-          Stake Matic, you can earn an ARP of <span style={{ color: 'green' }}>85.1%</span> up to{' '}
+          Stake Matic, you can earn an APR of <span style={{ color: 'green' }}>85.1%</span> up to{' '}
           <span style={{ color: 'green' }}>127.75%</span>. Start staking now to maximize your earnings!
         </h5>
       </ContentHeadRight>
