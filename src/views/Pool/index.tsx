@@ -301,12 +301,7 @@ const Pool = ({ poolId }) => {
   }
 
   const [openClaimModal] = useModal(
-    <ClaimPoolModal
-      account={account}
-      onSuccess={handleSuccess}
-      pool={poolInfo}
-      isV2={pool.userTotalLock > 0 ? false : true}
-    />,
+    <ClaimPoolModal account={account} onSuccess={handleSuccess} pool={poolInfo} isV2={pool2.totalReward > 0} />,
     true,
   )
   // const [openUnlockModal] = useModal(<WithDrawModal pool={poolInfo} onSuccess={handleSuccess} account={account} />)
