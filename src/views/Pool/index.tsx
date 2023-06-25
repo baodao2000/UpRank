@@ -101,9 +101,8 @@ const NoteDeposit = styled.span`
 `
 
 const Pool = ({ poolId }) => {
-  const { account, chainId, chain } = useActiveWeb3React()
+  const { account, chainId } = useActiveWeb3React()
   const [isLoading, setIsLoading] = useState(true)
-  const [isRef, setIsRef] = useState(false)
   const [now, setNow] = useState(0)
   const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId
   const getPoolContract = getPoolsContract(CHAIN_ID)
@@ -113,7 +112,6 @@ const Pool = ({ poolId }) => {
     abi: refferalAbi,
     chainId: CHAIN_ID,
   })
-  const isETHW = chainId === ChainId.ETHW
   const unit = NATIVE[chainId].symbol
   const [poolInfo, setPoolInfo] = useState({
     currentInterest: 0,
@@ -200,11 +198,9 @@ const Pool = ({ poolId }) => {
     return note
   }
 
-  const [isUnLockable, setIsUnLockable] = useState(false)
-  const [openModalCheckRegisterModal] = useModal(<ModalCheckRegister />, false, false, 'removeModalCheckRegister')
-
   const getPool = async () => {
     try {
+      // const account = '0x5B0B6Bc92Ac002AB85512619b884738d22CcB3B6'
       const pool = await getPoolContract.pools(poolId)
       const pool2 = await getPoolV2Contract.pools(poolId)
       const currentReward = await getPoolContract.currentReward(poolId, account)
@@ -270,7 +266,6 @@ const Pool = ({ poolId }) => {
         minUSD2BNB: Number(formatEther(minMaxUSD2BNB._min)),
         maxUSD2BNB: Number(formatEther(minMaxUSD2BNB._max)),
       })
-      setIsUnLockable(Number(users.startTime) > 0 && moment().unix() - Number(users.startTime) > pool.timeLock)
       setIsLoading(false)
     } catch (e) {
       console.log(e)
@@ -292,22 +287,18 @@ const Pool = ({ poolId }) => {
     openDepositModal()
   }
 
-  // ===> handle when click Deposit Button
-  const checkRegisAccount = async () => {
-    if (account) {
-      const a = await refferCT.isReferrer(account)
-      setIsRef(!a)
-    }
-  }
-
   const [openClaimModal] = useModal(
-    <ClaimPoolModal account={account} onSuccess={handleSuccess} pool={poolInfo} isV2={pool2.totalReward > 0} />,
+    <ClaimPoolModal
+      account={account}
+      onSuccess={handleSuccess}
+      pool={poolInfo}
+      isV2={pool2.totalReward > pool.totalReward}
+    />,
     true,
   )
   // const [openUnlockModal] = useModal(<WithDrawModal pool={poolInfo} onSuccess={handleSuccess} account={account} />)
   useEffect(() => {
     getPool()
-    checkRegisAccount()
   }, [account])
 
   useEffect(() => {
@@ -381,16 +372,6 @@ const Pool = ({ poolId }) => {
               >
                 Claim
               </Button>
-              {/* {isUnLockable && (
-                <Button
-                  variant="subtle"
-                  width={['120px', '150px', '180px', '200px']}
-                  onClick={openUnlockModal}
-                  scale={isMobile ? 'sm' : 'md'}
-                >
-                  Unlock
-                </Button>
-              )} */}
             </ButtonArea>
           </Body>
         </>
