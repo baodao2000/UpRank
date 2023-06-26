@@ -67,7 +67,7 @@ const Error = styled.span`
 
 const ClaimPoolModal: React.FC<React.PropsWithChildren<ClaimPoolModalProps>> = ({
   pool,
-  isV2,
+  // isV2,
   account,
   onDismiss,
   onSuccess,
@@ -81,9 +81,14 @@ const ClaimPoolModal: React.FC<React.PropsWithChildren<ClaimPoolModalProps>> = (
   const poolV2Contract = usePoolsV2Contract()
   const { chainId } = useActiveWeb3React()
 
+  // console.log(pool)
   const { isConfirming, handleConfirm } = useConfirmTransaction({
     onConfirm: () => {
-      return callWithMarketGasPrice(isV2 ? poolV2Contract : poolContract, 'claimReward', [pool.pid])
+      return callWithMarketGasPrice(
+        pool.currentRewardV1 < pool.currentRewardV2 ? poolV2Contract : poolContract,
+        'claimReward',
+        [pool.pid],
+      )
     },
     onSuccess: async ({ receipt }) => {
       setConfirmedTxHash(receipt.transactionHash)

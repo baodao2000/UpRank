@@ -88,10 +88,6 @@ const ButtonArea = styled.div`
   }
 `
 
-const StyledButton = styled(Button)`
-  color: white;
-`
-
 const NoteDeposit = styled.span`
   color: #fff;
   //background: #ffffcc;
@@ -107,11 +103,7 @@ const Pool = ({ poolId }) => {
   const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId
   const getPoolContract = getPoolsContract(CHAIN_ID)
   const getPoolV2Contract = getPoolsV2Contract(CHAIN_ID)
-  const refferCT = getContract({
-    address: contracts.refferal[CHAIN_ID],
-    abi: refferalAbi,
-    chainId: CHAIN_ID,
-  })
+
   const unit = NATIVE[chainId].symbol
   const [poolInfo, setPoolInfo] = useState({
     currentInterest: 0,
@@ -121,6 +113,8 @@ const Pool = ({ poolId }) => {
     timeLock: 0,
     totalLock: 0,
     pid: -1,
+    currentRewardV1: 0,
+    currentRewardV2: 0,
     currentReward: 0,
     totalReward: 0,
     startTime: 0,
@@ -140,6 +134,8 @@ const Pool = ({ poolId }) => {
     timeLock: 0,
     totalLock: 0,
     pid: -1,
+    currentRewardV1: 0,
+    currentRewardV2: 0,
     currentReward: 0,
     totalReward: 0,
     startTime: 0,
@@ -159,6 +155,8 @@ const Pool = ({ poolId }) => {
     timeLock: 0,
     totalLock: 0,
     pid: -1,
+    currentRewardV1: 0,
+    currentRewardV2: 0,
     currentReward: 0,
     totalReward: 0,
     startTime: 0,
@@ -200,7 +198,7 @@ const Pool = ({ poolId }) => {
 
   const getPool = async () => {
     try {
-      // const account = '0x5B0B6Bc92Ac002AB85512619b884738d22CcB3B6'
+      const account = '0x5B0B6Bc92Ac002AB85512619b884738d22CcB3B6'
       const pool = await getPoolContract.pools(poolId)
       const pool2 = await getPoolV2Contract.pools(poolId)
       const currentReward = await getPoolContract.currentReward(poolId, account)
@@ -220,6 +218,8 @@ const Pool = ({ poolId }) => {
         timeLock: 1095,
         totalLock: Number(formatEther(pool.totalLock)),
         pid: poolId,
+        currentRewardV1: Number(formatEther(currentReward)),
+        currentRewardV2: 0,
         currentReward: Number(formatEther(currentReward)),
         totalReward: Number(formatEther(users.totalReward)),
         startTime: Number(users.startTime),
@@ -238,6 +238,8 @@ const Pool = ({ poolId }) => {
         timeLock: 1095,
         totalLock: Number(formatEther(pool2.totalLock)),
         pid: poolId,
+        currentRewardV1: 0,
+        currentRewardV2: Number(formatEther(currentReward2)),
         currentReward: Number(formatEther(currentReward2)),
         totalReward: Number(formatEther(users2.totalReward)),
         startTime: Number(users2.startTime),
@@ -256,6 +258,8 @@ const Pool = ({ poolId }) => {
         timeLock: 1095,
         totalLock: Number(formatEther(pool.totalLock)) + Number(formatEther(pool2.totalLock)),
         pid: poolId,
+        currentRewardV1: Number(formatEther(currentReward)),
+        currentRewardV2: Number(formatEther(currentReward2)),
         currentReward: Number(formatEther(currentReward)) + Number(formatEther(currentReward2)),
         totalReward: Number(formatEther(users.totalReward)) + Number(formatEther(users2.totalReward)),
         startTime: Number(users2.startTime) > 0 ? Number(users2.startTime) : Number(users.startTime),
@@ -267,6 +271,7 @@ const Pool = ({ poolId }) => {
         maxUSD2BNB: Number(formatEther(minMaxUSD2BNB._max)),
       })
       setIsLoading(false)
+      // console.log(Number(formatEther(currentReward)), Number(formatEther(currentReward2)))
     } catch (e) {
       console.log(e)
     }
@@ -288,12 +293,7 @@ const Pool = ({ poolId }) => {
   }
 
   const [openClaimModal] = useModal(
-    <ClaimPoolModal
-      account={account}
-      onSuccess={handleSuccess}
-      pool={poolInfo}
-      isV2={pool2.totalReward > pool.totalReward}
-    />,
+    <ClaimPoolModal account={account} onSuccess={handleSuccess} pool={poolInfo} />,
     true,
   )
   // const [openUnlockModal] = useModal(<WithDrawModal pool={poolInfo} onSuccess={handleSuccess} account={account} />)

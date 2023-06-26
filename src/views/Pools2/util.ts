@@ -11,6 +11,8 @@ export interface Pool {
   timeLock: number
   totalLock: number
   pid: number
+  currentRewardV1: number
+  currentRewardV2: number
   totalReward: number
   currentReward: number
   startTime: number
