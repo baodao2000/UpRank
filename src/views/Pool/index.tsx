@@ -198,7 +198,7 @@ const Pool = ({ poolId }) => {
 
   const getPool = async () => {
     try {
-      const account = '0x5B0B6Bc92Ac002AB85512619b884738d22CcB3B6'
+      // const account = '0x5B0B6Bc92Ac002AB85512619b884738d22CcB3B6'
       const pool = await getPoolContract.pools(poolId)
       const pool2 = await getPoolV2Contract.pools(poolId)
       const currentReward = await getPoolContract.currentReward(poolId, account)
