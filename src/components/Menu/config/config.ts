@@ -93,8 +93,16 @@ const config: (
     //   icon: SwapIcon,
     //   items: [].map((item) => addMenuItemSupported(item, chainId)),
     // },
+    // {
+    //   label: t('Pools'),
+    //   href: '/poolv2',
+    //   showItemsOnMobile: false,
+    //   icon: PoolIcon,
+    //   items: [].map((item) => addMenuItemSupported(item, chainId)),
+    // },
+
     {
-      label: t('Pools'),
+      label: t('Pools '),
       href: '/pools',
       showItemsOnMobile: false,
       icon: PoolIcon,
@@ -105,6 +113,13 @@ const config: (
       href: '/referral',
       showItemsOnMobile: false,
       icon: NftIcon,
+      items: [].map((item) => addMenuItemSupported(item, chainId)),
+    },
+    {
+      label: t('Vote'),
+      href: '/vote',
+      showItemsOnMobile: false,
+      icon: PoolIcon,
       items: [].map((item) => addMenuItemSupported(item, chainId)),
     },
     // {
