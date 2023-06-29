@@ -70,7 +70,7 @@ function Vote() {
                   gap: '10px',
                 }}
               >
-                <Image src="/images/start.png" width="14px" height="13px" />
+                <Image src="/images/start.png" width="14px" height="13px" color="white" />
                 <h1>End date: 30/06/2023</h1>
               </div>
             </div>

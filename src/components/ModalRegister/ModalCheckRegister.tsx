@@ -136,6 +136,7 @@ export const ModalCheckRegister: React.FC<React.PropsWithChildren<RegistersModal
       })
     }
   }, [])
+  console.log(onDismiss)
 
   return (
     <Modal title="Register" onDismiss={onDismiss}>

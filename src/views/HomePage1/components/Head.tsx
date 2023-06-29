@@ -1,8 +1,10 @@
-import { Flex } from '@pancakeswap/uikit'
+import { Flex, useModal } from '@pancakeswap/uikit'
 import styled from 'styled-components'
 import images from 'configs/images'
 import 'aos/dist/aos.css'
 import VoteModal from '../../../components/VoteModal'
+import { ModalVotes } from 'components/VoteModal/Votemodal'
+import { ModalRegister } from 'components/ModalRegister'
 
 const Head = styled(Flex)`
   padding-top: 24px;
@@ -203,7 +205,6 @@ const ListImgButtonMb = styled.div`
     display: none;
   }
 `
-
 const HeadHome = (isModalOpen) => {
   return (
     <Head>
