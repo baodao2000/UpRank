@@ -1,5 +1,6 @@
 import { createGlobalStyle } from 'styled-components'
 import { PancakeTheme } from '@pancakeswap/uikit'
+import modal from 'antd/lib/modal'
 
 declare module 'styled-components' {
   /* eslint-disable @typescript-eslint/no-empty-interface */
@@ -51,6 +52,8 @@ const GlobalStyle = createGlobalStyle`
     background-color: #13171b;
     height: auto;
   }
+
+}
 `
 
 export default GlobalStyle

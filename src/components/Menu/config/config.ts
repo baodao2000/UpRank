@@ -116,7 +116,7 @@ const config: (
       items: [].map((item) => addMenuItemSupported(item, chainId)),
     },
     {
-      label: t('Vote'),
+      label: t('Voting'),
       href: '/vote',
       showItemsOnMobile: false,
       icon: PoolIcon,

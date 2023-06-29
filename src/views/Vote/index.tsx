@@ -61,7 +61,7 @@ function Vote() {
                 }}
               >
                 <Image src="/images/start.png" width="14px" height="13px" />
-                <h1>Start date: 29/06/2023</h1>
+                <h1 style={{ color: '#FFFFFF' }}>Start date: 29/06/2023</h1>
               </div>
               <div
                 style={{
@@ -74,14 +74,6 @@ function Vote() {
                 <h1>End date: 30/06/2023</h1>
               </div>
             </div>
-
-            <h1>
-              Requested from Kols and the Trendy Defi community development team, as well as the upcoming BTC
-              Availability period. The show at Trendy Defi has reached nearly 1000 members who have joined Pool Trendy
-              Defi. We will conduct voting on the issue of TREND tokens based on the votes of the members. If there is a
-              51% Consensus Rate. Token Trend will be released in July 2023 during the voting period from June 29 to
-              June 30, 2023. All methods of conducting the contest will be based on a majority decision.
-            </h1>
           </div>
 
           <button
