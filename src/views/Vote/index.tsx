@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import bg from '../../../public/images/backgroundVote.png'
 import { getContract } from 'utils/contractHelpers'
@@ -184,12 +183,15 @@ function Vote() {
         <Wrapper
           style={{
             backgroundImage: `url(${bg.src})`,
+            backgroundSize: 'cover',
           }}
         >
           <Container
             style={{
               background:
                 'linear-gradient(63.67deg, rgb(184 154 247) 11.76%, rgb(109, 33, 233) 71.88%), linear-gradient(146.96deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 100%)',
+              position: 'absolute',
+              top: '100px',
             }}
           >
             <h1 style={{ fontSize: '48px', marginTop: '20px', color: 'white' }}>Vote</h1>
@@ -202,7 +204,15 @@ function Vote() {
                   gap: '10px',
                 }}
               >
-                <Image src="/images/start.png" width="14px" height="13px" />
+                <img
+                  style={{
+                    width: 20,
+                    height: 20,
+                  }}
+                  src="/images/start.png"
+                  width="14px"
+                  height="13px"
+                />
                 <h1 style={{ color: '#FFFFFF' }}>Start date: 30/06/2023</h1>
               </div>
               <div
@@ -212,7 +222,15 @@ function Vote() {
                   gap: '10px',
                 }}
               >
-                <Image src="/images/start.png" width="14px" height="13px" />
+                <img
+                  style={{
+                    width: 20,
+                    height: 20,
+                  }}
+                  src="/images/start.png"
+                  width="14px"
+                  height="13px"
+                />
                 <h1 style={{ color: '#FFFFFF' }}>End date: 01/07/2023</h1>
               </div>
             </DateTime>
@@ -225,7 +243,15 @@ function Vote() {
                   margin: '15px 0',
                 }}
               >
-                <Image src="/images/start.png" width="14px" height="10px" />
+                <img
+                  style={{
+                    width: 20,
+                    height: 20,
+                  }}
+                  src="/images/start.png"
+                  width="14px"
+                  height="10px"
+                />
                 <TextContent>Requested from Kols and Trendy Defi community development team.</TextContent>
               </div>
               <div
@@ -236,7 +262,15 @@ function Vote() {
                   margin: '15px 0',
                 }}
               >
-                <Image src="/images/start.png" width="14px" height="10px" />
+                <img
+                  style={{
+                    width: 20,
+                    height: 20,
+                  }}
+                  src="/images/start.png"
+                  width="14px"
+                  height="10px"
+                />
                 <TextContent>As well as the upcoming Having BTC period.</TextContent>
               </div>
               <div
@@ -247,7 +281,15 @@ function Vote() {
                   margin: '15px 0',
                 }}
               >
-                <Image src="/images/start.png" width="14px" height="10px" />
+                <img
+                  style={{
+                    width: 20,
+                    height: 20,
+                  }}
+                  src="/images/start.png"
+                  width="14px"
+                  height="10px"
+                />
                 <TextContent style={{ fontSize: '14px' }}>
                   Currently, Trendy Defi has reached nearly 1000 members participating in Pool Trendy Defi.
                 </TextContent>
@@ -260,7 +302,15 @@ function Vote() {
                   margin: '15px 0',
                 }}
               >
-                <Image src="/images/start.png" width="14px" height="10px" />
+                <img
+                  style={{
+                    width: 20,
+                    height: 20,
+                  }}
+                  src="/images/start.png"
+                  width="14px"
+                  height="10px"
+                />
                 <TextContent style={{ fontSize: '14px' }}>
                   We will conduct voting for the issuance of TREND tokens based on the votes of the members.
                 </TextContent>
@@ -273,20 +323,17 @@ function Vote() {
                   margin: '15px 0',
                 }}
               >
-                <Image src="/images/start.png" width="14px" height="10px" />
+                <img
+                  style={{
+                    width: 20,
+                    height: 20,
+                  }}
+                  src="/images/start.png"
+                  width="14px"
+                  height="10px"
+                />
                 <TextContent> If there is a 51% consensus rate Token Trend will be released in July 2023.</TextContent>
               </div>
-              {/* <div
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                gap: '10px',
-                margin: '10px 0'
-              }}
-            >
- <Image src="/images/start.png" width="14px" height="13px" />
- <TextContent> .</TextContent>
-            </div> */}
               <div
                 style={{
                   display: 'flex',
@@ -295,7 +342,15 @@ function Vote() {
                   margin: '15px 0',
                 }}
               >
-                <Image src="/images/start.png" width="14px" height="16px" />
+                <img
+                  style={{
+                    width: 20,
+                    height: 20,
+                  }}
+                  src="/images/start.png"
+                  width="14px"
+                  height="16px"
+                />
                 <TextContent>Voting period from June 30 to July 01, 2023.</TextContent>
               </div>
               <div
@@ -306,7 +361,15 @@ function Vote() {
                   margin: '15px 0',
                 }}
               >
-                <Image src="/images/start.png" width="14px" height="13px" />
+                <img
+                  style={{
+                    width: 20,
+                    height: 20,
+                  }}
+                  src="/images/start.png"
+                  width="14px"
+                  height="13px"
+                />
                 <TextContent> All implementation plans will be based on majority vote.</TextContent>
               </div>
             </TextContainer>
