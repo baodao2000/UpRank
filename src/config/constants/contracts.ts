@@ -167,4 +167,7 @@ export default {
     56: '0x2C36221bF724c60E9FEE3dd44e2da8017a8EF3BA',
     97: '',
   },
+  vote: {
+    137: '0x49A0E77eB25655391A4E6C35fce30E383C04F1a3',
+  },
 }

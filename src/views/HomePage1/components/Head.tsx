@@ -2,8 +2,8 @@ import { Flex, useModal } from '@pancakeswap/uikit'
 import styled from 'styled-components'
 import images from 'configs/images'
 import 'aos/dist/aos.css'
-import VoteModal from '../../../components/VoteModal'
-import { ModalVotes } from 'components/VoteModal/Votemodal'
+// import {VoteModal }from '../../../components/VoteModal'
+// import { ModalVotes } from 'components/VoteModal/Votemodal'
 import { ModalRegister } from 'components/ModalRegister'
 
 const Head = styled(Flex)`
@@ -208,7 +208,7 @@ const ListImgButtonMb = styled.div`
 const HeadHome = (isModalOpen) => {
   return (
     <Head>
-      <VoteModal />
+      {/* <VoteModal /> */}
       <ContentHead data-aos="fade-up-right">
         <h2>
           Trendy Defi<br></br> is an open network for <br></br>storing and moving money
