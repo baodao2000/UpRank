@@ -44,7 +44,7 @@ export const ModalRegister = () => {
     'ModalWrongNetwork',
   )
   const checkRegis = async () => {
-    console.log(chainId, Number(process.env.NEXT_PUBLIC_DEFAULT_CHAIN))
+    // console.log(chainId, Number(process.env.NEXT_PUBLIC_DEFAULT_CHAIN))
     if (chainId != null && chainId === Number(process.env.NEXT_PUBLIC_DEFAULT_CHAIN)) {
       onCloseNetwork()
       if (!localStorage.getItem('isVote') && vote === false) {

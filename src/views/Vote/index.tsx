@@ -79,7 +79,7 @@ const TextContent = styled(Text)`
 const Progress = styled.div`
   width: 624px;
   @media screen and (max-width: 575px) {
-    width: 300px;
+    width: 100%;
   }
 `
 function Vote() {
@@ -92,6 +92,7 @@ function Vote() {
   const [isRegister, setIsRegister] = useState(true)
   const [usersIsVote, setUserIsVote] = useState(false)
   const [totalVoted, setTotalVoted] = useState(0)
+  const [userVoted, setUserVoted] = useState(0)
 
   const { toastSuccess, toastError } = useToast()
   const { t } = useTranslation()
@@ -119,7 +120,6 @@ function Vote() {
     } else {
       setLoadingPage(false)
       const usersRegister = await refferCT.isReferrer(account)
-      console.log(account)
 
       setIsRegister(usersRegister)
     }
@@ -132,7 +132,6 @@ function Vote() {
       setLoadingPage(true)
     } else {
       setLoadingPage(false)
-      console.log(account)
       const users = await voteCt.users(account)
       setUserIsVote(users)
     }
@@ -169,11 +168,14 @@ function Vote() {
     isFetched && data && data.value && isFetched2 && data2 && data2.value
       ? formatBigNumber(data.value.add(data2.value), 6)
       : 0
-  const tagert = (Number(balance) * 51) / 100
+  // console.log(balance, Number(totalVoted.toString()))
+  const tagert = Number(balance)
 
   const userTotal = async () => {
     const total = await voteCt.userTotalLockVoted()
-    setTotalVoted(total)
+    setTotalVoted(Number(formatBigNumber(total, 6)))
+    const uv = await voteCt.getUserVote().then((rs) => rs.length)
+    setUserVoted(uv)
   }
   return (
     <>
@@ -194,8 +196,6 @@ function Vote() {
               bottom: 150,
             }}
           >
-            <h1 style={{ fontSize: '48px', marginTop: '20px', color: 'white' }}>Vote</h1>
-
             <DateTime>
               <div
                 style={{
@@ -382,6 +382,9 @@ function Vote() {
 
               <div style={{ display: 'flex', justifyContent: 'space-between', color: 'white', marginBottom: 10 }}>
                 <span>0%</span>
+                <span>
+                  voted: {userVoted} - {((totalVoted * 100) / tagert).toFixed(2)} %
+                </span>
                 <span>100%</span>
               </div>
             </Progress>
@@ -418,7 +421,7 @@ function Vote() {
                 onClick={handleVote}
                 disabled={usersIsVote}
               >
-                <h1 style={{ fontSize: '20px', color: '#191326' }}>Vote</h1>
+                <h1 style={{ fontSize: '20px', color: '#191326' }}>I agree</h1>
               </Button>
             )}
           </Container>
