@@ -59,7 +59,7 @@ const DateTime = styled.div`
 `
 const TextContainer = styled.div`
   max-width: 660px;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
   @media screen and (max-width: 575px) {
     width: 100%;
   }
@@ -191,7 +191,7 @@ function Vote() {
               background:
                 'linear-gradient(63.67deg, rgb(184 154 247) 11.76%, rgb(109, 33, 233) 71.88%), linear-gradient(146.96deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 100%)',
               position: 'absolute',
-              top: '100px',
+              bottom: 150,
             }}
           >
             <h1 style={{ fontSize: '48px', marginTop: '20px', color: 'white' }}>Vote</h1>
@@ -380,7 +380,7 @@ function Vote() {
                 style={{ margin: '4px 0', accentColor: 'rgb(255, 199, 0)', height: 40, width: '100%' }}
               />
 
-              <div style={{ display: 'flex', justifyContent: 'space-between', color: 'white', marginBottom: 30 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', color: 'white', marginBottom: 10 }}>
                 <span>0%</span>
                 <span>100%</span>
               </div>
@@ -393,8 +393,8 @@ function Vote() {
                   borderRadius: '20px',
                   fontWeight: '700',
                   cursor: 'pointer',
-                  margin: '20px 0',
                   padding: '20px',
+                  marginBottom: 10,
                   boxShadow: '0px -1px 0px 0px rgba(14,14,44,0.4)',
                 }}
                 type="button"
@@ -410,8 +410,8 @@ function Vote() {
                   borderRadius: '20px',
                   fontWeight: '700',
                   cursor: 'pointer',
-                  margin: '20px 0',
                   padding: '20px',
+                  marginBottom: 10,
                   boxShadow: '0px -1px 0px 0px rgba(14,14,44,0.4)',
                 }}
                 type="button"
