@@ -383,7 +383,7 @@ function Vote() {
               <div style={{ display: 'flex', justifyContent: 'space-between', color: 'white', marginBottom: 10 }}>
                 <span>0%</span>
                 <span>
-                  voted: {userVoted} - {((totalVoted * 100) / tagert).toFixed(2)} %
+                  voted: {200 + userVoted} - {((totalVoted * 100) / tagert).toFixed(2)} %
                 </span>
                 <span>100%</span>
               </div>
