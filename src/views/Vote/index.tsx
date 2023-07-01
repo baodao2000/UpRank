@@ -382,7 +382,10 @@ function Vote() {
 
               <div style={{ display: 'flex', justifyContent: 'space-between', color: 'white', marginBottom: 10 }}>
                 <span>0%</span>
-                <span>voted: {200 + userVoted} - 99.99%</span>
+                <span>
+                  voted: {200 + userVoted} - {(((totalVoted > tagert ? tagert : totalVoted) * 100) / tagert).toFixed(2)}{' '}
+                  %
+                </span>
                 <span>100%</span>
               </div>
             </Progress>
