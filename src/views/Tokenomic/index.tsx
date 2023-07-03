@@ -32,7 +32,7 @@ function Tokenomic() {
             letterSpacing: '0.04em',
           }}
         >
-          Release TREND Token
+          Tokenomic Overview
         </h1>
       </div>
 
