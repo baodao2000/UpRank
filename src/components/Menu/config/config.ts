@@ -100,7 +100,13 @@ const config: (
     //   icon: PoolIcon,
     //   items: [].map((item) => addMenuItemSupported(item, chainId)),
     // },
-
+    {
+      label: t('Tokenomic '),
+      href: '/tokenomic',
+      showItemsOnMobile: false,
+      icon: PoolIcon,
+      items: [].map((item) => addMenuItemSupported(item, chainId)),
+    },
     {
       label: t('Pools '),
       href: '/pools',
