@@ -59,6 +59,7 @@ import {
   getTradingCompetitionContractMoD,
   getPoolsContract,
   getPoolsV2Contract,
+  getPoolsV3Contract,
 } from 'utils/contractHelpers'
 import { useSigner } from 'wagmi'
 
@@ -376,4 +377,9 @@ export const usePoolsV2Contract = () => {
   const { chainId } = useActiveChainId()
   const { data: signer } = useSigner()
   return useMemo(() => getPoolsV2Contract(chainId, signer), [chainId, signer])
+}
+export const usePoolsV3Contract = () => {
+  const { chainId } = useActiveChainId()
+  const { data: signer } = useSigner()
+  return useMemo(() => getPoolsV3Contract(chainId, signer), [chainId, signer])
 }

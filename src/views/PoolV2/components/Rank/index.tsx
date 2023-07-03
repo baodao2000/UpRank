@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import React from 'react'
 import { Heading, Text } from '@pancakeswap/uikit'
 import PoolRanks, { ImageRank } from './components/PoolRanks'
-import { getRankImage } from 'views/Pools2'
+import { getRankImage } from 'views/PoolV2'
 
 const Wrapper = styled.div`
   max-width: 900px;
@@ -32,7 +32,6 @@ const Rank = ({ userRank, ranks, onSuccess, userIsClaim, unit }) => {
       <Wrapper>
         <BlockPoolRanks>
           <StyledTitleRank fontSize={['30px', '30px', '36px', '40px', '48px', '48px']}>
-            Pool Rewards
             <ImageRank src={getRankImage(userRank).img} alt="" style={{ marginLeft: 10 }} />
           </StyledTitleRank>
           <PoolRanks unit={unit} data={ranks} onSuccess={onSuccess} userRank={userRank} userIsClaim={userIsClaim} />

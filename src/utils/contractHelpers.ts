@@ -43,6 +43,7 @@ import {
   getBCakeFarmBoosterProxyFactoryAddress,
   getPoolsAddress,
   getPoolsV2Address,
+  getPoolsV3Address,
 } from 'utils/addressHelpers'
 
 // ABI
@@ -379,6 +380,14 @@ export const getPoolsV2Contract = (chainId: number, signer?: Signer | Provider) 
   return getContract({
     abi: chainId === 137 ? oldPoolsAbi : poolsAbi,
     address: getPoolsV2Address(chainId),
+    chainId,
+    signer,
+  })
+}
+export const getPoolsV3Contract = (chainId: number, signer?: Signer | Provider) => {
+  return getContract({
+    abi: chainId === 137 ? oldPoolsAbi : poolsAbi,
+    address: getPoolsV3Address(chainId),
     chainId,
     signer,
   })
