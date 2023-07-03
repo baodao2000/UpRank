@@ -11,6 +11,8 @@ import {
   NftIcon,
   NftFillIcon,
   MoreIcon,
+  VoteIcon,
+  TokenPocketIcon,
 } from '@pancakeswap/uikit'
 import { ContextApi } from '@pancakeswap/localization'
 import { nftsBaseUrl } from 'views/Nft/market/constants'
@@ -100,13 +102,7 @@ const config: (
     //   icon: PoolIcon,
     //   items: [].map((item) => addMenuItemSupported(item, chainId)),
     // },
-    {
-      label: t('Tokenomic '),
-      href: '/tokenomic',
-      showItemsOnMobile: false,
-      icon: PoolIcon,
-      items: [].map((item) => addMenuItemSupported(item, chainId)),
-    },
+
     {
       label: t('Pools '),
       href: '/pools',
@@ -122,10 +118,17 @@ const config: (
       items: [].map((item) => addMenuItemSupported(item, chainId)),
     },
     {
+      label: t('Tokenomic '),
+      href: '/tokenomic',
+      showItemsOnMobile: false,
+      icon: EarnIcon,
+      items: [].map((item) => addMenuItemSupported(item, chainId)),
+    },
+    {
       label: t('Voting'),
       href: '/vote',
       showItemsOnMobile: false,
-      icon: PoolIcon,
+      icon: VoteIcon,
       items: [].map((item) => addMenuItemSupported(item, chainId)),
     },
     // {
