@@ -34,6 +34,10 @@ export default {
     137: '0x76763fD3723b0E8B552d9AaaF93BcC78cD999e8b',
     56: '',
   },
+  poolsV3: {
+    137: '0xF4A74d42420E460dCca1F86D700590CDD9D8e856',
+    56: '',
+  },
   sow: {
     56: '0x3eED8Eb7d0374B8B4Dea0a677c29AFb5d2B0387b',
     97: '0xEdd1037048F0ded3e39f7c69C9d00E324b85Bc7b',

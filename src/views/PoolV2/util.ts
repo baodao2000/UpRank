@@ -1,5 +1,5 @@
 import { json } from 'itty-router-extras'
-import { getPoolsContract } from 'utils/contractHelpers'
+import { getPoolsV3Contract } from 'utils/contractHelpers'
 import { formatEther } from '@ethersproject/units'
 import { useState } from 'react'
 
@@ -59,7 +59,7 @@ export const shortenURL = (s: string, max: number) => {
 }
 
 export const bnb2Usd = (bnb: number, chainId: number) => {
-  const getPoolContract = getPoolsContract(chainId)
+  const getPoolContract = getPoolsV3Contract(chainId)
   const value = getPoolContract.bnb2USD(bnb).then((res) => {
     return res
   })

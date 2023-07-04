@@ -53,6 +53,7 @@ const images = {
   logoBtc: 'images/pools/btc.svg',
   poolDetailFooterBg: '../images/pools/poolDetailFooterBg.png',
   backgroundpool: '../images/pools/bg.svg',
+  backgroundpoolV2: '../images/PoolsV2.svg',
   iconEthw: 'images/coin/eth.svg',
   iconMatic: 'images/coin/matic.svg',
   chartIcon: 'images/homepage/chart-icon.png',
@@ -79,6 +80,7 @@ const images = {
   chart2down: '/images/homepage/chart2down.gif',
   chart3down: '/images/homepage/chart3down.gif',
   chart4down: '/images/homepage/chart4down.gif',
+  iconpoolsV2: '/images/IconPoolsV2.svg',
 }
 
 export default images

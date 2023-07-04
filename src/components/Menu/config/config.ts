@@ -95,21 +95,21 @@ const config: (
     //   icon: SwapIcon,
     //   items: [].map((item) => addMenuItemSupported(item, chainId)),
     // },
-    // {
-    //   label: t('Pools'),
-    //   href: '/poolv2',
-    //   showItemsOnMobile: false,
-    //   icon: PoolIcon,
-    //   items: [].map((item) => addMenuItemSupported(item, chainId)),
-    // },
-
     {
-      label: t('Pools '),
+      label: t('Pools V1'),
       href: '/pools',
       showItemsOnMobile: false,
       icon: PoolIcon,
       items: [].map((item) => addMenuItemSupported(item, chainId)),
     },
+    {
+      label: t('Pools V2'),
+      href: '/poolv2',
+      showItemsOnMobile: false,
+      icon: PoolIcon,
+      items: [].map((item) => addMenuItemSupported(item, chainId)),
+    },
+
     {
       label: t('Referral'),
       href: '/referral',
