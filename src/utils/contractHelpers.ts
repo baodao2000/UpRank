@@ -97,6 +97,7 @@ import bCakeFarmBoosterProxyFactoryAbi from 'config/abi/bCakeFarmBoosterProxyFac
 import bCakeProxyAbi from 'config/abi/bCakeProxy.json'
 import poolsAbi from 'config/abi/pools.json'
 import oldPoolsAbi from 'config/abi/pools2.json'
+import pools3ABI from 'config/abi/pools3.json'
 // Types
 import type {
   ChainlinkOracle,
@@ -386,7 +387,7 @@ export const getPoolsV2Contract = (chainId: number, signer?: Signer | Provider) 
 }
 export const getPoolsV3Contract = (chainId: number, signer?: Signer | Provider) => {
   return getContract({
-    abi: chainId === 137 ? oldPoolsAbi : poolsAbi,
+    abi: pools3ABI,
     address: getPoolsV3Address(chainId),
     chainId,
     signer,

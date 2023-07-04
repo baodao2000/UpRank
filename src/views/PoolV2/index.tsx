@@ -17,7 +17,7 @@ import { PageMeta } from 'components/Layout/Page'
 import { isMobile } from 'react-device-detect'
 import { useState, useEffect } from 'react'
 import { formatBigNumber } from 'utils/formatBalance'
-import { poolBaseUrl } from 'views/Pools/constants'
+import { poolBaseUrlV2 } from 'views/PoolV2/components/PoolDetailsV2/constants'
 import Link from 'next/link'
 import { formatEther } from '@ethersproject/units'
 import { shortenURL, timeDisplayLong } from './util'
@@ -499,15 +499,15 @@ const Pools = () => {
     const months = await getPoolV3Contract.getMonths()
 
     const infoRank = await Promise.all([
-      getPoolV2Contract.userRank(account),
-      getPoolV2Contract.userRankRewardClaimed(account, Number(months.toString())),
-      getPoolV2Contract.getUserTotalLock(account),
-      getPoolV2Contract.getVolumeOnTre(account),
-      getPoolV2Contract.getChildren(account),
+      getPoolV3Contract.userRank(account),
+      getPoolV3Contract.userRankRewardClaimed(account, Number(months.toString())),
+      getPoolV3Contract.getUserTotalLock(account),
+      getPoolV3Contract.getVolumeOnTre(account),
+      getPoolV3Contract.getChildren(account),
     ])
     const arr = await Promise.all(
       indexRank.map(async (item) => {
-        const rank = await getPoolV2Contract.rankRewards(item)
+        const rank = await getPoolV3Contract.rankRewards(item)
         return {
           image: getRankImage(item).img,
           title: getRankImage(item).title,
@@ -550,16 +550,16 @@ const Pools = () => {
       const newPoolInfo = await Promise.all(
         pools.map(async (item, id) => {
           const userLockAndPool = await Promise.all([getPoolV3Contract.users(account, id), item])
-          const userLockAndPool2 = await Promise.all([getPoolV2Contract.users(account, id), pools2[id]])
+          // const userLockAndPool2 = await Promise.all([getPoolV2Contract.users(account, id), pools2[id]])
           return {
-            currentInterest: ((Number(userLockAndPool2[1].currentInterest.toString()) / 10000) * 365).toFixed(2),
-            enable: userLockAndPool2[1].enable,
-            maxLock: formatEther(userLockAndPool2[1].maxLock),
-            minLock: formatEther(userLockAndPool2[1].minLock),
+            currentInterest: ((Number(userLockAndPool[1].currentInterest.toString()) / 10000) * 365).toFixed(2),
+            enable: userLockAndPool[1].enable,
+            maxLock: formatEther(userLockAndPool[1].maxLock),
+            minLock: formatEther(userLockAndPool[1].minLock),
             timeLock: 1095,
-            totalLock: formatEther(userLockAndPool[1].totalLock.add(userLockAndPool2[1].totalLock)),
+            totalLock: formatEther(userLockAndPool[1].totalLock),
             rateBNB2USD: Number(formatEther(bnbPrice[0])) / Number(formatEther(bnbPrice[1])),
-            yourLock: Number(formatEther(userLockAndPool[0].totalLock.add(userLockAndPool2[0].totalLock))),
+            yourLock: Number(formatEther(userLockAndPool[0].totalLock)),
           }
         }),
       )
@@ -991,7 +991,7 @@ const Pools = () => {
                       </Reward>
                       <Time></Time>
                     </Info>
-                    <Link href={`${poolBaseUrl}/${r}?chainId=${CHAIN_ID}`}>
+                    <Link href={`${poolBaseUrlV2}/${r}?chainId=${CHAIN_ID}`}>
                       {isMobile ? (
                         <Button
                           style={{
@@ -1061,7 +1061,7 @@ const Pools = () => {
                       {shortenURL(`Root Contract 1: ${contracts.poolsV3[CHAIN_ID]}`, 35)}
                     </LinkExternal>
                   </Text>
-                  <Text style={{ color: '#C5C5C5' }} ellipsis={true}>
+                  {/* <Text style={{ color: '#C5C5C5' }} ellipsis={true}>
                     <LinkExternal
                       fontSize={['14px', '16px', '18px', '20px', '22px']}
                       href={getBlockExploreLink(contracts.poolsV2[CHAIN_ID], 'address', CHAIN_ID)}
@@ -1071,8 +1071,8 @@ const Pools = () => {
                     >
                       {shortenURL(`Root Contract 2: ${contracts.poolsV2[CHAIN_ID]}`, 35)}
                     </LinkExternal>
-                  </Text>
-                  <Button
+                  </Text> */}
+                  {/* <Button
                     style={{ color: '#6216B0', backgroundColor: '#D9D9D9' }}
                     marginTop={'30px'}
                     ml={['6px', '1em']}
@@ -1120,7 +1120,7 @@ const Pools = () => {
                     ) : (
                       'Claim'
                     )}
-                  </Button>
+                  </Button> */}
                 </LineText>
               </PoolsReward>
 
