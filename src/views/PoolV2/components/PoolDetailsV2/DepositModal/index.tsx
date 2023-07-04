@@ -412,10 +412,10 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
             <CheckMine>
               <Text>You want to mine</Text>
               <Switch>
-                <span className="switch">
-                  <input onChange={onChange} disabled={userTotal} type="checkbox" />
+                <label htmlFor="switchMine" className="switch">
+                  <input id="switchMine" onChange={onChange} disabled={userTotal} type="checkbox" />
                   <span className="slider round"></span>
-                </span>
+                </label>
               </Switch>
             </CheckMine>
           )}
@@ -426,10 +426,16 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
             <CheckMine>
               <Text>You want to mine</Text>
               <Switch>
-                <span className="switch">
-                  <input defaultChecked={checked} onChange={onChange} disabled={userTotal} type="checkbox" />
+                <label htmlFor="switchMine" className="switch">
+                  <input
+                    id="switchMine"
+                    defaultChecked={checked}
+                    onChange={onChange}
+                    disabled={userTotal}
+                    type="checkbox"
+                  />
                   <span className="slider round"></span>
-                </span>
+                </label>
               </Switch>
             </CheckMine>
           )}
