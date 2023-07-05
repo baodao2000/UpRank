@@ -4,7 +4,7 @@ import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { ThreeDots } from 'views/Pool/components/DepositModal'
 import useConfirmTransaction from 'hooks/useConfirmTransaction'
 import { useCallWithMarketGasPrice } from 'hooks/useCallWithMarketGasPrice'
-import { usePoolsV2Contract } from 'hooks/useContract'
+import { usePoolsV2Contract, usePoolsV3Contract } from 'hooks/useContract'
 import { ToastDescriptionWithTx } from 'components/Toast'
 import { ethers } from 'ethers'
 import { timeDisplayLong } from 'views/Pools2/util'
@@ -183,21 +183,33 @@ const BorderCard = styled.div`
   margin: 8px 0;
 `
 
-const StyledButtonRank = styled(Button)`
-  width: 103px;
-  height: 30px;
-  color: rgb(243, 243, 243);
+const StyledButtonRank = styled.button`
+  width: 160px;
+  height: 36px;
+  color: #f3f3f3;
   background: radial-gradient(
-      136.39% 160.48% at 0% 0%,
+    157.74% 210.61% at 0% 0%,
+    rgba(192, 240, 255, 0.8) 0%,
+    rgba(159, 169, 213, 0.29) 87.18%,
+    rgba(2, 0, 98, 0) 100%
+  );
+  backdrop-filter: blur(50px);
+  border-radius: 22.5px;
+  font-size: 18px;
+  &:disabled {
+    border-radius: 15px;
+    border: 1px solid rgba(245, 251, 242, 0.2);
+    opacity: 0.30000001192092896;
+    background: radial-gradient(
+      157.74% 210.61% at 0% 0%,
       rgba(192, 240, 255, 0.8) 0%,
       rgba(159, 169, 213, 0.29) 87.18%,
       rgba(2, 0, 98, 0) 100%
-    ),
-    linear-gradient(0deg, rgba(245, 251, 242, 0.2), rgba(245, 251, 242, 0.2));
-  box-shadow: 4px 4px 25px rgba(227, 227, 227, 0.25), 0px 4px 8px rgba(0, 0, 0, 0.25),
-    inset 0px 4px 4px rgba(236, 236, 236, 0.25);
-  border-radius: 22.5px;
-  font-size: 12px;
+    );
+    backdrop-filter: blur(50px);
+    color: #f3f3f3;
+    font-weight: 700;
+  }
 `
 const nextRankRequire = [
   {
@@ -234,7 +246,7 @@ const nextRankRequire = [
 const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
   const { toastSuccess, toastError } = useToast()
   const { account, chainId } = useActiveWeb3React()
-  const poolContract = usePoolsV2Contract()
+  const poolContract = usePoolsV3Contract()
   const { callWithMarketGasPrice } = useCallWithMarketGasPrice()
   const { isConfirming, handleConfirm } = useConfirmTransaction({
     onConfirm: () => {

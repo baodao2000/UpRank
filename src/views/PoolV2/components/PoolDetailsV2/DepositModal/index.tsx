@@ -211,6 +211,7 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
   const [userTotal, setUserTotal] = useState(false)
   const [mine, setMine] = useState(false)
   const [checked, setChecked] = useState(false)
+  const [pid, setPid] = useState(pool.pid)
   const checkAmount = (value: any) => {
     if (
       // value > Number((pool.maxLock / pool.rateBNB2USD).toFixed(4)) ||
@@ -262,7 +263,7 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
   }
   const { isConfirming, handleConfirm } = useConfirmTransaction({
     onConfirm: () => {
-      // console.log(poolContract,pool, mine);
+      console.log(poolContract, pool, mine)
       return callWithGasPrice(poolContract, 'deposit', [pool.pid], mine, {
         value: ethers.utils.parseUnits(amount.toString(), 'ether').toString(),
         gasLimit: '1000000',
@@ -280,8 +281,10 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
     },
   })
   const checkUsers = async () => {
-    const users = await poolContract.users(account, pool.pid)
+    const users = await poolContract.users(account, pid)
+
     setChecked(users.isMine)
+    setMine(users.isMine)
     if (users.totalLock.toString() === '0') {
       setUserTotal(false)
     } else {
@@ -308,48 +311,50 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
       <InputArea>
         <span>
           Amount: <br></br>
-          <CountUp
-            start={0}
-            preserveValue
-            delay={0}
-            end={Number(pool.minLock)}
-            decimals={0}
-            duration={0.5}
-            style={{ color: '#2CE0D5', fontWeight: 600 }}
-          />
-          <span style={{ color: '#2CE0D5', fontWeight: 600 }}>$</span>
-          <span style={{ color: '#2CE0D5' }}>{' ~ '}</span>
-          <CountUp
-            start={0}
-            preserveValue
-            delay={0}
-            end={minLockMatic}
-            decimals={4}
-            duration={0.5}
-            style={{ color: '#2CE0D5', fontWeight: 400 }}
-          />{' '}
-          <img src={`/images/chains/${chainId}.png`} alt="logo" width="12px" /> to{' '}
-          <CountUp
-            start={0}
-            preserveValue
-            delay={0}
-            end={Number(pool.maxLock)}
-            decimals={0}
-            duration={0.5}
-            style={{ color: '#2CE0D5', fontWeight: 600 }}
-          ></CountUp>
-          <span style={{ color: '#2CE0D5', fontWeight: 600 }}>$</span>
-          <span style={{ color: '#2CE0D5' }}>{' ~ '}</span>
-          <CountUp
-            start={0}
-            preserveValue
-            delay={0}
-            end={Number(pool.maxLock / pool.rateBNB2USD)}
-            decimals={4}
-            duration={0.5}
-            style={{ color: '#2CE0D5', fontWeight: 400 }}
-          />{' '}
-          <img src={`/images/chains/${chainId}.png`} alt="logo" width="12px" />
+          <div style={{ marginTop: '10px' }}>
+            <CountUp
+              start={0}
+              preserveValue
+              delay={0}
+              end={Number(pool.minLock)}
+              decimals={0}
+              duration={0.5}
+              style={{ color: '#2CE0D5', fontWeight: 600 }}
+            />
+            <span style={{ color: '#2CE0D5', fontWeight: 600 }}>$</span>
+            <span style={{ color: '#2CE0D5' }}>{' ~ '}</span>
+            <CountUp
+              start={0}
+              preserveValue
+              delay={0}
+              end={minLockMatic}
+              decimals={4}
+              duration={0.5}
+              style={{ color: '#2CE0D5', fontWeight: 400 }}
+            />{' '}
+            <img src={`/images/chains/${chainId}.png`} alt="logo" width="12px" /> to{' '}
+            <CountUp
+              start={0}
+              preserveValue
+              delay={0}
+              end={Number(pool.maxLock)}
+              decimals={0}
+              duration={0.5}
+              style={{ color: '#2CE0D5', fontWeight: 600 }}
+            ></CountUp>
+            <span style={{ color: '#2CE0D5', fontWeight: 600 }}>$</span>
+            <span style={{ color: '#2CE0D5' }}>{' ~ '}</span>
+            <CountUp
+              start={0}
+              preserveValue
+              delay={0}
+              end={Number(pool.maxLock / pool.rateBNB2USD)}
+              decimals={4}
+              duration={0.5}
+              style={{ color: '#2CE0D5', fontWeight: 400 }}
+            />{' '}
+            <img src={`/images/chains/${chainId}.png`} alt="logo" width="12px" />
+          </div>
         </span>
         <span className="bnb"></span>
         <UserBalance>
@@ -408,7 +413,7 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
       </InputArea>
       {userTotal === false ? (
         <>
-          {pool.pid.toString() === '1' ? null : (
+          {pool.pid.toString() === '0' ? null : (
             <CheckMine>
               <Text>You want to mine</Text>
               <Switch>
@@ -422,7 +427,7 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
         </>
       ) : (
         <>
-          {pool.pid.toString() === '1' ? null : (
+          {pool.pid.toString() === '0' ? null : (
             <CheckMine>
               <Text>You want to mine</Text>
               <Switch>

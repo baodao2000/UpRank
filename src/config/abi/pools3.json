@@ -552,6 +552,13 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "totalTicket",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [{ "internalType": "address", "name": "newOwner", "type": "address" }],
     "name": "transferOwnership",
     "outputs": [],
@@ -635,22 +642,6 @@
       { "internalType": "uint256", "name": "", "type": "uint256" }
     ],
     "name": "userClaimed",
-    "outputs": [
-      { "internalType": "uint256", "name": "date", "type": "uint256" },
-      { "internalType": "uint256", "name": "amount", "type": "uint256" },
-      { "internalType": "uint256", "name": "totalLock", "type": "uint256" },
-      { "internalType": "uint256", "name": "interrest", "type": "uint256" }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      { "internalType": "address", "name": "", "type": "address" },
-      { "internalType": "uint256", "name": "", "type": "uint256" },
-      { "internalType": "uint256", "name": "", "type": "uint256" }
-    ],
-    "name": "userClaimedV1",
     "outputs": [
       { "internalType": "uint256", "name": "date", "type": "uint256" },
       { "internalType": "uint256", "name": "amount", "type": "uint256" },

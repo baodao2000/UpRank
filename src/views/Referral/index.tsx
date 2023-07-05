@@ -412,7 +412,7 @@ const Referral = () => {
 
   const getTotalRefferChild = async (page, accountChild) => {
     if (!account) {
-      return
+      setLoadingPage(true)
     }
     setLoadingTable(true)
     const limit = 5
@@ -492,7 +492,7 @@ const Referral = () => {
 
   const getUserInfo = async () => {
     if (!account) {
-      return
+      setLoadingPage(true)
     }
     const infos = await Promise.all([
       refferCT.userInfos(account),
@@ -557,6 +557,9 @@ const Referral = () => {
     }
     const checkUserRegister = async () => {
       if (account) {
+        setLoadingPage(true)
+      } else {
+        setLoadingPage(false)
         const isRegister = await refferCT.isReferrer(account)
         setUserIsRegister(isRegister)
       }
