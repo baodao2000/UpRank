@@ -51,7 +51,10 @@ const Container = styled.div`
   .header {
     width: 1000px;
     @media screen and (max-width: 1024px) {
-      width: 100%
+      width: 95%
+    }
+    @media screen and (max-width: 800px) {
+      width: 95%
     }
   }
   width: 100%;
@@ -196,7 +199,7 @@ const Card = styled.div`
 const LogoAndName = styled.div`
   display: flex;
   justify-content: flex-start;
-  gap: 10px;
+  gap: 20px;
   width: 100%;
   height: 100%;
   align-items: center;
@@ -320,10 +323,11 @@ const LineText = styled.div`
   align-items: center;
   padding: 20px 0;
   display: flex;
-  margin: 20px 50px;
+  margin: 20px 100px;
   @media screen and (max-width: 600px) {
     margin: 20px 0;
   }
+  border-radius: 15px;
 `
 
 export const getRankImage = (index) => {
@@ -430,12 +434,11 @@ const PoolsReward = styled.div`
   @media screen and (max-width: 1024px) {
     width: 100%;
   }
+  border-radius: 15px;
 `
 const Pools = () => {
   const { account, chainId } = useActiveWeb3React()
   const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId
-  const getPoolContract = getPoolsContract(CHAIN_ID)
-  const getPoolV2Contract = getPoolsV2Contract(CHAIN_ID)
   const getPoolV3Contract = getPoolsV3Contract(CHAIN_ID)
   const [arr, setArr] = useState([])
   const [remainCommission, setRemainCommission] = useState(0)
@@ -444,10 +447,7 @@ const Pools = () => {
   const [isClaimableCommission, setIsClaimableCommission] = useState(false)
   const { toastSuccess, toastError } = useToast()
   const { callWithMarketGasPrice } = useCallWithMarketGasPrice()
-  const poolContract = usePoolsContract()
-  const poolV3Contract = usePoolsV3Contract()
-
-  const poolV2Contract = usePoolsV2Contract()
+  const poolContract = usePoolsV3Contract()
   const [ranks, setRanks] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [rateBnbUsd, setRateBnbUsd] = useState(1)
@@ -462,7 +462,7 @@ const Pools = () => {
   const [userClaimed, setUserClaimed] = useState(false)
   const { isConfirming, handleConfirm } = useConfirmTransaction({
     onConfirm: () => {
-      return callWithMarketGasPrice(commission > 0 ? poolContract : poolV2Contract, 'claimComm', [account])
+      return callWithMarketGasPrice(commission > 0 && poolContract, 'claimComm', [account])
     },
     onSuccess: async ({ receipt }) => {
       toastSuccess('Claim commission successfully !', <ToastDescriptionWithTx txHash={receipt.transactionHash} />)
@@ -475,10 +475,10 @@ const Pools = () => {
   const getCommission = async () => {
     if (account) {
       const comm = await getPoolV3Contract.remainComm(account)
-      const comm2 = await getPoolV2Contract.remainComm(account)
+      // const comm2 = await getPoolV2Contract.remainComm(account)
       setCommission(Number(formatEther(comm)))
-      setCommission2(Number(formatEther(comm2)))
-      const commRemain = Number(formatEther(comm)) + Number(formatEther(comm2))
+      // setCommission2(Number(formatEther(comm2)))
+      const commRemain = Number(formatEther(comm))
       setRemainCommission(commRemain)
       setIsClaimableCommission(commRemain > 0)
     } else {
@@ -541,8 +541,6 @@ const Pools = () => {
     try {
       const bnbPrice = await getPoolV3Contract.bnbPrice()
       const pools = ids.map((item) => getPoolV3Contract.pools(item))
-      const pools2 = ids.map((item) => getPoolV2Contract.pools(item))
-      const pools3 = ids.map((item) => getPoolV3Contract.pools(item))
 
       await getInfoRank(Number(formatEther(bnbPrice[0])) / Number(formatEther(bnbPrice[1])))
 
@@ -550,7 +548,6 @@ const Pools = () => {
       const newPoolInfo = await Promise.all(
         pools.map(async (item, id) => {
           const userLockAndPool = await Promise.all([getPoolV3Contract.users(account, id), item])
-          // const userLockAndPool2 = await Promise.all([getPoolV2Contract.users(account, id), pools2[id]])
           return {
             currentInterest: ((Number(userLockAndPool[1].currentInterest.toString()) / 10000) * 365).toFixed(2),
             enable: userLockAndPool[1].enable,
@@ -623,14 +620,15 @@ const Pools = () => {
               }}
             >
               <Flex width="100%" flex="1" flexDirection="column" mr={['8px', 0]} alignItems="center">
-                <div></div>
-                <Text
-                  fontSize={['22px', '22px', '24px', '24px', '24px', '24px']}
-                  fontWeight="600"
-                  style={{ color: 'rgba(253, 253, 253, 1)', textAlign: 'center' }}
-                >
-                  Total Lock:{' '}
-                </Text>
+                <div style={{ width: '250px', display: 'flex', justifyContent: 'flex-start', marginBottom: '30px' }}>
+                  <Text
+                    fontSize={['22px', '22px', '24px', '24px', '24px', '24px']}
+                    fontWeight="600"
+                    style={{ color: 'rgba(253, 253, 253, 1)', textAlign: 'center' }}
+                  >
+                    Total Lock:{' '}
+                  </Text>
+                </div>
                 <Flex
                   width="100%"
                   flex="1"
@@ -662,6 +660,7 @@ const Pools = () => {
                       background: 'rgba(240, 238, 238, 1)',
                       border: '2px solid rgba(240, 238, 238, 1)',
                       width: '37px',
+                      borderRadius: '20px',
                     }}
                   ></div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -697,11 +696,11 @@ const Pools = () => {
                 backdropFilter: 'blur(50px)',
               }}
             >
-              <Flex flex="1" flexDirection="column" mr={['8px', 0]} alignItems="center">
+              <Flex style={{ gap: '10px' }} flex="1" flexDirection="column" mr={['8px', 0]} alignItems="center">
                 <Text
                   fontSize={['22px', '22px', '36px', '40px', '50px', '60px']}
                   fontWeight="500"
-                  style={{ color: '#C5C5C5', textAlign: 'center' }}
+                  style={{ color: '#FDFDFD', textAlign: 'center' }}
                 >
                   Total Lock:{' '}
                   {
@@ -713,7 +712,7 @@ const Pools = () => {
                       end={Number(balance) * rateBnbUsd}
                       decimals={2}
                       duration={0.5}
-                      style={{ color: 'rgba(250, 255, 73, 1)', fontWeight: 700 }}
+                      style={{ color: 'rgba(250, 255, 73, 1)', fontWeight: 700, margin: '0 5px' }}
                     />
                   }
                   {'$ ~ '}
@@ -726,7 +725,7 @@ const Pools = () => {
                       end={Number(balance)}
                       decimals={4}
                       duration={0.5}
-                      style={{ color: 'rgba(107, 255, 228, 1)', fontWeight: 700 }}
+                      style={{ color: 'rgba(107, 255, 228, 1)', fontWeight: 700, margin: '0 5px' }}
                     />
                   }
                   {unit}
@@ -757,7 +756,7 @@ const Pools = () => {
                           <span
                             className="value"
                             style={{
-                              color: 'rgba(228, 230, 231, 1)',
+                              color: '#E4E6E7',
                               display: 'flex',
                               flexWrap: 'wrap',
                             }}
@@ -766,7 +765,7 @@ const Pools = () => {
                             {
                               <CountUp
                                 separator=","
-                                style={{ color: 'rgba(228, 230, 231, 1)' }}
+                                style={{ color: '#E4E6E7' }}
                                 start={0}
                                 preserveValue
                                 delay={0}
@@ -841,7 +840,7 @@ const Pools = () => {
                     <Info>
                       <Reward>
                         <Lineleft>
-                          <Line>
+                          <Line style={{ height: '70px' }}>
                             <span style={{ fontWeight: 400, fontSize: 14 }}>Interest</span>
                             <Text
                               style={{
@@ -1031,7 +1030,7 @@ const Pools = () => {
           <PageHeader background="none">
             <Flex flex="1" flexDirection="column" mr={['8px', 0]} alignItems="center">
               <PoolsReward>
-                <Text fontSize={['24px', '48px']} fontWeight="500" textAlign="center">
+                <Text fontSize={['24px', '36px', '48px']} fontWeight="500" textAlign="center">
                   Pool Rewards
                 </Text>
                 <Text
