@@ -146,28 +146,6 @@ const Pool = ({ poolId }) => {
     minUSD2BNB: 0,
     maxUSD2BNB: 0,
   })
-
-  const [pool2, setPool2] = useState({
-    currentInterest: 0,
-    enable: true,
-    maxLock: 0,
-    minLock: 0,
-    timeLock: 0,
-    totalLock: 0,
-    pid: -1,
-    currentRewardV1: 0,
-    currentRewardV2: 0,
-    currentReward: 0,
-    totalReward: 0,
-    startTime: 0,
-    userClaimedLength: 0,
-    userTotalLock: 0,
-    rateBNB2USD: 1,
-    unit: '',
-    minUSD2BNB: 0,
-    maxUSD2BNB: 0,
-  })
-
   const getNoteDeposit = () => {
     let note
     if (chainId === 97 && now - poolInfo.startTime > 3600) {
@@ -198,79 +176,65 @@ const Pool = ({ poolId }) => {
 
   const getPool = async () => {
     try {
-      // const account = '0x5B0B6Bc92Ac002AB85512619b884738d22CcB3B6'
-      const pool = await getPoolContract.pools(poolId)
-      const pool2 = await getPoolV2Contract.pools(poolId)
-      const currentReward = await getPoolContract.currentReward(poolId, account)
-      const currentReward2 = await getPoolV2Contract.currentReward(poolId, account)
-      const rateBnbUsd = await getPoolContract.bnbPrice()
-      const users = await getPoolContract.users(account, poolId)
-      const users2 = await getPoolV2Contract.users(account, poolId)
-      // console.log(Number(users2.startTime))
-      const minMaxUSD2BNB = await getPoolV2Contract.minMaxUSD2BNB(poolId)
-      const getUsersClaimedLength = await getPoolContract.getUsersClaimedLength(poolId, account)
-      const getUsersClaimedLength2 = await getPoolV2Contract.getUsersClaimedLength(poolId, account)
-      setPool({
-        currentInterest: (Number(pool.currentInterest.toString()) / 10000) * 365,
-        enable: pool.enable,
-        maxLock: Number(formatEther(pool.maxLock)),
-        minLock: Number(formatEther(pool.minLock)),
-        timeLock: 1095,
-        totalLock: Number(formatEther(pool.totalLock)),
-        pid: poolId,
-        currentRewardV1: Number(formatEther(currentReward)),
-        currentRewardV2: 0,
-        currentReward: Number(formatEther(currentReward)),
-        totalReward: Number(formatEther(users.totalReward)),
-        startTime: Number(users.startTime),
-        userTotalLock: Number(formatEther(users.totalLock)),
-        userClaimedLength: Number(getUsersClaimedLength),
-        rateBNB2USD: Number(formatEther(rateBnbUsd[0])) / Number(formatEther(rateBnbUsd[1])),
-        unit,
-        minUSD2BNB: Number(formatEther(minMaxUSD2BNB._min)),
-        maxUSD2BNB: Number(formatEther(minMaxUSD2BNB._max)),
-      })
-      // setPool2({
-      //   currentInterest: (Number(pool2.currentInterest.toString()) / 10000) * 365,
-      //   enable: pool2.enable,
-      //   maxLock: Number(formatEther(pool2.maxLock)),
-      //   minLock: Number(formatEther(pool2.minLock)),
-      //   timeLock: 1095,
-      //   totalLock: Number(formatEther(pool2.totalLock)),
-      //   pid: poolId,
-      //   currentRewardV1: 0,
-      //   currentRewardV2: Number(formatEther(currentReward2)),
-      //   currentReward: Number(formatEther(currentReward2)),
-      //   totalReward: Number(formatEther(users2.totalReward)),
-      //   startTime: Number(users2.startTime),
-      //   userTotalLock: Number(formatEther(users2.totalLock)),
-      //   userClaimedLength: Number(getUsersClaimedLength2),
-      //   rateBNB2USD: Number(formatEther(rateBnbUsd[0])) / Number(formatEther(rateBnbUsd[1])),
-      //   unit,
-      //   minUSD2BNB: Number(formatEther(minMaxUSD2BNB._min)),
-      //   maxUSD2BNB: Number(formatEther(minMaxUSD2BNB._max)),
-      // })
-      setPoolInfo({
-        currentInterest: (Number(pool.currentInterest.toString()) / 10000) * 365,
-        enable: pool2.enable,
-        maxLock: Number(formatEther(pool.maxLock)),
-        minLock: Number(formatEther(pool.minLock)),
-        timeLock: 1095,
-        totalLock: Number(formatEther(pool.totalLock)),
-        pid: poolId,
-        currentRewardV1: Number(formatEther(currentReward)),
-        currentRewardV2: Number(formatEther(currentReward2)),
-        currentReward: Number(formatEther(currentReward)),
-        totalReward: Number(formatEther(users.totalReward)),
-        startTime: Number(users.startTime),
-        userTotalLock: Number(formatEther(users.totalLock)),
-        userClaimedLength: Number(getUsersClaimedLength),
-        rateBNB2USD: Number(formatEther(rateBnbUsd[0])) / Number(formatEther(rateBnbUsd[1])),
-        unit,
-        minUSD2BNB: Number(formatEther(minMaxUSD2BNB._min)),
-        maxUSD2BNB: Number(formatEther(minMaxUSD2BNB._max)),
-      })
-      setIsLoading(false)
+      if (!account) {
+        setIsLoading(true)
+      } else {
+        setIsLoading(false)
+        // const account = '0x5B0B6Bc92Ac002AB85512619b884738d22CcB3B6'
+        const pool = await getPoolContract.pools(poolId)
+        const pool2 = await getPoolV2Contract.pools(poolId)
+        const currentReward = await getPoolContract.currentReward(poolId, account)
+        const currentReward2 = await getPoolV2Contract.currentReward(poolId, account)
+        const rateBnbUsd = await getPoolContract.bnbPrice()
+        const users = await getPoolContract.users(account, poolId)
+        const users2 = await getPoolV2Contract.users(account, poolId)
+        // console.log(Number(users2.startTime))
+        const minMaxUSD2BNB = await getPoolV2Contract.minMaxUSD2BNB(poolId)
+        const getUsersClaimedLength = await getPoolContract.getUsersClaimedLength(poolId, account)
+        const getUsersClaimedLength2 = await getPoolV2Contract.getUsersClaimedLength(poolId, account)
+        setPool({
+          currentInterest: (Number(pool.currentInterest.toString()) / 10000) * 365,
+          enable: pool.enable,
+          maxLock: Number(formatEther(pool.maxLock)),
+          minLock: Number(formatEther(pool.minLock)),
+          timeLock: 1095,
+          totalLock: Number(formatEther(pool.totalLock)),
+          pid: poolId,
+          currentRewardV1: Number(formatEther(currentReward)),
+          currentRewardV2: 0,
+          currentReward: Number(formatEther(currentReward)),
+          totalReward: Number(formatEther(users.totalReward)),
+          startTime: Number(users.startTime),
+          userTotalLock: Number(formatEther(users.totalLock)),
+          userClaimedLength: Number(getUsersClaimedLength),
+          rateBNB2USD: Number(formatEther(rateBnbUsd[0])) / Number(formatEther(rateBnbUsd[1])),
+          unit,
+          minUSD2BNB: Number(formatEther(minMaxUSD2BNB._min)),
+          maxUSD2BNB: Number(formatEther(minMaxUSD2BNB._max)),
+        })
+        setPoolInfo({
+          currentInterest: (Number(pool.currentInterest.toString()) / 10000) * 365,
+          enable: pool.enable,
+          maxLock: Number(formatEther(pool.maxLock)),
+          minLock: Number(formatEther(pool.minLock)),
+          timeLock: 1095,
+          totalLock: Number(formatEther(pool.totalLock)),
+          pid: poolId,
+          currentRewardV1: Number(formatEther(currentReward)),
+          currentRewardV2: Number(formatEther(currentReward2)),
+          currentReward: Number(formatEther(currentReward)),
+          totalReward: Number(formatEther(users.totalReward)),
+          startTime: Number(users.startTime),
+          userTotalLock: Number(formatEther(users.totalLock)),
+          userClaimedLength: Number(getUsersClaimedLength),
+          rateBNB2USD: Number(formatEther(rateBnbUsd[0])) / Number(formatEther(rateBnbUsd[1])),
+          unit,
+          minUSD2BNB: Number(formatEther(minMaxUSD2BNB._min)),
+          maxUSD2BNB: Number(formatEther(minMaxUSD2BNB._max)),
+        })
+        // setIsLoading(false)
+      }
+
       // console.log(Number(formatEther(currentReward)), Number(formatEther(currentReward2)))
     } catch (e) {
       console.log(e)
@@ -309,8 +273,7 @@ const Pool = ({ poolId }) => {
 
   return (
     <PoolDetail>
-      {' '}
-      {isLoading ? (
+      {isLoading === true ? (
         <TrendyPageLoader />
       ) : (
         <>
@@ -330,7 +293,7 @@ const Pool = ({ poolId }) => {
                   color="#00F0E1"
                   style={{ color: '#00F0E1' }}
                 >
-                  {shortenURL(`Root Contract 1: ${contracts.poolsV3[CHAIN_ID]}`, 35)}
+                  {shortenURL(`Root Contract: ${contracts.poolsV3[CHAIN_ID]}`, 35)}
                 </LinkExternal>
                 {/* <LinkExternal
                   fontSize={['14px', '16px', '18px', '20px', '22px']}

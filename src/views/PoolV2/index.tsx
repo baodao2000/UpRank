@@ -1057,7 +1057,7 @@ const Pools = () => {
                       style={{ color: 'rgba(249, 249, 249, 1)' }}
                       color="#00F0E1"
                     >
-                      {shortenURL(`Root Contract 1: ${contracts.poolsV3[CHAIN_ID]}`, 35)}
+                      {shortenURL(`Root Contract: ${contracts.poolsV3[CHAIN_ID]}`, 35)}
                     </LinkExternal>
                   </Text>
                   {/* <Text style={{ color: '#C5C5C5' }} ellipsis={true}>

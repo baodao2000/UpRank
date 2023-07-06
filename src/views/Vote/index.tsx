@@ -113,6 +113,7 @@ function Vote() {
       userTotal()
     }
   }, [account])
+  console.log(account)
 
   const checkRegister = async () => {
     if (!account) {
@@ -120,7 +121,6 @@ function Vote() {
     } else {
       setLoadingPage(false)
       const usersRegister = await refferCT.isReferrer(account)
-
       setIsRegister(usersRegister)
     }
   }
@@ -172,10 +172,15 @@ function Vote() {
   const tagert = Number(balance)
 
   const userTotal = async () => {
-    const total = await voteCt.userTotalLockVoted()
-    setTotalVoted(Number(formatBigNumber(total, 6)))
-    const uv = await voteCt.getUserVote().then((rs) => rs.length)
-    setUserVoted(uv)
+    if (!account) {
+      setLoadingPage(true)
+    } else {
+      setLoadingPage(false)
+      const total = await voteCt.userTotalLockVoted()
+      setTotalVoted(Number(formatBigNumber(total, 6)))
+      const uv = await voteCt.getUserVote().then((rs) => rs.length)
+      setUserVoted(uv)
+    }
   }
   return (
     <>
@@ -419,8 +424,9 @@ function Vote() {
                   boxShadow: '0px -1px 0px 0px rgba(14,14,44,0.4)',
                 }}
                 type="button"
+                className="buttonVote"
                 onClick={handleVote}
-                disabled={usersIsVote}
+                disabled={true}
               >
                 <h1 style={{ fontSize: '20px', color: '#191326' }}>I agree</h1>
               </Button>

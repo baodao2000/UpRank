@@ -329,7 +329,7 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
           <HeadLeft>
             <ImageRank src={data[userRank.rank].image} alt="" />
           </HeadLeft>
-          <HeadRight style={{ color: getColor('') }}>
+          <HeadRight style={{ color: getColor(''), marginBottom: '30px' }}>
             <TitleHeadRight style={{ color: '#fff' }}>Next Rank</TitleHeadRight>
           </HeadRight>
         </CardHead>
@@ -389,7 +389,7 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
           </StyledButtonRank>
         </div>
       </CardYourRanks>
-      {data.map((item, index) => (
+      {/* {data.map((item, index) => (
         <CardPoolRanks key={index}>
           <CardHead>
             <HeadRight style={{ color: getColor(item.title) }}>
@@ -442,7 +442,7 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
             </StyledButtonRank>
           </div>
         </CardPoolRanks>
-      ))}
+      ))} */}
     </ListPoolRanks>
   )
 }

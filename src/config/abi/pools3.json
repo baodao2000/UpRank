@@ -131,6 +131,20 @@
     "type": "event"
   },
   {
+    "inputs": [],
+    "name": "MM",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "addLPAmount",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       { "internalType": "uint256", "name": "minLock", "type": "uint256" },
       { "internalType": "uint256", "name": "maxLock", "type": "uint256" },
@@ -200,6 +214,7 @@
     "stateMutability": "nonpayable",
     "type": "function"
   },
+  { "inputs": [], "name": "claimRewardTREND", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
   {
     "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "name": "conditionMemOnTree",
@@ -220,6 +235,13 @@
       { "internalType": "address", "name": "user", "type": "address" }
     ],
     "name": "currentReward",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "user", "type": "address" }],
+    "name": "currentRewardTREND",
     "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
@@ -292,7 +314,7 @@
         "type": "tuple[]"
       }
     ],
-    "stateMutability": "pure",
+    "stateMutability": "view",
     "type": "function"
   },
   { "inputs": [], "name": "getStuck", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
@@ -389,6 +411,13 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "isLP",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
     "name": "lineStaked",
     "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
@@ -423,6 +452,13 @@
     "inputs": [],
     "name": "pancakeRouter",
     "outputs": [{ "internalType": "contract IPancakeRouter", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "period",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },
@@ -506,6 +542,21 @@
     "stateMutability": "nonpayable",
     "type": "function"
   },
+  { "inputs": [], "name": "setIsLP", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
+  {
+    "inputs": [{ "internalType": "address", "name": "mm", "type": "address" }],
+    "name": "setMM",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "timestamp", "type": "uint256" }],
+    "name": "setPeriod",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
   {
     "inputs": [{ "internalType": "contract IRefferal", "name": "iRefer", "type": "address" }],
     "name": "setRefer",
@@ -516,6 +567,13 @@
   {
     "inputs": [{ "internalType": "contract IPancakeRouter", "name": "pancakeRouteAddress", "type": "address" }],
     "name": "setRoute",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "trend", "type": "address" }],
+    "name": "setTREND",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -535,6 +593,20 @@
     "name": "togglePool",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "token", "type": "address" }],
+    "name": "tokenPrice",
+    "outputs": [{ "internalType": "uint256[]", "name": "amounts", "type": "uint256[]" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "token", "type": "address" }],
+    "name": "tokenPriceWithBNBPair",
+    "outputs": [{ "internalType": "uint256[]", "name": "amounts", "type": "uint256[]" }],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -638,6 +710,21 @@
   {
     "inputs": [
       { "internalType": "address", "name": "", "type": "address" },
+      { "internalType": "uint256", "name": "", "type": "uint256" }
+    ],
+    "name": "userClaimMined",
+    "outputs": [
+      { "internalType": "uint256", "name": "date", "type": "uint256" },
+      { "internalType": "uint256", "name": "amount", "type": "uint256" },
+      { "internalType": "uint256", "name": "totalLock", "type": "uint256" },
+      { "internalType": "uint256", "name": "interrest", "type": "uint256" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "", "type": "address" },
       { "internalType": "uint256", "name": "", "type": "uint256" },
       { "internalType": "uint256", "name": "", "type": "uint256" }
     ],
@@ -683,13 +770,6 @@
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
-    "name": "userTotalTicket",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       { "internalType": "address", "name": "", "type": "address" },
       { "internalType": "uint256", "name": "", "type": "uint256" },
@@ -713,6 +793,20 @@
       { "internalType": "uint256", "name": "startTime", "type": "uint256" },
       { "internalType": "uint256", "name": "totalReward", "type": "uint256" },
       { "internalType": "uint256", "name": "remainReward", "type": "uint256" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "name": "usersMine",
+    "outputs": [
+      { "internalType": "uint256", "name": "totalMined", "type": "uint256" },
+      { "internalType": "uint256", "name": "claimed", "type": "uint256" },
+      { "internalType": "uint256", "name": "remain", "type": "uint256" },
+      { "internalType": "uint256", "name": "mineSpeed", "type": "uint256" },
+      { "internalType": "uint256", "name": "mineSpeedLevel", "type": "uint256" },
+      { "internalType": "uint256", "name": "startTime", "type": "uint256" }
     ],
     "stateMutability": "view",
     "type": "function"

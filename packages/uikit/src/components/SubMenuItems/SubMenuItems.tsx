@@ -40,7 +40,7 @@ const SubMenuItems: React.FC<React.PropsWithChildren<SubMenuItemsProps>> = ({
   }, [layerController]);
   return (
     <SubMenuItemWrapper $isMobileOnly={isMobileOnly} {...props}>
-      {isMobile && (
+      {isMobile && items.length > 3 && (
         <LeftMaskLayer
           ref={chevronLeftRef}
           onClick={() => {
@@ -51,7 +51,7 @@ const SubMenuItems: React.FC<React.PropsWithChildren<SubMenuItemsProps>> = ({
           <ChevronLeftIcon />
         </LeftMaskLayer>
       )}
-      {isMobile && (
+      {isMobile && items.length > 3 && (
         <RightMaskLayer
           ref={chevronRightRef}
           onClick={() => {
@@ -63,12 +63,12 @@ const SubMenuItems: React.FC<React.PropsWithChildren<SubMenuItemsProps>> = ({
         </RightMaskLayer>
       )}
       <StyledSubMenuItems
-        justifyContent={[isMobileOnly ? "flex-end" : "start", null, "center"]}
+        justifyContent="center"
         pl={["12px", null, "0px"]}
         onScroll={debounce(layerController, 100)}
         ref={scrollLayerRef}
       >
-        {items.map(({ label, href, icon, itemProps, type, disabled }) => {
+        {items.map(({ label, labelItem, href, icon, itemProps, type, disabled }) => {
           const Icon = icon;
           const isExternalLink = type === DropdownMenuItemType.EXTERNAL_LINK;
           const linkProps = isExternalLink
@@ -93,7 +93,7 @@ const SubMenuItems: React.FC<React.PropsWithChildren<SubMenuItemsProps>> = ({
                   {...linkProps}
                 >
                   {Icon && <Icon color={isActive ? "secondary" : "textSubtle"} mr="4px" />}
-                  {label}
+                  {labelItem ? labelItem : label}
                   {isExternalLink && (
                     <Box display={["none", null, "flex"]} style={{ alignItems: "center" }} ml="4px">
                       <OpenNewIcon color="textSubtle" />
