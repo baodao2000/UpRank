@@ -4,7 +4,7 @@ import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import TrendyPageLoader from 'components/Loader/TrendyPageLoader'
-import TableDataPool from './components/yourMineHistory'
+// import TableDataPool from './components/yourMineHistory'
 import { getPoolsV3Contract } from 'utils/contractHelpers'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { ChainId } from '../../../packages/swap-sdk/src/constants'
@@ -178,9 +178,7 @@ function Mining() {
           </Text>
         </div>
       </div>
-      <Table>
-        <TableDataPool mine={mineData} userClaimedMineLength={mineData.userClaimedMineLength} />
-      </Table>
+      <Table>{/* <TableDataPool mine={mineData} userClaimedMineLength={mineData.userClaimedMineLength} /> */}</Table>
     </Wrapper>
   )
 }
