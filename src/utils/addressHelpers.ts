@@ -128,3 +128,6 @@ export const getPoolsAddress = (chainId?: number) => {
 export const getPoolsV2Address = (chainId?: number) => {
   return getAddress(addresses.poolsV2, chainId)
 }
+export const getPoolsV3Address = (chainId?: number) => {
+  return getAddress(addresses.poolsV3, chainId)
+}

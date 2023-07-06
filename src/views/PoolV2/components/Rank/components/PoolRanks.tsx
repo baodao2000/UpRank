@@ -4,7 +4,7 @@ import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { ThreeDots } from 'views/Pool/components/DepositModal'
 import useConfirmTransaction from 'hooks/useConfirmTransaction'
 import { useCallWithMarketGasPrice } from 'hooks/useCallWithMarketGasPrice'
-import { usePoolsV2Contract } from 'hooks/useContract'
+import { usePoolsV2Contract, usePoolsV3Contract } from 'hooks/useContract'
 import { ToastDescriptionWithTx } from 'components/Toast'
 import { ethers } from 'ethers'
 import { timeDisplayLong } from 'views/Pools2/util'
@@ -32,10 +32,17 @@ const CardNextRanks = styled.div`
   min-width: 235px;
   height: auto;
   color: #fff;
-  background: #7a67ed;
+  // background: #7a67ed;
   /* box-shadow: 6px 10px 25px rgba(0, 0, 0, 0.1), inset 0px 4px 16px rgba(255, 233, 190, 0.63); */
-  border-radius: 20px;
-  padding: 14px 20px;
+  background: radial-gradient(
+    101.36% 117.36% at 0% -2.74%,
+    rgba(125, 128, 196, 0.6) 0%,
+    rgba(136, 139, 224, 0.264) 100%
+  );
+  border: 1px solid rgba(245, 251, 242, 0.2);
+  backdrop-filter: blur(50px);
+  border-radius: 15px;
+  padding: 20px 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -44,22 +51,39 @@ const CardYourRanks = styled.div`
   min-width: 235px;
   height: auto;
   color: #fff;
-  background: #3a3e41;
-  /* box-shadow: 6px 10px 25px rgba(0, 0, 0, 0.1), inset 0px 4px 16px rgba(255, 233, 190, 0.63); */
-  border-radius: 20px;
-  padding: 14px 20px;
+  // background: #3a3e41;
+  // /* box-shadow: 6px 10px 25px rgba(0, 0, 0, 0.1), inset 0px 4px 16px rgba(255, 233, 190, 0.63); */
+  // border-radius: 20px;
+  background: radial-gradient(
+    101.36% 117.36% at 0% -2.74%,
+    rgba(125, 128, 196, 0.6) 0%,
+    rgba(136, 139, 224, 0.264) 100%
+  );
+  border: 1px solid rgba(245, 251, 242, 0.2);
+  backdrop-filter: blur(50px);
+  border-radius: 15px;
+  padding: 20px 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 `
 const CardPoolRanks = styled.div`
+  position: relative;
   width: auto;
   height: auto;
   color: #fff;
-  background: linear-gradient(244.16deg, #391e67 -21.5%, #c4cff6 104.65%);
-  box-shadow: 6px 10px 25px rgba(0, 0, 0, 0.1), inset 0px 4px 16px rgba(255, 233, 190, 0.63);
-  border-radius: 20px;
-  padding: 14px 20px;
+  background: radial-gradient(
+    101.36% 117.36% at 0% -2.74%,
+    rgba(125, 128, 196, 0.6) 0%,
+    rgba(136, 139, 224, 0.264) 100%
+  );
+  border: 1px solid rgba(245, 251, 242, 0.2);
+  backdrop-filter: blur(50px);
+  border-radius: 15px;
+  // background: linear-gradient(244.16deg, #391e67 -21.5%, #c4cff6 104.65%);
+  // box-shadow: 6px 10px 25px rgba(0, 0, 0, 0.1), inset 0px 4px 16px rgba(255, 233, 190, 0.63);
+  // border-radius: 20px;
+  padding: 20px 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -73,9 +97,15 @@ const CardHead = styled.div`
   margin-bottom: 10px;
 `
 
-const HeadLeft = styled.div``
+const HeadLeft = styled.div`
+  position: absolute;
+  top: -2px;
+  right: 10px;
+`
 
-const HeadRight = styled.div``
+const HeadRight = styled.div`
+  width: 230px;
+`
 
 const TitleHeadRight = styled(Heading)`
   font-weight: 700;
@@ -92,9 +122,10 @@ const TitleHeadRight = styled(Heading)`
 
 const MinMaxPrice = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   color: inherit;
-  gap: 6px;
+  gap: 50px;
+  color: #67e4ff;
 `
 
 const MinMaxItem = styled.span`
@@ -106,6 +137,7 @@ const MinMaxItem = styled.span`
   text-transform: capitalize;
   color: inherit;
   gap: 6px;
+  color: #67e4ff;
 `
 
 const CardBody = styled.div``
@@ -118,10 +150,11 @@ const ItemInfoCard = styled.div`
 `
 
 const Label = styled.span`
-  font-weight: 700;
-  font-size: 12px;
+  font-weight: 500;
+  font-size: 16px;
   line-height: 100%;
   display: flex;
+  color: #fff;
   align-items: center;
   text-transform: capitalize;
 
@@ -132,12 +165,13 @@ const Label = styled.span`
 
 const Value = styled.span`
   font-weight: 700;
-  font-size: 12px;
+  font-size: 18px;
   line-height: 100%;
   display: flex;
   align-items: center;
   text-transform: capitalize;
   gap: 6px;
+  color: #fff;
 
   @media (max-width: 739px) {
     font-size: 12px;
@@ -145,25 +179,37 @@ const Value = styled.span`
 `
 
 const BorderCard = styled.div`
-  border: 1px solid #595959;
+  border: 1px solid #fff;
   margin: 8px 0;
 `
 
-const StyledButtonRank = styled(Button)`
-  width: 103px;
-  height: 30px;
-  background: linear-gradient(
-    178.36deg,
-    #5c4a8a 1.4%,
-    #d2cbef 1.41%,
-    rgba(144, 126, 222, 0.62) 26.34%,
-    #7b6fef 71.12%,
-    #3c59f2 109.1%
+const StyledButtonRank = styled.button`
+  width: 160px;
+  height: 36px;
+  color: #f3f3f3;
+  background: radial-gradient(
+    157.74% 210.61% at 0% 0%,
+    rgba(192, 240, 255, 0.8) 0%,
+    rgba(159, 169, 213, 0.29) 87.18%,
+    rgba(2, 0, 98, 0) 100%
   );
-  box-shadow: 4px 4px 25px rgba(227, 227, 227, 0.25), 0px 4px 8px rgba(0, 0, 0, 0.25),
-    inset 0px 4px 4px rgba(236, 236, 236, 0.25);
+  backdrop-filter: blur(50px);
   border-radius: 22.5px;
-  font-size: 12px;
+  font-size: 18px;
+  &:disabled {
+    border-radius: 15px;
+    border: 1px solid rgba(245, 251, 242, 0.2);
+    opacity: 0.30000001192092896;
+    background: radial-gradient(
+      157.74% 210.61% at 0% 0%,
+      rgba(192, 240, 255, 0.8) 0%,
+      rgba(159, 169, 213, 0.29) 87.18%,
+      rgba(2, 0, 98, 0) 100%
+    );
+    backdrop-filter: blur(50px);
+    color: #f3f3f3;
+    font-weight: 700;
+  }
 `
 const nextRankRequire = [
   {
@@ -200,7 +246,7 @@ const nextRankRequire = [
 const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
   const { toastSuccess, toastError } = useToast()
   const { account, chainId } = useActiveWeb3React()
-  const poolContract = usePoolsV2Contract()
+  const poolContract = usePoolsV3Contract()
   const { callWithMarketGasPrice } = useCallWithMarketGasPrice()
   const { isConfirming, handleConfirm } = useConfirmTransaction({
     onConfirm: () => {
@@ -231,17 +277,17 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
   const getColor = (title) => {
     switch (title) {
       case 'Silver':
-        return '#ffc700'
+        return 'rgba(245, 245, 246, 1)'
       case 'Gold':
-        return '#ffc700'
+        return 'rgba(254, 243, 186, 1)'
       case 'Titanium':
-        return '#ffc700'
+        return 'rgba(181, 255, 246, 1)'
       case 'Platinum':
-        return '#ffc700'
+        return 'rgba(183, 229, 255, 1)'
       case 'Diamond':
-        return '#ffc700'
+        return 'rgba(174, 255, 235, 1)'
       default:
-        return '#ffc700'
+        return '#fff'
     }
   }
   // console.log(userRank)
@@ -250,10 +296,10 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
       <CardNextRanks>
         <CardHead>
           <HeadLeft>
-            <TitleHeadRight style={{ color: '#fff' }}>Your Rank</TitleHeadRight>
+            <ImageRank src={userRank.image} alt="" />
           </HeadLeft>
           <HeadRight style={{ color: getColor('') }}>
-            <ImageRank src={userRank.image} alt="" />
+            <TitleHeadRight style={{ color: '#fff' }}>Your Rank</TitleHeadRight>
           </HeadRight>
         </CardHead>
         <CardBody>
@@ -281,10 +327,10 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
       <CardYourRanks>
         <CardHead>
           <HeadLeft>
-            <TitleHeadRight style={{ color: '#fff' }}>Next Rank</TitleHeadRight>
+            <ImageRank src={data[userRank.rank].image} alt="" />
           </HeadLeft>
           <HeadRight style={{ color: getColor('') }}>
-            <ImageRank src={data[userRank.rank].image} alt="" />
+            <TitleHeadRight style={{ color: '#fff' }}>Next Rank</TitleHeadRight>
           </HeadRight>
         </CardHead>
         <CardBody>
@@ -346,22 +392,22 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
       {data.map((item, index) => (
         <CardPoolRanks key={index}>
           <CardHead>
-            <HeadLeft>
-              <ImageRank src={item.image} alt="" />
-            </HeadLeft>
             <HeadRight style={{ color: getColor(item.title) }}>
               <TitleHeadRight>{item.title}</TitleHeadRight>
               <progress
                 className="file"
                 value={item.total}
                 max={item.max}
-                style={{ margin: '4px 0', accentColor: getColor(item.title), width: 130 }}
+                style={{ margin: '4px 0', accentColor: getColor(item.title), width: 160 }}
               />
               <MinMaxPrice>
-                <MinMaxItem>{item.min}$</MinMaxItem>
-                <MinMaxItem>{item.max}$</MinMaxItem>
+                <MinMaxItem style={{ color: getColor(item.title) }}>{item.min}$</MinMaxItem>
+                <MinMaxItem style={{ color: getColor(item.title) }}>{item.max}$</MinMaxItem>
               </MinMaxPrice>
             </HeadRight>
+            <HeadLeft>
+              <ImageRank src={item.image} alt="" />
+            </HeadLeft>
           </CardHead>
           <CardBody>
             <ItemInfoCard>
@@ -378,7 +424,7 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
             </ItemInfoCard>
             <BorderCard />
             <ItemInfoCard>
-              <Label>Your reward:</Label>
+              <Label style={{ fontSize: '24px' }}>Your reward:</Label>
               <Value>{`${item.yourReward}`}$</Value>
             </ItemInfoCard>
           </CardBody>
