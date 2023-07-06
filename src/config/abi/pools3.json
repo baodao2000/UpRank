@@ -327,6 +327,37 @@
   },
   {
     "inputs": [
+      { "internalType": "address", "name": "user", "type": "address" },
+      { "internalType": "uint256", "name": "limit", "type": "uint256" },
+      { "internalType": "uint256", "name": "skip", "type": "uint256" }
+    ],
+    "name": "getUsersClaimMined",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "uint256", "name": "date", "type": "uint256" },
+          { "internalType": "uint256", "name": "amount", "type": "uint256" },
+          { "internalType": "uint256", "name": "totalLock", "type": "uint256" },
+          { "internalType": "uint256", "name": "interrest", "type": "uint256" }
+        ],
+        "internalType": "struct PoolsMaticV3.Claim[]",
+        "name": "list",
+        "type": "tuple[]"
+      },
+      { "internalType": "uint256", "name": "totalItem", "type": "uint256" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "user", "type": "address" }],
+    "name": "getUsersClaimMinedLength",
+    "outputs": [{ "internalType": "uint256", "name": "length", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
       { "internalType": "uint256", "name": "pid", "type": "uint256" },
       { "internalType": "address", "name": "user", "type": "address" },
       { "internalType": "uint256", "name": "limit", "type": "uint256" },
@@ -619,13 +650,6 @@
   {
     "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
     "name": "totalRewards",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "totalTicket",
     "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"

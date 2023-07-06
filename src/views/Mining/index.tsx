@@ -1,9 +1,14 @@
 import { useMatchBreakpoints } from '@pancakeswap/uikit'
 
 import Image from 'next/image'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import TrendyPageLoader from 'components/Loader/TrendyPageLoader'
+import TableDataPool from './components/yourMineHistory'
+import { getPoolsV3Contract } from 'utils/contractHelpers'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import { ChainId } from '../../../packages/swap-sdk/src/constants'
+import { formatEther } from '@ethersproject/units'
 
 const Title = styled.div`
   color: #00f0e1;
@@ -48,10 +53,56 @@ const TitleChildren = styled.div`
   color: #c0c0c0;
   font-size: 30px;
 `
+const Table = styled.div``
 
 function Mining() {
+  const { account, chainId } = useActiveWeb3React()
   const { isMobile, isTablet } = useMatchBreakpoints()
   const [loadingPage, setLoadingPage] = useState(true)
+  const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId
+  const [isLoading, setIsLoading] = useState(false)
+  const getPoolContract = getPoolsV3Contract(CHAIN_ID)
+  const [mineData, setMineData] = useState({
+    totalMined: 0,
+    claimed: 0,
+    remain: 0,
+    mineSpeed: 0,
+    mineSpeedLevel: 0,
+    startTime: 0,
+    userClaimedMineLength: 0,
+  })
+  const getMine = async () => {
+    try {
+      if (!account) {
+        setIsLoading(true)
+      } else {
+        console.log(account)
+        setIsLoading(false)
+        const getUsersClaimMinedLength = await getPoolContract.getUsersClaimMinedLength(
+          '0x22852cbcF916Dd0B32BB25680ec3a4f9ce223e52',
+        )
+        const users = await getPoolContract.usersMine('0x22852cbcF916Dd0B32BB25680ec3a4f9ce223e52')
+        console.log(formatEther(users.totalMine))
+
+        setMineData({
+          totalMined: Number(formatEther(users.totalMined)),
+          claimed: Number(formatEther(users.claimed)),
+          remain: Number(formatEther(users.remain)),
+          mineSpeed: Number(formatEther(users.mineSpeed)),
+          mineSpeedLevel: Number(formatEther(users.mineSpeedLevel)),
+          startTime: Number(formatEther(users.startTime)),
+          userClaimedMineLength: Number(formatEther(getUsersClaimMinedLength)),
+        })
+        // setIsLoading(false)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  useEffect(() => {
+    getMine()
+  }, [account])
+  console.log(mineData)
 
   return (
     <Wrapper>
@@ -127,6 +178,9 @@ function Mining() {
           </Text>
         </div>
       </div>
+      <Table>
+        <TableDataPool mine={mineData} userClaimedMineLength={mineData.userClaimedMineLength} />
+      </Table>
     </Wrapper>
   )
 }

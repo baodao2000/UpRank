@@ -182,16 +182,16 @@ const Pool = ({ poolId }) => {
         setIsLoading(false)
         // const account = '0x5B0B6Bc92Ac002AB85512619b884738d22CcB3B6'
         const pool = await getPoolContract.pools(poolId)
-        const pool2 = await getPoolV2Contract.pools(poolId)
+        // const pool2 = await getPoolV2Contract.pools(poolId)
         const currentReward = await getPoolContract.currentReward(poolId, account)
-        const currentReward2 = await getPoolV2Contract.currentReward(poolId, account)
+        // const currentReward2 = await getPoolV2Contract.currentReward(poolId, account)
         const rateBnbUsd = await getPoolContract.bnbPrice()
         const users = await getPoolContract.users(account, poolId)
-        const users2 = await getPoolV2Contract.users(account, poolId)
+        // const users2 = await getPoolV2Contract.users(account, poolId)
         // console.log(Number(users2.startTime))
-        const minMaxUSD2BNB = await getPoolV2Contract.minMaxUSD2BNB(poolId)
+        const minMaxUSD2BNB = await getPoolContract.minMaxUSD2BNB(poolId)
         const getUsersClaimedLength = await getPoolContract.getUsersClaimedLength(poolId, account)
-        const getUsersClaimedLength2 = await getPoolV2Contract.getUsersClaimedLength(poolId, account)
+        // const getUsersClaimedLength2 = await getPoolV2Contract.getUsersClaimedLength(poolId, account)
         setPool({
           currentInterest: (Number(pool.currentInterest.toString()) / 10000) * 365,
           enable: pool.enable,
@@ -221,7 +221,7 @@ const Pool = ({ poolId }) => {
           totalLock: Number(formatEther(pool.totalLock)),
           pid: poolId,
           currentRewardV1: Number(formatEther(currentReward)),
-          currentRewardV2: Number(formatEther(currentReward2)),
+          currentRewardV2: Number(formatEther(currentReward)),
           currentReward: Number(formatEther(currentReward)),
           totalReward: Number(formatEther(users.totalReward)),
           startTime: Number(users.startTime),

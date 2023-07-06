@@ -154,23 +154,23 @@ const config: (
     {
       label: t('Pool'),
       showItemsOnMobile: false,
-      href: '/pools',
+      href: '/poolv2',
       icon: PoolIcon,
       fillIcon: PoolIcon,
       items: [
-        {
-          label: t('V1'),
-          labelItem: t('Pools V1'),
-          href: '/pools',
-          showItemsOnMobile: false,
-          icon: PoolIcon,
-          items: [].map((item) => addMenuItemSupported(item, chainId)),
-        },
         {
           label: t('V2'),
           labelItem: t('Pools V2'),
           href: '/poolv2',
           showItemsOnMobile: true,
+          icon: PoolIcon,
+          items: [].map((item) => addMenuItemSupported(item, chainId)),
+        },
+        {
+          label: t('V1'),
+          labelItem: t('Pools V1'),
+          href: '/pools',
+          showItemsOnMobile: false,
           icon: PoolIcon,
           items: [].map((item) => addMenuItemSupported(item, chainId)),
         },
