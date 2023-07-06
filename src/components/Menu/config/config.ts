@@ -125,6 +125,13 @@ const config: (
       items: [].map((item) => addMenuItemSupported(item, chainId)),
     },
     {
+      label: t('Mining'),
+      href: '/mining',
+      showItemsOnMobile: false,
+      icon: TrophyIcon,
+      items: [].map((item) => addMenuItemSupported(item, chainId)),
+    },
+    {
       label: t('Voting'),
       href: '/vote',
       showItemsOnMobile: false,
