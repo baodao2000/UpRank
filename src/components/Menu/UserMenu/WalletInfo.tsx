@@ -12,6 +12,7 @@ import { getBlockExploreLink, getBlockExploreName } from 'utils'
 import { formatBigNumber } from 'utils/formatBalance'
 import { useBalance } from 'wagmi'
 import CopyAddress from './CopyAddress'
+import Image from 'next/image'
 
 interface WalletInfoProps {
   hasLowNativeBalance: boolean
@@ -66,9 +67,9 @@ const WalletInfo: React.FC<WalletInfoProps> = ({ hasLowNativeBalance, onDismiss 
       </Flex>
       <Flex alignItems="center" justifyContent="space-between" mb="24px" mt="12px">
         <Flex alignItems="center">
-          {!isBSC && <ChainLogo chainId={56} />}
+          {!isBSC && <Image src="/images/trendLogo.png" width={24} height={24} alt="" />}
           <Text ml={isBSC ? 0 : '8px'} color="textSubtle">
-            {t('CAKE Balance')}
+            {t('TREND Balance')}
           </Text>
         </Flex>
         {cakeFetchStatus !== FetchStatus.Fetched ? (
