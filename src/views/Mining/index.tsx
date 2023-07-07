@@ -1,14 +1,15 @@
-import { useMatchBreakpoints } from '@pancakeswap/uikit'
+import { useMatchBreakpoints, Text, Button, useModal } from '@pancakeswap/uikit'
 
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import TrendyPageLoader from 'components/Loader/TrendyPageLoader'
-// import TableDataPool from './components/yourMineHistory'
+import TableDataPool from './components/yourMineHistory'
 import { getPoolsV3Contract } from 'utils/contractHelpers'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { ChainId } from '../../../packages/swap-sdk/src/constants'
 import { formatEther } from '@ethersproject/units'
+import ClaimPoolModal from './components/ClaimModal'
 
 const Title = styled.div`
   color: #00f0e1;
@@ -40,20 +41,17 @@ const Container = styled.div`
   color: white;
   font-size: 30px;
 `
-const Text = styled.div`
-  color: #ffffff;
-  font-size: 30px;
-  display: flex;
-  font-weight: 600;
-  flex-direction: row;
-  align-items: center;
-  gap: 10px;
-`
 const TitleChildren = styled.div`
   color: #c0c0c0;
   font-size: 30px;
 `
-const Table = styled.div``
+const Table = styled.div`
+  border: 2px solid #00f0e1;
+  border-radius: 24px;
+  color: black;
+  max-width: 1000px;
+  width: 100%;
+`
 
 function Mining() {
   const { account, chainId } = useActiveWeb3React()
@@ -62,6 +60,7 @@ function Mining() {
   const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId
   const [isLoading, setIsLoading] = useState(false)
   const getPoolContract = getPoolsV3Contract(CHAIN_ID)
+
   const [mineData, setMineData] = useState({
     totalMined: 0,
     claimed: 0,
@@ -70,6 +69,7 @@ function Mining() {
     mineSpeedLevel: 0,
     startTime: 0,
     userClaimedMineLength: 0,
+    currentReward: 0,
   })
   const getMine = async () => {
     try {
@@ -81,17 +81,17 @@ function Mining() {
         const getUsersClaimMinedLength = await getPoolContract.getUsersClaimMinedLength(
           '0x22852cbcF916Dd0B32BB25680ec3a4f9ce223e52',
         )
-        const users = await getPoolContract.usersMine('0x22852cbcF916Dd0B32BB25680ec3a4f9ce223e52')
-        console.log(formatEther(users.totalMine))
+        const users = await getPoolContract.usersMine(account)
 
         setMineData({
           totalMined: Number(formatEther(users.totalMined)),
-          claimed: Number(formatEther(users.claimed)),
+          claimed: Number(users.claimed),
           remain: Number(formatEther(users.remain)),
-          mineSpeed: Number(formatEther(users.mineSpeed)),
-          mineSpeedLevel: Number(formatEther(users.mineSpeedLevel)),
-          startTime: Number(formatEther(users.startTime)),
+          mineSpeed: Number(users.mineSpeed),
+          mineSpeedLevel: Number(users.mineSpeedLevel),
+          startTime: Number(users.startTime),
           userClaimedMineLength: Number(formatEther(getUsersClaimMinedLength)),
+          currentReward: 0,
         })
         // setIsLoading(false)
       }
@@ -102,8 +102,11 @@ function Mining() {
   useEffect(() => {
     getMine()
   }, [account])
-  console.log(mineData)
+  // const current = async () => {
+  //   const newdd = await getPoolContract.currentRewardTREND(account)
+  //   console.log(newdd);
 
+  // }
   return (
     <Wrapper>
       <Container>
@@ -178,7 +181,10 @@ function Mining() {
           </Text>
         </div>
       </div>
-      <Table>{/* <TableDataPool mine={mineData} userClaimedMineLength={mineData.userClaimedMineLength} /> */}</Table>
+
+      <Table>
+        <TableDataPool mine={mineData} userClaimedMineLength={mineData.userClaimedMineLength} />
+      </Table>
     </Wrapper>
   )
 }

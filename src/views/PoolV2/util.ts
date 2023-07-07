@@ -20,6 +20,17 @@ export interface Pool {
   rateBNB2USD: number
   unit?: string
 }
+export interface Mine {
+  totalMined: number
+  claimed: number
+  remain: number
+  mineSpeed: number
+  mineSpeedLevel: number
+  startTime: number
+  userClaimedMineLength: number
+  unit?: string
+  currentReward: number
+}
 export const timeDisplayLong = (seconds: number) => {
   let y = Math.floor(seconds / 31536000)
   let mo = Math.floor((seconds % 31536000) / 2628000)

@@ -3,7 +3,7 @@ import styled, { ThemeConsumer } from 'styled-components'
 import { trendyColors } from 'style/trendyTheme'
 import { Table, Th, Td, Text } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
-import { getPoolsContract } from 'utils/contractHelpers'
+import { getPoolsContract, getPoolsV2Contract } from 'utils/contractHelpers'
 import CountUp from 'react-countup'
 import contracts from 'config/constants/contracts'
 import { Pool, timeDisplay } from 'views/Pools2/util'
@@ -79,6 +79,7 @@ const AmountData = styled.div`
 const responsiveTextSize = ['11px', '12px', '16px', '18px', '20px']
 const responsiveTextSizeBNB = ['9px', '10px', '12px', '14px', '16px']
 const responsiveTextSizeHeader = ['16px', '18px', '22px', '26px', '30px']
+
 const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength: number; pool2: Pool }>> = ({
   pool,
   pool2,
@@ -86,7 +87,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
   ...props
 }) => {
   const { account, chainId } = useActiveWeb3React()
-  const poolsContract = getPoolsContract(chainId)
+  const poolsContract = getPoolsV2Contract(chainId)
   const { t } = useTranslation()
   const [usersClaimed, setUserClaimed] = useState([])
 
@@ -95,8 +96,10 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
   }, [userClaimedLength])
   const getPool = () => {
     try {
-      if (userClaimedLength > 0) {
+      if (userClaimedLength === 0) {
         poolsContract.getUsersClaimed(pool.pid, account, 10, 0).then((res) => {
+          console.log(res)
+
           setUserClaimed(
             res.list.map((claimed: any, i: number) => {
               return {
@@ -113,6 +116,8 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
       console.log(e)
     }
   }
+  // console.log(usersClaimed);
+
   const renderClaimHistory = () => {
     return (
       <>
@@ -288,10 +293,11 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
       </>
     )
   }
+
   const renderHistory = () => {
     return (
       <>
-        {userClaimedLength > 0 &&
+        {userClaimedLength === 0 &&
           usersClaimed.map((claimHistory, index) => {
             return (
               <tr key={index}>
@@ -413,6 +419,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
           </thead>
           <tbody>
             <>{renderClaimHistory()}</>
+            <>{renderHistory()}</>
           </tbody>
         </TableScroll>
       </TablePool>
