@@ -1,6 +1,8 @@
 import { useMatchBreakpoints } from '@pancakeswap/uikit'
 import Image from 'next/image'
 import React from 'react'
+import { IOSView, isDesktop } from 'react-device-detect'
+import { Global } from 'recharts'
 import styled from 'styled-components'
 const Wrapper = styled.div`
   display: flex;
@@ -9,6 +11,7 @@ const Wrapper = styled.div`
   justify-content: center;
   background: linear-gradient(90deg, #9e86ff 0%, #2b0864 111.24%);
   gap: 10px;
+  height: 100%;
 `
 const OverviewText = styled.div`
   text-align: center;
@@ -33,13 +36,13 @@ const PoolText = styled.div`
   letter-spacing: 0.04em;
   @media screen and (max-width: 575px) {
     font-size: 30px;
-    margin-top: 100px;
+    margin-top: 50px;
   }
   @media screen and (max-width: 900px) {
     margin-top: 100px;
   }
   @media screen and (max-width: 1440px) {
-    margin-top: 200px;
+    margin-top: 170px;
   }
 `
 const RankText = styled.div`
@@ -537,6 +540,9 @@ const GlobeImage = styled.div`
   width: 450px;
   height: 150px;
   position: relative;
+  @media screen and (max-width: 575px) {
+    width: 350px;
+  }
 `
 const ButtonStake = styled.div`
   position: absolute;
@@ -559,8 +565,220 @@ const ButtonContain = styled.div`
   boxshadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 `
 
+const GlobalTextContent = styled.div`
+  font-family: Dosis;
+  font-weight: 400;
+  font-size: 18px;
+  color: rgba(255, 255, 255, 1);
+`
+const GlobalPool = styled.div`
+  position: relative;
+`
+const Table = styled.div`
+  overflow: auto;
+  height: 1930px;
+  margin-top: 270px;
+  left: 100px;
+  padding: 24px 12px 24px 12px;
+  border-radius: 15px;
+  border: 1px;
+  background: radial-gradient(
+    100% 115.26% at 0% -2.74%,
+    rgba(125, 128, 196, 0.7) 0%,
+    rgba(71, 74, 155, 0.253633) 80.17%,
+    rgba(164, 164, 164, 0.308) 100%
+  );
+  @media screen and (max-width: 575px) {
+    margin-top: 650px;
+    height: 500px;
+  }
+`
+const TitleText = styled.div`
+  font-family: Poppins, sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: rgba(255, 255, 255, 1);
+`
+const ContentText = styled.div`
+  font-family: Poppins, sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  color: rgba(255, 255, 255, 1);
+  text-align: right;
+`
+const data = [
+  {
+    day: 1,
+    price: 1,
+    speed: 0.001369863014,
+    perDay: '',
+    remain: 730,
+    claim: 1,
+  },
+  {
+    day: 2,
+    price: 1.1,
+    speed: 0.001245330012,
+    perDay: 1,
+    remain: 729,
+    claim: 1,
+  },
+  {
+    day: 3,
+    price: 1.2,
+    speed: 0.001369863014,
+    perDay: 0.9090909091,
+    remain: 728.0909091,
+    claim: 1,
+  },
+  {
+    day: 4,
+    price: 1.3,
+    speed: 0.00105374078,
+    perDay: 0.8333333333,
+    remain: 727.2575758,
+    claim: 1,
+  },
+  {
+    day: 5,
+    price: 1.4,
+    speed: 0.0009784735812,
+    perDay: 0.7692307692,
+    remain: 726.488345,
+    claim: 1,
+  },
+  {
+    day: 6,
+    price: 1.5,
+    speed: 0.0009132420091,
+    perDay: 0.7142857143,
+    remain: 725.7740593,
+    claim: 1,
+  },
+  {
+    day: 7,
+    price: 1.6,
+    speed: 0.0008561643836,
+    perDay: 0.6666666667,
+    remain: 725.1073926,
+    claim: 1,
+  },
+  {
+    day: 8,
+    price: 1.7,
+    speed: 0.0008058017728,
+    perDay: 0.625,
+    remain: 724.4823926,
+    claim: 1,
+  },
+  {
+    day: 9,
+    price: 1.8,
+    speed: 0.0007610350076,
+    perDay: 0.5882352941,
+    remain: 723.8941573,
+    claim: 1,
+  },
+  {
+    day: 10,
+    price: 1.9,
+    speed: 0.0007209805335,
+    perDay: 0.5555555556,
+    remain: 723.3386018,
+    claim: 1,
+  },
+  {
+    day: 11,
+    price: 2.0,
+    speed: 0.0006849315068,
+    perDay: 0.5263157895,
+    remain: 722.812286,
+    claim: 1,
+  },
+  {
+    day: 12,
+    price: 2.1,
+    speed: 0.0006523157208,
+    perDay: 0.5,
+    remain: 722.312286,
+    claim: 1,
+  },
+  {
+    day: 13,
+    price: 2.2,
+    speed: 0.0006226650062,
+    perDay: 0.4761904762,
+    remain: 721.8360955,
+    claim: 1,
+  },
+  {
+    day: 14,
+    price: 2.3,
+    speed: 0.0005955926147,
+    perDay: 0.4545454545,
+    remain: 721.38155,
+    claim: 1,
+  },
+  {
+    day: 15,
+    price: 2.4,
+    speed: 0.0005707762557,
+    perDay: 0.4347826087,
+    remain: 720.9467674,
+    claim: 1,
+  },
+  {
+    day: 16,
+    price: 2.5,
+    speed: 0.0005479452055,
+    perDay: 0.4166666667,
+    remain: 720.5301008,
+    claim: 1,
+  },
+  {
+    day: 17,
+    price: 2.6,
+    speed: 0.0005268703899,
+    perDay: 0.4,
+    remain: 0.3846153846,
+    claim: 1,
+  },
+  {
+    day: 18,
+    price: 2.7,
+    speed: 0.0005073566717,
+    perDay: 0.3846153846,
+    remain: 0.3703703704,
+    claim: 1,
+  },
+
+  {
+    day: 19,
+    price: 2.8,
+    speed: 0.0004892367906,
+    perDay: 0.3703703704,
+    remain: 0.3571428571,
+    claim: 1,
+  },
+  {
+    day: 20,
+    price: 2.9,
+    speed: 0.0004723665564,
+    perDay: 0.3571428571,
+    remain: 0.3448275862,
+    claim: 1,
+  },
+  {
+    day: 21,
+    price: 3,
+    speed: 0.0004566210046,
+    perDay: 0.3448275862,
+    remain: 0.3333333333,
+    claim: 1,
+  },
+]
 function Tokenomic() {
-  const { isMobile, isTablet } = useMatchBreakpoints()
+  const { isMobile, isTablet, isDesktop, isXl } = useMatchBreakpoints()
 
   return (
     <Wrapper>
@@ -643,6 +861,411 @@ function Tokenomic() {
           <Image src="/images/platinumRank.png" alt="rank" width={200} height={200} />
           <Image src="/images/diamondRank.png" alt="rank" width={200} height={200} />
         </RankImage>
+        <GlobalPool>
+          <Image src="/images/poolGlobal.png" alt="" width={900} height={600} />
+          <div
+            style={{
+              position: 'absolute',
+              top: isMobile ? '250px' : isTablet ? '-10px' : '20px',
+              left: isMobile ? '10px' : isTablet ? '1px' : '-30px',
+              maxWidth: '400px',
+            }}
+          >
+            <Image src="/images/box1.png" alt="" width={400} height={170} />
+            <GlobalTextContent
+              style={{
+                position: 'absolute',
+                left: isMobile ? '30px' : '20px',
+                top: isMobile ? '35px' : '50px',
+                padding: ' 0 30px',
+                maxWidth: isMobile ? '300px' : '350px',
+                width: '100%',
+              }}
+            >
+              The regulation states that for every 1 dollar deposited, the user will receive a 20% conversion to TREND
+              in contact mining.
+            </GlobalTextContent>
+          </div>
+          <div
+            style={{
+              position: 'absolute',
+              top: isMobile ? '400px' : isTablet ? '10px' : '50px',
+              left: isMobile ? '35px' : isTablet ? '450px' : '550px',
+            }}
+          >
+            <Image src="/images/box2.png" alt="" width={400} height={170} />
+            <GlobalTextContent
+              style={{
+                position: 'absolute',
+                left: isTablet ? '20px' : '20px',
+                top: isTablet ? '40px' : '40px',
+                padding: ' 0 20px',
+                maxWidth: isTablet ? '300px' : '300px',
+                width: '100%',
+                textAlign: 'right',
+              }}
+            >
+              The regulation states that for every 1 dollar deposited, the user will receive a 20% conversion to TREND
+              in contact mining.
+            </GlobalTextContent>
+          </div>
+
+          <div
+            style={{
+              display: isMobile ? 'none' : 'flex',
+              position: 'absolute',
+              left: isMobile ? '10px' : isTablet ? '30px' : '60px',
+              top: isMobile ? '600px' : '470px',
+            }}
+          >
+            <Image
+              src="/images/box3.png"
+              alt=""
+              width={isMobile ? 350 : isTablet ? 750 : 800}
+              height={isMobile ? 100 : 110}
+            />
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                position: 'absolute',
+                left: '40px',
+                top: '20px',
+                padding: ' 0 30px',
+                maxWidth: isMobile ? '300px' : isTablet ? '700px' : '800px',
+                width: '100%',
+              }}
+            >
+              <GlobalTextContent style={{ fontSize: '18px' }}>
+                For example, when the price of TREND increases by 100% and doubles, the claiming rate would decrease by
+                two times, resulting in a claiming rate of 1/1460 per day.
+              </GlobalTextContent>
+              <GlobalTextContent style={{ fontSize: '18px' }}>
+                For example, if A has been gifted 730 TREND, they can claim 1 TREND per day. However, if the price of
+                TREND is $2, then A can only claim 0.5 TREND per day.
+              </GlobalTextContent>
+            </div>
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: isMobile ? 'column' : 'row',
+              position: 'relative',
+              top: isMobile ? '300px' : isTablet ? '50px' : '30px',
+              left: isMobile ? '5px' : isTablet ? '30px' : '50px',
+            }}
+          >
+            <div>
+              <Image src="/images/box6.png" alt="" width={isMobile ? 360 : isTablet ? 370 : 400} height={110} />
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  position: 'absolute',
+                  left: '45px',
+                  top: '20px',
+                  padding: ' 0 25px',
+                  maxWidth: isMobile ? '300px' : '350px',
+                  width: '100%',
+                }}
+              >
+                <GlobalTextContent style={{ fontWeight: 700, fontSize: '27px' }}>Pool Standard</GlobalTextContent>
+                <GlobalTextContent style={{ fontSize: '15px' }}>
+                  Claim speed is increased by an additional{' '}
+                  <span style={{ fontWeight: 700, fontSize: '25px', fontFamily: 'Dosis' }}>0.25% </span>mean
+                  <span style={{ fontWeight: 700, fontSize: '25px', fontFamily: 'Dosis' }}> 1/730 * 1.25</span>
+                </GlobalTextContent>
+              </div>
+            </div>
+            <div style={{ marginTop: '3px' }}>
+              <Image src="/images/box7png.png" alt="" width={isMobile ? 360 : isTablet ? 370 : 400} height={110} />
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  position: 'absolute',
+                  left: isMobile ? '1px' : isTablet ? '370px' : '420px',
+                  top: isMobile ? '135px' : '20px',
+                  padding: ' 0 30px',
+                  maxWidth: isMobile ? '350px' : isTablet ? '350px' : '400px',
+                  width: '100%',
+                }}
+              >
+                <GlobalTextContent style={{ fontSize: '15px' }}>
+                  <GlobalTextContent style={{ fontWeight: 700, fontSize: '27px' }}>Pool Pro</GlobalTextContent>
+                  Claim speed is increased by an additional{' '}
+                  <span style={{ fontWeight: 700, fontSize: '25px', fontFamily: 'Dosis' }}>0.25% </span>mean
+                  <span style={{ fontWeight: 700, fontSize: '25px', fontFamily: 'Dosis' }}> 1/730 * 1.25</span>
+                </GlobalTextContent>
+              </div>
+            </div>
+          </div>
+          <div
+            style={{
+              position: 'absolute',
+              left: isMobile ? '15px' : isTablet ? '40px' : '50px',
+              top: isMobile ? '830px' : '750px',
+            }}
+          >
+            <Image
+              src="/images/box4.png"
+              alt=""
+              width={isMobile ? 350 : isTablet ? 730 : 800}
+              height={isMobile ? 100 : 70}
+            />
+            <GlobalTextContent
+              style={{
+                position: 'absolute',
+                left: isMobile ? '20px' : isTablet ? '30px' : '55px',
+                top: isMobile ? '20px' : '25px',
+                padding: ' 0 30px',
+                maxWidth: '750px',
+                width: '100%',
+                fontSize: '20px',
+              }}
+            >
+              The claim speed is determined by the highest pool that the user participates in .
+            </GlobalTextContent>
+          </div>
+          <div
+            style={{
+              position: 'absolute',
+              left: isMobile ? '15px' : isTablet ? '40px' : '50px',
+              top: isMobile ? '930px' : '830px',
+            }}
+          >
+            <Image
+              src="/images/box5.png"
+              alt=""
+              width={isMobile ? 350 : isTablet ? 730 : 800}
+              height={isMobile ? 150 : 90}
+            />
+            <GlobalTextContent
+              style={{
+                position: 'absolute',
+                left: isMobile ? '10px' : isTablet ? '30px' : '55px',
+                top: '20px',
+                padding: ' 0 30px',
+                maxWidth: isMobile ? '700px' : '750px',
+                width: '100%',
+                fontSize: '20px',
+              }}
+            >
+              When the user reaches the target level, for example Silver, the claim speed increases by x0.5 =&gt; every
+              day claim{' '}
+              <span style={{ fontWeight: 600, fontSize: '20px', fontFamily: 'Dosis' }}>
+                1/730 * 1.5 + (1/730 * 1.5 * 0.5)
+              </span>
+            </GlobalTextContent>
+          </div>
+        </GlobalPool>
+        <Table
+          style={{
+            width: isMobile ? '300px' : isTablet ? '700px' : '1000px',
+            overflow: 'auto',
+          }}
+        >
+          <table>
+            <tr style={{ gap: '10px', display: 'flex' }}>
+              <th
+                style={{
+                  width: '140px',
+                  height: '76px',
+                  borderRadius: '8px',
+                  border: '1px solid white',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  background:
+                    'radial-gradient(101.36% 117.36% at 0% -2.74%, #7D84C4 0%, rgba(112, 110, 222, 0.73) 100%) ',
+                }}
+              >
+                <TitleText>Day</TitleText>
+              </th>
+              <th
+                style={{
+                  width: '140px',
+                  height: '76px',
+                  borderRadius: '8px',
+                  border: '1px solid white',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  background:
+                    'radial-gradient(101.36% 117.36% at 0% -2.74%, #7D84C4 0%, rgba(112, 110, 222, 0.73) 100%) ',
+                }}
+              >
+                <TitleText>TREND Price</TitleText>
+              </th>
+              <th
+                style={{
+                  width: '231px',
+                  height: '76px',
+                  borderRadius: '8px',
+                  border: '1px solid white',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  background:
+                    'radial-gradient(101.36% 117.36% at 0% -2.74%, #7D84C4 0%, rgba(112, 110, 222, 0.73) 100%) ',
+                }}
+              >
+                <TitleText>Mine Speed</TitleText>
+              </th>
+              <th
+                style={{
+                  width: '231px',
+                  height: '76px',
+                  borderRadius: '8px',
+                  border: '1px solid white',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  background:
+                    'radial-gradient(101.36% 117.36% at 0% -2.74%, #7D84C4 0%, rgba(112, 110, 222, 0.73) 100%) ',
+                }}
+              >
+                <TitleText> The number of 730 TREND claimed per day</TitleText>
+              </th>
+              <th
+                style={{
+                  width: '231px',
+                  height: '76px',
+                  borderRadius: '8px',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  border: '1px solid white',
+                  background:
+                    'radial-gradient(101.36% 117.36% at 0% -2.74%, #7D84C4 0%, rgba(112, 110, 222, 0.73) 100%) ',
+                }}
+              >
+                <TitleText>Remained TREND per day</TitleText>
+              </th>
+              <th
+                style={{
+                  width: '231px',
+                  height: '76px',
+                  borderRadius: '8px',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  border: '1px solid white',
+                  background:
+                    'radial-gradient(101.36% 117.36% at 0% -2.74%, #7D84C4 0%, rgba(112, 110, 222, 0.73) 100%) ',
+                }}
+              >
+                <TitleText>The number of USD claimed</TitleText>
+              </th>
+            </tr>
+            {data.map((i) => (
+              <tr style={{ gap: '10px', display: 'flex' }}>
+                <td
+                  style={{
+                    marginTop: '10px',
+                    width: '140px',
+                    height: '76px',
+                    borderRadius: '8px',
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                    padding: '17px',
+                    alignItems: 'center',
+                    background:
+                      'radial-gradient(101.36% 117.36% at 0% -2.74%, rgba(135, 125, 196, 0.6) 0%, rgba(136, 168, 206, 0.411) 77.08%, rgba(136, 224, 214, 0.264) 100%) ',
+                  }}
+                >
+                  <ContentText>{i.day}</ContentText>
+                </td>
+                <td
+                  style={{
+                    marginTop: '10px',
+
+                    width: '140px',
+                    height: '76px',
+                    borderRadius: '8px',
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                    padding: '17px',
+                    alignItems: 'center',
+                    background:
+                      'radial-gradient(101.36% 117.36% at 0% -2.74%, rgba(135, 125, 196, 0.6) 0%, rgba(136, 168, 206, 0.411) 77.08%, rgba(136, 224, 214, 0.264) 100%) ',
+                  }}
+                >
+                  <ContentText>{i.price}</ContentText>{' '}
+                </td>
+
+                <td
+                  style={{
+                    marginTop: '10px',
+
+                    width: '231px',
+                    height: '76px',
+                    borderRadius: '8px',
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                    padding: '17px',
+                    alignItems: 'center',
+                    background:
+                      'radial-gradient(101.36% 117.36% at 0% -2.74%, rgba(135, 125, 196, 0.6) 0%, rgba(136, 168, 206, 0.411) 77.08%, rgba(136, 224, 214, 0.264) 100%) ',
+                  }}
+                >
+                  <ContentText>{i.speed}</ContentText>
+                </td>
+                <td
+                  style={{
+                    marginTop: '10px',
+
+                    width: '231px',
+                    height: '76px',
+                    borderRadius: '8px',
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                    padding: '17px',
+                    alignItems: 'center',
+                    background:
+                      'radial-gradient(101.36% 117.36% at 0% -2.74%, rgba(135, 125, 196, 0.6) 0%, rgba(136, 168, 206, 0.411) 77.08%, rgba(136, 224, 214, 0.264) 100%) ',
+                  }}
+                >
+                  <ContentText>{i.perDay}</ContentText>
+                </td>
+                <td
+                  style={{
+                    marginTop: '10px',
+
+                    background:
+                      'radial-gradient(101.36% 117.36% at 0% -2.74%, rgba(135, 125, 196, 0.6) 0%, rgba(136, 168, 206, 0.411) 77.08%, rgba(136, 224, 214, 0.264) 100%) ',
+                    width: '231px',
+                    height: '76px',
+                    borderRadius: '8px',
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                    padding: '17px',
+                    alignItems: 'center',
+                  }}
+                >
+                  <ContentText>{i.remain}</ContentText>
+                </td>
+                <td
+                  style={{
+                    marginTop: '10px',
+
+                    width: '231px',
+                    height: '76px',
+                    borderRadius: '8px',
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                    padding: '17px',
+                    alignItems: 'center',
+                    background:
+                      'radial-gradient(101.36% 117.36% at 0% -2.74%, rgba(135, 125, 196, 0.6) 0%, rgba(136, 168, 206, 0.411) 77.08%, rgba(136, 224, 214, 0.264) 100%) ',
+                  }}
+                >
+                  <ContentText>{i.claim}</ContentText>
+                </td>
+              </tr>
+            ))}
+          </table>
+        </Table>
       </Container>
     </Wrapper>
   )
