@@ -588,9 +588,15 @@ const Table = styled.div`
     rgba(71, 74, 155, 0.253633) 80.17%,
     rgba(164, 164, 164, 0.308) 100%
   );
+  @media screen and (max-width: 1024px) {
+    width: 1000px !important;
+  }
+  @media screen and (max-width: 768px) {
+    width: 700px !important;
+  }
   @media screen and (max-width: 575px) {
-    margin-top: 650px;
-    height: 500px;
+    width: 300px !important;
+    margin-top: 600px;
   }
 `
 const TitleText = styled.div`
@@ -965,15 +971,15 @@ function Tokenomic() {
                   left: '45px',
                   top: '20px',
                   padding: ' 0 25px',
-                  maxWidth: isMobile ? '300px' : '350px',
+                  maxWidth: isMobile ? '320px' : '350px',
                   width: '100%',
                 }}
               >
                 <GlobalTextContent style={{ fontWeight: 700, fontSize: '27px' }}>Pool Standard</GlobalTextContent>
                 <GlobalTextContent style={{ fontSize: '15px' }}>
                   Claim speed is increased by an additional{' '}
-                  <span style={{ fontWeight: 700, fontSize: '25px', fontFamily: 'Dosis' }}>0.25% </span>mean
-                  <span style={{ fontWeight: 700, fontSize: '25px', fontFamily: 'Dosis' }}> 1/730 * 1.25</span>
+                  <span style={{ fontWeight: 700, fontSize: '25px' }}>0.25% </span>mean
+                  <span style={{ fontWeight: 700, fontSize: '25px' }}> 1/730 * 1.25</span>
                 </GlobalTextContent>
               </div>
             </div>
@@ -994,8 +1000,8 @@ function Tokenomic() {
                 <GlobalTextContent style={{ fontSize: '15px' }}>
                   <GlobalTextContent style={{ fontWeight: 700, fontSize: '27px' }}>Pool Pro</GlobalTextContent>
                   Claim speed is increased by an additional{' '}
-                  <span style={{ fontWeight: 700, fontSize: '25px', fontFamily: 'Dosis' }}>0.25% </span>mean
-                  <span style={{ fontWeight: 700, fontSize: '25px', fontFamily: 'Dosis' }}> 1/730 * 1.25</span>
+                  <span style={{ fontWeight: 700, fontSize: '25px' }}>0.25% </span>mean
+                  <span style={{ fontWeight: 700, fontSize: '25px' }}> 1/730 * 1.25</span>
                 </GlobalTextContent>
               </div>
             </div>
@@ -1049,19 +1055,17 @@ function Tokenomic() {
                 maxWidth: isMobile ? '700px' : '750px',
                 width: '100%',
                 fontSize: '20px',
+                lineHeight: isMobile ? '20px' : '25px',
               }}
             >
               When the user reaches the target level, for example Silver, the claim speed increases by x0.5 =&gt; every
-              day claim{' '}
-              <span style={{ fontWeight: 600, fontSize: '20px', fontFamily: 'Dosis' }}>
-                1/730 * 1.5 + (1/730 * 1.5 * 0.5)
-              </span>
+              day claim <span style={{ fontWeight: 600, fontSize: '20px' }}>1/730 * 1.5 + (1/730 * 1.5 * 0.5)</span>
             </GlobalTextContent>
           </div>
         </GlobalPool>
         <Table
           style={{
-            width: isMobile ? '300px' : isTablet ? '700px' : '1000px',
+            width: isMobile ? '300px' : isTablet ? '700px' : '1280px',
             overflow: 'auto',
           }}
         >
