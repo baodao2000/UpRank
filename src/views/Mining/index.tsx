@@ -1,9 +1,16 @@
 import { useMatchBreakpoints } from '@pancakeswap/uikit'
 import Image from 'next/image'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { IOSView, isDesktop } from 'react-device-detect'
 import { Global } from 'recharts'
 import styled from 'styled-components'
+import ClaimPoolModal from './components/ClaimModal'
+import TrendyPageLoader from 'components/Loader/TrendyPageLoader'
+import TableDataPool from './components/yourMineHistory'
+import { getPoolsV3Contract } from 'utils/contractHelpers'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import { ChainId } from '../../../packages/swap-sdk/src/constants'
+import { formatEther } from '@ethersproject/units'
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -11,7 +18,7 @@ const Wrapper = styled.div`
   justify-content: center;
   background: linear-gradient(90deg, #9e86ff 0%, #2b0864 111.24%);
   gap: 10px;
-  height: 900px;
+  height: 1200px;
   @media screen and (max-width: 575px) {
     height: 100%;
   }
@@ -113,7 +120,13 @@ const Button = styled.button`
   border: 1px;
   background: linear-gradient(0deg, #ececec, #ececec), linear-gradient(0deg, #ffffff, #ffffff);
 `
-
+const TableMine = styled.div`
+  border: 2px solid #00f0e1;
+  border-radius: 24px;
+  color: black;
+  max-width: 1000px;
+  width: 100%;
+`
 const data = [
   {
     title: 'Mined Trend',
@@ -133,6 +146,62 @@ const data = [
 ]
 function Mining() {
   const { isMobile, isTablet, isDesktop, isXl } = useMatchBreakpoints()
+  const { account, chainId } = useActiveWeb3React()
+  const [loadingPage, setLoadingPage] = useState(true)
+  const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId
+  const [isLoading, setIsLoading] = useState(false)
+  const getPoolContract = getPoolsV3Contract(CHAIN_ID)
+
+  const [mineData, setMineData] = useState({
+    totalMined: 0,
+    claimed: 0,
+    remain: 0,
+    mineSpeed: 0,
+    mineSpeedLevel: 0,
+    startTime: 0,
+    userClaimedMineLength: 0,
+    currentReward: 0,
+  })
+  useEffect(() => {
+    if (!account) {
+      setIsLoading(true)
+    } else {
+      setIsLoading(false)
+      getMine()
+    }
+  }, [account])
+
+  const getMine = async () => {
+    try {
+      if (!account) {
+        setIsLoading(true)
+      } else {
+        setIsLoading(false)
+        const getUsersClaimMinedLength = await getPoolContract.getUsersClaimMinedLength(account)
+        const users = await getPoolContract.usersMine(account)
+        const currentRewardTREND = await getPoolContract.currentRewardTREND(account)
+        setMineData({
+          totalMined: Number(formatEther(users.totalMined)),
+          claimed: Number(users.claimed),
+          remain: Number(formatEther(users.remain)),
+          mineSpeed: Number(users.mineSpeed),
+          mineSpeedLevel: Number(users.mineSpeedLevel),
+          startTime: Number(users.startTime),
+          userClaimedMineLength: Number(formatEther(getUsersClaimMinedLength)),
+          currentReward: Number(formatEther(currentRewardTREND)),
+        })
+        // setIsLoading(false)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  // const current = async () => {
+  //   const newdd = await getPoolContract.currentRewardTREND(account)
+  //   console.log(newdd);
+
+  // }
 
   return (
     <Wrapper>
@@ -273,6 +342,9 @@ function Mining() {
           <Image src="/images/chart.png" alt="" width={isMobile ? 250 : 600} height={300} />
         </div>
       </Container>
+      <TableMine>
+        <TableDataPool mine={mineData} userClaimedMineLength={mineData.userClaimedMineLength} />
+      </TableMine>
     </Wrapper>
   )
 }

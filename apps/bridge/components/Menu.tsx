@@ -31,7 +31,7 @@ const StyledMenuItem = styled.a<any>`
   display: flex;
   align-items: center;
 
-  color: ${({ theme, $isActive }) => ($isActive ? theme.colors.secondary : theme.colors.textSubtle)};
+  color: ${({ theme, $isActive }) => ($isActive ? theme.colors.white : theme.colors.textSubtle)};
   font-size: 16px;
   font-weight: ${({ $isActive }) => ($isActive ? '600' : '400')};
 
