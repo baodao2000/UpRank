@@ -75,7 +75,6 @@ const ClaimPoolModal = ({
 }: {
   // onSuccess: (dataModal) => void
   onSuccess: () => void
-
   onDismiss: () => void
   mine: Mine
 }) => {
@@ -87,29 +86,9 @@ const ClaimPoolModal = ({
   const mineContract = usePoolsV3Contract()
   const power = Number(mine.mineSpeed + mine.mineSpeedLevel) / 100
   const [data, setData] = useState([])
-  // const mineV2Contract = usePoolsV2Contract()
   const { chainId } = useActiveWeb3React()
   const date = Math.floor(new Date().getTime() / 1000)
 
-  // const handleConfirmData = async () => {
-  //   setData(
-  //     [{
-  //       amount: 50000,
-  //       date: date,
-  //       power: power,
-  //       totalMined: mine.totalMined,
-  //     }
-
-  //     ]
-  //   )
-  //   console.log(data)
-  // }
-  // const handleConfirm = async () => {
-  //   console.log(data)
-  //   onSuccess(data)
-  //   onDismiss()
-  // }
-  console.log(mine)
   const { isConfirming, handleConfirm } = useConfirmTransaction({
     onConfirm: () => {
       return callWithMarketGasPrice(mineContract, 'claimRewardTREND')
@@ -125,7 +104,7 @@ const ClaimPoolModal = ({
   return (
     <Modal
       style={depositModal}
-      title={'CLAIM'}
+      title={'CLAIM TTREND'}
       onDismiss={onDismiss}
       hideCloseButton={false}
       borderRadius={25}
@@ -134,20 +113,9 @@ const ClaimPoolModal = ({
     >
       <Wrapper>
         <ClaimAmount>
-          <Text fontSize="18px">Current reward:</Text>
+          <Text fontSize="18px">Current reward trend:</Text>
           <Text fontSize="16px" style={{ display: 'flex' }}>
-            {
-              <CountUp
-                separator=","
-                start={0}
-                preserveValue
-                delay={0}
-                end={Number(mine.currentReward)}
-                decimals={mine.currentReward === 0 ? 0 : 2}
-                duration={0.5}
-              />
-            }
-            $&ensp;~&ensp;
+            {/* $&ensp;~&ensp; */}
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <CountUp
                 separator=","
@@ -158,8 +126,7 @@ const ClaimPoolModal = ({
                 decimals={mine.currentReward === 0 ? 0 : 4}
                 duration={0.5}
               />
-              &ensp;
-              <img src={`/images/chains/${chainId}.png`} alt="mine name" width={18} />
+              &ensp; ${/* <img src={`/images/chains/${chainId}.png`} alt="mine name" width={18} /> */}
             </div>
           </Text>
           <Text></Text>
@@ -182,8 +149,6 @@ const ClaimPoolModal = ({
             'Claim'
           )}
         </StyledButton>
-        {/* <Button onClick={handleConfirm}>Claim</Button>
-        <Button onClick={handleConfirmData}>Claim Data</Button> */}
       </Wrapper>
     </Modal>
   )

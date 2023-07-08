@@ -13,6 +13,7 @@ import moment from 'moment'
 import { formatEther } from '@ethersproject/units'
 import Dots from 'components/Loader/Dots'
 import ClaimPoolModal from './ClaimModal'
+import { ThreeDots } from 'views/Pool/components/DepositModal'
 
 // STYLE
 const TableScroll = styled.div`
@@ -140,51 +141,18 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
   const [tabActive, setTabActive] = useState(true)
   const [totalMined, setTotalMine] = useState()
   const getPoolContract = getPoolsV3Contract(chainId)
-
+  const [rewardTrend, setRewardTrend] = useState(0)
+  const [isLoading, setIsLoading] = useState(false)
   useEffect(() => {
-    // getMine()
+    getMine()
+    getCurrenReward()
   }, [userClaimedMineLength, account])
   const power = Number(mine.mineSpeed + mine.mineSpeedLevel) / 100
-  const [mineHistory, setMineHistory] = useState([
-    {
-      amount: 100000,
-      date: 16889,
-      power: power,
-      totalMined: mine.totalMined,
-    },
-    {
-      amount: 51321312,
-      date: 16899,
-      power: power,
-      totalMined: mine.totalMined,
-    },
-    {
-      amount: 146546565,
-      date: 16899,
-      power: power,
-      totalMined: mine.totalMined,
-    },
-  ])
-  // const handleSuccess = async (data) => {
-  //   await mineHistory.unshift(...data)
-  //   console.log(mineHistory);
 
-  //   // await renderHistory()
-  //   setMineHistory(mineHistory)
-  // }
   const handleSuccess = () => {
     getMine()
+    getCurrenReward()
   }
-  // const [openClaimModal, onDismissModal] = useModal(
-  //   <ClaimPoolModal
-  //     onDismiss={() => onDismissModal()}
-  //     onSuccess={(dataModal) => handleSuccess(dataModal)}
-  //     mine={mine}
-  //   />,
-  //   true,
-  //   false,
-  //   'removeModal',
-  // )
 
   const [openClaimModal, onDismissModal] = useModal(
     <ClaimPoolModal onDismiss={() => onDismissModal()} onSuccess={() => handleSuccess()} mine={mine} />,
@@ -192,23 +160,35 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
     false,
     'removeModal',
   )
-  console.log(mine.totalMined)
 
+  const getCurrenReward = async () => {
+    const currenReward = getPoolContract.currentRewardTREND(account)
+    setRewardTrend(Number(currenReward.toString()))
+    //  console.log(currenReward);
+  }
   const getMine = async () => {
     try {
-      if (userClaimedMineLength === 0) {
-        await getPoolContract.getUsersClaimMined(account, 10, 0).then((res) => {
-          setUserClaimed(
-            res.list.map((claimed: any, i: number) => {
-              return {
-                amount: Number(formatEther(claimed.amount)),
-                date: Number(claimed.date.toString()),
-                power: (Number(claimed.interrest.toString()) / 10000) * 365,
-                totalLock: Number(formatEther(claimed.totalLock)),
-              }
-            }),
-          )
-        })
+      if (!account) {
+        setIsLoading(true)
+      } else {
+        setIsLoading(false)
+        if (userClaimedMineLength === 0) {
+          const currenReward = await getPoolContract.currentRewardTREND(account)
+          const currentRewardTREND = currenReward.toString()
+          await getPoolContract.getUsersClaimMined(account, 10, 0).then((res) => {
+            setUserClaimed(
+              res.list.map((claimed: any, i: number) => {
+                return {
+                  date: Number(claimed.date.toString()),
+                  amount: Number(formatEther(claimed.amount)),
+                  totalLock: Number(formatEther(claimed.totalLock)),
+                  power: Number(claimed.interrest.toString()) / 100,
+                  currentReward: Number(formatEther(currentRewardTREND)),
+                }
+              }),
+            )
+          })
+        }
       }
     } catch (e) {
       console.log(e)
@@ -243,7 +223,8 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                       end={mine.totalMined}
                       decimals={mine.totalMined > 0 ? 4 : 0}
                       duration={0.5}
-                    />
+                    />{' '}
+                    $
                   </Text>
                 </AmountData>
               )}
@@ -264,7 +245,8 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                       end={mine.totalMined}
                       decimals={mine.claimed > 0 ? 4 : 0}
                       duration={0.5}
-                    />
+                    />{' '}
+                    $
                   </Text>
                 </AmountData>
               )}
@@ -285,13 +267,14 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                       end={mine.remain}
                       decimals={mine.remain > 0 ? 4 : 0}
                       duration={0.5}
-                    />
+                    />{' '}
+                    $
                   </Text>
                 </AmountData>
               )}
             </Td>
             <Td textAlign={'right'}>
-              {mine.currentReward === 0 ? (
+              {/* {mine.currentReward === 0 ? (
                 <Text fontSize={responsiveTextSize}>0</Text>
               ) : (
                 <AmountData>
@@ -324,7 +307,8 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                     <img src={`/images/chains/${chainId}.png`} alt="mine name" width={18} style={{ marginLeft: 6 }} />
                   </Text>
                 </AmountData>
-              )}
+              )} */}
+              <Text>0</Text>
             </Td>
             <Td textAlign={'center'}>
               <Text fontSize={responsiveTextSize}>
@@ -337,15 +321,16 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
       </>
     )
   }
+
   const renderHistory = () => {
     return (
       <>
-        {mine.userClaimedMineLength === 0 &&
-          mineHistory.map((claimHistory, index) => {
+        {mine.userClaimedMineLength > 0 &&
+          usersClaimed.map((claimHistory, index) => {
             return (
               <tr key={index}>
-                <Td textAlign={'center'}>
-                  <Text fontSize={responsiveTextSize}> {moment.unix(claimHistory.date * 86400).format('L')}</Text>
+                <Td textAlign={'left'}>
+                  <Text fontSize={responsiveTextSize}> {moment.unix(claimHistory.date * 300).format('L')}</Text>
                 </Td>
                 <Td textAlign={'center'}>
                   <Text fontSize={responsiveTextSize}>
@@ -365,18 +350,6 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                     <Text fontSize={responsiveTextSize}>0</Text>
                   ) : (
                     <AmountData>
-                      {/* <Text  fontSize={responsiveTextSize}>
-                        ~
-                        <CountUp
-                          start={0}
-                          preserveValue
-                          delay={0}
-                          end={claimHistory.totalMined}
-                          decimals={claimHistory.totalMined > 0 ? 2 : 0}
-                          duration={0.5}
-                        />
-                        $
-                      </Text> */}
                       <Text fontSize={responsiveTextSizeBNB}>
                         <CountUp
                           start={0}
@@ -396,20 +369,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                     <Text fontSize={responsiveTextSize}>0</Text>
                   ) : (
                     <AmountData>
-                      {/* <Text fontSize={responsiveTextSize}>
-                        ~
-                        <CountUp
-                          start={0}
-                          preserveValue
-                          delay={0}
-                          end={claimHistory.amount}
-                          decimals={claimHistory.amount > 0 ? 4 : 0}
-                          duration={0.5}
-                        />
-                        $
-                      </Text> */}
                       <Text fontSize={responsiveTextSizeBNB}>
-                        ~
                         <CountUp
                           start={0}
                           preserveValue
@@ -417,8 +377,8 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                           end={claimHistory.amount}
                           decimals={claimHistory.amount > 0 ? 4 : 0}
                           duration={0.5}
-                        />
-                        {mine.unit}
+                        />{' '}
+                        ${mine.unit}
                       </Text>
                     </AmountData>
                   )}
@@ -428,18 +388,6 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                     <Text fontSize={responsiveTextSize}>0</Text>
                   ) : (
                     <AmountData>
-                      {/* <Text  fontSize={responsiveTextSize}>
-                        ~
-                        <CountUp
-                          start={0}
-                          preserveValue
-                          delay={0}
-                          end={claimHistory.totalMined}
-                          decimals={claimHistory.totalMined > 0 ? 2 : 0}
-                          duration={0.5}
-                        />
-                        $
-                      </Text> */}
                       <Text fontSize={responsiveTextSizeBNB}>
                         <CountUp
                           start={0}
@@ -464,8 +412,8 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                           start={0}
                           preserveValue
                           delay={0}
-                          end={claimHistory.totalMined}
-                          decimals={claimHistory.totalMined > 0 ? 4 : 0}
+                          end={claimHistory.currentReward}
+                          decimals={claimHistory.currentReward > 0 ? 4 : 0}
                           duration={0.5}
                         />{' '}
                         ${mine.unit}
@@ -484,70 +432,91 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
   }
   return (
     <>
-      <TableHeader>
-        <Text style={{ color: '#00f0e1' }} textAlign="center" fontSize={responsiveTextSizeHeader}>
-          Your Mined History
-        </Text>
-      </TableHeader>
-      <TablePool>
-        <TableScroll className="scroll">
-          <table style={{ width: '100%' }}>
-            <thead>
-              <tr>
-                <Th textAlign="left">
-                  <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
-                    Date Time
-                  </Text>
-                </Th>
-                <Th textAlign="center">
-                  <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
-                    Power
-                  </Text>
-                </Th>
-                <Th textAlign="right">
-                  <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
-                    TotalMine
-                  </Text>
-                </Th>
-                <Th textAlign="right">
-                  <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
-                    Claimed
-                  </Text>
-                </Th>
-                <Th textAlign="right">
-                  <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
-                    Remaind
-                  </Text>
-                </Th>
-                <Th textAlign="right">
-                  <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
-                    Available
-                  </Text>
-                </Th>
+      {isLoading === true ? (
+        <ThreeDots style={{ textAlign: 'center' }} className="loading">
+          Loading
+          <span>.</span>
+          <span>.</span>
+          <span>.</span>
+        </ThreeDots>
+      ) : (
+        <>
+          <TableHeader>
+            <Text style={{ color: '#00f0e1' }} textAlign="center" fontSize={responsiveTextSizeHeader}>
+              Your Mined History
+            </Text>
+          </TableHeader>
+          <TablePool>
+            <TableScroll className="scroll">
+              <table style={{ width: '100%' }}>
+                <thead>
+                  <tr>
+                    <Th textAlign="left">
+                      <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
+                        Date Time
+                      </Text>
+                    </Th>
+                    <Th textAlign="center">
+                      <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
+                        Power
+                      </Text>
+                    </Th>
+                    <Th textAlign="right">
+                      <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
+                        TotalMine
+                      </Text>
+                    </Th>
+                    <Th textAlign="right">
+                      <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
+                        Claimed
+                      </Text>
+                    </Th>
+                    <Th textAlign="right">
+                      <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
+                        Remaind
+                      </Text>
+                    </Th>
+                    <Th textAlign="right">
+                      <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
+                        Available
+                      </Text>
+                    </Th>
 
-                <Th textAlign="center">
-                  <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
-                    Action
-                  </Text>
-                </Th>
-              </tr>
-            </thead>
-            <tbody>
-              <>{renderClaimHistory()}</>
-            </tbody>
-          </table>
-        </TableScroll>
-      </TablePool>
-      <Button
-        style={{ color: '#6216B0', backgroundColor: '#D9D9D9' }}
-        variant={mine.currentReward > 0 ? 'danger' : 'light'}
-        disabled={false}
-        width={['120px', '150px', '180px', '200px']}
-        onClick={openClaimModal}
-        // scale={isMobile ? 'sm' : 'md'}
-      >
-        Claim
-      </Button>
+                    <Th textAlign="center">
+                      <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
+                        Action
+                      </Text>
+                    </Th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <>{renderClaimHistory()}</>
+                </tbody>
+              </table>
+            </TableScroll>
+          </TablePool>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              margin: '15px',
+              width: '100%',
+              justifyContent: 'center',
+            }}
+          >
+            <Button
+              style={{ color: '#6216B0', backgroundColor: '#D9D9D9' }}
+              variant={mine.currentReward > 0 ? 'danger' : 'light'}
+              disabled={false}
+              width={['120px', '150px', '180px', '200px']}
+              onClick={openClaimModal}
+              // scale={isMobile ? 'sm' : 'md'}
+            >
+              Claim
+            </Button>
+          </div>
+        </>
+      )}
     </>
   )
 }
