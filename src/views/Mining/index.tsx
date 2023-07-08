@@ -82,7 +82,7 @@ function Mining() {
           '0x22852cbcF916Dd0B32BB25680ec3a4f9ce223e52',
         )
         const users = await getPoolContract.usersMine(account)
-
+        const currentRewardTREND = await getPoolContract.currentRewardTREND(account)
         setMineData({
           totalMined: Number(formatEther(users.totalMined)),
           claimed: Number(users.claimed),
@@ -91,7 +91,7 @@ function Mining() {
           mineSpeedLevel: Number(users.mineSpeedLevel),
           startTime: Number(users.startTime),
           userClaimedMineLength: Number(formatEther(getUsersClaimMinedLength)),
-          currentReward: 0,
+          currentReward: Number(formatEther(currentRewardTREND)),
         })
         // setIsLoading(false)
       }

@@ -3,9 +3,8 @@
     "inputs": [
       { "internalType": "contract IRefferal", "name": "_refer", "type": "address" },
       { "internalType": "address", "name": "gnosisSafeAddress", "type": "address" },
-      { "internalType": "contract IPancakeRouter", "name": "pancakeRouteAddress", "type": "address" },
-      { "internalType": "address", "name": "_wBnbAddress", "type": "address" },
-      { "internalType": "address", "name": "_usdAddress", "type": "address" }
+      { "internalType": "contract ILiquidity", "name": "_liquidity", "type": "address" },
+      { "internalType": "address", "name": "mm", "type": "address" }
     ],
     "stateMutability": "nonpayable",
     "type": "constructor"
@@ -56,16 +55,14 @@
   },
   {
     "anonymous": false,
-    "inputs": [{ "indexed": false, "internalType": "contract IRefferal", "name": "iRefer", "type": "address" }],
-    "name": "SetRefer",
+    "inputs": [{ "indexed": false, "internalType": "contract ILiquidity", "name": "_liquidity", "type": "address" }],
+    "name": "SetLiquidity",
     "type": "event"
   },
   {
     "anonymous": false,
-    "inputs": [
-      { "indexed": false, "internalType": "contract IPancakeRouter", "name": "pancakeRouteAddress", "type": "address" }
-    ],
-    "name": "SetRoute",
+    "inputs": [{ "indexed": false, "internalType": "contract IRefferal", "name": "iRefer", "type": "address" }],
+    "name": "SetRefer",
     "type": "event"
   },
   {
@@ -132,8 +129,22 @@
   },
   {
     "inputs": [],
+    "name": "MATIC2USDT",
+    "outputs": [{ "internalType": "uint256", "name": "price", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "MM",
     "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "TREND2USDT",
+    "outputs": [{ "internalType": "uint256", "name": "price", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },
@@ -173,13 +184,6 @@
     "inputs": [{ "internalType": "uint256", "name": "amount", "type": "uint256" }],
     "name": "bnb2USD",
     "outputs": [{ "internalType": "uint256", "name": "_usd", "type": "uint256" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "bnbPrice",
-    "outputs": [{ "internalType": "uint256[]", "name": "amounts", "type": "uint256[]" }],
     "stateMutability": "view",
     "type": "function"
   },
@@ -456,6 +460,13 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "liquidity",
+    "outputs": [{ "internalType": "contract ILiquidity", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [{ "internalType": "uint256", "name": "pid", "type": "uint256" }],
     "name": "minMaxUSD2BNB",
     "outputs": [
@@ -476,13 +487,6 @@
     "inputs": [],
     "name": "owner",
     "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "pancakeRouter",
-    "outputs": [{ "internalType": "contract IPancakeRouter", "name": "", "type": "address" }],
     "stateMutability": "view",
     "type": "function"
   },
@@ -575,6 +579,13 @@
   },
   { "inputs": [], "name": "setIsLP", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
   {
+    "inputs": [{ "internalType": "contract ILiquidity", "name": "_liquidity", "type": "address" }],
+    "name": "setLiquidity",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [{ "internalType": "address", "name": "mm", "type": "address" }],
     "name": "setMM",
     "outputs": [],
@@ -591,13 +602,6 @@
   {
     "inputs": [{ "internalType": "contract IRefferal", "name": "iRefer", "type": "address" }],
     "name": "setRefer",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [{ "internalType": "contract IPancakeRouter", "name": "pancakeRouteAddress", "type": "address" }],
-    "name": "setRoute",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -624,20 +628,6 @@
     "name": "togglePool",
     "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [{ "internalType": "address", "name": "token", "type": "address" }],
-    "name": "tokenPrice",
-    "outputs": [{ "internalType": "uint256[]", "name": "amounts", "type": "uint256[]" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [{ "internalType": "address", "name": "token", "type": "address" }],
-    "name": "tokenPriceWithBNBPair",
-    "outputs": [{ "internalType": "uint256[]", "name": "amounts", "type": "uint256[]" }],
-    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -715,13 +705,6 @@
     "name": "updatePool",
     "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "usd",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
-    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -874,13 +857,6 @@
       { "internalType": "uint256", "name": "totalVote", "type": "uint256" },
       { "internalType": "bool", "name": "status", "type": "bool" }
     ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "wBnb",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
     "stateMutability": "view",
     "type": "function"
   }

@@ -73,7 +73,9 @@ const ClaimPoolModal = ({
   onDismiss,
   onSuccess,
 }: {
-  onSuccess: (dataModal) => void
+  // onSuccess: (dataModal) => void
+  onSuccess: () => void
+
   onDismiss: () => void
   mine: Mine
 }) => {
@@ -83,41 +85,42 @@ const ClaimPoolModal = ({
   const { toastSuccess, toastError } = useToast()
   const [isValidAmount, setIsValidAmount] = useState(true)
   const mineContract = usePoolsV3Contract()
-  const [data, setData] = useState([])
   const power = Number(mine.mineSpeed + mine.mineSpeedLevel) / 100
-
+  const [data, setData] = useState([])
   // const mineV2Contract = usePoolsV2Contract()
   const { chainId } = useActiveWeb3React()
   const date = Math.floor(new Date().getTime() / 1000)
 
-  const handleConfirmData = async () => {
-    setData([
-      {
-        amount: 50000,
-        date: date,
-        power: power,
-        totalMined: mine.totalMined,
-      },
-    ])
-    console.log(data)
-  }
-  const handleConfirm = async () => {
-    console.log(data)
+  // const handleConfirmData = async () => {
+  //   setData(
+  //     [{
+  //       amount: 50000,
+  //       date: date,
+  //       power: power,
+  //       totalMined: mine.totalMined,
+  //     }
 
-    onSuccess(data)
-  }
-  // console.log(mine)
-  //   const { isConfirming, handleConfirm } = useConfirmTransaction({
-  //     onConfirm: () => {
-  //       return callWithMarketGasPrice(mineContract, 'claimReward', [mine.pid])
-  //     },
-  //     onSuccess: async ({ receipt }) => {
-  //       setConfirmedTxHash(receipt.transactionHash)
-  //       toastSuccess(t('Claim reward successfully !'), <ToastDescriptionWithTx txHash={receipt.transactionHash} />)
-  //       onDismiss()
-  //       onSuccess()
-  //     },
-  //   })
+  //     ]
+  //   )
+  //   console.log(data)
+  // }
+  // const handleConfirm = async () => {
+  //   console.log(data)
+  //   onSuccess(data)
+  //   onDismiss()
+  // }
+  console.log(mine)
+  const { isConfirming, handleConfirm } = useConfirmTransaction({
+    onConfirm: () => {
+      return callWithMarketGasPrice(mineContract, 'claimRewardTREND')
+    },
+    onSuccess: async ({ receipt }) => {
+      setConfirmedTxHash(receipt.transactionHash)
+      toastSuccess(t('Claim reward successfully !'), <ToastDescriptionWithTx txHash={receipt.transactionHash} />)
+      onDismiss()
+      onSuccess()
+    },
+  })
 
   return (
     <Modal
@@ -132,7 +135,7 @@ const ClaimPoolModal = ({
       <Wrapper>
         <ClaimAmount>
           <Text fontSize="18px">Current reward:</Text>
-          {/* <Text fontSize="16px" style={{ display: 'flex' }}>
+          <Text fontSize="16px" style={{ display: 'flex' }}>
             {
               <CountUp
                 separator=","
@@ -158,12 +161,12 @@ const ClaimPoolModal = ({
               &ensp;
               <img src={`/images/chains/${chainId}.png`} alt="mine name" width={18} />
             </div>
-          </Text> */}
+          </Text>
           <Text></Text>
           <Text></Text>
           <Text></Text>
         </ClaimAmount>
-        {/* <StyledButton
+        <StyledButton
           variant={'danger'}
           width="180px"
           disabled={isConfirming || (!isValidAmount ? true : false)}
@@ -178,9 +181,9 @@ const ClaimPoolModal = ({
           ) : (
             'Claim'
           )}
-        </StyledButton> */}
-        <Button onClick={handleConfirm}>Claim</Button>
-        <Button onClick={handleConfirmData}>Claim Data</Button>
+        </StyledButton>
+        {/* <Button onClick={handleConfirm}>Claim</Button>
+        <Button onClick={handleConfirmData}>Claim Data</Button> */}
       </Wrapper>
     </Modal>
   )

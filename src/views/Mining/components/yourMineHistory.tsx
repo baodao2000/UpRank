@@ -140,14 +140,12 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
   const [tabActive, setTabActive] = useState(true)
   const [totalMined, setTotalMine] = useState()
   const getPoolContract = getPoolsV3Contract(chainId)
-  const [data, setData] = useState([])
 
   useEffect(() => {
-    getMine()
+    // getMine()
   }, [userClaimedMineLength, account])
   const power = Number(mine.mineSpeed + mine.mineSpeedLevel) / 100
-  console.log(userClaimedMineLength)
-  const mineHistory = [
+  const [mineHistory, setMineHistory] = useState([
     {
       amount: 100000,
       date: 16889,
@@ -166,36 +164,46 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
       power: power,
       totalMined: mine.totalMined,
     },
-  ]
-  console.log(mineHistory)
-  const handleSuccess = (dataModal) => {
-    mineHistory.push(dataModal)
-    console.log(mineHistory)
+  ])
+  // const handleSuccess = async (data) => {
+  //   await mineHistory.unshift(...data)
+  //   console.log(mineHistory);
+
+  //   // await renderHistory()
+  //   setMineHistory(mineHistory)
+  // }
+  const handleSuccess = () => {
+    getMine()
   }
+  // const [openClaimModal, onDismissModal] = useModal(
+  //   <ClaimPoolModal
+  //     onDismiss={() => onDismissModal()}
+  //     onSuccess={(dataModal) => handleSuccess(dataModal)}
+  //     mine={mine}
+  //   />,
+  //   true,
+  //   false,
+  //   'removeModal',
+  // )
+
   const [openClaimModal, onDismissModal] = useModal(
-    <ClaimPoolModal
-      onDismiss={() => onDismissModal()}
-      onSuccess={(dataModal) => handleSuccess(dataModal)}
-      mine={mine}
-    />,
+    <ClaimPoolModal onDismiss={() => onDismissModal()} onSuccess={() => handleSuccess()} mine={mine} />,
     true,
     false,
     'removeModal',
   )
-  console.log(data)
+  console.log(mine.totalMined)
 
   const getMine = async () => {
     try {
       if (userClaimedMineLength === 0) {
         await getPoolContract.getUsersClaimMined(account, 10, 0).then((res) => {
-          console.log(res)
-
           setUserClaimed(
             res.list.map((claimed: any, i: number) => {
               return {
                 amount: Number(formatEther(claimed.amount)),
                 date: Number(claimed.date.toString()),
-                interest: (Number(claimed.interrest.toString()) / 10000) * 365,
+                power: (Number(claimed.interrest.toString()) / 10000) * 365,
                 totalLock: Number(formatEther(claimed.totalLock)),
               }
             }),
@@ -206,7 +214,6 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
       console.log(e)
     }
   }
-
   const renderClaimHistory = () => {
     return (
       <>
@@ -375,8 +382,8 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                           start={0}
                           preserveValue
                           delay={0}
-                          end={claimHistory.totalMined}
-                          decimals={claimHistory.totalMined > 0 ? 4 : 0}
+                          end={mine.totalMined}
+                          decimals={mine.totalMined > 0 ? 2 : 0}
                           duration={0.5}
                         />{' '}
                         ${mine.unit}
@@ -448,7 +455,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                   )}
                 </Td>
                 <Td textAlign={'right'}>
-                  {claimHistory.totalMined === 0 ? (
+                  {claimHistory.totalMined > 0 ? (
                     <Text fontSize={responsiveTextSize}>0</Text>
                   ) : (
                     <AmountData>

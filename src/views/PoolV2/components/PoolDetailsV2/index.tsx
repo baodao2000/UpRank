@@ -185,7 +185,7 @@ const Pool = ({ poolId }) => {
         // const pool2 = await getPoolV2Contract.pools(poolId)
         const currentReward = await getPoolContract.currentReward(poolId, account)
         // const currentReward2 = await getPoolV2Contract.currentReward(poolId, account)
-        const rateBnbUsd = await getPoolContract.bnbPrice()
+        const rateBnbUsd = await getPoolContract.MATIC2USDT()
         const users = await getPoolContract.users(account, poolId)
         // const users2 = await getPoolV2Contract.users(account, poolId)
         // console.log(Number(users2.startTime))
@@ -207,7 +207,7 @@ const Pool = ({ poolId }) => {
           startTime: Number(users.startTime),
           userTotalLock: Number(formatEther(users.totalLock)),
           userClaimedLength: Number(getUsersClaimedLength),
-          rateBNB2USD: Number(formatEther(rateBnbUsd[0])) / Number(formatEther(rateBnbUsd[1])),
+          rateBNB2USD: Number(formatEther(rateBnbUsd)),
           unit,
           minUSD2BNB: Number(formatEther(minMaxUSD2BNB._min)),
           maxUSD2BNB: Number(formatEther(minMaxUSD2BNB._max)),
@@ -227,7 +227,7 @@ const Pool = ({ poolId }) => {
           startTime: Number(users.startTime),
           userTotalLock: Number(formatEther(users.totalLock)),
           userClaimedLength: Number(getUsersClaimedLength),
-          rateBNB2USD: Number(formatEther(rateBnbUsd[0])) / Number(formatEther(rateBnbUsd[1])),
+          rateBNB2USD: Number(formatEther(rateBnbUsd)),
           unit,
           minUSD2BNB: Number(formatEther(minMaxUSD2BNB._min)),
           maxUSD2BNB: Number(formatEther(minMaxUSD2BNB._max)),

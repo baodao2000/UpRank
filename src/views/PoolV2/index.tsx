@@ -344,22 +344,22 @@ export const getRankImage = (index) => {
       obj.img = '/images/poolsV2/silver.svg?t=1'
       obj.title = 'Silver'
       break
-    case 2:
-      obj.img = '/images/poolsV2/gold.svg?t=1'
-      obj.title = 'Gold'
-      break
-    case 3:
-      obj.img = '/images/poolsV2/titanium.svg?t=1'
-      obj.title = 'Titanium'
-      break
-    case 4:
-      obj.img = '/images/poolsV2/platinum.svg?t=1'
-      obj.title = 'Platinum'
-      break
-    case 5:
-      obj.img = '/images/poolsV2/diamond.svg?t=1'
-      obj.title = 'Diamond'
-      break
+    // case 2:
+    //   obj.img = '/images/poolsV2/gold.svg?t=1'
+    //   obj.title = 'Gold'
+    //   break
+    // case 3:
+    //   obj.img = '/images/poolsV2/titanium.svg?t=1'
+    //   obj.title = 'Titanium'
+    //   break
+    // case 4:
+    //   obj.img = '/images/poolsV2/platinum.svg?t=1'
+    //   obj.title = 'Platinum'
+    //   break
+    // case 5:
+    //   obj.img = '/images/poolsV2/diamond.svg?t=1'
+    //   obj.title = 'Diamond'
+    //   break
     default:
       break
   }
@@ -497,7 +497,6 @@ const Pools = () => {
 
   const getInfoRank = async (rateBNB2USD) => {
     const months = await getPoolV3Contract.getMonths()
-
     const infoRank = await Promise.all([
       getPoolV3Contract.userRank(account),
       getPoolV3Contract.userRankRewardClaimed(account, Number(months.toString())),
@@ -512,8 +511,8 @@ const Pools = () => {
           image: getRankImage(item).img,
           title: getRankImage(item).title,
           currentReward: formatEther(rank.remainInMonth.toString()),
-          total: Number(Number(formatEther(rank.total)) * rateBNB2USD).toFixed(3),
-          min: Number(Number(formatEther(rank.total)) * rateBNB2USD).toFixed(3),
+          total: Number(Number(formatEther(rank.total))).toFixed(3),
+          min: Number(Number(formatEther(rank.total))).toFixed(3),
           max: Number(formatEther(rank.minStart)),
           member: rank.totalMember.toString(),
           yourReward:
@@ -539,12 +538,12 @@ const Pools = () => {
 
   const getPools = async (ids: number[]) => {
     try {
-      const bnbPrice = await getPoolV3Contract.bnbPrice()
+      const bnbPrice = await getPoolV3Contract.MATIC2USDT()
       const pools = ids.map((item) => getPoolV3Contract.pools(item))
 
-      await getInfoRank(Number(formatEther(bnbPrice[0])) / Number(formatEther(bnbPrice[1])))
-
-      setRateBnbUsd(Number(formatEther(bnbPrice[0])) / Number(formatEther(bnbPrice[1])))
+      await getInfoRank(Number(formatEther(bnbPrice)))
+      // await getInfoRank()
+      setRateBnbUsd(Number(formatEther(bnbPrice)))
       const newPoolInfo = await Promise.all(
         pools.map(async (item, id) => {
           const userLockAndPool = await Promise.all([getPoolV3Contract.users(account, id), item])
@@ -555,7 +554,7 @@ const Pools = () => {
             minLock: formatEther(userLockAndPool[1].minLock),
             timeLock: 1095,
             totalLock: formatEther(userLockAndPool[1].totalLock),
-            rateBNB2USD: Number(formatEther(bnbPrice[0])) / Number(formatEther(bnbPrice[1])),
+            rateBNB2USD: Number(formatEther(bnbPrice)),
             yourLock: Number(formatEther(userLockAndPool[0].totalLock)),
           }
         }),

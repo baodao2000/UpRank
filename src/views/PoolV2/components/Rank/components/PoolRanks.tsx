@@ -260,6 +260,7 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
       onSuccess()
     },
   })
+
   const { isConfirming: isConfirmingUpRank, handleConfirm: handleConfirmUpRank } = useConfirmTransaction({
     onConfirm: () => {
       return callWithMarketGasPrice(poolContract, 'upRank', [])
