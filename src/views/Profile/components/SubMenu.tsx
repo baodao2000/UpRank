@@ -10,10 +10,12 @@ const SubMenuComponent: React.FC<React.PropsWithChildren> = () => {
 
   const ItemsConfig = [
     {
+      labelItem: '',
       label: t('Items'),
       href: `/profile/${accountAddress}`,
     },
     {
+      labelItem: '',
       label: t('Activity'),
       href: `/profile/${accountAddress}/activity`,
     },

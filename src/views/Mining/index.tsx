@@ -125,7 +125,8 @@ const TableMine = styled.div`
   border-radius: 24px;
   color: black;
   max-width: 1000px;
-  width: 100%;
+  width: 95%;
+  margin-top: 20px;
 `
 const data = [
   {

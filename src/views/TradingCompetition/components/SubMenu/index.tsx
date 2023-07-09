@@ -9,8 +9,8 @@ const SubMenu: React.FC<React.PropsWithChildren> = () => {
 
   const subMenuItems = useMemo(() => {
     return [
-      { label: t('Latest'), href: '/competition' },
-      { label: t('Finished'), href: '/competition/finished' },
+      { label: t('Latest'), href: '/competition', labelItem: '' },
+      { label: t('Finished'), href: '/competition/finished', labelItem: '' },
     ]
   }, [t])
 
