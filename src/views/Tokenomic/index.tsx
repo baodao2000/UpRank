@@ -28,7 +28,7 @@ const OverviewText = styled.div`
 `
 const PoolText = styled.div`
   margin-top: 300px;
-  font-family: Raleway;
+  font-family: Raleway, sans-serif;
   font-size: 48px;
   font-weight: 700;
   text-align: center;

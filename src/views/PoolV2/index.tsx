@@ -25,6 +25,7 @@ import useActiveWeb3React from '../../hooks/useActiveWeb3React'
 import { ChainId, NATIVE } from '../../../packages/swap-sdk/src/constants'
 import Rank from './components/Rank'
 import moment from 'moment'
+import { arrayify } from '@ethersproject/bytes'
 
 // ============= STYLED
 const Container = styled.div`
@@ -72,7 +73,7 @@ const Body = styled.div`
   background: none;
   padding: 20px;
   @media screen and (max-width: 575px) {
-    padding: 10px;
+    padding: 15px;
   }
 `
 const PoolsList = styled.div`
@@ -170,7 +171,7 @@ const Card = styled.div`
   gap: 15px;
   width: 480px;
   height: auto;
-  border-radius: 20px;
+  border-radius: 15px;
   padding: 20px;
   @media screen and (max-width: 1300px) {
     width: 100%;
@@ -193,7 +194,7 @@ const Card = styled.div`
   }
   @media screen and (max-width: 320px) {
     width: 100%;
-    padding: 0px;
+    padding: 10px;
   }
 `
 const LogoAndName = styled.div`
@@ -436,6 +437,10 @@ const PoolsReward = styled.div`
   }
   border-radius: 15px;
 `
+
+const Loading = styled.div`
+  display: flex;
+`
 const Pools = () => {
   const { account, chainId } = useActiveWeb3React()
   const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId
@@ -451,6 +456,8 @@ const Pools = () => {
   const [ranks, setRanks] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [rateBnbUsd, setRateBnbUsd] = useState(1)
+  const [rankLoading, setRankLoading] = useState(true)
+
   const [userRank, setUserRank] = useState({
     rank: 0,
     image: '',
@@ -494,78 +501,103 @@ const Pools = () => {
     let linkRef = `${param}/referral`
     return linkRef
   }
-
-  const getInfoRank = async (rateBNB2USD) => {
-    const months = await getPoolV3Contract.getMonths()
-    const infoRank = await Promise.all([
-      getPoolV3Contract.userRank(account),
-      getPoolV3Contract.userRankRewardClaimed(account, Number(months.toString())),
-      getPoolV3Contract.getUserTotalLock(account),
-      getPoolV3Contract.getVolumeOnTre(account),
-      getPoolV3Contract.getChildren(account),
-    ])
-    const arr = await Promise.all(
-      indexRank.map(async (item) => {
-        const rank = await getPoolV3Contract.rankRewards(item)
-        return {
-          image: getRankImage(item).img,
-          title: getRankImage(item).title,
-          currentReward: formatEther(rank.remainInMonth.toString()),
-          total: Number(Number(formatEther(rank.total))).toFixed(3),
-          min: Number(Number(formatEther(rank.total))).toFixed(3),
-          max: Number(formatEther(rank.minStart)),
-          member: rank.totalMember.toString(),
-          yourReward:
-            Number(formatEther(rank.rewardInMonth.toString())) && Number(rank.totalMember.toString())
-              ? Number(formatEther(rank.rewardInMonth.toString())) / Number(rank.totalMember.toString())
-              : 0,
-        }
-      }),
-    )
-    setUserRank({
-      ...userRank,
-      rank: Number(infoRank[0]),
-      image: getRankImage(Number(infoRank[0])).img,
-      locked: Number(Number(formatEther(infoRank[2])).toFixed(3)),
-      volumnOnTree: Number(Number(formatEther(infoRank[3])).toFixed(3)),
-      direct: Number(infoRank[4].direct),
-      downline: Number(infoRank[4].downLine),
-    })
-
-    setRanks(arr)
-    setUserClaimed(infoRank[1])
-  }
-
   const getPools = async (ids: number[]) => {
     try {
       const bnbPrice = await getPoolV3Contract.MATIC2USDT()
       const pools = ids.map((item) => getPoolV3Contract.pools(item))
-
       await getInfoRank(Number(formatEther(bnbPrice)))
       // await getInfoRank()
       setRateBnbUsd(Number(formatEther(bnbPrice)))
-      const newPoolInfo = await Promise.all(
-        pools.map(async (item, id) => {
-          const userLockAndPool = await Promise.all([getPoolV3Contract.users(account, id), item])
-          return {
-            currentInterest: ((Number(userLockAndPool[1].currentInterest.toString()) / 10000) * 365).toFixed(2),
-            enable: userLockAndPool[1].enable,
-            maxLock: formatEther(userLockAndPool[1].maxLock),
-            minLock: formatEther(userLockAndPool[1].minLock),
-            timeLock: 1095,
-            totalLock: formatEther(userLockAndPool[1].totalLock),
-            rateBNB2USD: Number(formatEther(bnbPrice)),
-            yourLock: Number(formatEther(userLockAndPool[0].totalLock)),
-          }
-        }),
-      )
-      setArr(newPoolInfo)
-      setIsLoading(false)
+      // console.log(Promise.all([pools[0]]))
+      const arrNew = pools.map((item) => item)
+      if (!account) {
+        const newPoolInfo = await Promise.all(
+          pools.map(async (items) => {
+            const arr = await Promise.all([items])
+            return {
+              currentInterest: ((Number(arr[0].currentInterest.toString()) / 10000) * 365).toFixed(2),
+              enable: arr[0].enable,
+              maxLock: formatEther(arr[0].maxLock),
+              minLock: formatEther(arr[0].minLock),
+              timeLock: 1095,
+              totalLock: formatEther(arr[0].totalLock),
+              rateBNB2USD: Number(formatEther(bnbPrice)),
+              yourLock: 0,
+              arr,
+            }
+          }),
+        )
+        setArr(newPoolInfo)
+        setIsLoading(false)
+      }
+      // const newPoolInfo = await Promise.all(
+      //   pools.map(async (item, id) => {
+      //     const userLockAndPool = await Promise.all([getPoolV3Contract.users(account, id), item])
+      //     console.log(userLockAndPool)
+      //     return {
+      //       currentInterest: ((Number(userLockAndPool[1].currentInterest.toString()) / 10000) * 365).toFixed(2),
+      //       enable: userLockAndPool[1].enable,
+      //       maxLock: formatEther(userLockAndPool[1].maxLock),
+      //       minLock: formatEther(userLockAndPool[1].minLock),
+      //       timeLock: 1095,
+      //       totalLock: formatEther(userLockAndPool[1].totalLock),
+      //       rateBNB2USD: Number(formatEther(bnbPrice)),
+      //       yourLock: Number(formatEther(userLockAndPool[0].totalLock)),
+      //     }
+      //   }),
+      // )
+      //   setArr(newPoolInfo)
+      // setIsLoading(false)
+      console.log(isLoading)
     } catch (e) {
       console.log('error', e)
     }
   }
+  const getInfoRank = async (rateBnbUsd) => {
+    if (!account) {
+      setIsLoading(true)
+    } else {
+      const months = await getPoolV3Contract.getMonths()
+      const infoRank = await Promise.all([
+        getPoolV3Contract.userRank(account),
+        getPoolV3Contract.userRankRewardClaimed(account, Number(months.toString())),
+        getPoolV3Contract.getUserTotalLock(account),
+        getPoolV3Contract.getVolumeOnTre(account),
+        getPoolV3Contract.getChildren(account),
+      ])
 
+      const arr = await Promise.all(
+        indexRank.map(async (item) => {
+          const rank = await getPoolV3Contract.rankRewards(item)
+
+          return {
+            image: getRankImage(item).img,
+            title: getRankImage(item).title,
+            currentReward: formatEther(rank.remainInMonth.toString()),
+            total: Number(Number(formatEther(rank.total)) * rateBnbUsd).toFixed(3),
+            min: Number(Number(formatEther(rank.total)) * rateBnbUsd).toFixed(3),
+            max: Number(formatEther(rank.minStart)),
+            member: rank.totalMember.toString(),
+            yourReward:
+              Number(formatEther(rank.rewardInMonth.toString())) && Number(rank.totalMember.toString())
+                ? Number(formatEther(rank.rewardInMonth.toString())) / Number(rank.totalMember.toString())
+                : 0,
+          }
+        }),
+      )
+      setUserRank({
+        ...userRank,
+        rank: Number(infoRank[0]),
+        image: getRankImage(Number(infoRank[0])).img,
+        locked: Number(Number(formatEther(infoRank[2])).toFixed(3)),
+        volumnOnTree: Number(Number(formatEther(infoRank[3])).toFixed(3)),
+        direct: Number(infoRank[4].direct),
+        downline: Number(infoRank[4].downLine),
+      })
+      await setRanks(arr)
+      setUserClaimed(infoRank[1])
+    }
+  }
   // BALANCE
   const { data, isFetched } = useBalance({
     addressOrName: contracts.poolsV3[CHAIN_ID],
@@ -585,7 +617,6 @@ const Pools = () => {
     getInfoRank(rateBnbUsd)
   }
   useEffect(() => {
-    if (!account) return
     getCommission()
     getPools([0, 1, 2, 3, 4, 5])
   }, [account])
@@ -602,7 +633,7 @@ const Pools = () => {
   return (
     <Container>
       <PageMeta />
-      {isLoading ? (
+      {isLoading === true ? (
         <TrendyPageLoader />
       ) : (
         <>
@@ -689,6 +720,7 @@ const Pools = () => {
             <PageHeader
               style={{
                 borderRadius: '15px',
+                width: '90%',
                 border: '1px solid rgba(245, 251, 242, 0.20)',
                 background:
                   'radial-gradient(131.77% 143.25% at -0.00% -2.74%, rgba(125, 128, 195, 0.60) 0%, rgba(136, 139, 224, 0.26) 100%)',
@@ -1026,6 +1058,7 @@ const Pools = () => {
               })}
             </PoolsList>
           </Body>
+
           <PageHeader background="none">
             <Flex flex="1" flexDirection="column" mr={['8px', 0]} alignItems="center">
               <PoolsReward>
@@ -1059,70 +1092,11 @@ const Pools = () => {
                       {shortenURL(`Root Contract: ${contracts.poolsV3[CHAIN_ID]}`, 35)}
                     </LinkExternal>
                   </Text>
-                  {/* <Text style={{ color: '#C5C5C5' }} ellipsis={true}>
-                    <LinkExternal
-                      fontSize={['14px', '16px', '18px', '20px', '22px']}
-                      href={getBlockExploreLink(contracts.poolsV2[CHAIN_ID], 'address', CHAIN_ID)}
-                      ellipsis={true}
-                      style={{ color: 'rgba(249, 249, 249, 1)' }}
-                      color="#00F0E1"
-                    >
-                      {shortenURL(`Root Contract 2: ${contracts.poolsV2[CHAIN_ID]}`, 35)}
-                    </LinkExternal>
-                  </Text> */}
-                  {/* <Button
-                    style={{ color: '#6216B0', backgroundColor: '#D9D9D9' }}
-                    marginTop={'30px'}
-                    ml={['6px', '1em']}
-                    variant="primary"
-                    width={['90px', '80px', '150px']}
-                    p={['6px', '0 8px', '10px']}
-                    scale="md"
-                    display={isMobile ? 'none' : 'block'}
-                    onClick={handleConfirm}
-                    disabled={!isClaimableCommission}
-                  >
-                    {isConfirming ? (
-                      <ThreeDots className="loading">
-                        Claiming<span>.</span>
-                        <span>.</span>
-                        <span>.</span>
-                      </ThreeDots>
-                    ) : (
-                      'Claim'
-                    )}
-                  </Button>
-                  <Button
-                    style={{
-                      color: '#6216B0',
-                      background:
-                        'radial-gradient(157.74% 210.61% at 0.00% 0.00%, rgba(192, 240, 255, 0.80) 0%, rgba(159, 169, 213, 0.29) 87.18%, rgba(2, 0, 98, 0.00) 100%)',
-                      backdropFilter: 'blur(50px)',
-                    }}
-                    marginTop={'30px'}
-                    ml={['6px', '1em']}
-                    variant="primary"
-                    width={['90px', '80px', '150px']}
-                    p={['6px', '0 8px', '10px']}
-                    scale="sm"
-                    display={isMobile ? 'block' : 'none'}
-                    onClick={handleConfirm}
-                    disabled={!isClaimableCommission}
-                  >
-                    {isConfirming ? (
-                      <ThreeDots className="loading">
-                        Claiming<span>.</span>
-                        <span>.</span>
-                        <span>.</span>
-                      </ThreeDots>
-                    ) : (
-                      'Claim'
-                    )}
-                  </Button> */}
                 </LineText>
               </PoolsReward>
-
-              <Rank unit={unit} ranks={ranks} userRank={userRank} onSuccess={onSuccessRank} userIsClaim={userClaimed} />
+              {/* {
+              !account ? null : <Rank unit={unit} ranks={ranks} userRank={userRank} onSuccess={onSuccessRank} userIsClaim={userClaimed} /> 
+             } */}
             </Flex>
           </PageHeader>
         </>

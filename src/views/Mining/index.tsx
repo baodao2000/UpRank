@@ -1,4 +1,4 @@
-import { useMatchBreakpoints } from '@pancakeswap/uikit'
+import { Text, useMatchBreakpoints } from '@pancakeswap/uikit'
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import { IOSView, isDesktop } from 'react-device-detect'
@@ -11,6 +11,8 @@ import { getPoolsV3Contract } from 'utils/contractHelpers'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { ChainId } from '../../../packages/swap-sdk/src/constants'
 import { formatEther } from '@ethersproject/units'
+import { useWallet } from 'hooks/useWallet'
+import CountUp from 'react-countup'
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -128,23 +130,23 @@ const TableMine = styled.div`
   width: 95%;
   margin-top: 20px;
 `
-const data = [
-  {
-    title: 'Mined Trend',
-    trend: '50 TREND',
-    price: '50 USD',
-  },
-  {
-    title: 'Claimed Trend',
-    trend: '12 TREND',
-    price: '12 USD',
-  },
-  {
-    title: 'Remained Trend',
-    trend: '38 TREND',
-    price: '38 USD',
-  },
-]
+// const data = [
+//   {
+//     title: 'Mined Trend',
+//     trend: '50 TREND',
+//     price: '50 USD',
+//   },
+//   {
+//     title: 'Claimed Trend',
+//     trend: '12 TREND',
+//     price: '12 USD',
+//   },
+//   {
+//     title: 'Remained Trend',
+//     trend: '38 TREND',
+//     price: '38 USD',
+//   },
+// ]
 function Mining() {
   const { isMobile, isTablet, isDesktop, isXl } = useMatchBreakpoints()
   const { account, chainId } = useActiveWeb3React()
@@ -152,6 +154,7 @@ function Mining() {
   const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId
   const [isLoading, setIsLoading] = useState(false)
   const getPoolContract = getPoolsV3Contract(CHAIN_ID)
+  const { onPresentConnectModal } = useWallet()
 
   const [mineData, setMineData] = useState({
     totalMined: 0,
@@ -162,25 +165,25 @@ function Mining() {
     startTime: 0,
     userClaimedMineLength: 0,
     currentReward: 0,
+    trend2USDT: 0,
   })
+  console.log(mineData)
+
   useEffect(() => {
-    if (!account) {
-      setIsLoading(true)
-    } else {
-      setIsLoading(false)
-      getMine()
-    }
+    getMine()
   }, [account])
 
   const getMine = async () => {
     try {
       if (!account) {
         setIsLoading(true)
+        console.log('dsdsdsd')
       } else {
         setIsLoading(false)
         const getUsersClaimMinedLength = await getPoolContract.getUsersClaimMinedLength(account)
         const users = await getPoolContract.usersMine(account)
         const currentRewardTREND = await getPoolContract.currentRewardTREND(account)
+        const trendUSD = await getPoolContract.TREND2USDT()
         setMineData({
           totalMined: Number(formatEther(users.totalMined)),
           claimed: Number(users.claimed),
@@ -190,6 +193,7 @@ function Mining() {
           startTime: Number(users.startTime),
           userClaimedMineLength: Number(formatEther(getUsersClaimMinedLength)),
           currentReward: Number(formatEther(currentRewardTREND)),
+          trend2USDT: Number(formatEther(trendUSD)),
         })
         // setIsLoading(false)
       }
@@ -204,33 +208,158 @@ function Mining() {
 
   // }
 
+  const handleClick = () => {
+    onPresentConnectModal()
+  }
   return (
     <Wrapper>
       <Container>
         <Table>
-          <ContentText>Your Wallet</ContentText>
+          <Text fontFamily="Poppins, sans-serif" marginLeft="20px" fontWeight="700" fontSize={['18px', '22px', '32px']}>
+            Your Wallet
+          </Text>
           <BoxContain>
-            {data.map((i) => (
-              <Box>
-                <div>
-                  <ContentText style={{ fontSize: '18px', fontWeight: 600 }}>{i.title}</ContentText>
-                  <div
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      gap: isMobile ? '5px' : '10px',
-                      marginTop: '10px',
-                    }}
-                  >
-                    <ContentText>{i.trend}</ContentText>
-                    <Image src="/images/wallet.png" alt="" width={30} height={30} />
-                    <Image src="/images/exchange.png" alt="" width={30} height={30} />
-                    <ContentText>{i.price}</ContentText>
-                  </div>
+            <Box>
+              <div>
+                <ContentText style={{ fontSize: '18px', fontWeight: 600 }}>Mined Trend</ContentText>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    gap: isMobile ? '5px' : '10px',
+                    marginTop: '10px',
+                  }}
+                >
+                  {!account ? (
+                    <ContentText>0 TREND</ContentText>
+                  ) : (
+                    <ContentText>
+                      <CountUp
+                        start={0}
+                        preserveValue
+                        delay={0}
+                        end={mineData.totalMined}
+                        decimals={mineData.totalMined > 0 ? 4 : 0}
+                        duration={0.5}
+                      />{' '}
+                      TREND
+                    </ContentText>
+                  )}
+                  <Image src="/images/wallet.png" alt="" width={30} height={30} />
+                  <Image src="/images/exchange.png" alt="" width={30} height={30} />
+                  {!account ? (
+                    <ContentText>0 USD</ContentText>
+                  ) : (
+                    <ContentText>
+                      <CountUp
+                        start={0}
+                        preserveValue
+                        delay={0}
+                        end={mineData.totalMined * mineData.trend2USDT}
+                        decimals={mineData.totalMined > 0 ? 4 : 0}
+                        duration={0.5}
+                      />{' '}
+                      USD
+                    </ContentText>
+                  )}
                 </div>
-              </Box>
-            ))}
+              </div>
+            </Box>
+            <Box>
+              <div>
+                <ContentText style={{ fontSize: '18px', fontWeight: 600 }}>Claimed Trend</ContentText>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    gap: isMobile ? '5px' : '10px',
+                    marginTop: '10px',
+                  }}
+                >
+                  {!account ? (
+                    <ContentText>0 TREND</ContentText>
+                  ) : (
+                    <ContentText>
+                      <CountUp
+                        start={0}
+                        preserveValue
+                        delay={0}
+                        end={mineData.claimed}
+                        decimals={mineData.claimed > 0 ? 4 : 0}
+                        duration={0.5}
+                      />{' '}
+                      TREND
+                    </ContentText>
+                  )}
+                  <Image src="/images/wallet.png" alt="" width={30} height={30} />
+                  <Image src="/images/exchange.png" alt="" width={30} height={30} />
+                  {!account ? (
+                    <ContentText>0 USD</ContentText>
+                  ) : (
+                    <ContentText>
+                      <CountUp
+                        start={0}
+                        preserveValue
+                        delay={0}
+                        end={mineData.claimed * mineData.trend2USDT}
+                        decimals={mineData.claimed > 0 ? 4 : 0}
+                        duration={0.5}
+                      />{' '}
+                      USD
+                    </ContentText>
+                  )}
+                </div>
+              </div>
+            </Box>
+            <Box>
+              <div>
+                <ContentText style={{ fontSize: '18px', fontWeight: 600 }}>Remained Trend</ContentText>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    gap: isMobile ? '5px' : '10px',
+                    marginTop: '10px',
+                  }}
+                >
+                  {!account ? (
+                    <ContentText>0 TREND</ContentText>
+                  ) : (
+                    <ContentText>
+                      <CountUp
+                        start={0}
+                        preserveValue
+                        delay={0}
+                        end={mineData.remain}
+                        decimals={mineData.remain > 0 ? 4 : 0}
+                        duration={0.5}
+                      />{' '}
+                      TREND
+                    </ContentText>
+                  )}
+                  <Image src="/images/wallet.png" alt="" width={30} height={30} />
+                  <Image src="/images/exchange.png" alt="" width={30} height={30} />
+                  {!account ? (
+                    <ContentText>0 USD</ContentText>
+                  ) : (
+                    <ContentText>
+                      <CountUp
+                        start={0}
+                        preserveValue
+                        delay={0}
+                        end={mineData.remain * mineData.trend2USDT}
+                        decimals={mineData.remain > 0 ? 4 : 0}
+                        duration={0.5}
+                      />{' '}
+                      USD
+                    </ContentText>
+                  )}
+                </div>
+              </div>
+            </Box>
           </BoxContain>
           <BoxContain
             style={{
@@ -244,13 +373,41 @@ function Mining() {
               <div
                 style={{ display: 'flex', flexDirection: 'row', gap: isMobile ? '5px' : '10px', alignItems: 'center' }}
               >
-                <ContentText>12 TREND</ContentText>
+                {' '}
+                {!account ? (
+                  <ContentText>0 TREND</ContentText>
+                ) : (
+                  <ContentText>
+                    <CountUp
+                      start={0}
+                      preserveValue
+                      delay={0}
+                      end={mineData.currentReward}
+                      decimals={mineData.currentReward > 0 ? 4 : 0}
+                      duration={0.5}
+                    />{' '}
+                    TREND
+                  </ContentText>
+                )}
                 <Image src="/images/wallet.png" alt="" width={30} height={30} />
                 <Image src="/images/exchange.png" alt="" width={30} height={30} />
-
-                <ContentText>12 USD</ContentText>
+                {!account ? (
+                  <ContentText>0 USD</ContentText>
+                ) : (
+                  <ContentText>
+                    <CountUp
+                      start={0}
+                      preserveValue
+                      delay={0}
+                      end={mineData.currentReward * mineData.trend2USDT}
+                      decimals={mineData.currentReward > 0 ? 4 : 0}
+                      duration={0.5}
+                    />{' '}
+                    USD
+                  </ContentText>
+                )}
               </div>
-              <Button>
+              <Button onClick={handleClick}>
                 <ContentText
                   style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: 22, color: '#4122FF' }}
                 >
@@ -262,7 +419,14 @@ function Mining() {
         </Table>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
           <Table style={{ width: isMobile ? '370px' : '600px', height: isMobile ? '400px' : '317px' }}>
-            <ContentText>System</ContentText>
+            <Text
+              fontFamily="Poppins, sans-serif"
+              marginLeft="20px"
+              fontWeight="700"
+              fontSize={['18px', '22px', '32px']}
+            >
+              System
+            </Text>
             <div style={{ display: 'flex', flexDirection: 'column', gap: isMobile ? '1px' : '10px' }}>
               <div style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
                 <Table
@@ -343,9 +507,11 @@ function Mining() {
           <Image src="/images/chart.png" alt="" width={isMobile ? 250 : 600} height={300} />
         </div>
       </Container>
-      <TableMine>
-        <TableDataPool mine={mineData} userClaimedMineLength={mineData.userClaimedMineLength} />
-      </TableMine>
+      {!account ? null : (
+        <TableMine>
+          <TableDataPool mine={mineData} userClaimedMineLength={mineData.userClaimedMineLength} />
+        </TableMine>
+      )}
     </Wrapper>
   )
 }

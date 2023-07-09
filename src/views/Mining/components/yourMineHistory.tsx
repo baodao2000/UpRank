@@ -14,6 +14,7 @@ import { formatEther } from '@ethersproject/units'
 import Dots from 'components/Loader/Dots'
 import ClaimPoolModal from './ClaimModal'
 import { ThreeDots } from 'views/Pool/components/DepositModal'
+import { useWallet } from 'hooks/useWallet'
 
 // STYLE
 const TableScroll = styled.div`
@@ -143,17 +144,13 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
   const getPoolContract = getPoolsV3Contract(chainId)
   const [rewardTrend, setRewardTrend] = useState(0)
   const [isLoading, setIsLoading] = useState(false)
-  useEffect(() => {
-    getMine()
-    getCurrenReward()
-  }, [userClaimedMineLength, account])
+
   const power = Number(mine.mineSpeed + mine.mineSpeedLevel) / 100
 
   const handleSuccess = () => {
     getMine()
-    getCurrenReward()
+    // getCurrenReward()
   }
-
   const [openClaimModal, onDismissModal] = useModal(
     <ClaimPoolModal onDismiss={() => onDismissModal()} onSuccess={() => handleSuccess()} mine={mine} />,
     true,
@@ -162,6 +159,11 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
   )
 
   const getCurrenReward = async () => {
+    if (account) {
+      setIsLoading(true)
+    } else {
+      setIsLoading(false)
+    }
     const currenReward = getPoolContract.currentRewardTREND(account)
     setRewardTrend(Number(currenReward.toString()))
     //  console.log(currenReward);
@@ -194,6 +196,10 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
       console.log(e)
     }
   }
+  useEffect(() => {
+    getMine()
+    // getCurrenReward()
+  }, [userClaimedMineLength, account])
   const renderClaimHistory = () => {
     return (
       <>
@@ -274,11 +280,11 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
               )}
             </Td>
             <Td textAlign={'right'}>
-              {/* {mine.currentReward === 0 ? (
+              {mine.currentReward === 0 ? (
                 <Text fontSize={responsiveTextSize}>0</Text>
               ) : (
                 <AmountData>
-                  <Text fontSize={responsiveTextSize}>
+                  {/* <Text fontSize={responsiveTextSize}>
                     ~
                     <CountUp
                       start={0}
@@ -290,12 +296,11 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                       style={{ marginRight: 6 }}
                     />
                     $
-                  </Text>
+                  </Text> */}
                   <Text
                     fontSize={responsiveTextSizeBNB}
                     style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}
                   >
-                    ~
                     <CountUp
                       start={0}
                       preserveValue
@@ -303,12 +308,12 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                       end={mine.currentReward}
                       decimals={mine.currentReward > 0 ? 4 : 0}
                       duration={0.5}
-                    />
-                    <img src={`/images/chains/${chainId}.png`} alt="mine name" width={18} style={{ marginLeft: 6 }} />
+                    />{' '}
+                    $
                   </Text>
                 </AmountData>
-              )} */}
-              <Text>0</Text>
+              )}
+              {/* <Text>0</Text> */}
             </Td>
             <Td textAlign={'center'}>
               <Text fontSize={responsiveTextSize}>
@@ -403,7 +408,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                   )}
                 </Td>
                 <Td textAlign={'right'}>
-                  {claimHistory.totalMined > 0 ? (
+                  {/* {claimHistory.totalMined > 0 ? (
                     <Text fontSize={responsiveTextSize}>0</Text>
                   ) : (
                     <AmountData>
@@ -419,7 +424,8 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                         ${mine.unit}
                       </Text>
                     </AmountData>
-                  )}
+                  )} */}
+                  <Text>0</Text>
                 </Td>
                 <Td textAlign={'center'}>
                   <Text fontSize={responsiveTextSize}>Claimed</Text>
