@@ -509,7 +509,6 @@ const Pools = () => {
       // await getInfoRank()
       setRateBnbUsd(Number(formatEther(bnbPrice)))
       // console.log(Promise.all([pools[0]]))
-      const arrNew = pools.map((item) => item)
       if (!account) {
         const newPoolInfo = await Promise.all(
           pools.map(async (items) => {
@@ -523,31 +522,36 @@ const Pools = () => {
               totalLock: formatEther(arr[0].totalLock),
               rateBNB2USD: Number(formatEther(bnbPrice)),
               yourLock: 0,
-              arr,
+              currentInterestWithMine: ((Number(arr[0].currentInterestWithMine.toString()) / 10000) * 365).toFixed(2),
+            }
+          }),
+        )
+        setArr(newPoolInfo)
+        setIsLoading(false)
+      } else {
+        const newPoolInfo = await Promise.all(
+          pools.map(async (item, id) => {
+            const userLockAndPool = await Promise.all([getPoolV3Contract.users(account, id), item])
+            return {
+              currentInterest: ((Number(userLockAndPool[1].currentInterest.toString()) / 10000) * 365).toFixed(2),
+              enable: userLockAndPool[1].enable,
+              maxLock: formatEther(userLockAndPool[1].maxLock),
+              minLock: formatEther(userLockAndPool[1].minLock),
+              timeLock: 1095,
+              totalLock: formatEther(userLockAndPool[1].totalLock),
+              rateBNB2USD: Number(formatEther(bnbPrice)),
+              yourLock: Number(formatEther(userLockAndPool[0].totalLock)),
+              currentInterestWithMine: (
+                (Number(userLockAndPool[1].currentInterestWithMine.toString()) / 10000) *
+                365
+              ).toFixed(2),
             }
           }),
         )
         setArr(newPoolInfo)
         setIsLoading(false)
       }
-      // const newPoolInfo = await Promise.all(
-      //   pools.map(async (item, id) => {
-      //     const userLockAndPool = await Promise.all([getPoolV3Contract.users(account, id), item])
-      //     console.log(userLockAndPool)
-      //     return {
-      //       currentInterest: ((Number(userLockAndPool[1].currentInterest.toString()) / 10000) * 365).toFixed(2),
-      //       enable: userLockAndPool[1].enable,
-      //       maxLock: formatEther(userLockAndPool[1].maxLock),
-      //       minLock: formatEther(userLockAndPool[1].minLock),
-      //       timeLock: 1095,
-      //       totalLock: formatEther(userLockAndPool[1].totalLock),
-      //       rateBNB2USD: Number(formatEther(bnbPrice)),
-      //       yourLock: Number(formatEther(userLockAndPool[0].totalLock)),
-      //     }
-      //   }),
-      // )
-      //   setArr(newPoolInfo)
-      // setIsLoading(false)
+
       console.log(isLoading)
     } catch (e) {
       console.log('error', e)
@@ -602,9 +606,12 @@ const Pools = () => {
   const { data, isFetched } = useBalance({
     addressOrName: contracts.poolsV3[CHAIN_ID],
   })
-  const { data: data2, isFetched: isFetched2 } = useBalance({
-    addressOrName: contracts.poolsV2[CHAIN_ID],
-  })
+  // console.log(contracts.poolsV3[CHAIN_ID])
+  // console.log(data , isFetched);
+
+  // const { data: data2, isFetched: isFetched2 } = useBalance({
+  //   addressOrName: contracts.poolsV2[CHAIN_ID],
+  // })
 
   const balance = isFetched && data && data.value ? formatBigNumber(data.value, 6) : 0
   const unit = NATIVE[chainId].symbol
@@ -899,6 +906,34 @@ const Pools = () => {
                               %
                             </Text>
                           </Line>
+                          <Line style={{ height: '70px' }}>
+                            <span style={{ fontWeight: 400, fontSize: 14 }}>Interest With Mine</span>
+                            <Text
+                              style={{
+                                color: 'rgba(228, 230, 231, 1)',
+                                marginBottom: 10,
+                              }}
+                              fontSize={['16px, 24px']}
+                              className="value"
+                            >
+                              {
+                                <CountUp
+                                  start={0}
+                                  preserveValue
+                                  delay={0}
+                                  end={Number(i.currentInterestWithMine)}
+                                  decimals={2}
+                                  duration={1}
+                                  className="value"
+                                  style={{
+                                    borderRadius: '4px',
+                                    color: 'rgba(228, 230, 231, 1)',
+                                  }}
+                                />
+                              }{' '}
+                              %
+                            </Text>
+                          </Line>
                           <Line>
                             <TitelandIcon>
                               <span className="label">Total Lock</span>
@@ -1094,9 +1129,15 @@ const Pools = () => {
                   </Text>
                 </LineText>
               </PoolsReward>
-              {/* {
-              !account ? null : <Rank unit={unit} ranks={ranks} userRank={userRank} onSuccess={onSuccessRank} userIsClaim={userClaimed} /> 
-             } */}
+              {!account ? null : (
+                <Rank
+                  unit={unit}
+                  ranks={ranks}
+                  userRank={userRank}
+                  onSuccess={onSuccessRank}
+                  userIsClaim={userClaimed}
+                />
+              )}
             </Flex>
           </PageHeader>
         </>

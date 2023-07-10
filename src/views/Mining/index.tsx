@@ -1,4 +1,4 @@
-import { Text, useMatchBreakpoints } from '@pancakeswap/uikit'
+import { Text, useMatchBreakpoints, useModal } from '@pancakeswap/uikit'
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import { IOSView, isDesktop } from 'react-device-detect'
@@ -13,6 +13,10 @@ import { ChainId } from '../../../packages/swap-sdk/src/constants'
 import { formatEther } from '@ethersproject/units'
 import { useWallet } from 'hooks/useWallet'
 import CountUp from 'react-countup'
+import { useBalance } from 'wagmi'
+import contracts from 'config/constants/contracts'
+import { formatBigNumber } from 'utils/formatBalance'
+import SendTrendModal from './components/sendModal'
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -20,7 +24,7 @@ const Wrapper = styled.div`
   justify-content: center;
   background: linear-gradient(90deg, #9e86ff 0%, #2b0864 111.24%);
   gap: 10px;
-  height: 1200px;
+  height: 100%;
   @media screen and (max-width: 575px) {
     height: 100%;
   }
@@ -65,7 +69,7 @@ const Table = styled.div`
 `
 const BoxContain = styled.div`
   width: 492px;
-  height: 329px;
+  // height: 329px;
   padding: 16px;
   border-radius: 15px;
   border: 1px;
@@ -112,6 +116,9 @@ const ContentText = styled.div`
   font-weight: 700;
   font-size: 22px;
   color: rgba(255, 255, 255, 1);
+  @media screen and (max-width: 800px) {
+    font-size: 16px;
+  }
 `
 const Button = styled.button`
   cursor: pointer;
@@ -155,7 +162,7 @@ function Mining() {
   const [isLoading, setIsLoading] = useState(false)
   const getPoolContract = getPoolsV3Contract(CHAIN_ID)
   const { onPresentConnectModal } = useWallet()
-
+  const [usersClaimed, setUserClaimed] = useState([])
   const [mineData, setMineData] = useState({
     totalMined: 0,
     claimed: 0,
@@ -167,12 +174,23 @@ function Mining() {
     currentReward: 0,
     trend2USDT: 0,
   })
-  console.log(mineData)
 
   useEffect(() => {
     getMine()
+    // getMineHistory()
   }, [account])
-
+  const [openClaimModal, onDismissModal] = useModal(
+    <ClaimPoolModal onDismiss={() => onDismissModal()} onSuccess={() => handleSuccess()} mine={mineData} />,
+    true,
+    false,
+    'removeModal',
+  )
+  const [openSendModal, onDismissSendModal] = useModal(
+    <SendTrendModal onDismiss={() => onDismissSendModal} />,
+    true,
+    false,
+    'removeModal',
+  )
   const getMine = async () => {
     try {
       if (!account) {
@@ -191,11 +209,12 @@ function Mining() {
           mineSpeed: Number(users.mineSpeed),
           mineSpeedLevel: Number(users.mineSpeedLevel),
           startTime: Number(users.startTime),
-          userClaimedMineLength: Number(formatEther(getUsersClaimMinedLength)),
+          userClaimedMineLength: Number(getUsersClaimMinedLength),
           currentReward: Number(formatEther(currentRewardTREND)),
           trend2USDT: Number(formatEther(trendUSD)),
         })
         // setIsLoading(false)
+        await getMineHistory(getUsersClaimMinedLength)
       }
     } catch (error) {
       console.log(error)
@@ -208,9 +227,56 @@ function Mining() {
 
   // }
 
-  const handleClick = () => {
-    onPresentConnectModal()
+  const getMineHistory = async (getUsersClaimMinedLength) => {
+    try {
+      if (!account) {
+        setIsLoading(true)
+      } else {
+        setIsLoading(false)
+
+        if (Number(getUsersClaimMinedLength) > 0) {
+          const currenReward = await getPoolContract.currentRewardTREND(account)
+          const currentRewardTREND = currenReward.toString()
+          await getPoolContract.getUsersClaimMined(account, 10, 0).then((res) => {
+            console.log('dsds')
+
+            const arr = res.list.map((claimed: any, i: number) => {
+              return {
+                date: Number(claimed.date.toString()),
+                amount: Number(formatEther(claimed.amount)),
+                totalLock: Number(formatEther(claimed.totalLock)),
+                power: Number(claimed.interrest.toString()) / 100,
+                currentReward: Number(formatEther(currentRewardTREND)),
+              }
+            })
+            setUserClaimed(arr)
+          })
+        }
+      }
+    } catch (e) {
+      console.log(e)
+    }
   }
+
+  const handleSuccess = () => {
+    getMine()
+  }
+
+  const handleClick = () => {
+    if (!account) {
+      onPresentConnectModal()
+    } else {
+      openClaimModal()
+    }
+  }
+  const handleSend = () => {
+    openSendModal()
+  }
+  const { data, isFetched } = useBalance({
+    addressOrName: account,
+  })
+
+  const balance = isFetched && data && data.value ? formatBigNumber(data.value, 6) : 0
   return (
     <Wrapper>
       <Container>
@@ -219,7 +285,7 @@ function Mining() {
             Your Wallet
           </Text>
           <BoxContain>
-            <Box>
+            {/* <Box>
               <div>
                 <ContentText style={{ fontSize: '18px', fontWeight: 600 }}>Mined Trend</ContentText>
                 <div
@@ -247,9 +313,9 @@ function Mining() {
                     </ContentText>
                   )}
                   <Image src="/images/wallet.png" alt="" width={30} height={30} />
-                  <Image src="/images/exchange.png" alt="" width={30} height={30} />
+                  <Text fontSize='36px' lineHeight='0'>~</Text>
                   {!account ? (
-                    <ContentText>0 USD</ContentText>
+                    <ContentText>0 $</ContentText>
                   ) : (
                     <ContentText>
                       <CountUp
@@ -260,7 +326,7 @@ function Mining() {
                         decimals={mineData.totalMined > 0 ? 4 : 0}
                         duration={0.5}
                       />{' '}
-                      USD
+                      $
                     </ContentText>
                   )}
                 </div>
@@ -294,9 +360,9 @@ function Mining() {
                     </ContentText>
                   )}
                   <Image src="/images/wallet.png" alt="" width={30} height={30} />
-                  <Image src="/images/exchange.png" alt="" width={30} height={30} />
+                  <Text fontSize='36px' lineHeight='0'>~</Text>
                   {!account ? (
-                    <ContentText>0 USD</ContentText>
+                    <ContentText>0 $</ContentText>
                   ) : (
                     <ContentText>
                       <CountUp
@@ -307,15 +373,15 @@ function Mining() {
                         decimals={mineData.claimed > 0 ? 4 : 0}
                         duration={0.5}
                       />{' '}
-                      USD
+                      $
                     </ContentText>
                   )}
                 </div>
               </div>
-            </Box>
+            </Box> */}
             <Box>
               <div>
-                <ContentText style={{ fontSize: '18px', fontWeight: 600 }}>Remained Trend</ContentText>
+                <ContentText style={{ fontSize: '18px', fontWeight: 600 }}>Remained Trend (Locking)</ContentText>
                 <div
                   style={{
                     display: 'flex',
@@ -340,12 +406,15 @@ function Mining() {
                       TREND
                     </ContentText>
                   )}
-                  <Image src="/images/wallet.png" alt="" width={30} height={30} />
-                  <Image src="/images/exchange.png" alt="" width={30} height={30} />
+                  <Image src="/images/trendCoin.png" alt="" width={30} height={30} />
+                  <Text fontSize="36px" lineHeight="0">
+                    ~
+                  </Text>
                   {!account ? (
-                    <ContentText>0 USD</ContentText>
+                    <ContentText>$ 0</ContentText>
                   ) : (
                     <ContentText>
+                      ${' '}
                       <CountUp
                         start={0}
                         preserveValue
@@ -353,8 +422,7 @@ function Mining() {
                         end={mineData.remain * mineData.trend2USDT}
                         decimals={mineData.remain > 0 ? 4 : 0}
                         duration={0.5}
-                      />{' '}
-                      USD
+                      />
                     </ContentText>
                   )}
                 </div>
@@ -389,10 +457,69 @@ function Mining() {
                     TREND
                   </ContentText>
                 )}
-                <Image src="/images/wallet.png" alt="" width={30} height={30} />
-                <Image src="/images/exchange.png" alt="" width={30} height={30} />
+                <Image src="/images/trendCoin.png" alt="" width={30} height={30} />
+                <Text fontSize="36px" lineHeight="0">
+                  ~
+                </Text>
                 {!account ? (
-                  <ContentText>0 USD</ContentText>
+                  <ContentText>$ 0</ContentText>
+                ) : (
+                  <ContentText>
+                    ${' '}
+                    <CountUp
+                      start={0}
+                      preserveValue
+                      delay={0}
+                      end={mineData.currentReward * mineData.trend2USDT}
+                      decimals={mineData.currentReward > 0 ? 4 : 0}
+                      duration={0.5}
+                    />
+                  </ContentText>
+                )}
+              </div>
+              <Button onClick={handleClick}>
+                <ContentText
+                  style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: 22, color: '#4122FF' }}
+                >
+                  Claim
+                </ContentText>
+              </Button>
+            </Box>
+          </BoxContain>
+          <BoxContain
+            style={{
+              height: '200px',
+              background:
+                'radial-gradient(101.36% 117.36% at 0% -2.74%, rgba(125, 128, 196, 0.6) 0%, rgba(136, 139, 224, 0.264) 100%)linear-gradient(0deg, rgba(245, 251, 242, 0.2), rgba(245, 251, 242, 0.2))',
+            }}
+          >
+            <Box style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              <ContentText>Trend on your wallet</ContentText>
+              <div
+                style={{ display: 'flex', flexDirection: 'row', gap: isMobile ? '5px' : '10px', alignItems: 'center' }}
+              >
+                {' '}
+                {!account ? (
+                  <ContentText>0 TREND</ContentText>
+                ) : (
+                  <ContentText>
+                    <CountUp
+                      start={0}
+                      preserveValue
+                      delay={0}
+                      end={Number(balance)}
+                      decimals={Number(balance) > 0 ? 4 : 0}
+                      duration={0.5}
+                    />{' '}
+                    TREND
+                  </ContentText>
+                )}
+                <Image src="/images/trendCoin.png" alt="" width={30} height={30} />
+                <Text fontSize="36px" lineHeight="0">
+                  ~
+                </Text>
+                {!account ? (
+                  <ContentText>0 $</ContentText>
                 ) : (
                   <ContentText>
                     <CountUp
@@ -403,15 +530,15 @@ function Mining() {
                       decimals={mineData.currentReward > 0 ? 4 : 0}
                       duration={0.5}
                     />{' '}
-                    USD
+                    $
                   </ContentText>
                 )}
               </div>
-              <Button onClick={handleClick}>
+              <Button onClick={handleSend}>
                 <ContentText
                   style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: 22, color: '#4122FF' }}
                 >
-                  Claim
+                  Send
                 </ContentText>
               </Button>
             </Box>
@@ -466,14 +593,14 @@ function Mining() {
                     style={{ display: 'flex', flexDirection: 'row', gap: '10px', fontSize: isMobile ? '15px' : '25px' }}
                   >
                     1,250 TREND{' '}
-                    <span>
-                      <Image src="/images/wallet.png" alt="" width={30} height={30} />
+                    <span style={{ display: isMobile ? 'none' : 'block' }}>
+                      <Image src="/images/trendCoin.png" alt="" width={30} height={30} />
                     </span>
+                    <Text fontSize="36px" lineHeight={['16px', '16px', '24px']}>
+                      ~
+                    </Text>
                     <span>
-                      <Image src="/images/exchange.png" alt="" width={30} height={30} />
-                    </span>
-                    <span>
-                      <ContentText style={{ fontSize: isMobile ? '15px' : '25px' }}>1,250 USD</ContentText>
+                      <ContentText style={{ fontSize: isMobile ? '15px' : '25px' }}>$ 1,250</ContentText>
                     </span>
                   </ContentText>
                 </Table>
@@ -483,7 +610,7 @@ function Mining() {
                   style={{ width: '140px', height: '107px', display: 'flex', flexDirection: 'column', gap: '10px' }}
                 >
                   <ContentText style={{ fontSize: '16px', fontWeight: '500', width: '100px' }}>1 TREND /</ContentText>
-                  <ContentText style={{ fontSize: '25px' }}>1.2 USD</ContentText>
+                  <ContentText style={{ fontSize: '25px' }}>$ 1.2</ContentText>
                 </Table>
                 <Table
                   style={{ width: '483px', height: '107px', display: 'flex', flexDirection: 'column', gap: '10px' }}
@@ -493,11 +620,14 @@ function Mining() {
                     style={{ display: 'flex', flexDirection: 'row', gap: '10px', fontSize: isMobile ? '15px' : '25px' }}
                   >
                     1,250 TREND{' '}
-                    <span>
-                      <Image src="/images/wallet.png" alt="" width={30} height={30} />
+                    <span style={{ display: isMobile ? 'none' : 'block' }}>
+                      <Image src="/images/trendCoin.png" alt="" width={30} height={30} />
                     </span>
+                    <Text fontSize="36px" lineHeight={['16px', '16px', '24px']}>
+                      ~
+                    </Text>
                     <span>
-                      <ContentText style={{ fontSize: isMobile ? '15px' : '25px' }}>1,250 USD</ContentText>
+                      <ContentText style={{ fontSize: isMobile ? '15px' : '25px' }}>$ 1,250</ContentText>
                     </span>
                   </ContentText>
                 </Table>
@@ -509,7 +639,11 @@ function Mining() {
       </Container>
       {!account ? null : (
         <TableMine>
-          <TableDataPool mine={mineData} userClaimedMineLength={mineData.userClaimedMineLength} />
+          <TableDataPool
+            mine={mineData}
+            userClaimedMineLength={mineData.userClaimedMineLength}
+            mineHistory={usersClaimed}
+          />
         </TableMine>
       )}
     </Wrapper>

@@ -129,10 +129,11 @@ const responsiveTextSize = ['14px', '14px', '16px', '18px', '20px']
 const responsiveTextSizeBNB = ['14px', '14px', '16px', '18px', '20px']
 const responsiveTextSizeHeader = ['20px', '24px', '32px', '38px', '48px']
 
-const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLength: number }>> = ({
+const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLength: number; mineHistory }>> = ({
   mine,
   // mine2,
   userClaimedMineLength,
+  mineHistory,
   ...props
 }) => {
   const { account, chainId } = useActiveWeb3React()
@@ -148,7 +149,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
   const power = Number(mine.mineSpeed + mine.mineSpeedLevel) / 100
 
   const handleSuccess = () => {
-    getMine()
+    getMineHistory()
     // getCurrenReward()
   }
   const [openClaimModal, onDismissModal] = useModal(
@@ -168,13 +169,13 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
     setRewardTrend(Number(currenReward.toString()))
     //  console.log(currenReward);
   }
-  const getMine = async () => {
+  const getMineHistory = async () => {
     try {
       if (!account) {
         setIsLoading(true)
       } else {
         setIsLoading(false)
-        if (userClaimedMineLength === 0) {
+        if (userClaimedMineLength > 0) {
           const currenReward = await getPoolContract.currentRewardTREND(account)
           const currentRewardTREND = currenReward.toString()
           await getPoolContract.getUsersClaimMined(account, 10, 0).then((res) => {
@@ -197,7 +198,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
     }
   }
   useEffect(() => {
-    getMine()
+    getMineHistory()
     // getCurrenReward()
   }, [userClaimedMineLength, account])
   const renderClaimHistory = () => {
@@ -331,7 +332,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
     return (
       <>
         {mine.userClaimedMineLength > 0 &&
-          usersClaimed.map((claimHistory, index) => {
+          mineHistory.map((claimHistory, index) => {
             return (
               <tr key={index}>
                 <Td textAlign={'left'}>
