@@ -29,7 +29,6 @@ const StyledNav = styled.nav`
   background-color: black;
   /* border-bottom: 1px solid ${({ theme }) => theme.colors.cardBorder}; */
   transform: translate3d(0, 0, 0);
-
   padding-left: 24px;
   padding-right: 24px;
 `;
@@ -89,7 +88,7 @@ const Menu: React.FC<React.PropsWithChildren<NavProps>> = ({
   buyCakeLabel,
   children,
 }) => {
-  const { isMobile, isMd } = useMatchBreakpoints();
+  const { isMobile, isTablet } = useMatchBreakpoints();
   const [showMenu, setShowMenu] = useState(true);
   const refPrevOffset = useRef(typeof window === "undefined" ? 0 : window.pageYOffset);
 
@@ -139,7 +138,9 @@ const Menu: React.FC<React.PropsWithChildren<NavProps>> = ({
           {/* {banner && <TopBannerContainer height={topBannerHeight}>{banner}</TopBannerContainer>} */}
           <StyledNav>
             <Logo isDark={isDark} href={homeLink?.href ?? "/"} />
-            {!isMobile && <MenuItems items={links} activeItem={activeItem} activeSubItem={activeSubItem} ml="24px" />}
+            {!isMobile && !isTablet && (
+              <MenuItems items={links} activeItem={activeItem} activeSubItem={activeSubItem} ml="24px" />
+            )}
             {/* {!isMobile && !isMd && (
                 <Box mr="12px">
                   <CakePrice showSkeleton={false} cakePriceUsd={cakePriceUsd} />
@@ -189,6 +190,7 @@ const Menu: React.FC<React.PropsWithChildren<NavProps>> = ({
           </Inner>
         </BodyWrapper>
         {isMobile && <BottomNav items={links} activeItem={activeItem} activeSubItem={activeSubItem} />}
+        {isTablet && <BottomNav items={links} activeItem={activeItem} activeSubItem={activeSubItem} />}
       </Wrapper>
     </MenuContext.Provider>
   );

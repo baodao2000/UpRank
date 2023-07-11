@@ -18,6 +18,7 @@ export interface Pool {
   startTime: number
   userTotalLock: number
   rateBNB2USD: number
+  currentInterestWithMine: number
   unit?: string
 }
 export interface Mine {

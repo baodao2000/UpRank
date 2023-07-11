@@ -343,6 +343,9 @@ const BoxTwoRes = styled.div`
   @media screen and (min-width: 1440px) {
     display: none;
   }
+  @media screen and (max-width: 1438px) {
+    display: none;
+  }
 `
 const BoxTwoContain = styled.div`
   padding: 16px;

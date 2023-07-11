@@ -124,6 +124,7 @@ const Pool = ({ poolId }) => {
     unit: '',
     minUSD2BNB: 0,
     maxUSD2BNB: 0,
+    currentInterestWithMine: 0,
   })
 
   const [pool, setPool] = useState({
@@ -145,6 +146,7 @@ const Pool = ({ poolId }) => {
     unit: '',
     minUSD2BNB: 0,
     maxUSD2BNB: 0,
+    currentInterestWithMine: 0,
   })
   const getNoteDeposit = () => {
     let note
@@ -211,6 +213,7 @@ const Pool = ({ poolId }) => {
           unit,
           minUSD2BNB: Number(formatEther(minMaxUSD2BNB._min)),
           maxUSD2BNB: Number(formatEther(minMaxUSD2BNB._max)),
+          currentInterestWithMine: (Number(pool.currentInterestWithMine.toString()) / 10000) * 365,
         })
         setPoolInfo({
           currentInterest: (Number(pool.currentInterest.toString()) / 10000) * 365,
@@ -231,6 +234,7 @@ const Pool = ({ poolId }) => {
           unit,
           minUSD2BNB: Number(formatEther(minMaxUSD2BNB._min)),
           maxUSD2BNB: Number(formatEther(minMaxUSD2BNB._max)),
+          currentInterestWithMine: (Number(pool.currentInterestWithMine.toString()) / 10000) * 365,
         })
         // setIsLoading(false)
       }
