@@ -11,7 +11,6 @@ const Wrapper = styled.div`
   justify-content: center;
   background: linear-gradient(90deg, #9e86ff 0%, #2b0864 111.24%);
   gap: 10px;
-  height: 100%;
 `
 const OverviewText = styled.div`
   text-align: center;
@@ -28,7 +27,7 @@ const OverviewText = styled.div`
 `
 const PoolText = styled.div`
   margin-top: 300px;
-  font-family: Raleway;
+  font-family: Raleway, sans-serif;
   font-size: 48px;
   font-weight: 700;
   text-align: center;
@@ -47,7 +46,7 @@ const PoolText = styled.div`
 `
 const RankText = styled.div`
   margin-top: 50px;
-  font-family: Raleway;
+  font-family: Raleway, sans-serif;
   font-size: 48px;
   font-weight: 700;
   text-align: center;
@@ -92,6 +91,7 @@ const SupplyText = styled.div`
   line-height: 22px;
 `
 const Container = styled.div`
+  margin-bottom: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -895,24 +895,24 @@ function Tokenomic() {
           <div
             style={{
               position: 'absolute',
-              top: isMobile ? '400px' : isTablet ? '10px' : '50px',
-              left: isMobile ? '35px' : isTablet ? '450px' : '550px',
+              top: isMobile ? '400px' : isTablet ? '-10px' : '30px',
+              left: isMobile ? '1px' : isTablet ? '400px' : '500px',
             }}
           >
-            <Image src="/images/box2.png" alt="" width={400} height={170} />
+            <Image src="/images/box2.png" alt="" width={550} height={250} />
             <GlobalTextContent
               style={{
                 position: 'absolute',
-                left: isTablet ? '20px' : '20px',
-                top: isTablet ? '40px' : '40px',
-                padding: ' 0 20px',
+                left: isMobile ? '40px' : isTablet ? '50px' : '60px',
+                top: isMobile ? '40px' : isTablet ? '40px' : '40px',
+                padding: ' 0 10px',
                 maxWidth: isTablet ? '300px' : '300px',
                 width: '100%',
                 textAlign: 'right',
               }}
             >
-              The regulation states that for every 1 dollar deposited, the user will receive a 20% conversion to TREND
-              in contact mining.
+              The claim speed of TREND per day is 1/730, which is equivalent to 2 years. However, it will be inversely
+              proportional to the price of TREND on the pool.
             </GlobalTextContent>
           </div>
 
@@ -968,8 +968,8 @@ function Tokenomic() {
                   display: 'flex',
                   flexDirection: 'column',
                   position: 'absolute',
-                  left: '45px',
-                  top: '20px',
+                  left: '80px',
+                  top: '25px',
                   padding: ' 0 25px',
                   maxWidth: isMobile ? '320px' : '350px',
                   width: '100%',
@@ -990,7 +990,7 @@ function Tokenomic() {
                   display: 'flex',
                   flexDirection: 'column',
                   position: 'absolute',
-                  left: isMobile ? '1px' : isTablet ? '370px' : '420px',
+                  left: isMobile ? '1px' : isTablet ? '370px' : '400px',
                   top: isMobile ? '135px' : '20px',
                   padding: ' 0 30px',
                   maxWidth: isMobile ? '350px' : isTablet ? '350px' : '400px',
