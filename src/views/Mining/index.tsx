@@ -251,14 +251,15 @@ function Mining() {
                   display: 'flex',
                   flexDirection: 'row',
                   gap: '5px',
-                  alignItems: 'center',
+                  alignItems: 'flex-start',
+
                   justifyContent: 'space-between',
                   width: '100%',
                 }}
               >
                 <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '10px' }}>
                   <Image src="/images/trendiCoin.png" width={25} height={25} alt="" />
-                  <ContentText>12 TREND</ContentText>
+                  <ContentText>TREND</ContentText>
                 </div>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
@@ -279,14 +280,14 @@ function Mining() {
                     display: 'flex',
                     flexDirection: 'row',
                     gap: '5px',
-                    alignItems: 'center',
+                    alignItems: 'flex-start',
                     justifyContent: 'space-between',
                     width: '100%',
                   }}
                 >
                   <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '10px' }}>
                     <Image src="/images/trendiCoin.png" width={25} height={25} alt="" />
-                    <ContentText>12 TREND</ContentText>
+                    <ContentText>TREND</ContentText>
                   </div>
 
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
@@ -362,7 +363,8 @@ function Mining() {
                     display: 'flex',
                     flexDirection: 'row',
                     gap: '5px',
-                    alignItems: 'center',
+                    alignItems: 'flex-start',
+
                     justifyContent: 'space-between',
                     width: '100%',
                   }}
@@ -388,7 +390,8 @@ function Mining() {
                     display: 'flex',
                     flexDirection: 'row',
                     gap: '5px',
-                    alignItems: 'center',
+                    alignItems: 'flex-start',
+
                     justifyContent: 'space-between',
                     width: '100%',
                   }}
