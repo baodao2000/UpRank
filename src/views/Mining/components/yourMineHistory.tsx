@@ -21,10 +21,13 @@ const Warpper = styled.div`
   * {
     font-family: 'Poppins', sans-serif;
   }
+  height: 400px;
 `
 const TableScroll = styled.div`
   max-width: 100%;
   width: 100%;
+  height: 260px;
+  overflow-y: auto;
   &.scroll::-webkit-scrollbar {
     width: 10px;
     height: 10px;
@@ -50,7 +53,7 @@ const TablePool = styled.div`
   flex-direction: column;
   gap: 0.5em;
   align-items: center;
-  padding: 20px;
+  padding: 20px 0;
   tbody {
     background: radial-gradient(
       131.77% 143.25% at -0% -2.74%,
