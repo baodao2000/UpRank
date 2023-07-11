@@ -51,8 +51,8 @@ const Switch = styled.div`
   .switch {
     position: relative;
     display: inline-block;
-    width: 50px;
-    height: 26px;
+    width: 40px;
+    height: 18px;
   }
 
   .switch input {
@@ -75,24 +75,24 @@ const Switch = styled.div`
   .slider:before {
     position: absolute;
     content: '';
-    height: 20px;
-    width: 20px;
-    top: 3px;
+    height: 14px;
+    width: 14px;
+    top: 2px;
     left: 4px;
     background-color: white;
     transition: 0.4s;
   }
 
   input:checked + .slider {
-    background-color: #2196f3;
+    background-color: rgb(44, 224, 213);
   }
 
   input:focus + .slider {
-    box-shadow: 0 0 1px #2196f3;
+    box-shadow: 0 0 1px rgb(44, 224, 213);
   }
 
   input:checked + .slider:before {
-    transform: translateX(26px);
+    transform: translateX(21px);
   }
 
   /* Rounded sliders */
@@ -140,7 +140,7 @@ const UserBalance = styled.div`
     font-size: 14px;
     font-weight: 600;
     opacity: 0.6;
-    color: rgba(255, 255, 255, 0.6);
+    color: #ffffff;
   }
   width: 100%;
   display: flex;
@@ -296,7 +296,7 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
     }
   }
   const onChange = () => {
-    setMine(true)
+    setMine(!mine)
   }
   useEffect(() => {
     checkUsers()
@@ -389,6 +389,42 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
             {'$'}
           </span>
         </UserBalance>
+        {mine === true ? (
+          <UserBalance>
+            <span>
+              Interest With Mine :{' '}
+              {
+                <CountUp
+                  start={0}
+                  preserveValue
+                  delay={0}
+                  end={Number(pool.currentInterestWithMine)}
+                  decimals={2}
+                  duration={0.5}
+                />
+              }{' '}
+              %
+            </span>
+          </UserBalance>
+        ) : (
+          <UserBalance>
+            <span>
+              Interest :{' '}
+              {
+                <CountUp
+                  start={0}
+                  preserveValue
+                  delay={0}
+                  end={Number(pool.currentInterest)}
+                  decimals={2}
+                  duration={0.5}
+                />
+              }{' '}
+              %
+            </span>
+          </UserBalance>
+        )}
+
         <StyledInput
           value={amount}
           autoFocus={true}
@@ -419,7 +455,7 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
         <>
           {pool.pid.toString() === '0' ? null : (
             <CheckMine>
-              <Text>You want to mine</Text>
+              <Text>Mine Trend</Text>
               <Switch>
                 <label htmlFor="switchMine" className="switch">
                   <input id="switchMine" onChange={onChange} disabled={userTotal} type="checkbox" />
@@ -433,7 +469,7 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
         <>
           {pool.pid.toString() === '0' ? null : (
             <CheckMine>
-              <Text>You want to mine</Text>
+              <Text>Mine Trend</Text>
               <Switch>
                 <label htmlFor="switchMine" className="switch">
                   <input
