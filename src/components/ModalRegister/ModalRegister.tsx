@@ -47,12 +47,12 @@ export const ModalRegister = () => {
     // console.log(chainId, Number(process.env.NEXT_PUBLIC_DEFAULT_CHAIN))
     if (chainId != null && chainId === Number(process.env.NEXT_PUBLIC_DEFAULT_CHAIN)) {
       onCloseNetwork()
-      if (!localStorage.getItem('isVote') && vote === false) {
-        openModalVote()
-      }
+      // if (!localStorage.getItem('isVote') && vote === false) {
+      //   openModalVote()
+      // }
       if (account) {
         const a = await refferCT.isReferrer(account)
-        if (!a && vote === true) {
+        if (!a) {
           openModal()
         }
       }

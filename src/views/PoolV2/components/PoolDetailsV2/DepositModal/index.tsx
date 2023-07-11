@@ -252,7 +252,11 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
         //   setAmount(maxLockMatic)
         //   checkAmount(Number(maxLockMatic))
         // } else {
-        setAmount((Number(userBalance) - 0.009).toFixed(4))
+        if (Number(userBalance) > 0) {
+          setAmount((Number(userBalance) - 0.009).toFixed(4))
+        } else {
+          setAmount(Number(userBalance).toFixed(4))
+        }
         checkAmount(Number(userBalance))
         // }
         break

@@ -92,7 +92,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
 
   useEffect(() => {
     getPool()
-  }, [userClaimedLength])
+  }, [userClaimedLength, account])
   const getPool = () => {
     try {
       if (userClaimedLength > 0) {
