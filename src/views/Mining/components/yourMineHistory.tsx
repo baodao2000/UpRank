@@ -17,6 +17,11 @@ import { ThreeDots } from 'views/Pool/components/DepositModal'
 import { useWallet } from 'hooks/useWallet'
 
 // STYLE
+const Warpper = styled.div`
+  * {
+    font-family: 'Poppins', sans-serif;
+  }
+`
 const TableScroll = styled.div`
   max-width: 100%;
   width: 100%;
@@ -46,88 +51,41 @@ const TablePool = styled.div`
   gap: 0.5em;
   align-items: center;
   padding: 20px;
-  table > thead {
-    width: 800px;
-    tr {
-      font-weight: 300;
-      border-bottom: 1px solid ${trendyColors.BLACK};
-    }
+  tbody {
+    background: radial-gradient(
+      131.77% 143.25% at -0% -2.74%,
+      rgba(125, 128, 195, 0.4) 0%,
+      rgba(136, 139, 224, 0.18) 100%
+    );
+    backdrop-filter: blur(50px);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 12px;
+    overflow: hidden;
   }
   width: auto;
+  border-radius: 16px;
+  thead {
+    background: rgba(255, 255, 255, 0.37);
+  }
+  tr {
+    border-bottom: 0.5px solid #b9b9b963;
+  }
 `
 const AmountData = styled.div`
   display: flex;
   flex-direction: column;
   align-items: right;
 `
-const TableTab = styled.div`
-  .tabs {
-    width: 100%;
-    position: relative;
-    background: #eeeaf4;
-    border-top-left-radius: 24px;
-    border-top-right-radius: 24px;
-  }
-  .tabs::before,
-  .tabs::after {
-    content: '';
-    display: table;
-  }
-  .tabs::after {
-    clear: both;
-  }
-  .tab {
-    float: left;
-    width: 50%;
-  }
-  .tab-switch {
-    display: none;
-  }
-  .tab-label {
-    position: relative;
-    display: block;
-    line-height: 2.75em;
-    padding: 0 1.618em;
-    background: #eeeaf4;
-    color: #7a6eaa;
-    cursor: pointer;
-    top: 0;
-    transition: all 0.25s;
-    border-top-left-radius: 24px;
-    border-top-right-radius: 24px;
-    width: 100%;
-    text-align: center;
-    font-size: 24px;
-    font-weight: 700;
-    @media screen and (max-width: 375px) {
-      font-size: 16px;
-    }
-    @media screen and (max-width: 600px) {
-      font-size: 20px;
-    }
-  }
-  .tab-label:hover {
-    transition: top 0.25s;
-  }
-  .tab-switch:checked + .tab-label {
-    background: #fff;
-    color: #280d5f;
-    border-bottom: 0;
-    transition: all 0.35s;
-    z-index: 1;
-  }
-  .tab-switch:checked + label + .tab-content {
-    z-index: 2;
-    opacity: 1;
-    transition: all 0.35s;
-  }
-`
+
 const TableHeader = styled.span`
   font-size: 26px;
 `
 const responsiveTextSize = ['14px', '14px', '16px', '18px', '20px']
 const responsiveTextSizeBNB = ['14px', '14px', '16px', '18px', '20px']
-const responsiveTextSizeHeader = ['20px', '24px', '32px', '38px', '48px']
+const responsiveTextSizeHeader = ['20px', '24px', '28px', '32px', '32px']
 
 const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLength: number; mineHistory }>> = ({
   mine,
@@ -335,7 +293,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
           mineHistory.map((claimHistory, index) => {
             return (
               <tr key={index}>
-                <Td textAlign={'left'}>
+                <Td textAlign={'center'}>
                   <Text fontSize={responsiveTextSize}> {moment.unix(claimHistory.date * 300).format('L')}</Text>
                 </Td>
                 <Td textAlign={'center'}>
@@ -351,7 +309,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                     X
                   </Text>
                 </Td>
-                <Td textAlign={'right'}>
+                <Td textAlign={'center'}>
                   {claimHistory.totalMined === 0 ? (
                     <Text fontSize={responsiveTextSize}>0</Text>
                   ) : (
@@ -370,7 +328,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                     </AmountData>
                   )}
                 </Td>
-                <Td textAlign={'right'}>
+                <Td textAlign={'center'}>
                   {claimHistory.amount === 0 ? (
                     <Text fontSize={responsiveTextSize}>0</Text>
                   ) : (
@@ -389,7 +347,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                     </AmountData>
                   )}
                 </Td>
-                <Td textAlign={'right'}>
+                <Td textAlign={'center'}>
                   {claimHistory.totalMined === 0 ? (
                     <Text fontSize={responsiveTextSize}>0</Text>
                   ) : (
@@ -408,7 +366,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                     </AmountData>
                   )}
                 </Td>
-                <Td textAlign={'right'}>
+                <Td textAlign={'center'}>
                   {/* {claimHistory.totalMined > 0 ? (
                     <Text fontSize={responsiveTextSize}>0</Text>
                   ) : (
@@ -448,61 +406,61 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
         </ThreeDots>
       ) : (
         <>
-          <TableHeader>
-            <Text style={{ color: '#00f0e1' }} textAlign="center" fontSize={responsiveTextSizeHeader}>
-              Your Mined History
-            </Text>
-          </TableHeader>
-          <TablePool>
-            <TableScroll className="scroll">
-              <table style={{ width: '100%' }}>
-                <thead>
-                  <tr>
-                    <Th textAlign="left">
-                      <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
-                        Date Time
-                      </Text>
-                    </Th>
-                    <Th textAlign="center">
-                      <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
-                        Power
-                      </Text>
-                    </Th>
-                    <Th textAlign="right">
-                      <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
-                        TotalMine
-                      </Text>
-                    </Th>
-                    <Th textAlign="right">
-                      <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
-                        Claimed
-                      </Text>
-                    </Th>
-                    <Th textAlign="right">
-                      <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
-                        Remaind
-                      </Text>
-                    </Th>
-                    <Th textAlign="right">
-                      <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
-                        Available
-                      </Text>
-                    </Th>
-
-                    <Th textAlign="center">
-                      <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
-                        Action
-                      </Text>
-                    </Th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <>{renderClaimHistory()}</>
-                </tbody>
-              </table>
-            </TableScroll>
-          </TablePool>
-          <div
+          <Warpper>
+            <TableHeader>
+              <Text style={{ color: '#F5F5F6' }} textAlign="center" fontSize={responsiveTextSizeHeader}>
+                Your Mined History
+              </Text>
+            </TableHeader>
+            <TablePool>
+              <TableScroll className="scroll">
+                <table>
+                  <thead>
+                    <tr>
+                      <Th textAlign="center">
+                        <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
+                          Date Time
+                        </Text>
+                      </Th>
+                      <Th textAlign="center">
+                        <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
+                          Power
+                        </Text>
+                      </Th>
+                      <Th textAlign="center">
+                        <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
+                          TotalMine
+                        </Text>
+                      </Th>
+                      <Th textAlign="center">
+                        <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
+                          Claimed
+                        </Text>
+                      </Th>
+                      <Th textAlign="center">
+                        <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
+                          Remaind
+                        </Text>
+                      </Th>
+                      <Th textAlign="center">
+                        <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
+                          Available
+                        </Text>
+                      </Th>
+                      <Th textAlign="center">
+                        <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
+                          Action
+                        </Text>
+                      </Th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <>{renderHistory()}</>
+                  </tbody>
+                </table>
+              </TableScroll>
+            </TablePool>
+            {/* <div
             style={{
               display: 'flex',
               alignItems: 'center',
@@ -521,7 +479,8 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
             >
               Claim
             </Button>
-          </div>
+          </div> */}
+          </Warpper>
         </>
       )}
     </>

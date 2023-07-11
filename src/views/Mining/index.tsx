@@ -22,7 +22,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(90deg, #9e86ff 0%, #2b0864 111.24%);
+  background: var(--bg-1, linear-gradient(90deg, #9e86ff 0%, #2b0864 100%));
   gap: 10px;
   height: 100%;
   @media screen and (max-width: 575px) {
@@ -131,11 +131,20 @@ const Button = styled.button`
 `
 const TableMine = styled.div`
   border: 2px solid #00f0e1;
-  border-radius: 24px;
-  color: black;
-  max-width: 1000px;
+  padding: 28px 28px 46px 28px;
+  border: 1px solid rgba(245, 251, 242, 0.2);
+  border-radius: 16px;
+  max-width: 1240px;
   width: 95%;
   margin-top: 20px;
+  background: linear-gradient(
+    131deg,
+    rgba(125, 128, 195, 0.7) 0%,
+    rgba(71, 74, 155, 0.25) 57.58%,
+    rgba(153, 159, 204, 0.28) 82.49%,
+    rgba(239, 248, 255, 0.31) 100%
+  );
+  backdrop-filter: blur(50px);
 `
 // const data = [
 //   {
