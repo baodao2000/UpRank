@@ -38,6 +38,10 @@ export default {
     137: '0x6c7A6fAe998B1F423332db6834d838366A35a38e',
     56: '',
   },
+  trend: {
+    137: '0x68ADA85d2D7fFF3cA4d223c8E0D742aFc19a1847',
+    56: '',
+  },
   sow: {
     56: '0x3eED8Eb7d0374B8B4Dea0a677c29AFb5d2B0387b',
     97: '0xEdd1037048F0ded3e39f7c69C9d00E324b85Bc7b',

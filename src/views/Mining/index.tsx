@@ -7,7 +7,7 @@ import styled from 'styled-components'
 import ClaimPoolModal from './components/ClaimModal'
 import TrendyPageLoader from 'components/Loader/TrendyPageLoader'
 import TableDataPool from './components/yourMineHistory'
-import { getPoolsV3Contract } from 'utils/contractHelpers'
+import { getPoolsV3Contract, getTrendContract } from 'utils/contractHelpers'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { ChainId } from '../../../packages/swap-sdk/src/constants'
 import { formatEther } from '@ethersproject/units'
@@ -213,6 +213,7 @@ function Mining() {
   const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId
   const [isLoading, setIsLoading] = useState(false)
   const getPoolContract = getPoolsV3Contract(CHAIN_ID)
+  const getTokenTrendContract = getTrendContract(CHAIN_ID)
   const { onPresentConnectModal } = useWallet()
   const [usersClaimed, setUserClaimed] = useState([])
   const [claimDisable, setClaimDisable] = useState(false)
@@ -228,11 +229,11 @@ function Mining() {
     userClaimedMineLength: 0,
     currentReward: 0,
     trend2USDT: 0,
+    balanceTrend: 0,
   })
 
   useEffect(() => {
     getMine()
-    checkBlance()
     // getMineHistory()
   }, [account])
   const [openClaimModal, onDismissModal] = useModal(
@@ -242,7 +243,7 @@ function Mining() {
     'removeModal',
   )
   const [openSendModal, onDismissSendModal] = useModal(
-    <SendTrendModal onDismiss={() => onDismissSendModal} />,
+    <SendTrendModal onDismiss={() => onDismissSendModal} mine={mineData} />,
     true,
     false,
     'removeModal',
@@ -251,7 +252,6 @@ function Mining() {
     try {
       if (!account) {
         setIsLoading(true)
-        console.log('dsdsdsd')
       } else {
         setIsLoading(false)
         const getUsersClaimMinedLength = await getPoolContract.getUsersClaimMinedLength(account)
@@ -263,6 +263,13 @@ function Mining() {
           setClaimDisable(false)
         }
         const trendUSD = await getPoolContract.TREND2USDT()
+        const balance = await getTokenTrendContract.balanceOf(account)
+        const balanceAccount = Number(formatEther(balance))
+        if (balanceAccount === 0) {
+          setSendDisable(true)
+        } else {
+          setSendDisable(false)
+        }
         setMineData({
           totalMined: Number(formatEther(users.totalMined)),
           claimed: Number(users.claimed),
@@ -273,6 +280,7 @@ function Mining() {
           userClaimedMineLength: Number(getUsersClaimMinedLength),
           currentReward: Number(formatEther(currentRewardTREND)),
           trend2USDT: Number(formatEther(trendUSD)),
+          balanceTrend: balanceAccount,
         })
         // setIsLoading(false)
         await getMineHistory(getUsersClaimMinedLength)
@@ -339,15 +347,8 @@ function Mining() {
   const { data, isFetched } = useBalance({
     addressOrName: account,
   })
+  console.log(data)
 
-  const balance = isFetched && data && data.value ? formatBigNumber(data.value, 6) : 0
-  const checkBlance = () => {
-    if (balance === 0) {
-      setSendDisable(true)
-    } else {
-      setSendDisable(false)
-    }
-  }
   return (
     <Wrapper>
       <Container>
@@ -400,6 +401,7 @@ function Mining() {
                     <ContentText style={{ fontSize: '16px', fontWeight: 500 }}>$ 0</ContentText>
                   ) : (
                     <ContentText style={{ fontSize: '16px', fontWeight: 500 }}>
+                      ${' '}
                       <CountUp
                         start={0}
                         preserveValue
@@ -407,8 +409,7 @@ function Mining() {
                         end={mineData.totalMined * mineData.trend2USDT}
                         decimals={mineData.totalMined > 0 ? 4 : 0}
                         duration={0.5}
-                      />{' '}
-                      $
+                      />
                     </ContentText>
                   )}
                 </div>
@@ -507,8 +508,8 @@ function Mining() {
                         start={0}
                         preserveValue
                         delay={0}
-                        end={Number(balance)}
-                        decimals={Number(balance) > 0 ? 4 : 0}
+                        end={Number(mineData.balanceTrend)}
+                        decimals={Number(mineData.balanceTrend) > 0 ? 4 : 0}
                         duration={0.5}
                       />
                     </ContentText>
@@ -517,6 +518,7 @@ function Mining() {
                     <ContentText style={{ fontSize: '16px', fontWeight: 500 }}>$ 0</ContentText>
                   ) : (
                     <ContentText style={{ fontSize: '16px', fontWeight: 500 }}>
+                      ${' '}
                       <CountUp
                         start={0}
                         preserveValue
@@ -524,8 +526,7 @@ function Mining() {
                         end={mineData.currentReward * mineData.trend2USDT}
                         decimals={mineData.currentReward > 0 ? 4 : 0}
                         duration={0.5}
-                      />{' '}
-                      $
+                      />
                     </ContentText>
                   )}
                 </div>
@@ -561,7 +562,7 @@ function Mining() {
                   height: '96px',
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: '20px',
+                  gap: '10px',
                   background:
                     'radial-gradient(101.36% 117.36% at 0% -2.74%, rgba(125, 128, 196, 0.6) 0%, rgba(136, 139, 224, 0.264) 100%) linear-gradient(0deg, rgba(245, 251, 242, 0.2), rgba(245, 251, 242, 0.2))',
                 }}
@@ -618,7 +619,7 @@ function Mining() {
                     display: 'flex',
                     flexDirection: 'row',
                     gap: '5px',
-                    alignItems: 'center',
+                    alignItems: 'flex-start',
                     justifyContent: 'space-between',
                     width: '100%',
                   }}
@@ -651,7 +652,7 @@ function Mining() {
                     display: 'flex',
                     flexDirection: 'row',
                     gap: '5px',
-                    alignItems: 'center',
+                    alignItems: 'flex-start',
                     justifyContent: 'space-between',
                     width: '100%',
                   }}

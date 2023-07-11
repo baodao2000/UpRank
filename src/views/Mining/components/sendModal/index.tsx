@@ -16,6 +16,7 @@ import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { Mine } from 'views/PoolV2/util'
 import { useBalance } from 'wagmi'
 import { formatBigNumber } from 'utils/formatBalance'
+import { formatEther } from '@ethersproject/units'
 
 // STYLE
 const Wrapper = styled.div`
@@ -80,9 +81,11 @@ const InputAmount = styled(Input)`
 `
 const SendTrendModal = ({
   onDismiss,
+  mine,
 }: {
   // onSuccess: (dataModal) => void
   onDismiss: () => void
+  mine: Mine
 }) => {
   const { callWithMarketGasPrice } = useCallWithMarketGasPrice()
   const [confirmedTxHash, setConfirmedTxHash] = useState('')
@@ -96,10 +99,7 @@ const SendTrendModal = ({
   const [amount, setAmount] = useState(0)
   const { account } = useActiveWeb3React()
 
-  const { data, isFetched } = useBalance({
-    addressOrName: account,
-  })
-  const balance = isFetched && data && data.value ? formatBigNumber(data.value, 6) : 0
+  const balance = Number(mine.balanceTrend).toFixed(4)
   const { isConfirming, handleConfirm } = useConfirmTransaction({
     onConfirm: () => {
       return callWithMarketGasPrice(mineContract, 'claimRewardTREND')
