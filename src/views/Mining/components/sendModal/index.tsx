@@ -8,7 +8,7 @@ import styled from 'styled-components'
 import { trendyColors } from 'style/trendyTheme'
 import useConfirmTransaction from 'hooks/useConfirmTransaction'
 import { useCallWithMarketGasPrice } from 'hooks/useCallWithMarketGasPrice'
-import { usePoolsContract, usePoolsV2Contract, usePoolsV3Contract } from 'hooks/useContract'
+import { usePoolsContract, usePoolsV2Contract, usePoolsV3Contract, useTrendContract } from 'hooks/useContract'
 import { ToastDescriptionWithTx } from 'components/Toast'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 // import { ChainId } from '../../../../../../../packages/swap-sdk/src/constants'
@@ -16,13 +16,14 @@ import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { Mine } from 'views/PoolV2/util'
 import { useBalance } from 'wagmi'
 import { formatBigNumber } from 'utils/formatBalance'
+import { formatEther } from '@ethersproject/units'
 
 // STYLE
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 200px;
+  height: 300px;
   justify-content: center;
   gap: 1em;
 `
@@ -66,6 +67,7 @@ const ThreeDots = styled.p`
 const Error = styled.span`
   margin: -0.5em 0 1em;
   color: ${trendyColors.ORANGE};
+  font-size: 18px;
 `
 const ButtonMax = styled(Button)`
   position: absolute;
@@ -78,11 +80,14 @@ const ButtonMax = styled(Button)`
 const InputAmount = styled(Input)`
   width: 300px;
 `
+
 const SendTrendModal = ({
   onDismiss,
+  mine,
 }: {
   // onSuccess: (dataModal) => void
   onDismiss: () => void
+  mine: Mine
 }) => {
   const { callWithMarketGasPrice } = useCallWithMarketGasPrice()
   const [confirmedTxHash, setConfirmedTxHash] = useState('')
@@ -90,20 +95,22 @@ const SendTrendModal = ({
   const { toastSuccess, toastError } = useToast()
   const [isValidAmount, setIsValidAmount] = useState(true)
   const mineContract = usePoolsV3Contract()
+  const trendContranct = useTrendContract()
   const { chainId } = useActiveWeb3React()
   const date = Math.floor(new Date().getTime() / 1000)
   const [address, setAddress] = useState('')
   const [amount, setAmount] = useState(0)
+  const [valueAmount, setValueAmount] = useState(0)
+
   const { account } = useActiveWeb3React()
 
-  const { data, isFetched } = useBalance({
-    addressOrName: account,
-  })
-  const balance = isFetched && data && data.value ? formatBigNumber(data.value, 6) : 0
+  const balance = Number(mine.balanceTrend)
+  const amountMax = Number(formatEther(mine.balanceTrend))
   const { isConfirming, handleConfirm } = useConfirmTransaction({
     onConfirm: () => {
-      return callWithMarketGasPrice(mineContract, 'claimRewardTREND')
+      return callWithMarketGasPrice(trendContranct, 'transfer', [address], [amount])
     },
+
     onSuccess: async ({ receipt }) => {
       setConfirmedTxHash(receipt.transactionHash)
       toastSuccess(t('Claim reward successfully !'), <ToastDescriptionWithTx txHash={receipt.transactionHash} />)
@@ -114,10 +121,12 @@ const SendTrendModal = ({
     setAddress(e)
   }
   const changeAmount = (e) => {
-    setAmount(e)
+    setAmount(e * 10 ** 18)
+    setValueAmount(e)
   }
   const setAmountMax = () => {
-    setAmount(Number(balance))
+    setAmount(balance)
+    setValueAmount(amountMax)
   }
   return (
     <Modal
@@ -138,10 +147,11 @@ const SendTrendModal = ({
         <ClaimAmount>
           <Text fontSize="18px">Amount:</Text>
           <div style={{ position: 'relative' }}>
-            <InputAmount value={amount} onChange={(e) => changeAmount(e.target.value)} />
+            <InputAmount value={valueAmount} onChange={(e) => changeAmount(e.target.value)} />
             <ButtonMax onClick={setAmountMax}>Max</ButtonMax>
           </div>
         </ClaimAmount>
+        {amount > balance ? <Error>You don &#39;t have enough Trend to send !!</Error> : null}
         <StyledButton
           variant={'danger'}
           width="180px"
@@ -150,12 +160,12 @@ const SendTrendModal = ({
         >
           {isConfirming ? (
             <ThreeDots className="loading">
-              Claiming<span>.</span>
+              Sending<span>.</span>
               <span>.</span>
               <span>.</span>
             </ThreeDots>
           ) : (
-            'Claim'
+            'Send'
           )}
         </StyledButton>
       </Wrapper>

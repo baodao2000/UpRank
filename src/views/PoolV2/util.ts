@@ -31,6 +31,7 @@ export interface Mine {
   userClaimedMineLength: number
   unit?: string
   currentReward: number
+  balanceTrend: number
 }
 export const timeDisplayLong = (seconds: number) => {
   let y = Math.floor(seconds / 31536000)

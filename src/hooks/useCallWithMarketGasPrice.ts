@@ -17,7 +17,8 @@ export function useCallWithMarketGasPrice() {
     async (
       contract: Contract,
       methodName: string,
-      methodArgs: any[] = [],
+      methodArgs1: any[] = [],
+      methodArgs2: any[] = [],
       overrides: CallOverrides = null,
     ): Promise<TransactionResponse> => {
       addBreadcrumb({
@@ -26,13 +27,14 @@ export function useCallWithMarketGasPrice() {
         data: {
           contractAddress: contract.address,
           methodName,
-          methodArgs,
+          methodArgs1,
+          methodArgs2,
           overrides,
         },
       })
 
       const contractMethod = get(contract, methodName)
-      const tx = await contractMethod(...methodArgs, { ...overrides })
+      const tx = await contractMethod(...methodArgs1, ...methodArgs2, { ...overrides })
 
       if (tx) {
         addBreadcrumb({
