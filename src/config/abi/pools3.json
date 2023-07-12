@@ -259,6 +259,18 @@
     "type": "function"
   },
   {
+    "inputs": [{ "internalType": "address", "name": "user", "type": "address" }],
+    "name": "currentRewardTREND1",
+    "outputs": [
+      { "internalType": "uint256", "name": "_totalMined", "type": "uint256" },
+      { "internalType": "uint256", "name": "_spendPeriods", "type": "uint256" },
+      { "internalType": "uint256", "name": "_currentSpeed", "type": "uint256" },
+      { "internalType": "uint256", "name": "_rw", "type": "uint256" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       { "internalType": "uint256", "name": "pid", "type": "uint256" },
       { "internalType": "bool", "name": "isMine", "type": "bool" }
