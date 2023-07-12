@@ -468,7 +468,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                       </Th>
                       <Th textAlign="center">
                         <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
-                          TotalMine
+                          Total Mine
                         </Text>
                       </Th>
                       <Th textAlign="center">
