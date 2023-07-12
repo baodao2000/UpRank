@@ -30,10 +30,13 @@ const Wrapper = styled.div`
 const ClaimAmount = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
 `
 const StyledButton = styled(Button)`
-  background: #1fc7d4;
+  border-radius: 24px;
+  background: radial-gradient(131.77% 143.25% at -0% -2.74%, #bae4e7 0%, rgba(136, 139, 224, 0.44) 100%);
+  backdrop-filter: blur(5px);
+  width: 378px;
 `
 const depositModal = {}
 const depositInput = {
@@ -76,9 +79,18 @@ const ButtonMax = styled(Button)`
   height: 30px;
   color: white;
   padding: 10px;
+  border-radius: 24px;
+  background: linear-gradient(359deg, rgba(158, 134, 255, 0.8) 0%, rgba(43, 8, 100, 0.8) 100%);
 `
 const InputAmount = styled(Input)`
-  width: 300px;
+  width: 378px;
+  border-radius: 36px;
+  border: 1px solid #3749aa;
+  background: #f2f3f4;
+  backdrop-filter: blur(5px);
+  height: 20px;
+  padding: 20px 16px;
+  color: black;
 `
 
 const SendTrendModal = ({
@@ -126,6 +138,7 @@ const SendTrendModal = ({
   }
   const onChange = (e) => {
     setAddress(e)
+    setCheckError(false)
   }
   const changeAmount = (e) => {
     setAmount(e)
@@ -140,36 +153,38 @@ const SendTrendModal = ({
   const handleInputChange = (e) => {
     if (!e) {
       setAmount(0)
+      setValueAmount(0)
       setInvalid(true)
       return
     }
     if (!Number.isNaN(+e)) {
       const val = String(Math.max(min, Math.min(max, Number(e))))
       setAmount(Number(val))
+      setValueAmount(Number(val))
       setInvalid(false)
     }
   }
   return (
     <Modal
-      style={{ width: '400px' }}
+      style={{ width: '400px', boxShadow: '0px 4px 16px 0px rgba(17, 10, 65, 0.36)', backdropFilter: 'blur(50px)' }}
       title={'SEND TREND'}
       onDismiss={onDismiss}
       hideCloseButton={false}
       borderRadius={25}
-      headerBackground="rgb(105 84 156 / 77%)"
-      background={'linear-gradient(139.08deg, #171718 1.7%, rgba(86, 27, 211, 0.84) 108.66%)'}
+      headerBackground="rgba(238, 238, 241, 0.51)"
+      background={'linear-gradient(112deg, rgba(34, 39, 45, 0.40) 0%, rgba(50, 73, 95, 0.40) 100%)'}
       width="800px"
     >
       <Wrapper>
         <ClaimAmount>
-          <Text fontSize="18px">To:</Text>
+          <Text fontSize="18px">To</Text>
           <InputAmount value={address} onChange={(e) => onChange(e.target.value)} />
         </ClaimAmount>
         {checkError === true ? <Error>You do not enter an address !!!</Error> : null}
         <ClaimAmount>
-          <Text fontSize="18px">Amount:</Text>
+          <Text fontSize="18px">Amount</Text>
           <div style={{ position: 'relative' }}>
-            <InputAmount value={amountMax} onChange={(e) => handleInputChange(e.target.value)} />
+            <InputAmount value={valueAmount} onChange={(e) => handleInputChange(e.target.value)} />
             <ButtonMax onClick={setAmountMax}>Max</ButtonMax>
           </div>
         </ClaimAmount>
@@ -178,7 +193,7 @@ const SendTrendModal = ({
         <StyledButton
           variant={'danger'}
           width="180px"
-          disabled={isConfirming || (!isValidAmount ? true : false)}
+          disabled={isConfirming || (!isValidAmount ? true : false) || inValid === true}
           onClick={handleCheck}
         >
           {isConfirming ? (

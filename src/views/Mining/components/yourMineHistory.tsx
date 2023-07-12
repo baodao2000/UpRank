@@ -110,7 +110,6 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
   const [isLoading, setIsLoading] = useState(false)
 
   const power = Number(mine.mineSpeed + mine.mineSpeedLevel) / 100
-
   const handleSuccess = () => {
     getMineHistory()
     // getCurrenReward()

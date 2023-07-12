@@ -238,10 +238,11 @@ function Mining() {
     totalMined: 0,
     totalClaimed: 0,
   })
-
+  var available = 0
   useEffect(() => {
     getMine()
     getMineSystem()
+    getAvailable()
     // getMineHistory()
   }, [account])
   const [openClaimModal, onDismissModal] = useModal(
@@ -264,12 +265,14 @@ function Mining() {
         setIsLoading(false)
         const getUsersClaimMinedLength = await getPoolContract.getUsersClaimMinedLength(account)
         const users = await getPoolContract.usersMine(account)
+        const mineSpeedLevel = await getPoolContract.userRank(account)
         const currentRewardTREND = await getPoolContract.currentRewardTREND(account)
         if (Number(formatEther(currentRewardTREND)) === 0) {
           setClaimDisable(true)
         } else {
           setClaimDisable(false)
         }
+        // mineSpeedLevel
         const trendUSD = await getPoolContract.TREND2USDT()
         const balance = await getTokenTrendContract.balanceOf(account)
         const balanceAccount = Number(formatEther(balance))
@@ -283,7 +286,7 @@ function Mining() {
           claimed: Number(users.claimed),
           remain: Number(formatEther(users.remain)),
           mineSpeed: Number(users.mineSpeed),
-          mineSpeedLevel: Number(users.mineSpeedLevel),
+          mineSpeedLevel: Number(mineSpeedLevel),
           startTime: Number(users.startTime),
           userClaimedMineLength: Number(getUsersClaimMinedLength),
           currentReward: Number(formatEther(currentRewardTREND)),
@@ -297,6 +300,17 @@ function Mining() {
       console.log(error)
     }
   }
+
+  const getAvailable = async () => {
+    if (!account) {
+      available = 0
+    } else {
+      const currentRewardTREND = await getPoolContract.currentRewardTREND(account)
+      available = Number(formatEther(currentRewardTREND))
+      console.log('sasas')
+    }
+  }
+  const interval = setInterval(getAvailable, 30000)
   const getMineSystem = async () => {
     const totalMiner = await getPoolContract.totalMiner()
     const totalMined = await getPoolContract.totalMined()
@@ -469,8 +483,8 @@ function Mining() {
                         start={0}
                         preserveValue
                         delay={0}
-                        end={mineData.currentReward}
-                        decimals={mineData.currentReward > 0 ? 4 : 0}
+                        end={available}
+                        decimals={available > 0 ? 6 : 0}
                         duration={0.5}
                       />
                     </ContentText>
