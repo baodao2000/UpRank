@@ -15,6 +15,8 @@ import Dots from 'components/Loader/Dots'
 import ClaimPoolModal from './ClaimModal'
 import { ThreeDots } from 'views/Pool/components/DepositModal'
 import { useWallet } from 'hooks/useWallet'
+import Image from 'next/image'
+import { isMobile } from 'react-device-detect'
 
 // STYLE
 const Warpper = styled.div`
@@ -192,7 +194,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                       decimals={mine.totalMined > 0 ? 4 : 0}
                       duration={0.5}
                     />{' '}
-                    $
+                    <Image src="/images/trendiCoin.png" width={25} height={25} alt="" />
                   </Text>
                 </AmountData>
               )}
@@ -323,10 +325,27 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                           preserveValue
                           delay={0}
                           end={mine.totalMined}
-                          decimals={mine.totalMined > 0 ? 2 : 0}
+                          decimals={mine.totalMined > 0 ? 4 : 0}
                           duration={0.5}
                         />{' '}
-                        ${mine.unit}
+                        <Image src="/images/trendiCoin.png" width={16} height={16} alt="" />
+                      </Text>
+                    </AmountData>
+                  )}
+                  {claimHistory.totalMined === 0 ? (
+                    <Text fontSize={responsiveTextSize}>0</Text>
+                  ) : (
+                    <AmountData>
+                      <Text fontSize={responsiveTextSizeBNB}>
+                        ~ ${' '}
+                        <CountUp
+                          start={0}
+                          preserveValue
+                          delay={0}
+                          end={mine.totalMined * claimHistory.rateUSD}
+                          decimals={mine.totalMined > 0 ? 4 : 0}
+                          duration={0.5}
+                        />
                       </Text>
                     </AmountData>
                   )}
@@ -336,7 +355,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                     <Text fontSize={responsiveTextSize}>0</Text>
                   ) : (
                     <AmountData>
-                      <Text fontSize={responsiveTextSizeBNB}>
+                      <Text fontSize={responsiveTextSize}>
                         <CountUp
                           start={0}
                           preserveValue
@@ -345,7 +364,24 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                           decimals={claimHistory.amount > 0 ? 4 : 0}
                           duration={0.5}
                         />{' '}
-                        ${mine.unit}
+                        <Image src="/images/trendiCoin.png" width={16} height={16} alt="" />
+                      </Text>
+                    </AmountData>
+                  )}
+                  {claimHistory.amount === 0 ? (
+                    <Text fontSize={responsiveTextSize}>0</Text>
+                  ) : (
+                    <AmountData>
+                      <Text fontSize={responsiveTextSize}>
+                        ~ ${' '}
+                        <CountUp
+                          start={0}
+                          preserveValue
+                          delay={0}
+                          end={claimHistory.amount * claimHistory.rateUSD}
+                          decimals={claimHistory.amount > 0 ? 4 : 0}
+                          duration={0.5}
+                        />
                       </Text>
                     </AmountData>
                   )}
@@ -436,7 +472,12 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                         </Text>
                       </Th>
                       <Th textAlign="center">
-                        <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
+                        <Text
+                          style={{ width: isMobile && '62px' }}
+                          color={trendyColors.DARK_PURPLE}
+                          fontSize={responsiveTextSize}
+                          textTransform="capitalize"
+                        >
                           Claimed
                         </Text>
                       </Th>
@@ -463,26 +504,6 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                 </table>
               </TableScroll>
             </TablePool>
-            {/* <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              margin: '15px',
-              width: '100%',
-              justifyContent: 'center',
-            }}
-          >
-            <Button
-              style={{ color: '#6216B0', backgroundColor: '#D9D9D9' }}
-              variant={mine.currentReward > 0 ? 'danger' : 'light'}
-              disabled={false}
-              width={['120px', '150px', '180px', '200px']}
-              onClick={openClaimModal}
-              // scale={isMobile ? 'sm' : 'md'}
-            >
-              Claim
-            </Button>
-          </div> */}
           </Warpper>
         </>
       )}

@@ -207,7 +207,7 @@ const SystemContent = styled.div`
   }
 `
 function Mining() {
-  const { isMobile, isTablet, isDesktop, isXl } = useMatchBreakpoints()
+  const { isMobile, isTablet } = useMatchBreakpoints()
   const { account, chainId } = useActiveWeb3React()
   const [loadingPage, setLoadingPage] = useState(true)
   const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId
@@ -232,8 +232,16 @@ function Mining() {
     balanceTrend: 0,
   })
 
+  const [systemData, setSystemData] = useState({
+    totalMiner: 0,
+    defaultTrend: 0,
+    totalMined: 0,
+    totalClaimed: 0,
+  })
+
   useEffect(() => {
     getMine()
+    getMineSystem()
     // getMineHistory()
   }, [account])
   const [openClaimModal, onDismissModal] = useModal(
@@ -280,7 +288,7 @@ function Mining() {
           userClaimedMineLength: Number(getUsersClaimMinedLength),
           currentReward: Number(formatEther(currentRewardTREND)),
           trend2USDT: Number(formatEther(trendUSD)),
-          balanceTrend: balanceAccount,
+          balanceTrend: balance,
         })
         // setIsLoading(false)
         await getMineHistory(getUsersClaimMinedLength)
@@ -289,7 +297,18 @@ function Mining() {
       console.log(error)
     }
   }
-
+  const getMineSystem = async () => {
+    const totalMiner = await getPoolContract.totalMiner()
+    const totalMined = await getPoolContract.totalMined()
+    const totalClaimed = await getPoolContract.totalClaimed()
+    const trend2USDT = await getPoolContract.TREND2USDT()
+    setSystemData({
+      totalMiner: Number(totalMiner),
+      defaultTrend: Number(formatEther(trend2USDT)),
+      totalMined: Number(formatEther(totalMined)),
+      totalClaimed: Number(formatEther(totalClaimed)),
+    })
+  }
   // const current = async () => {
   //   const newdd = await getPoolContract.currentRewardTREND(account)
   //   console.log(newdd);
@@ -306,7 +325,7 @@ function Mining() {
         if (Number(getUsersClaimMinedLength) > 0) {
           const currenReward = await getPoolContract.currentRewardTREND(account)
           const currentRewardTREND = currenReward.toString()
-
+          const trendUSD = await getPoolContract.TREND2USDT()
           await getPoolContract.getUsersClaimMined(account, 10, 0).then((res) => {
             const arr = res.list.map((claimed: any, i: number) => {
               return {
@@ -315,6 +334,7 @@ function Mining() {
                 totalLock: Number(formatEther(claimed.totalLock)),
                 power: Number(claimed.interrest.toString()) / 100,
                 currentReward: Number(formatEther(currentRewardTREND)),
+                rateUSD: Number(formatEther(trendUSD)),
               }
             })
             setUserClaimed(arr)
@@ -347,7 +367,6 @@ function Mining() {
   const { data, isFetched } = useBalance({
     addressOrName: account,
   })
-  console.log(data)
 
   return (
     <Wrapper>
@@ -417,7 +436,7 @@ function Mining() {
             </Box>
             <Box style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
               <ContentText>
-                Available TREND
+                Available
                 <div style={{ width: '100%', height: '1px', backgroundColor: ' #DFDFDF3D ', marginTop: '4px' }} />
               </ContentText>
 
@@ -508,7 +527,7 @@ function Mining() {
                         start={0}
                         preserveValue
                         delay={0}
-                        end={Number(mineData.balanceTrend)}
+                        end={Number(formatEther(mineData.balanceTrend))}
                         decimals={Number(mineData.balanceTrend) > 0 ? 4 : 0}
                         duration={0.5}
                       />
@@ -523,8 +542,8 @@ function Mining() {
                         start={0}
                         preserveValue
                         delay={0}
-                        end={mineData.currentReward * mineData.trend2USDT}
-                        decimals={mineData.currentReward > 0 ? 4 : 0}
+                        end={Number(formatEther(mineData.balanceTrend)) * mineData.trend2USDT}
+                        decimals={Number(formatEther(mineData.balanceTrend)) > 0 ? 4 : 0}
                         duration={0.5}
                       />
                     </ContentText>
@@ -555,7 +574,7 @@ function Mining() {
               marginTop: '20px',
             }}
           >
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', width: '100%' }}>
               <Box
                 style={{
                   width: isMobile ? '100%' : '195px',
@@ -567,9 +586,16 @@ function Mining() {
                     'radial-gradient(101.36% 117.36% at 0% -2.74%, rgba(125, 128, 196, 0.6) 0%, rgba(136, 139, 224, 0.264) 100%) linear-gradient(0deg, rgba(245, 251, 242, 0.2), rgba(245, 251, 242, 0.2))',
                 }}
               >
-                <ContentText style={{ fontSize: '18px', fontWeight: 700 }}>Number of users mining</ContentText>
+                <ContentText style={{ fontSize: '18px', fontWeight: 700 }}>Miners</ContentText>
                 <ContentText style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '28px' }}>
-                  310{' '}
+                  <CountUp
+                    start={0}
+                    preserveValue
+                    delay={0}
+                    end={Number(systemData.totalMiner)}
+                    // decimals={Number((mineData.balanceTrend)) > 0 ? 4 : 0}
+                    duration={0.5}
+                  />
                   <span>
                     <Image src="/images/user.png" alt="" width={20} height={20} />
                   </span>
@@ -585,12 +611,21 @@ function Mining() {
                   gap: '20px',
                 }}
               >
-                <ContentText style={{ fontSize: '18px', fontWeight: '700' }}>1 TREND/</ContentText>
-                <ContentText
-                  style={{ display: 'flex', flexDirection: 'row', gap: '10px', fontSize: isMobile ? '15px' : '25px' }}
-                >
-                  1.2 USD
-                </ContentText>
+                <ContentText style={{ fontSize: '18px', fontWeight: '700' }}>1 TREND</ContentText>
+                <div style={{ display: 'flex', gap: '5px' }}>
+                  <ContentText style={{ fontSize: '36px', fontWeight: 500, lineHeight: '16px' }}>~</ContentText>
+                  <ContentText style={{ fontSize: '18px', fontWeight: 500 }}>
+                    ${' '}
+                    <CountUp
+                      start={0}
+                      preserveValue
+                      delay={0}
+                      end={Number(systemData.defaultTrend)}
+                      decimals={Number(systemData.defaultTrend) > 0 ? 4 : 0}
+                      duration={0.5}
+                    />
+                  </ContentText>
+                </div>
               </Box>
             </div>
             <div
@@ -604,7 +639,7 @@ function Mining() {
             >
               <Box style={{ display: 'flex', flexDirection: 'column', gap: '10px', height: '100px', width: '100%' }}>
                 <ContentText>
-                  Total TREND
+                  Total Mined
                   <div
                     style={{
                       width: isMobile ? '100%' : '394px',
@@ -630,14 +665,33 @@ function Mining() {
                   </div>
 
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                    <ContentText style={{ fontSize: '20px', fontWeight: 700, color: 'black' }}>38</ContentText>
-                    <ContentText style={{ fontSize: '16px', fontWeight: 500 }}>$12</ContentText>
+                    <ContentText style={{ fontSize: '20px', fontWeight: 700, color: 'black' }}>
+                      <CountUp
+                        start={0}
+                        preserveValue
+                        delay={0}
+                        end={Number(systemData.totalMined)}
+                        decimals={Number(systemData.totalMined) > 0 ? 4 : 0}
+                        duration={0.5}
+                      />
+                    </ContentText>
+                    <ContentText style={{ fontSize: '16px', fontWeight: 500 }}>
+                      ${' '}
+                      <CountUp
+                        start={0}
+                        preserveValue
+                        delay={0}
+                        end={Number(systemData.totalMined) * systemData.defaultTrend}
+                        decimals={Number(systemData.totalMined) > 0 ? 4 : 0}
+                        duration={0.5}
+                      />
+                    </ContentText>
                   </div>
                 </div>
               </Box>
               <Box style={{ display: 'flex', flexDirection: 'column', gap: '10px', height: '100px', width: '100%' }}>
                 <ContentText>
-                  Total Claimed TREND
+                  Total Claimed
                   <div
                     style={{
                       width: isMobile ? '100%' : '394px',
@@ -663,8 +717,27 @@ function Mining() {
                   </div>
 
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                    <ContentText style={{ fontSize: '20px', fontWeight: 700, color: 'black' }}>38</ContentText>
-                    <ContentText style={{ fontSize: '16px', fontWeight: 500 }}>$12</ContentText>
+                    <ContentText style={{ fontSize: '20px', fontWeight: 700, color: 'black' }}>
+                      <CountUp
+                        start={0}
+                        preserveValue
+                        delay={0}
+                        end={Number(systemData.totalClaimed)}
+                        decimals={Number(systemData.totalClaimed) > 0 ? 4 : 0}
+                        duration={0.5}
+                      />
+                    </ContentText>
+                    <ContentText style={{ fontSize: '16px', fontWeight: 500 }}>
+                      ${' '}
+                      <CountUp
+                        start={0}
+                        preserveValue
+                        delay={0}
+                        end={Number(systemData.totalClaimed) * systemData.defaultTrend}
+                        decimals={Number(systemData.totalClaimed) > 0 ? 4 : 0}
+                        duration={0.5}
+                      />
+                    </ContentText>
                   </div>
                 </div>
               </Box>

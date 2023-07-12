@@ -1129,7 +1129,7 @@ const Pools = () => {
                   </Text>
                 </LineText>
               </PoolsReward>
-              {!account ? null : (
+              {/* {!account ? null : (
                 <Rank
                   unit={unit}
                   ranks={ranks}
@@ -1137,7 +1137,7 @@ const Pools = () => {
                   onSuccess={onSuccessRank}
                   userIsClaim={userClaimed}
                 />
-              )}
+              )} */}
             </Flex>
           </PageHeader>
         </>
