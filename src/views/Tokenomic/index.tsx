@@ -399,7 +399,7 @@ const BoxTwoContainText = styled.div`
 `
 const BoxTwoText = styled.div`
   width: 220px;
-  font-family: Poppins;
+  font-family: Poppins, sans-serif;
   font-weight: 600;
   font-size: 16px;
   line-height: 17.6px;
@@ -740,7 +740,7 @@ const dataRight = [
     color: '#B128FF',
   },
   {
-    title: 'Program for the community and close partners',
+    title: 'Community and close partners',
     label: '17%',
     color: '#8500F9',
   },
@@ -953,7 +953,7 @@ function Tokenomic() {
             <div>
               <ContentLeft>
                 {dataLeft.map((item) => (
-                  <Item style={{ margin: '5px' }}>
+                  <Item>
                     <Icon style={{ background: item.color }}></Icon>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
                       <Title>{item.title}</Title>
