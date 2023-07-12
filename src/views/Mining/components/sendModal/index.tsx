@@ -101,9 +101,9 @@ const SendTrendModal = ({
   const [address, setAddress] = useState('')
   const [amount, setAmount] = useState(0)
   const [valueAmount, setValueAmount] = useState(0)
-
+  const [checkError, setCheckError] = useState(false)
   const { account } = useActiveWeb3React()
-
+  const [inValid, setInvalid] = useState(false)
   const balance = Number(mine.balanceTrend)
   const amountMax = Number(formatEther(mine.balanceTrend))
   const { isConfirming, handleConfirm } = useConfirmTransaction({
@@ -117,16 +117,37 @@ const SendTrendModal = ({
       onDismiss()
     },
   })
+  const handleCheck = () => {
+    if (address === '') {
+      setCheckError(true)
+    } else {
+      handleConfirm()
+    }
+  }
   const onChange = (e) => {
     setAddress(e)
   }
   const changeAmount = (e) => {
-    setAmount(e * 10 ** 18)
+    setAmount(e)
     setValueAmount(e)
   }
   const setAmountMax = () => {
     setAmount(balance)
     setValueAmount(amountMax)
+  }
+  const min = 0
+  const max = Number(balance)
+  const handleInputChange = (e) => {
+    if (!e) {
+      setAmount(0)
+      setInvalid(true)
+      return
+    }
+    if (!Number.isNaN(+e)) {
+      const val = String(Math.max(min, Math.min(max, Number(e))))
+      setAmount(Number(val))
+      setInvalid(false)
+    }
   }
   return (
     <Modal
@@ -144,19 +165,21 @@ const SendTrendModal = ({
           <Text fontSize="18px">To:</Text>
           <InputAmount value={address} onChange={(e) => onChange(e.target.value)} />
         </ClaimAmount>
+        {checkError === true ? <Error>You do not enter an address !!!</Error> : null}
         <ClaimAmount>
           <Text fontSize="18px">Amount:</Text>
           <div style={{ position: 'relative' }}>
-            <InputAmount value={valueAmount} onChange={(e) => changeAmount(e.target.value)} />
+            <InputAmount value={amountMax} onChange={(e) => handleInputChange(e.target.value)} />
             <ButtonMax onClick={setAmountMax}>Max</ButtonMax>
           </div>
         </ClaimAmount>
-        {amount > balance ? <Error>You don &#39;t have enough Trend to send !!</Error> : null}
+        {inValid === true ? <Error>Please enter the value !!!</Error> : null}
+        {/* {amount > balance ? <Error>You don &#39;t have enough Trend to send !!</Error> : null} */}
         <StyledButton
           variant={'danger'}
           width="180px"
           disabled={isConfirming || (!isValidAmount ? true : false)}
-          onClick={handleConfirm}
+          onClick={handleCheck}
         >
           {isConfirming ? (
             <ThreeDots className="loading">

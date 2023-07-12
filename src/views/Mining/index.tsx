@@ -17,7 +17,7 @@ import { useBalance } from 'wagmi'
 import contracts from 'config/constants/contracts'
 import { formatBigNumber } from 'utils/formatBalance'
 import SendTrendModal from './components/sendModal'
-
+import numeral from 'numeral'
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -367,7 +367,12 @@ function Mining() {
   const { data, isFetched } = useBalance({
     addressOrName: account,
   })
+  //   var number = Number(formatEther(mineData.balanceTrend));
 
+  // var newaa = numeral(number).format('0,0.0000');
+  // console.log(Number(newaa));
+
+  // '1,000'
   return (
     <Wrapper>
       <Container>
@@ -551,9 +556,22 @@ function Mining() {
                 </div>
               </div>
               <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <Button onClick={handleSend} disabled={sendDisable}>
+                <Button
+                  style={{
+                    background:
+                      'radial-gradient(193.01% 318.93% at -0.00% -0.00%, #FBFDFF 0%, rgba(192, 203, 251, 0.36) 87.18%, rgba(2, 0, 98, 0.00) 100%)',
+                    backdropFilter: 'blur(50px)',
+                  }}
+                  onClick={handleSend}
+                  disabled={sendDisable}
+                >
                   <ContentText
-                    style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: 16, color: '#FFFFFF' }}
+                    style={{
+                      fontFamily: 'Poppins, sans-serif',
+                      fontWeight: 700,
+                      fontSize: 16,
+                      color: 'rgba(139, 22, 255, 1), rgba(13, 22, 100, 1)',
+                    }}
                   >
                     Send
                   </ContentText>
