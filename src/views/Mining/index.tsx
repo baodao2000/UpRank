@@ -233,12 +233,22 @@ function Mining() {
     totalMined: 0,
     totalClaimed: 0,
   })
+  const getAvailable = async () => {
+    if (!account) {
+      setAvailable(0)
+    } else {
+      const currentRewardTREND = await getPoolContract.currentRewardTREND(account)
+      setAvailable(Number(formatEther(currentRewardTREND)))
+    }
+  }
   useEffect(() => {
     getMine()
     getMineSystem()
-    // getAvailable()
-    // getMineHistory()
+    let interval
+    if (account) interval = setInterval(() => getAvailable(), 30000)
+    return () => clearInterval(interval)
   }, [account])
+
   const [openClaimModal, onDismissModal] = useModal(
     <ClaimPoolModal onDismiss={() => onDismissModal()} onSuccess={() => handleSuccess()} mine={mineData} />,
     true,
@@ -271,7 +281,7 @@ function Mining() {
         } else {
           mineSpeedLevel = (mineSpeedLevel + 1) * 25
         }
-        // await getAvailable()
+        await getAvailable()
         const trendUSD = await getPoolContract.TREND2USDT()
         const balance = await getTokenTrendContract.balanceOf(account)
         const balanceAccount = Number(formatEther(balance))
@@ -290,7 +300,7 @@ function Mining() {
           userClaimedMineLength: Number(getUsersClaimMinedLength),
           currentReward: Number(formatEther(currentRewardTREND)),
           trend2USDT: Number(formatEther(trendUSD)),
-          balanceTrend: balance,
+          balanceTrend: balanceAccount,
         })
         // setIsLoading(false)
         await getMineHistory(getUsersClaimMinedLength)
@@ -300,16 +310,6 @@ function Mining() {
     }
   }
 
-  const getAvailable = async () => {
-    if (!account) {
-      setAvailable(0)
-    } else {
-      const currentRewardTREND = await getPoolContract.currentRewardTREND(account)
-      setAvailable(Number(formatEther(currentRewardTREND)))
-    }
-  }
-
-  //  setInterval(getAvailable, 300000)
   const getMineSystem = async () => {
     const totalMiner = await getPoolContract.totalMiner()
     const totalMined = await getPoolContract.totalMined()
@@ -375,10 +375,11 @@ function Mining() {
   const { data, isFetched } = useBalance({
     addressOrName: account,
   })
+
   return (
     <Wrapper>
       <Container>
-        <Table style={{ width: isMobile ? '350px' : isTablet ? '670px' : '530px' }}>
+        <Table style={{ width: isMobile ? '350px' : isTablet ? '670px' : '510px' }}>
           <BoxContain>
             <ContentText style={{ fontSize: '32px' }}>Your Wallet</ContentText>
 
@@ -396,14 +397,15 @@ function Mining() {
                   <Image src="/images/speed.png" width={20} height={15} alt="" />
                 </div>
                 <ContentText style={{ fontSize: isMobile ? '40px' : '64px', fontWeight: 700 }}>
-                  1.5<span style={{ fontSize: '26px', fontWeight: 700 }}>x</span>
+                  {Number(mineData.mineSpeed + mineData.mineSpeedLevel) / 100}
+                  <span style={{ fontSize: '26px', fontWeight: 700 }}>x</span>
                 </ContentText>
 
                 <ContentText style={{ fontSize: '16px', fontWeight: 500, color: '#D1D1D1' }}>Mine Speed</ContentText>
               </Box>
               <Box
                 style={{
-                  width: isMobile ? '145px' : isTablet ? '900px' : '243px',
+                  width: isMobile ? '145px' : isTablet ? '900px' : '270px',
                   display: 'flex',
                   flexDirection: 'column',
                   gap: '10px',
@@ -425,22 +427,22 @@ function Mining() {
                       <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '10px' }}>
                         <Image
                           src="/images/trendiCoin.png"
-                          width={isMobile ? 30 : 50}
-                          height={isMobile ? 30 : 50}
+                          width={isMobile ? 30 : 20}
+                          height={isMobile ? 30 : 20}
                           alt=""
                         />
-                        <ContentText style={{ fontSize: isMobile ? '35px' : '64px', fontWeight: 700 }}>0</ContentText>
+                        <ContentText style={{ fontSize: isMobile ? '24px' : '36px', fontWeight: 700 }}>0</ContentText>
                       </div>
                     ) : (
                       <>
                         <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '10px' }}>
                           <Image
                             src="/images/trendiCoin.png"
-                            width={isMobile ? 30 : 50}
-                            height={isMobile ? 30 : 50}
+                            width={isMobile ? 30 : 25}
+                            height={isMobile ? 30 : 25}
                             alt=""
                           />
-                          <ContentText style={{ fontSize: isMobile ? '35px' : '64px', fontWeight: 700 }}>
+                          <ContentText style={{ fontSize: isMobile ? '24px' : '36px', fontWeight: 700 }}>
                             <CountUp
                               start={0}
                               preserveValue
@@ -497,27 +499,27 @@ function Mining() {
                     width: '100%',
                   }}
                 >
-                  <div style={{ display: 'flex', flexDirection: 'row', gap: '5px', alignItems: 'center' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', alignItems: 'center' }}>
                     {!account ? (
-                      <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '10px' }}>
+                      <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '5px' }}>
                         <Image
                           src="/images/trendiCoin.png"
-                          width={isMobile ? 30 : 50}
-                          height={isMobile ? 30 : 50}
+                          width={isMobile ? 30 : 25}
+                          height={isMobile ? 30 : 25}
                           alt=""
                         />
-                        <ContentText style={{ fontSize: isMobile ? '35px' : '64px', fontWeight: 700 }}>0</ContentText>
+                        <ContentText style={{ fontSize: isMobile ? '24px' : '36px', fontWeight: 700 }}>0</ContentText>
                       </div>
                     ) : (
                       <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '10px' }}>
                         <Image
                           src="/images/trendiCoin.png"
-                          width={isMobile ? 30 : 50}
-                          height={isMobile ? 30 : 50}
+                          width={isMobile ? 30 : 25}
+                          height={isMobile ? 30 : 25}
                           alt=""
                         />
 
-                        <ContentText style={{ fontSize: isMobile ? '35px' : '64px', fontWeight: 700 }}>
+                        <ContentText style={{ fontSize: isMobile ? '24px' : '36px', fontWeight: 700 }}>
                           <CountUp
                             start={0}
                             preserveValue
@@ -592,35 +594,38 @@ function Mining() {
                     width: '100%',
                   }}
                 >
-                  <div style={{ display: 'flex', flexDirection: 'row', gap: '5px', alignItems: 'center' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', alignItems: 'center' }}>
                     {!account ? (
                       <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '10px' }}>
                         <Image
                           src="/images/trendiCoin.png"
-                          width={isMobile ? 30 : 50}
-                          height={isMobile ? 30 : 50}
+                          width={isMobile ? 30 : 25}
+                          height={isMobile ? 30 : 25}
                           alt=""
                         />
-                        <ContentText style={{ fontSize: isMobile ? '35px' : '64px', fontWeight: 700 }}>0</ContentText>
+                        <ContentText style={{ fontSize: isMobile ? '24px' : '36px', fontWeight: 700 }}>0</ContentText>
                       </div>
                     ) : (
                       <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '10px' }}>
                         <Image
                           src="/images/trendiCoin.png"
-                          width={isMobile ? 30 : 50}
-                          height={isMobile ? 30 : 50}
+                          width={isMobile ? 30 : 25}
+                          height={isMobile ? 30 : 25}
                           alt=""
                         />
-                        <ContentText style={{ fontSize: isMobile ? '35px' : '64px', fontWeight: 700 }}>
-                          {/* <CountUp
-                        start={0}
-                        preserveValue
-                        delay={0}
-                        end={Number(formatEther(mineData.balanceTrend))}
-                        decimals={Number(mineData.balanceTrend) > 0 ? 4 : 0}
-                        duration={0.5}
-                      /> */}
-                          {numeral(Number(formatEther(mineData.balanceTrend))).format('0,0')}
+                        <ContentText style={{ fontSize: isMobile ? '24px' : '36px', fontWeight: 700 }}>
+                          {
+                            <CountUp
+                              separator=","
+                              start={0}
+                              preserveValue
+                              delay={0}
+                              end={Number(mineData.balanceTrend)}
+                              decimals={1}
+                              duration={0.5}
+                            />
+                          }
+                          {/* {numeral(Number(formatEther(mineData.balanceTrend))).format('0,0')} */}
                         </ContentText>
                       </div>
                     )}
@@ -630,11 +635,12 @@ function Mining() {
                       <ContentText style={{ fontSize: '24px', fontWeight: 600, color: '#D1D1D1' }}>
                         ~ ${' '}
                         <CountUp
+                          separator=","
                           start={0}
                           preserveValue
                           delay={0}
-                          end={Number(formatEther(mineData.balanceTrend)) * mineData.trend2USDT}
-                          decimals={Number(formatEther(mineData.balanceTrend)) > 0 ? 4 : 0}
+                          end={Number(mineData.balanceTrend) * mineData.trend2USDT}
+                          decimals={Number(mineData.balanceTrend) > 0 ? 3 : 0}
                           duration={0.5}
                         />
                       </ContentText>
@@ -739,8 +745,8 @@ function Mining() {
                 >
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '35px' }}>
                     <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '10px' }}>
-                      <Image src="/images/trendiCoin.png" width={50} height={50} alt="" />
-                      <ContentText style={{ fontWeight: 700, fontSize: isMobile ? '20px' : '40px' }}>
+                      <Image src="/images/trendiCoin.png" width={25} height={25} alt="" />
+                      <ContentText style={{ fontWeight: 700, fontSize: isMobile ? '20px' : '36px' }}>
                         <CountUp
                           start={0}
                           preserveValue
@@ -822,12 +828,12 @@ function Mining() {
                     <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '10px' }}>
                       <Image
                         src="/images/trendiCoin.png"
-                        width={isMobile ? 20 : 50}
-                        height={isMobile ? 20 : 50}
+                        width={isMobile ? 20 : 25}
+                        height={isMobile ? 20 : 25}
                         alt=""
                       />
 
-                      <ContentText style={{ fontWeight: 700, fontSize: isMobile ? '20px' : '40px' }}>
+                      <ContentText style={{ fontWeight: 700, fontSize: isMobile ? '20px' : '36px' }}>
                         <CountUp
                           start={0}
                           preserveValue

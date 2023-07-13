@@ -17,6 +17,8 @@ import { Mine } from 'views/PoolV2/util'
 import { useBalance } from 'wagmi'
 import { formatBigNumber } from 'utils/formatBalance'
 import { formatEther } from '@ethersproject/units'
+import BigNumber from 'bignumber.js'
+import { getFullDecimalMultiplier } from 'utils/getFullDecimalMultiplier'
 
 // STYLE
 const Wrapper = styled.div`
@@ -111,21 +113,23 @@ const SendTrendModal = ({
   const { chainId } = useActiveWeb3React()
   const date = Math.floor(new Date().getTime() / 1000)
   const [address, setAddress] = useState('')
-  const [amount, setAmount] = useState(0)
+  const [amount, setAmount] = useState('')
   const [valueAmount, setValueAmount] = useState(0)
   const [checkError, setCheckError] = useState(false)
   const { account } = useActiveWeb3React()
   const [inValid, setInvalid] = useState(false)
   const balance = Number(mine.balanceTrend)
-  const amountMax = Number(formatEther(mine.balanceTrend))
+  const amountMax = Number(mine.balanceTrend)
   const { isConfirming, handleConfirm } = useConfirmTransaction({
     onConfirm: () => {
+      console.log(amount)
+
       return callWithMarketGasPrice(trendContranct, 'transfer', [address], [amount])
     },
 
     onSuccess: async ({ receipt }) => {
       setConfirmedTxHash(receipt.transactionHash)
-      toastSuccess(t('Claim reward successfully !'), <ToastDescriptionWithTx txHash={receipt.transactionHash} />)
+      toastSuccess(t('Send TREND successfully !'), <ToastDescriptionWithTx txHash={receipt.transactionHash} />)
       onDismiss()
     },
   })
@@ -140,26 +144,27 @@ const SendTrendModal = ({
     setAddress(e)
     setCheckError(false)
   }
-  const changeAmount = (e) => {
-    setAmount(e)
-    setValueAmount(e)
-  }
+  // const changeAmount = (e) => {
+  //   setAmount(Number(new BigNumber(e).times(getFullDecimalMultiplier(18)).toString()))
+  //   setValueAmount(e)
+  // }
   const setAmountMax = () => {
-    setAmount(balance)
+    setAmount(balance.toString())
     setValueAmount(amountMax)
   }
   const min = 0
   const max = Number(balance)
   const handleInputChange = (e) => {
     if (!e) {
-      setAmount(0)
+      setAmount('')
       setValueAmount(0)
       setInvalid(true)
       return
     }
     if (!Number.isNaN(+e)) {
       const val = String(Math.max(min, Math.min(max, Number(e))))
-      setAmount(Number(val))
+      setAmount(new BigNumber(val).times(getFullDecimalMultiplier(18)).toString())
+      // console.log(new BigNumber(e).times(getFullDecimalMultiplier(18)).toString());
       setValueAmount(Number(val))
       setInvalid(false)
     }
@@ -178,7 +183,7 @@ const SendTrendModal = ({
       <Wrapper>
         <ClaimAmount>
           <Text fontSize="18px">To</Text>
-          <InputAmount value={address} onChange={(e) => onChange(e.target.value)} />
+          <InputAmount style={{ fontSize: '14px' }} value={address} onChange={(e) => onChange(e.target.value)} />
         </ClaimAmount>
         {checkError === true ? <Error>You do not enter an address !!!</Error> : null}
         <ClaimAmount>
