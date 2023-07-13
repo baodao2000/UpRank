@@ -455,7 +455,7 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
         <>
           {pool.pid.toString() === '0' ? null : (
             <CheckMine>
-              <Text>Mine Trend</Text>
+              <Text>Mine TREND</Text>
               <Switch>
                 <label htmlFor="switchMine" className="switch">
                   <input id="switchMine" onChange={onChange} disabled={userTotal} type="checkbox" />
@@ -469,7 +469,7 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
         <>
           {pool.pid.toString() === '0' ? null : (
             <CheckMine>
-              <Text>Mine Trend</Text>
+              <Text>Mine TREND</Text>
               <Switch>
                 <label htmlFor="switchMine" className="switch">
                   <input
@@ -479,7 +479,7 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
                     disabled={userTotal}
                     type="checkbox"
                   />
-                  <span className="slider round"></span>
+                  <span style={{ background: '#ccc' }} className="slider round"></span>
                 </label>
               </Switch>
             </CheckMine>

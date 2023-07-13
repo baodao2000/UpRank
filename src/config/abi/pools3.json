@@ -4,7 +4,8 @@
       { "internalType": "contract IRefferal", "name": "_refer", "type": "address" },
       { "internalType": "address", "name": "gnosisSafeAddress", "type": "address" },
       { "internalType": "contract ILiquidity", "name": "_liquidity", "type": "address" },
-      { "internalType": "address", "name": "mm", "type": "address" }
+      { "internalType": "address", "name": "mm", "type": "address" },
+      { "internalType": "address", "name": "trend", "type": "address" }
     ],
     "stateMutability": "nonpayable",
     "type": "constructor"
@@ -137,6 +138,13 @@
   {
     "inputs": [],
     "name": "MM",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "TREND",
     "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
     "stateMutability": "view",
     "type": "function"
@@ -294,6 +302,13 @@
   {
     "inputs": [],
     "name": "getMonths",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getPeriodMined",
     "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
@@ -631,8 +646,29 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "totalClaimed",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
     "name": "totalComms",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "totalMined",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "totalMiner",
     "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
@@ -812,7 +848,6 @@
       { "internalType": "uint256", "name": "claimed", "type": "uint256" },
       { "internalType": "uint256", "name": "remain", "type": "uint256" },
       { "internalType": "uint256", "name": "mineSpeed", "type": "uint256" },
-      { "internalType": "uint256", "name": "mineSpeedLevel", "type": "uint256" },
       { "internalType": "uint256", "name": "startTime", "type": "uint256" }
     ],
     "stateMutability": "view",

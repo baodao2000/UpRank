@@ -1,4 +1,4 @@
-import { useMatchBreakpoints } from '@pancakeswap/uikit'
+import { Text, useMatchBreakpoints } from '@pancakeswap/uikit'
 import Image from 'next/image'
 import React from 'react'
 import { IOSView, isDesktop } from 'react-device-detect'
@@ -11,18 +11,24 @@ const Wrapper = styled.div`
   justify-content: center;
   background: linear-gradient(90deg, #9e86ff 0%, #2b0864 111.24%);
   gap: 10px;
+  padding: 0 20px !important;
 `
 const OverviewText = styled.div`
+  margin-top: 30px;
+  color: #95ffec;
   text-align: center;
-  margin-top: 70px;
+  text-shadow: 0px 4px 20px 0px rgba(255, 255, 255, 0.36), 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   font-family: Raleway, sans-serif;
   font-size: 48px;
-  font-weight: 800;
-  color: #95ffec;
-  text-shadow: 1px 1px 6px #95ffec;
-  letter-spacing: 0.04em;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 110%;
+  letter-spacing: 1.92px;
+  text-transform: uppercase;
   @media screen and (max-width: 575px) {
-    font-size: 30px;
+    font-size: 28px;
+    width: 70%;
+    font-weight: 700;
   }
 `
 const PoolText = styled.div`
@@ -35,7 +41,7 @@ const PoolText = styled.div`
   letter-spacing: 0.04em;
   @media screen and (max-width: 575px) {
     font-size: 30px;
-    margin-top: 50px;
+    margin-top: 300px !important;
   }
   @media screen and (max-width: 900px) {
     margin-top: 100px;
@@ -70,18 +76,19 @@ const BoxContain = styled.div`
   margin-top: 20px;
   width: 350px;
   height: 70px;
-  border-radius: 8px;
   padding: 24px 32px 24px 32px;
   gap: 4px;
-  box-shadow: 0px 4px 12px 0px #ffffff4f inset;
+  border-radius: 8px;
   background: linear-gradient(
-    89.91deg,
-    rgba(147, 255, 229, 0.06) -10.22%,
-    rgba(230, 255, 251, 0.215) 24.44%,
-    rgba(114, 255, 237, 0.175) 58.18%,
-    rgba(183, 255, 248, 0.295) 81.81%,
-    rgba(87, 255, 244, 0.27) 105.99%
+    88deg,
+    rgba(147, 255, 229, 0.06) 0%,
+    rgba(229, 255, 251, 0.22) 29.82%,
+    rgba(114, 255, 237, 0.17) 58.86%,
+    rgba(183, 255, 248, 0.29) 79.19%,
+    rgba(87, 255, 244, 0.27) 100%
   );
+  box-shadow: 0px 4px 12px 0px rgba(255, 255, 255, 0.31) inset;
+  backdrop-filter: blur(5px);
 `
 const SupplyText = styled.div`
   text-align: center;
@@ -89,6 +96,7 @@ const SupplyText = styled.div`
   font-weight: 600;
   font-size: 20px;
   line-height: 22px;
+  color: #fff;
 `
 const Container = styled.div`
   margin-bottom: 100px;
@@ -98,9 +106,7 @@ const Container = styled.div`
   gap: 10px;
   height: 100%;
 `
-const ImageOverview = styled.div`
-  margin-top: 40px;
-`
+const ImageOverview = styled.div``
 const GetTrendText = styled.div`
   margin-top: 100px;
   font-family: Raleway, sans-serif;
@@ -246,6 +252,7 @@ const BoxOneText = styled.div`
   font-size: 16px;
   line-height: 17.6px;
   letter-spacing: 0.04em;
+  color: #fff;
 `
 const BoxTwo = styled.div`
   display: flex;
@@ -257,6 +264,8 @@ const BoxTwo = styled.div`
   padding: 16px;
   margin-top: 20px;
   border: 3px solid;
+  color: #fff;
+
   border-image-source: linear-gradient(
     1.29deg,
     #f5fbf2 12.78%,
@@ -310,6 +319,8 @@ const BoxTwoRes = styled.div`
   margin-top: 20px;
   border: 3px solid;
   border-image-slice: 1;
+  color: #fff;
+
   border-image-source: linear-gradient(
     108.29deg,
     #f5fbf2 12.78%,
@@ -336,9 +347,12 @@ const BoxTwoRes = styled.div`
   @media screen and (max-width: 575px) {
     width: 350px;
     display: flex !important;
+<<<<<<< HEAD
   }
   @media screen and (max-width: 768px) {
     display: flex !important;
+=======
+>>>>>>> 3408364b42ef0af339a4726ee2c567892d927ce0
   }
   @media screen and (max-width: 1024px) {
     display: flex !important;
@@ -391,7 +405,7 @@ const BoxTwoContainText = styled.div`
 `
 const BoxTwoText = styled.div`
   width: 220px;
-  font-family: Poppins;
+  font-family: Poppins, sans-serif;
   font-weight: 600;
   font-size: 16px;
   line-height: 17.6px;
@@ -442,11 +456,11 @@ const BoxThree = styled.div`
   @media screen and (max-width: 575px) {
     transform: none;
     width: 350px;
-    margin-top: 150px;
+    margin-top: 20px !important;
   }
   @media screen and (max-width: 900px) {
     transform: none;
-    margin-top: 150px;
+    margin-top: 190px;
   }
   @media screen and (max-width: 1100px) {
     transform: none;
@@ -548,11 +562,28 @@ const GlobeImage = styled.div`
   position: relative;
   @media screen and (max-width: 575px) {
     width: 350px;
+    height: 1px;
   }
 `
 const ButtonStake = styled.div`
   position: absolute;
   top: 170%;
+  left: 53%;
+  transform: translate(-50%, -50%);
+  font-family: Poppins, sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  cursor: pointer;
+  align-items: center;
+  display: flex;
+  background: linear-gradient(167.91deg, #a3d8d5 13.8%, #cafbf8 26.11%, #f2fdff 37.78%, #cfeaeb 49.33%, #7bf7ff 89.87%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+`
+const ButtonStakeRes = styled.div`
+  position: absolute;
+  top: 200px;
   left: 53%;
   transform: translate(-50%, -50%);
   font-family: Poppins, sans-serif;
@@ -573,6 +604,8 @@ const ButtonContain = styled.div`
 
 const GlobalTextContent = styled.div`
   font-family: Dosis;
+  top: 140%;
+
   font-weight: 400;
   font-size: 18px;
   color: rgba(255, 255, 255, 1);
@@ -602,7 +635,8 @@ const Table = styled.div`
   }
   @media screen and (max-width: 575px) {
     width: 300px !important;
-    margin-top: 600px;
+    height: 600px;
+    margin-top: 300px;
   }
 `
 const TitleText = styled.div`
@@ -617,6 +651,119 @@ const ContentText = styled.div`
   font-size: 22px;
   color: rgba(255, 255, 255, 1);
   text-align: right;
+`
+const Token = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 50px;
+  margin-top: 30px;
+  @media screen and (max-width: 800px) {
+    flex-direction: column;
+  }
+`
+const Card = styled.div`
+  border-radius: 8px;
+  background: linear-gradient(
+    351deg,
+    rgba(143, 146, 233, 0.5) 3.65%,
+    rgba(176, 178, 246, 0.36) 16.67%,
+    rgba(192, 194, 240, 0.34) 24.48%,
+    rgba(151, 154, 219, 0.31) 44.06%,
+    rgba(103, 106, 212, 0.5) 100%
+  );
+  backdrop-filter: blur(50px);
+  display: flex;
+  width: 714px;
+  height: 323px;
+  padding: 48px 56px;
+  gap: 44px;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  @media screen and (max-width: 575px) {
+    width: 100%;
+    flex-direction: column;
+    height: 100%;
+    padding: 24px;
+  }
+`
+const ContentRight = styled.div`
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+`
+const ContentLeft = styled.div`
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+`
+const Item = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+`
+const Title = styled(Text)`
+  color: #f3f2f9;
+  font-family: Poppins, sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 110%;
+  letter-spacing: 0.64px;
+  width: 250px;
+`
+const Label = styled(Text)`
+  color: #f3f2f9;
+  font-family: Poppins, sans-serif;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 110%;
+  letter-spacing: 0.96px;
+`
+const dataLeft = [
+  {
+    title: 'Bounty - Marketing',
+    label: '3%',
+    color: '#B0FF9B',
+  },
+  {
+    title: 'Early Contributors',
+    label: '5%',
+    color: '#94FFFF',
+  },
+  {
+    title: 'Market Maker',
+    label: '10%',
+    color: '#30E3FF',
+  },
+]
+const dataRight = [
+  {
+    title: 'Miners Reward',
+    label: '50%',
+    color: '#B128FF',
+  },
+  {
+    title: 'Community and close partners',
+    label: '17%',
+    color: '#8500F9',
+  },
+  {
+    title: 'Team Foundation',
+    label: '15%',
+    color: '#1F31F3',
+  },
+]
+
+const Icon = styled.div`
+width: 24px;
+height: 24px;
+border-radius: 4px;
+box-shadow: 0px 4px 4px 0px rgba(246, 246, 246, 0.27) inset, 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+1x
+
 `
 const data = [
   {
@@ -795,19 +942,48 @@ function Tokenomic() {
   return (
     <Wrapper>
       <Container>
-        <OverviewText>Tokenomic Overview</OverviewText>
+        <OverviewText>TREND Token Overview</OverviewText>
         <BoxContain>
           <SupplyText>Supply: 21,000,000 TREND</SupplyText>
         </BoxContain>
-        <ImageOverview>
-          <Image
-            src="/images/tokenomic.png"
-            alt="tokenomic"
-            width={isMobile ? 350 : isTablet ? 700 : 1000}
-            height={isMobile ? 150 : isTablet ? 300 : 400}
-          />
-        </ImageOverview>
-
+        <Token>
+          <ImageOverview>
+            <Image
+              src="/images/token.png"
+              alt="tokenomic"
+              width={isMobile ? 280 : 410}
+              height={isMobile ? 290 : isTablet ? 300 : 334}
+            />
+          </ImageOverview>
+          <Card>
+            <div>
+              <ContentLeft>
+                {dataLeft.map((item) => (
+                  <Item>
+                    <Icon style={{ background: item.color }}></Icon>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                      <Title>{item.title}</Title>
+                      <Label>{item.label}</Label>
+                    </div>
+                  </Item>
+                ))}
+              </ContentLeft>
+            </div>
+            <div>
+              <ContentRight>
+                {dataRight.map((item) => (
+                  <Item>
+                    <Icon style={{ background: item.color }}></Icon>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                      <Title>{item.title}</Title>
+                      <Label>{item.label}</Label>
+                    </div>
+                  </Item>
+                ))}
+              </ContentRight>
+            </div>
+          </Card>
+        </Token>
         <GetTrendText>
           How to get <span style={{ color: '#95ffec' }}> TREND</span> Token
         </GetTrendText>
@@ -832,15 +1008,19 @@ function Tokenomic() {
             <BoxTwoText>Earn profits and rewards by developing the Pool Standard system</BoxTwoText>
           </BoxTwoRes>
           <GlobeImage>
-            <Image src="/images/globefinal2.svg" alt="global" width={2600} height={2000} />
+            <div style={{ display: isMobile ? 'none' : 'flex' }}>
+              <Image src="/images/globefinal2.svg" alt="global" width={2600} height={2000} />
+            </div>
 
             <ButtonContain>
-              <ButtonStake>
-                STAKE NOW
-                <span>
-                  <Image src="/images/arrowIcon.png" alt="global" width={20} height={20} />
-                </span>
-              </ButtonStake>
+              <div style={{ display: isMobile ? 'none' : 'flex' }}>
+                <ButtonStake>
+                  STAKE NOW
+                  <span>
+                    <Image src="/images/arrowIcon.png" alt="global" width={20} height={20} />
+                  </span>
+                </ButtonStake>
+              </div>
             </ButtonContain>
           </GlobeImage>
           <BoxThree>
@@ -849,6 +1029,24 @@ function Tokenomic() {
             </BoxOneContain>
             <BoxOneText>Engage in Bounty and Airdrop programs on Trendy DeFi community platforms</BoxOneText>
           </BoxThree>
+          <div style={{ display: isMobile ? 'flex' : 'none' }}>
+            <GlobeImage>
+              <div style={{ display: isMobile ? 'flex' : 'none' }}>
+                <Image src="/images/globefinal2.svg" alt="global" width={2600} height={2000} />
+              </div>
+
+              <ButtonContain>
+                <div style={{ display: isMobile ? 'flex' : 'none' }}>
+                  <ButtonStakeRes>
+                    STAKE NOW
+                    <span>
+                      <Image src="/images/arrowIcon.png" alt="global" width={20} height={20} />
+                    </span>
+                  </ButtonStakeRes>
+                </div>
+              </ButtonContain>
+            </GlobeImage>
+          </div>
         </ContainerBox>
         <PoolText>Pool’s mining speed</PoolText>
         <PoolContent>The mining speed of the TREND token depends on the highest pool you participate in.</PoolContent>
@@ -874,11 +1072,13 @@ function Tokenomic() {
           <Image src="/images/diamondRank.png" alt="rank" width={200} height={200} />
         </RankImage>
         <GlobalPool>
-          <Image src="/images/poolGlobal.png" alt="" width={900} height={600} />
+          <div style={{ display: isMobile ? 'none' : 'flex' }}>
+            <Image src="/images/poolGlobal.png" alt="" width={900} height={600} />
+          </div>
           <div
             style={{
               position: 'absolute',
-              top: isMobile ? '250px' : isTablet ? '-10px' : '20px',
+              top: isMobile ? '10px' : isTablet ? '-10px' : '20px',
               left: isMobile ? '10px' : isTablet ? '1px' : '-30px',
               maxWidth: '400px',
             }}
@@ -895,13 +1095,13 @@ function Tokenomic() {
               }}
             >
               The regulation states that for every 1 dollar deposited, the user will receive a 20% conversion to TREND
-              in contact mining.
+              in contract mining.
             </GlobalTextContent>
           </div>
           <div
             style={{
               position: 'absolute',
-              top: isMobile ? '400px' : isTablet ? '-10px' : '30px',
+              top: isMobile ? '130px' : isTablet ? '-10px' : '30px',
               left: isMobile ? '1px' : isTablet ? '400px' : '500px',
             }}
           >
@@ -921,7 +1121,9 @@ function Tokenomic() {
               proportional to the price of TREND on the pool.
             </GlobalTextContent>
           </div>
-
+          <div style={{ display: isMobile ? 'flex' : 'none', marginTop: '300px' }}>
+            <Image src="/images/poolGlobal.png" alt="" width={900} height={600} />
+          </div>
           <div
             style={{
               display: isMobile ? 'none' : 'flex',
@@ -963,18 +1165,18 @@ function Tokenomic() {
               display: 'flex',
               flexDirection: isMobile ? 'column' : 'row',
               position: 'relative',
-              top: isMobile ? '300px' : isTablet ? '50px' : '30px',
-              left: isMobile ? '5px' : isTablet ? '30px' : '50px',
+              top: isMobile ? '1px' : isTablet ? '50px' : '30px',
+              left: isMobile ? '30px' : isTablet ? '30px' : '50px',
             }}
           >
             <div>
-              <Image src="/images/box6.png" alt="" width={isMobile ? 360 : isTablet ? 370 : 400} height={110} />
+              <Image src="/images/box6.png" alt="" width={isMobile ? 320 : isTablet ? 370 : 400} height={110} />
               <div
                 style={{
                   display: 'flex',
                   flexDirection: 'column',
                   position: 'absolute',
-                  left: '80px',
+                  left: isMobile ? '30px' : '80px',
                   top: '25px',
                   padding: ' 0 25px',
                   maxWidth: isMobile ? '320px' : '350px',
@@ -990,14 +1192,14 @@ function Tokenomic() {
               </div>
             </div>
             <div style={{ marginTop: '3px' }}>
-              <Image src="/images/box7png.png" alt="" width={isMobile ? 360 : isTablet ? 370 : 400} height={110} />
+              <Image src="/images/box7png.png" alt="" width={isMobile ? 320 : isTablet ? 370 : 400} height={110} />
               <div
                 style={{
                   display: 'flex',
                   flexDirection: 'column',
                   position: 'absolute',
                   left: isMobile ? '1px' : isTablet ? '370px' : '400px',
-                  top: isMobile ? '135px' : '20px',
+                  top: isMobile ? '140px' : '20px',
                   padding: ' 0 30px',
                   maxWidth: isMobile ? '350px' : isTablet ? '350px' : '400px',
                   width: '100%',
@@ -1015,15 +1217,15 @@ function Tokenomic() {
           <div
             style={{
               position: 'absolute',
-              left: isMobile ? '15px' : isTablet ? '40px' : '50px',
-              top: isMobile ? '830px' : '750px',
+              left: isMobile ? '40px' : isTablet ? '40px' : '50px',
+              top: isMobile ? '770px' : '750px',
             }}
           >
             <Image
               src="/images/box4.png"
               alt=""
-              width={isMobile ? 350 : isTablet ? 730 : 800}
-              height={isMobile ? 100 : 70}
+              width={isMobile ? 300 : isTablet ? 730 : 800}
+              height={isMobile ? 120 : 70}
             />
             <GlobalTextContent
               style={{
@@ -1042,15 +1244,15 @@ function Tokenomic() {
           <div
             style={{
               position: 'absolute',
-              left: isMobile ? '15px' : isTablet ? '40px' : '50px',
-              top: isMobile ? '930px' : '830px',
+              left: isMobile ? '40px' : isTablet ? '40px' : '50px',
+              top: isMobile ? '880px' : '830px',
             }}
           >
             <Image
               src="/images/box5.png"
               alt=""
-              width={isMobile ? 350 : isTablet ? 730 : 800}
-              height={isMobile ? 150 : 90}
+              width={isMobile ? 300 : isTablet ? 730 : 800}
+              height={isMobile ? 160 : 90}
             />
             <GlobalTextContent
               style={{
@@ -1075,6 +1277,8 @@ function Tokenomic() {
             overflow: 'auto',
           }}
         >
+          {' '}
+          <div style={{ display: isMobile ? 'flex' : 'none' }}></div>
           <table>
             <tr style={{ gap: '10px', display: 'flex' }}>
               <th

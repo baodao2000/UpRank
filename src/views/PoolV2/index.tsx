@@ -558,7 +558,7 @@ const Pools = () => {
     }
   }
   const getInfoRank = async (rateBnbUsd) => {
-    if (!account) {
+    if (!rateBnbUsd) {
       setIsLoading(true)
     } else {
       const months = await getPoolV3Contract.getMonths()

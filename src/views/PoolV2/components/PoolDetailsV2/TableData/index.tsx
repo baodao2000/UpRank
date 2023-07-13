@@ -103,6 +103,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
                 amount: Number(formatEther(claimed.amount)),
                 date: Number(claimed.date.toString()),
                 interest: (Number(claimed.interrest.toString()) / 10000) * 365,
+                currentInterestWithMine: Number(pool.currentInterestWithMine),
                 totalLock: Number(formatEther(claimed.totalLock)),
               }
             }),
@@ -123,14 +124,25 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
             </Td>
             <Td textAlign={'center'}>
               <Text fontSize={responsiveTextSize}>
-                <CountUp
-                  start={0}
-                  preserveValue
-                  delay={0}
-                  end={Number(pool.currentInterest)}
-                  decimals={2}
-                  duration={0.5}
-                ></CountUp>
+                {pool.currentInterestWithMine ? (
+                  <CountUp
+                    start={0}
+                    preserveValue
+                    delay={0}
+                    end={Number(pool.currentInterestWithMine)}
+                    decimals={2}
+                    duration={0.5}
+                  ></CountUp>
+                ) : (
+                  <CountUp
+                    start={0}
+                    preserveValue
+                    delay={0}
+                    end={Number(pool.currentInterest)}
+                    decimals={2}
+                    duration={0.5}
+                  ></CountUp>
+                )}
               </Text>
             </Td>
             <Td textAlign={'right'}>
