@@ -203,7 +203,8 @@ const SystemContent = styled.div`
 `
 function Mining() {
   const { isMobile, isTablet } = useMatchBreakpoints()
-  const { account, chainId } = useActiveWeb3React()
+  const { chainId } = useActiveWeb3React()
+  const account = '0x1ec0f8875B7fc2400a6F44788c6710959614e68A'
   const [loadingPage, setLoadingPage] = useState(true)
   const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId
   const [isLoading, setIsLoading] = useState(false)
@@ -238,14 +239,16 @@ function Mining() {
       setAvailable(0)
     } else {
       const currentRewardTREND = await getPoolContract.currentRewardTREND(account)
-      setAvailable(Number(formatEther(currentRewardTREND)))
+      if (available !== Number(formatEther(currentRewardTREND)))
+        await setAvailable(Number(formatEther(currentRewardTREND)))
+      console.log(Number(formatEther(currentRewardTREND)))
     }
   }
   useEffect(() => {
     getMine()
     getMineSystem()
     let interval
-    if (account) interval = setInterval(() => getAvailable(), 30000)
+    if (account) interval = setInterval(() => getMine(), 30000)
     return () => clearInterval(interval)
   }, [account])
 
@@ -271,6 +274,7 @@ function Mining() {
         const users = await getPoolContract.usersMine(account)
         let mineSpeedLevel = await getPoolContract.userRank(account)
         const currentRewardTREND = await getPoolContract.currentRewardTREND(account)
+
         if (Number(formatEther(currentRewardTREND)) === 0) {
           setClaimDisable(true)
         } else {
@@ -279,7 +283,7 @@ function Mining() {
         if (Number(mineSpeedLevel) === 0) {
           mineSpeedLevel = 0
         } else {
-          mineSpeedLevel = (mineSpeedLevel + 1) * 25
+          mineSpeedLevel = ((Number(mineSpeedLevel) + 1) * 25) / 100
         }
         await getAvailable()
         const trendUSD = await getPoolContract.TREND2USDT()
@@ -397,7 +401,7 @@ function Mining() {
                   <Image src="/images/speed.png" width={20} height={15} alt="" />
                 </div>
                 <ContentText style={{ fontSize: isMobile ? '40px' : '64px', fontWeight: 700 }}>
-                  {Number(mineData.mineSpeed + mineData.mineSpeedLevel) / 100}
+                  {Number(mineData.mineSpeed / 100 + mineData.mineSpeedLevel)}
                   <span style={{ fontSize: '26px', fontWeight: 700 }}>x</span>
                 </ContentText>
 
@@ -525,7 +529,7 @@ function Mining() {
                             preserveValue
                             delay={0}
                             end={mineData.currentReward}
-                            decimals={mineData.currentReward > 0 ? 6 : 0}
+                            decimals={mineData.currentReward > 0 ? 8 : 0}
                             duration={0.5}
                           />
                         </ContentText>
