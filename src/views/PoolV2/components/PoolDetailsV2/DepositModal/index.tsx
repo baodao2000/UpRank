@@ -267,7 +267,6 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
   }
   const { isConfirming, handleConfirm } = useConfirmTransaction({
     onConfirm: () => {
-      console.log(poolContract, pool, mine)
       return callWithGasPrice(poolContract, 'deposit', [pool.pid], mine, {
         value: ethers.utils.parseUnits(amount.toString(), 'ether').toString(),
         gasLimit: '1000000',

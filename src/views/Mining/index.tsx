@@ -238,12 +238,22 @@ function Mining() {
     totalMined: 0,
     totalClaimed: 0,
   })
+  const getAvailable = async () => {
+    if (!account) {
+      setAvailable(0)
+    } else {
+      const currentRewardTREND = await getPoolContract.currentRewardTREND(account)
+      setAvailable(Number(formatEther(currentRewardTREND)))
+    }
+  }
   useEffect(() => {
     getMine()
     getMineSystem()
-    // getAvailable()
-    // getMineHistory()
+    let interval
+    if (account) interval = setInterval(() => getAvailable(), 30000)
+    return () => clearInterval(interval)
   }, [account])
+
   const [openClaimModal, onDismissModal] = useModal(
     <ClaimPoolModal onDismiss={() => onDismissModal()} onSuccess={() => handleSuccess()} mine={mineData} />,
     true,
@@ -276,7 +286,7 @@ function Mining() {
         } else {
           mineSpeedLevel = (mineSpeedLevel + 1) * 25
         }
-        // await getAvailable()
+        await getAvailable()
         const trendUSD = await getPoolContract.TREND2USDT()
         const balance = await getTokenTrendContract.balanceOf(account)
         const balanceAccount = Number(formatEther(balance))
@@ -295,7 +305,7 @@ function Mining() {
           userClaimedMineLength: Number(getUsersClaimMinedLength),
           currentReward: Number(formatEther(currentRewardTREND)),
           trend2USDT: Number(formatEther(trendUSD)),
-          balanceTrend: balance,
+          balanceTrend: balanceAccount,
         })
         // setIsLoading(false)
         await getMineHistory(getUsersClaimMinedLength)
@@ -305,16 +315,6 @@ function Mining() {
     }
   }
 
-  const getAvailable = async () => {
-    if (!account) {
-      setAvailable(0)
-    } else {
-      const currentRewardTREND = await getPoolContract.currentRewardTREND(account)
-      setAvailable(Number(formatEther(currentRewardTREND)))
-    }
-  }
-
-  //  setInterval(getAvailable, 300000)
   const getMineSystem = async () => {
     const totalMiner = await getPoolContract.totalMiner()
     const totalMined = await getPoolContract.totalMined()
@@ -380,6 +380,7 @@ function Mining() {
   const { data, isFetched } = useBalance({
     addressOrName: account,
   })
+
   return (
     <Wrapper>
       <Container>
@@ -476,8 +477,8 @@ function Mining() {
                         start={0}
                         preserveValue
                         delay={0}
-                        end={mineData.currentReward}
-                        decimals={mineData.currentReward > 0 ? 6 : 0}
+                        end={available}
+                        decimals={available > 0 ? 6 : 0}
                         duration={0.5}
                       />
                     </ContentText>
@@ -491,8 +492,8 @@ function Mining() {
                         start={0}
                         preserveValue
                         delay={0}
-                        end={mineData.currentReward * mineData.trend2USDT}
-                        decimals={mineData.currentReward > 0 ? 6 : 0}
+                        end={available * mineData.trend2USDT}
+                        decimals={available > 0 ? 6 : 0}
                         duration={0.5}
                       />
                     </ContentText>
@@ -534,31 +535,41 @@ function Mining() {
                   {!account ? (
                     <ContentText style={{ fontSize: '20px', fontWeight: 700, color: 'black' }}>0</ContentText>
                   ) : (
-                    <ContentText style={{ fontSize: '20px', fontWeight: 700, color: 'black' }}>
-                      {/* <CountUp
-                        start={0}
-                        preserveValue
-                        delay={0}
-                        end={Number(formatEther(mineData.balanceTrend))}
-                        decimals={Number(mineData.balanceTrend) > 0 ? 4 : 0}
-                        duration={0.5}
-                      /> */}
-                      {numeral(Number(formatEther(mineData.balanceTrend))).format('0,0')}
-                    </ContentText>
+                    <>
+                      {mineData.balanceTrend === 0 ? (
+                        <ContentText style={{ fontSize: '20px', fontWeight: 700, color: 'black' }}>0</ContentText>
+                      ) : (
+                        <ContentText style={{ fontSize: '20px', fontWeight: 700, color: 'black' }}>
+                          {
+                            <CountUp
+                              separator=","
+                              start={0}
+                              preserveValue
+                              delay={0}
+                              end={Number(mineData.balanceTrend)}
+                              decimals={Number(mineData.balanceTrend) > 0 ? 4 : 0}
+                              duration={0.5}
+                            />
+                          }
+                        </ContentText>
+                      )}
+                    </>
                   )}
                   {!account ? (
                     <ContentText style={{ fontSize: '16px', fontWeight: 500 }}>$ 0</ContentText>
                   ) : (
                     <ContentText style={{ fontSize: '16px', fontWeight: 500 }}>
                       ${' '}
-                      <CountUp
-                        start={0}
-                        preserveValue
-                        delay={0}
-                        end={Number(formatEther(mineData.balanceTrend)) * mineData.trend2USDT}
-                        decimals={Number(formatEther(mineData.balanceTrend)) > 0 ? 4 : 0}
-                        duration={0.5}
-                      />
+                      {
+                        <CountUp
+                          start={0}
+                          preserveValue
+                          delay={0}
+                          end={Number(mineData.balanceTrend) * mineData.trend2USDT}
+                          decimals={Number(mineData.balanceTrend) > 0 ? 4 : 0}
+                          duration={0.5}
+                        />
+                      }
                     </ContentText>
                   )}
                 </div>

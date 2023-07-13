@@ -95,7 +95,7 @@ const ClaimPoolModal = ({
     },
     onSuccess: async ({ receipt }) => {
       setConfirmedTxHash(receipt.transactionHash)
-      toastSuccess(t('Claim reward successfully !'), <ToastDescriptionWithTx txHash={receipt.transactionHash} />)
+      toastSuccess(t('Claim reward TREND successfully !'), <ToastDescriptionWithTx txHash={receipt.transactionHash} />)
       onDismiss()
       onSuccess()
     },
@@ -104,7 +104,7 @@ const ClaimPoolModal = ({
   return (
     <Modal
       style={depositModal}
-      title={'CLAIM TTREND'}
+      title={'CLAIM TREND'}
       onDismiss={onDismiss}
       hideCloseButton={false}
       borderRadius={25}
@@ -123,7 +123,7 @@ const ClaimPoolModal = ({
                 preserveValue
                 delay={0}
                 end={Number(mine.currentReward)}
-                decimals={mine.currentReward === 0 ? 0 : 4}
+                decimals={mine.currentReward === 0 ? 0 : 6}
                 duration={0.5}
               />
               &ensp; ${/* <img src={`/images/chains/${chainId}.png`} alt="mine name" width={18} /> */}
