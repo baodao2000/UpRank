@@ -241,7 +241,7 @@ function Mining() {
       const currentRewardTREND = await getPoolContract.currentRewardTREND(account)
       if (available !== Number(formatEther(currentRewardTREND)))
         await setAvailable(Number(formatEther(currentRewardTREND)))
-      console.log(Number(formatEther(currentRewardTREND)))
+      // console.log(Number(formatEther(currentRewardTREND)))
     }
   }
   useEffect(() => {
