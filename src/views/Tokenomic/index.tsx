@@ -347,6 +347,12 @@ const BoxTwoRes = styled.div`
   @media screen and (max-width: 575px) {
     width: 350px;
     display: flex !important;
+<<<<<<< HEAD
+  }
+  @media screen and (max-width: 768px) {
+    display: flex !important;
+=======
+>>>>>>> 3408364b42ef0af339a4726ee2c567892d927ce0
   }
   @media screen and (max-width: 1024px) {
     display: flex !important;
@@ -1089,7 +1095,7 @@ function Tokenomic() {
               }}
             >
               The regulation states that for every 1 dollar deposited, the user will receive a 20% conversion to TREND
-              in contact mining.
+              in contract mining.
             </GlobalTextContent>
           </div>
           <div
