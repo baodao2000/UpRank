@@ -335,10 +335,13 @@ const BoxTwoRes = styled.div`
 
   @media screen and (max-width: 575px) {
     width: 350px;
-    display: flex;
+    display: flex !important;
+  }
+  @media screen and (max-width: 768px) {
+    display: flex !important;
   }
   @media screen and (max-width: 1024px) {
-    display: flex;
+    display: flex !important;
   }
   @media screen and (min-width: 1440px) {
     display: none;
