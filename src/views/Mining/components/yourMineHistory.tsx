@@ -446,7 +446,11 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
         <>
           <Warpper>
             <TableHeader>
-              <Text style={{ color: '#F5F5F6' }} textAlign="center" fontSize={responsiveTextSizeHeader}>
+              <Text
+                style={{ color: '#F5F5F6', fontWeight: 700 }}
+                textAlign="center"
+                fontSize={responsiveTextSizeHeader}
+              >
                 Your Mined History
               </Text>
             </TableHeader>
