@@ -196,7 +196,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                       decimals={mine.totalMined > 0 ? 4 : 0}
                       duration={0.5}
                     />{' '}
-                    <Image src="/images/trendiCoin.png" width={25} height={25} alt="" />
+                    <Image src="/images/trendyloop.png" width={25} height={25} alt="" />
                   </Text>
                 </AmountData>
               )}
