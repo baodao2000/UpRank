@@ -149,7 +149,7 @@ const SendTrendModal = ({
   //   setValueAmount(e)
   // }
   const setAmountMax = () => {
-    setAmount(balance.toString())
+    setAmount(new BigNumber(balance).times(getFullDecimalMultiplier(18)).toString())
     setValueAmount(amountMax)
   }
   const min = 0

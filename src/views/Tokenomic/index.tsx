@@ -247,7 +247,7 @@ const BoxOneContainText = styled.div`
 `
 const BoxOneText = styled.div`
   width: 260px;
-  font-family: Poppins;
+  font-family: Poppins, sans-serif;
   font-weight: 600;
   font-size: 16px;
   line-height: 17.6px;
@@ -347,12 +347,6 @@ const BoxTwoRes = styled.div`
   @media screen and (max-width: 575px) {
     width: 350px;
     display: flex !important;
-<<<<<<< HEAD
-  }
-  @media screen and (max-width: 768px) {
-    display: flex !important;
-=======
->>>>>>> 3408364b42ef0af339a4726ee2c567892d927ce0
   }
   @media screen and (max-width: 1024px) {
     display: flex !important;
@@ -1274,7 +1268,10 @@ function Tokenomic() {
         <Table
           style={{
             width: isMobile ? '300px' : isTablet ? '700px' : '1280px',
-            overflow: 'auto',
+            overflowX: 'auto',
+            overflowY: 'auto',
+            display: isTablet || isMobile ? 'block' : 'flex',
+            justifyContent: 'center',
           }}
         >
           {' '}
@@ -1283,8 +1280,8 @@ function Tokenomic() {
             <tr style={{ gap: '10px', display: 'flex' }}>
               <th
                 style={{
-                  width: '140px',
-                  height: '76px',
+                  width: isMobile ? '100px' : '140px',
+                  height: isMobile ? '40px' : '76px',
                   borderRadius: '8px',
                   border: '1px solid white',
                   display: 'flex',
@@ -1298,8 +1295,8 @@ function Tokenomic() {
               </th>
               <th
                 style={{
-                  width: '140px',
-                  height: '76px',
+                  width: isMobile ? '100px' : '140px',
+                  height: isMobile ? '40px' : '76px',
                   borderRadius: '8px',
                   border: '1px solid white',
                   display: 'flex',
@@ -1313,8 +1310,8 @@ function Tokenomic() {
               </th>
               <th
                 style={{
-                  width: '231px',
-                  height: '76px',
+                  width: '200px',
+                  height: isMobile ? '40px' : '76px',
                   borderRadius: '8px',
                   border: '1px solid white',
                   display: 'flex',
@@ -1328,8 +1325,8 @@ function Tokenomic() {
               </th>
               <th
                 style={{
-                  width: '231px',
-                  height: '76px',
+                  width: '200px',
+                  height: isMobile ? '40px' : '76px',
                   borderRadius: '8px',
                   border: '1px solid white',
                   display: 'flex',
@@ -1343,8 +1340,8 @@ function Tokenomic() {
               </th>
               <th
                 style={{
-                  width: '231px',
-                  height: '76px',
+                  width: '200px',
+                  height: isMobile ? '40px' : '76px',
                   borderRadius: '8px',
                   display: 'flex',
                   justifyContent: 'center',
@@ -1358,8 +1355,8 @@ function Tokenomic() {
               </th>
               <th
                 style={{
-                  width: '231px',
-                  height: '76px',
+                  width: '200px',
+                  height: isMobile ? '40px' : '76px',
                   borderRadius: '8px',
                   display: 'flex',
                   justifyContent: 'center',
@@ -1377,8 +1374,8 @@ function Tokenomic() {
                 <td
                   style={{
                     marginTop: '10px',
-                    width: '140px',
-                    height: '76px',
+                    width: isMobile ? '100px' : '140px',
+                    height: isMobile ? '40px' : '76px',
                     borderRadius: '8px',
                     display: 'flex',
                     justifyContent: 'flex-end',
@@ -1394,8 +1391,8 @@ function Tokenomic() {
                   style={{
                     marginTop: '10px',
 
-                    width: '140px',
-                    height: '76px',
+                    width: isMobile ? '100px' : '140px',
+                    height: isMobile ? '40px' : '76px',
                     borderRadius: '8px',
                     display: 'flex',
                     justifyContent: 'flex-end',
@@ -1412,8 +1409,8 @@ function Tokenomic() {
                   style={{
                     marginTop: '10px',
 
-                    width: '231px',
-                    height: '76px',
+                    width: '200px',
+                    height: isMobile ? '40px' : '76px',
                     borderRadius: '8px',
                     display: 'flex',
                     justifyContent: 'flex-end',
@@ -1429,8 +1426,8 @@ function Tokenomic() {
                   style={{
                     marginTop: '10px',
 
-                    width: '231px',
-                    height: '76px',
+                    width: '200px',
+                    height: isMobile ? '40px' : '76px',
                     borderRadius: '8px',
                     display: 'flex',
                     justifyContent: 'flex-end',
@@ -1448,8 +1445,8 @@ function Tokenomic() {
 
                     background:
                       'radial-gradient(101.36% 117.36% at 0% -2.74%, rgba(135, 125, 196, 0.6) 0%, rgba(136, 168, 206, 0.411) 77.08%, rgba(136, 224, 214, 0.264) 100%) ',
-                    width: '231px',
-                    height: '76px',
+                    width: '200px',
+                    height: isMobile ? '40px' : '76px',
                     borderRadius: '8px',
                     display: 'flex',
                     justifyContent: 'flex-end',
@@ -1463,8 +1460,8 @@ function Tokenomic() {
                   style={{
                     marginTop: '10px',
 
-                    width: '231px',
-                    height: '76px',
+                    width: '200px',
+                    height: isMobile ? '40px' : '76px',
                     borderRadius: '8px',
                     display: 'flex',
                     justifyContent: 'flex-end',

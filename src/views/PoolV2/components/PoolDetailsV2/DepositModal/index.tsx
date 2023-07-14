@@ -18,6 +18,7 @@ import { formatBigNumber } from 'utils/formatBalance'
 import { DepositPoolModalProps } from './type'
 import numeral from 'numeral'
 import { vaultPoolConfig } from '../../../../../config/constants/pools'
+import TrendyPageLoader from 'components/Loader/TrendyPageLoader'
 
 // STYLE
 const InputArea = styled.div`
@@ -212,6 +213,7 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
   const [mine, setMine] = useState(false)
   const [checked, setChecked] = useState(false)
   const [pid, setPid] = useState(pool.pid)
+  const [isLoading, setIsLoading] = useState(true)
   const checkAmount = (value: any) => {
     if (
       // value > Number((pool.maxLock / pool.rateBNB2USD).toFixed(4)) ||
@@ -267,6 +269,8 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
   }
   const { isConfirming, handleConfirm } = useConfirmTransaction({
     onConfirm: () => {
+      console.log(mine)
+
       return callWithGasPrice(poolContract, 'deposit', [pool.pid], mine, {
         value: ethers.utils.parseUnits(amount.toString(), 'ether').toString(),
         gasLimit: '1000000',
@@ -284,14 +288,19 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
     },
   })
   const checkUsers = async () => {
-    const users = await poolContract.users(account, pid)
-
-    setChecked(users.isMine)
-    setMine(users.isMine)
-    if (users.totalLock.toString() === '0') {
-      setUserTotal(false)
+    if (!account) {
+      setIsLoading(true)
     } else {
-      setUserTotal(true)
+      setIsLoading(false)
+
+      const users = await poolContract.users(account, pid)
+      setChecked(users.isMine)
+      setMine(users.isMine)
+      if (users.totalLock.toString() === '0') {
+        setUserTotal(false)
+      } else {
+        setUserTotal(true)
+      }
     }
   }
   const onChange = () => {
@@ -302,209 +311,215 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
   }, [account, pool.pid])
 
   return (
-    <Modal
-      style={depositModal}
-      title={'DEPOSIT'}
-      onDismiss={onDismiss}
-      hideCloseButton={false}
-      borderRadius={25}
-      headerBackground="rgb(105 84 156 / 77%)"
-      background={'linear-gradient(139.08deg, #171718 1.7%, rgba(86, 27, 211, 0.84) 108.66%)'}
-    >
-      <InputArea>
-        <span>
-          Amount: <br></br>
-          <div style={{ marginTop: '10px' }}>
-            <CountUp
-              start={0}
-              preserveValue
-              delay={0}
-              end={Number(pool.minLock)}
-              decimals={0}
-              duration={0.5}
-              style={{ color: '#2CE0D5', fontWeight: 600 }}
-            />
-            <span style={{ color: '#2CE0D5', fontWeight: 600 }}>$</span>
-            <span style={{ color: '#2CE0D5' }}>{' ~ '}</span>
-            <CountUp
-              start={0}
-              preserveValue
-              delay={0}
-              end={minLockMatic}
-              decimals={4}
-              duration={0.5}
-              style={{ color: '#2CE0D5', fontWeight: 400 }}
-            />{' '}
-            <img src={`/images/chains/${chainId}.png`} alt="logo" width="12px" /> to{' '}
-            <CountUp
-              start={0}
-              preserveValue
-              delay={0}
-              end={Number(pool.maxLock)}
-              decimals={0}
-              duration={0.5}
-              style={{ color: '#2CE0D5', fontWeight: 600 }}
-            ></CountUp>
-            <span style={{ color: '#2CE0D5', fontWeight: 600 }}>$</span>
-            <span style={{ color: '#2CE0D5' }}>{' ~ '}</span>
-            <CountUp
-              start={0}
-              preserveValue
-              delay={0}
-              end={Number(pool.maxLock / pool.rateBNB2USD)}
-              decimals={4}
-              duration={0.5}
-              style={{ color: '#2CE0D5', fontWeight: 400 }}
-            />{' '}
-            <img src={`/images/chains/${chainId}.png`} alt="logo" width="12px" />
-          </div>
-        </span>
-        <span className="bnb"></span>
-        <UserBalance>
-          <span>
-            Balance:{' '}
-            {
-              <CountUp
-                start={0}
-                preserveValue
-                delay={0}
-                end={Number(userBalance)}
-                decimals={4}
-                duration={0.5}
-              ></CountUp>
-            }{' '}
-            <img src={`/images/chains/${chainId}.png`} alt="logo" width="12px" />
-            {'  ~'}
-            {
-              <CountUp
-                start={0}
-                preserveValue
-                delay={0}
-                end={Number(userBalance) * pool.rateBNB2USD}
-                decimals={4}
-                duration={0.5}
-              ></CountUp>
-            }
-            {'$'}
-          </span>
-        </UserBalance>
-        {mine === true ? (
-          <UserBalance>
-            <span>
-              Interest With Mine :{' '}
-              {
-                <CountUp
-                  start={0}
-                  preserveValue
-                  delay={0}
-                  end={Number(pool.currentInterestWithMine)}
-                  decimals={2}
-                  duration={0.5}
-                />
-              }{' '}
-              %
-            </span>
-          </UserBalance>
-        ) : (
-          <UserBalance>
-            <span>
-              Interest :{' '}
-              {
-                <CountUp
-                  start={0}
-                  preserveValue
-                  delay={0}
-                  end={Number(pool.currentInterest)}
-                  decimals={2}
-                  duration={0.5}
-                />
-              }{' '}
-              %
-            </span>
-          </UserBalance>
-        )}
-
-        <StyledInput
-          value={amount}
-          autoFocus={true}
-          type="number"
-          style={depositInput}
-          onChange={handleAmountChange}
-          placeholder={`${minLockMatic.toFixed(4)} ${pool.unit}`}
-        />
-        <MinMaxButtons>
-          <MinMax onClick={() => minMaxBalanceHandle(1)} className={perActive === 1 ? 'active' : ''}>
-            Min
-          </MinMax>
-          <MinMax onClick={() => minMaxBalanceHandle(25)} className={perActive === 25 ? 'active' : ''}>
-            25%
-          </MinMax>
-          <MinMax onClick={() => minMaxBalanceHandle(50)} className={perActive === 50 ? 'active' : ''}>
-            50%
-          </MinMax>
-          <MinMax onClick={() => minMaxBalanceHandle(75)} className={perActive === 75 ? 'active' : ''}>
-            75%
-          </MinMax>
-          <MinMax onClick={() => minMaxBalanceHandle(100)} className={perActive === 100 ? 'active' : ''}>
-            Max
-          </MinMax>
-        </MinMaxButtons>
-      </InputArea>
-      {userTotal === false ? (
-        <>
-          {pool.pid.toString() === '0' ? null : (
-            <CheckMine>
-              <Text>Mine TREND</Text>
-              <Switch>
-                <label htmlFor="switchMine" className="switch">
-                  <input id="switchMine" onChange={onChange} disabled={userTotal} type="checkbox" />
-                  <span className="slider round"></span>
-                </label>
-              </Switch>
-            </CheckMine>
-          )}
-        </>
+    <>
+      {isLoading === true ? (
+        <TrendyPageLoader />
       ) : (
-        <>
-          {pool.pid.toString() === '0' ? null : (
-            <CheckMine>
-              <Text>Mine TREND</Text>
-              <Switch>
-                <label htmlFor="switchMine" className="switch">
-                  <input
-                    id="switchMine"
-                    defaultChecked={checked}
-                    onChange={onChange}
-                    disabled={userTotal}
-                    type="checkbox"
-                  />
-                  <span style={{ background: '#ccc' }} className="slider round"></span>
-                </label>
-              </Switch>
-            </CheckMine>
-          )}
-        </>
-      )}
-
-      {isValidAmount ? <></> : <Error>Amount is out of acceptable range !!</Error>}
-      <div style={{ textAlign: 'center' }}>
-        <StyledButton
-          variant={!isValidAmount ? 'light' : 'primary'}
-          disabled={isConfirming || (!isValidAmount ? true : false)}
-          onClick={handleConfirm}
+        <Modal
+          style={depositModal}
+          title={'DEPOSIT'}
+          onDismiss={onDismiss}
+          hideCloseButton={false}
+          borderRadius={25}
+          headerBackground="rgb(105 84 156 / 77%)"
+          background={'linear-gradient(139.08deg, #171718 1.7%, rgba(86, 27, 211, 0.84) 108.66%)'}
         >
-          {isConfirming ? (
-            <ThreeDots className="loading">
-              Depositing<span>.</span>
-              <span>.</span>
-              <span>.</span>
-            </ThreeDots>
+          <InputArea>
+            <span>
+              Amount: <br></br>
+              <div style={{ marginTop: '10px' }}>
+                <CountUp
+                  start={0}
+                  preserveValue
+                  delay={0}
+                  end={Number(pool.minLock)}
+                  decimals={0}
+                  duration={0.5}
+                  style={{ color: '#2CE0D5', fontWeight: 600 }}
+                />
+                <span style={{ color: '#2CE0D5', fontWeight: 600 }}>$</span>
+                <span style={{ color: '#2CE0D5' }}>{' ~ '}</span>
+                <CountUp
+                  start={0}
+                  preserveValue
+                  delay={0}
+                  end={minLockMatic}
+                  decimals={4}
+                  duration={0.5}
+                  style={{ color: '#2CE0D5', fontWeight: 400 }}
+                />{' '}
+                <img src={`/images/chains/${chainId}.png`} alt="logo" width="12px" /> to{' '}
+                <CountUp
+                  start={0}
+                  preserveValue
+                  delay={0}
+                  end={Number(pool.maxLock)}
+                  decimals={0}
+                  duration={0.5}
+                  style={{ color: '#2CE0D5', fontWeight: 600 }}
+                ></CountUp>
+                <span style={{ color: '#2CE0D5', fontWeight: 600 }}>$</span>
+                <span style={{ color: '#2CE0D5' }}>{' ~ '}</span>
+                <CountUp
+                  start={0}
+                  preserveValue
+                  delay={0}
+                  end={Number(pool.maxLock / pool.rateBNB2USD)}
+                  decimals={4}
+                  duration={0.5}
+                  style={{ color: '#2CE0D5', fontWeight: 400 }}
+                />{' '}
+                <img src={`/images/chains/${chainId}.png`} alt="logo" width="12px" />
+              </div>
+            </span>
+            <span className="bnb"></span>
+            <UserBalance>
+              <span>
+                Balance:{' '}
+                {
+                  <CountUp
+                    start={0}
+                    preserveValue
+                    delay={0}
+                    end={Number(userBalance)}
+                    decimals={4}
+                    duration={0.5}
+                  ></CountUp>
+                }{' '}
+                <img src={`/images/chains/${chainId}.png`} alt="logo" width="12px" />
+                {'  ~'}
+                {
+                  <CountUp
+                    start={0}
+                    preserveValue
+                    delay={0}
+                    end={Number(userBalance) * pool.rateBNB2USD}
+                    decimals={4}
+                    duration={0.5}
+                  ></CountUp>
+                }
+                {'$'}
+              </span>
+            </UserBalance>
+            {mine === true ? (
+              <UserBalance>
+                <span>
+                  Interest With Mine :{' '}
+                  {
+                    <CountUp
+                      start={0}
+                      preserveValue
+                      delay={0}
+                      end={Number(pool.currentInterestWithMine)}
+                      decimals={2}
+                      duration={0.5}
+                    />
+                  }{' '}
+                  %
+                </span>
+              </UserBalance>
+            ) : (
+              <UserBalance>
+                <span>
+                  Interest :{' '}
+                  {
+                    <CountUp
+                      start={0}
+                      preserveValue
+                      delay={0}
+                      end={Number(pool.currentInterest)}
+                      decimals={2}
+                      duration={0.5}
+                    />
+                  }{' '}
+                  %
+                </span>
+              </UserBalance>
+            )}
+
+            <StyledInput
+              value={amount}
+              autoFocus={true}
+              type="number"
+              style={depositInput}
+              onChange={handleAmountChange}
+              placeholder={`${minLockMatic.toFixed(4)} ${pool.unit}`}
+            />
+            <MinMaxButtons>
+              <MinMax onClick={() => minMaxBalanceHandle(1)} className={perActive === 1 ? 'active' : ''}>
+                Min
+              </MinMax>
+              <MinMax onClick={() => minMaxBalanceHandle(25)} className={perActive === 25 ? 'active' : ''}>
+                25%
+              </MinMax>
+              <MinMax onClick={() => minMaxBalanceHandle(50)} className={perActive === 50 ? 'active' : ''}>
+                50%
+              </MinMax>
+              <MinMax onClick={() => minMaxBalanceHandle(75)} className={perActive === 75 ? 'active' : ''}>
+                75%
+              </MinMax>
+              <MinMax onClick={() => minMaxBalanceHandle(100)} className={perActive === 100 ? 'active' : ''}>
+                Max
+              </MinMax>
+            </MinMaxButtons>
+          </InputArea>
+          {userTotal === false ? (
+            <>
+              {pool.pid.toString() === '0' ? null : (
+                <CheckMine>
+                  <Text>Mine TREND</Text>
+                  <Switch>
+                    <label htmlFor="switchMine" className="switch">
+                      <input id="switchMine" onChange={onChange} disabled={userTotal} type="checkbox" />
+                      <span className="slider round"></span>
+                    </label>
+                  </Switch>
+                </CheckMine>
+              )}
+            </>
           ) : (
-            'Deposit'
+            <>
+              {pool.pid.toString() === '0' ? null : (
+                <CheckMine>
+                  <Text>Mine TREND</Text>
+                  <Switch>
+                    <label htmlFor="switchMine" className="switch">
+                      <input
+                        id="switchMine"
+                        defaultChecked={checked}
+                        onChange={onChange}
+                        disabled={userTotal}
+                        type="checkbox"
+                      />
+                      <span style={{ background: '#ccc' }} className="slider round"></span>
+                    </label>
+                  </Switch>
+                </CheckMine>
+              )}
+            </>
           )}
-        </StyledButton>
-      </div>
-    </Modal>
+
+          {isValidAmount ? <></> : <Error>Amount is out of acceptable range !!</Error>}
+          <div style={{ textAlign: 'center' }}>
+            <StyledButton
+              variant={!isValidAmount ? 'light' : 'primary'}
+              disabled={isConfirming || (!isValidAmount ? true : false)}
+              onClick={handleConfirm}
+            >
+              {isConfirming ? (
+                <ThreeDots className="loading">
+                  Depositing<span>.</span>
+                  <span>.</span>
+                  <span>.</span>
+                </ThreeDots>
+              ) : (
+                'Deposit'
+              )}
+            </StyledButton>
+          </div>
+        </Modal>
+      )}
+    </>
   )
 }
 

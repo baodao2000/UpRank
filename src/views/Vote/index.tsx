@@ -428,7 +428,7 @@ function Vote() {
                 onClick={handleVote}
                 disabled={true}
               >
-                <h1 style={{ fontSize: '20px', color: '#191326' }}>I agree</h1>
+                <h1 style={{ fontSize: '20px', color: '#191326' }}>Ended</h1>
               </Button>
             )}
           </Container>

@@ -205,6 +205,8 @@ function Mining() {
   const { isMobile, isTablet } = useMatchBreakpoints()
   const { chainId } = useActiveWeb3React()
   const account = '0x1ec0f8875B7fc2400a6F44788c6710959614e68A'
+  // const {account, chainId } = useActiveWeb3React()
+
   const [loadingPage, setLoadingPage] = useState(true)
   const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId
   const [isLoading, setIsLoading] = useState(false)
@@ -315,16 +317,21 @@ function Mining() {
   }
 
   const getMineSystem = async () => {
-    const totalMiner = await getPoolContract.totalMiner()
-    const totalMined = await getPoolContract.totalMined()
-    const totalClaimed = await getPoolContract.totalClaimed()
-    const trend2USDT = await getPoolContract.TREND2USDT()
-    setSystemData({
-      totalMiner: Number(totalMiner),
-      defaultTrend: Number(formatEther(trend2USDT)),
-      totalMined: Number(formatEther(totalMined)),
-      totalClaimed: Number(formatEther(totalClaimed)),
-    })
+    if (!account) {
+      setIsLoading(true)
+    } else {
+      setIsLoading(false)
+      const totalMiner = await getPoolContract.totalMiner()
+      const totalMined = await getPoolContract.totalMined()
+      const totalClaimed = await getPoolContract.totalClaimed()
+      const trend2USDT = await getPoolContract.TREND2USDT()
+      setSystemData({
+        totalMiner: Number(totalMiner),
+        defaultTrend: Number(formatEther(trend2USDT)),
+        totalMined: Number(formatEther(totalMined)),
+        totalClaimed: Number(formatEther(totalClaimed)),
+      })
+    }
   }
 
   const getMineHistory = async (getUsersClaimMinedLength) => {
@@ -528,8 +535,8 @@ function Mining() {
                             start={0}
                             preserveValue
                             delay={0}
-                            end={mineData.currentReward}
-                            decimals={mineData.currentReward > 0 ? 8 : 0}
+                            end={available}
+                            decimals={available > 0 ? 8 : 0}
                             duration={0.5}
                           />
                         </ContentText>
@@ -544,8 +551,8 @@ function Mining() {
                           start={0}
                           preserveValue
                           delay={0}
-                          end={mineData.currentReward * mineData.trend2USDT}
-                          decimals={mineData.currentReward > 0 ? 6 : 0}
+                          end={available * mineData.trend2USDT}
+                          decimals={available > 0 ? 6 : 0}
                           duration={0.5}
                         />
                       </ContentText>
