@@ -6,7 +6,7 @@ import SocialLinks from "./Components/SocialLinks";
 export const StyledFooter = styled(Flex)`
   flex-direction: column;
   align-items: center;
-  background: rgba(12, 12, 12, 0.25);
+  background: #2d2828;
 `;
 
 export const StyledList = styled.ul`

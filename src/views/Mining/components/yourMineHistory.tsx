@@ -21,7 +21,7 @@ import { isMobile } from 'react-device-detect'
 // STYLE
 const Warpper = styled.div`
   * {
-    font-family: 'Poppins', sans-serif;
+    font-family: Poppins, sans-serif;
   }
   height: 400px;
 `
@@ -69,6 +69,9 @@ const TablePool = styled.div`
     border-collapse: collapse;
     border-radius: 12px;
     overflow: hidden;
+    @media screen and (max-width: 575px) {
+      width: 700px;
+    }
   }
   width: auto;
   border-radius: 16px;
@@ -360,7 +363,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                           preserveValue
                           delay={0}
                           end={claimHistory.amount}
-                          decimals={claimHistory.amount > 0 ? 4 : 0}
+                          decimals={claimHistory.amount > 0 ? 6 : 0}
                           duration={0.5}
                         />{' '}
                         <Image src="/images/trendiCoin.png" width={16} height={16} alt="" />
@@ -378,7 +381,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                           preserveValue
                           delay={0}
                           end={claimHistory.amount * claimHistory.rateUSD}
-                          decimals={claimHistory.amount > 0 ? 4 : 0}
+                          decimals={claimHistory.amount > 0 ? 6 : 0}
                           duration={0.5}
                         />
                       </Text>
@@ -446,7 +449,11 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
         <>
           <Warpper>
             <TableHeader>
-              <Text style={{ color: '#F5F5F6' }} textAlign="center" fontSize={responsiveTextSizeHeader}>
+              <Text
+                style={{ color: '#F5F5F6', fontWeight: 700 }}
+                textAlign="center"
+                fontSize={responsiveTextSizeHeader}
+              >
                 Your Mined History
               </Text>
             </TableHeader>
