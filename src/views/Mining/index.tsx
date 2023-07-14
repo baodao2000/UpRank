@@ -22,7 +22,7 @@ const Wrapper = styled.div`
   gap: 10px;
   height: 1200px;
   * {
-    font-family: Poppins, sans-serif;
+    font-family: 'Helvetica Compressed';
   }
   @media screen and (max-width: 900px) {
     height: 80% !important;
@@ -133,7 +133,6 @@ const Box = styled.div`
   // }
 `
 const ContentText = styled.text`
-  // font-family: Dosis;
   font-weight: 700;
   font-size: 22px;
   color: rgba(255, 255, 255, 1);
@@ -383,6 +382,7 @@ function Mining() {
             fontWeight: 700,
             textAlign: 'center',
             marginTop: '30px',
+            marginLeft: isMobile ? '0px' : isTablet ? '0px' : '50px',
           }}
         >
           Dashboard
@@ -412,7 +412,7 @@ function Mining() {
                   }}
                 >
                   <div>
-                    <Image src="/images/speed.png" width={30} height={25} alt="" />
+                    <Image src="/images/speedV2.png" width={30} height={30} alt="" />
                   </div>
                   <ContentText style={{ fontSize: isMobile ? '30px' : isTablet ? '45px' : '64px', fontWeight: 700 }}>
                     {Number(mineData.mineSpeed / 100 + mineData.mineSpeedLevel)}
@@ -768,7 +768,7 @@ function Mining() {
                       duration={0.5}
                     />
                     <span>
-                      <Image src="/images/user.png" alt="" width={isMobile ? 30 : 30} height={isMobile ? 30 : 30} />
+                      <Image src="/images/humanV2.png" alt="" width={isMobile ? 30 : 30} height={isMobile ? 30 : 30} />
                     </span>
                   </ContentText>
                   <ContentText style={{ fontSize: '16px', fontWeight: 500, color: '#D1D1D1' }}>Miners</ContentText>
@@ -789,8 +789,8 @@ function Mining() {
                     1 TREND
                   </Text>
                   <div style={{ display: 'flex', gap: '5px' }}>
-                    <ContentText style={{ fontSize: '36px', fontWeight: 500, lineHeight: '16px' }}>~</ContentText>
-                    <ContentText style={{ fontSize: '18px', fontWeight: 500 }}>
+                    <ContentText style={{ fontSize: '22px', lineHeight: '16px', color: '#D1D1D1' }}>~</ContentText>
+                    <ContentText style={{ fontSize: '18px', fontWeight: 500, color: '#D1D1D1' }}>
                       ${' '}
                       <CountUp
                         start={0}

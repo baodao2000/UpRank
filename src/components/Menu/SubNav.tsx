@@ -6,9 +6,6 @@ import Link from 'next/link'
 
 const StyledNav = styled.nav`
   margin-bottom: 40px;
-  * {
-    font-family: Poppins, sans-serif;
-  }
 `
 
 const getActiveIndex = (pathname: string): number => {

@@ -13,7 +13,7 @@ const Wrapper = styled.div`
   gap: 10px;
   padding: 0 20px !important;
   * {
-    font-family: Poppins, sans-serif;
+    font-family: 'Helvetica Compressed';
   }
 `
 const OverviewText = styled.div`
@@ -95,7 +95,7 @@ const BoxContain = styled.div`
 `
 const SupplyText = styled.div`
   text-align: center;
-  font-family: Poppins, sans-serif;
+  font-family: 'Helvetica Compressed';
   font-weight: 600;
   font-size: 20px;
   line-height: 22px;
@@ -250,7 +250,7 @@ const BoxOneContainText = styled.div`
 `
 const BoxOneText = styled.div`
   width: 260px;
-  font-family: Poppins, sans-serif;
+  font-family: 'Helvetica Compressed';
   font-weight: 600;
   font-size: 16px;
   line-height: 17.6px;
@@ -402,7 +402,7 @@ const BoxTwoContainText = styled.div`
 `
 const BoxTwoText = styled.div`
   width: 220px;
-  font-family: Poppins, sans-serif;
+  font-family: 'Helvetica Compressed';
   font-weight: 600;
   font-size: 16px;
   line-height: 17.6px;
@@ -511,7 +511,7 @@ const BoxThreeContainText = styled.div`
 `
 const BoxThreeText = styled.div`
   width: 220px;
-  font-family: Poppins, sans-serif;
+  font-family: 'Helvetica Compressed';
   font-weight: 500;
   font-size: 16px;
   line-height: 17.6px;
@@ -567,7 +567,7 @@ const ButtonStake = styled.div`
   top: 170%;
   left: 53%;
   transform: translate(-50%, -50%);
-  font-family: Poppins, sans-serif;
+  font-family: 'Helvetica Compressed';
   font-weight: 700;
   font-size: 20px;
   cursor: pointer;
@@ -583,7 +583,7 @@ const ButtonStakeRes = styled.div`
   top: 200px;
   left: 53%;
   transform: translate(-50%, -50%);
-  font-family: Poppins, sans-serif;
+  font-family: 'Helvetica Compressed';
   font-weight: 700;
   font-size: 20px;
   cursor: pointer;
@@ -637,13 +637,13 @@ const Table = styled.div`
   }
 `
 const TitleText = styled.div`
-  font-family: Poppins, sans-serif;
+  font-family: 'Helvetica Compressed';
   font-weight: 700;
   font-size: 16px;
   color: rgba(255, 255, 255, 1);
 `
 const ContentText = styled.div`
-  font-family: Poppins, sans-serif;
+  font-family: 'Helvetica Compressed';
   font-weight: 700;
   font-size: 22px;
   color: rgba(255, 255, 255, 1);
@@ -702,7 +702,7 @@ const Item = styled.div`
 `
 const Title = styled(Text)`
   color: #f3f2f9;
-  font-family: Poppins, sans-serif;
+  font-family: 'Helvetica Compressed';
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
@@ -712,7 +712,7 @@ const Title = styled(Text)`
 `
 const Label = styled(Text)`
   color: #f3f2f9;
-  font-family: Poppins, sans-serif;
+  font-family: 'Helvetica Compressed';
   font-size: 24px;
   font-style: normal;
   font-weight: 700;
@@ -1085,7 +1085,7 @@ function Tokenomic() {
               style={{
                 position: 'absolute',
                 left: isMobile ? '30px' : '20px',
-                top: isMobile ? '35px' : '50px',
+                top: isMobile ? '40px' : '50px',
                 padding: ' 0 30px',
                 maxWidth: isMobile ? '300px' : '350px',
                 width: '100%',
@@ -1107,7 +1107,7 @@ function Tokenomic() {
               style={{
                 position: 'absolute',
                 left: isMobile ? '40px' : isTablet ? '50px' : '60px',
-                top: isMobile ? '40px' : isTablet ? '40px' : '40px',
+                top: isMobile ? '45px' : isTablet ? '50px' : '50px',
                 padding: ' 0 10px',
                 maxWidth: isTablet ? '300px' : '300px',
                 width: '100%',
@@ -1143,7 +1143,7 @@ function Tokenomic() {
                 left: '40px',
                 top: '25px',
                 padding: ' 0 30px',
-                maxWidth: isMobile ? '300px' : isTablet ? '700px' : '700px',
+                maxWidth: isMobile ? '300px' : isTablet ? '700px' : '750px',
                 width: '100%',
               }}
             >
@@ -1174,9 +1174,9 @@ function Tokenomic() {
                   flexDirection: 'column',
                   position: 'absolute',
                   left: isMobile ? '40px' : '60px',
-                  top: isMobile ? '20px' : '25px',
+                  top: isMobile ? '20px' : '20px',
                   padding: ' 0 25px',
-                  maxWidth: isMobile ? '325px' : '350px',
+                  maxWidth: isMobile ? '320px' : isTablet ? '320px' : '350px',
                   width: '100%',
                 }}
               >
@@ -1198,9 +1198,9 @@ function Tokenomic() {
                   flexDirection: 'column',
                   position: 'absolute',
                   left: isMobile ? '1px' : isTablet ? '370px' : '410px',
-                  top: isMobile ? '140px' : '20px',
+                  top: isMobile ? '130px' : '20px',
                   padding: ' 0 30px',
-                  maxWidth: isMobile ? '350px' : isTablet ? '350px' : '400px',
+                  maxWidth: isMobile ? '320px' : isTablet ? '350px' : '400px',
                   width: '100%',
                 }}
               >
@@ -1229,8 +1229,8 @@ function Tokenomic() {
             <GlobalTextContent
               style={{
                 position: 'absolute',
-                left: isMobile ? '20px' : isTablet ? '30px' : '25px',
-                top: isMobile ? '20px' : '25px',
+                left: isMobile ? '20px' : isTablet ? '30px' : '40px',
+                top: isMobile ? '30px' : '25px',
                 padding: ' 0 30px',
                 maxWidth: '800px',
                 width: '100%',

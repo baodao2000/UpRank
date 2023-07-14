@@ -37,7 +37,7 @@ background:var(--bg-1, linear-gradient(90deg, #9E86FF 0%, #2B0864 100%));
   align-items: center;
   background-color: var(--bg-1, linear-gradient(90deg, #9E86FF 0%, #2B0864 100%));
   * {
-    font-family: Poppins, sans-serif;
+    font-family: "Helvetica Compressed";
   }
   @media screen and (max-width: 1024px) {
     background: none;
@@ -209,7 +209,7 @@ const LogoAndName = styled.div`
     font-style: normal;
     color: #ffffff;
     font-weight: 700;
-    font-family: Poppins, sans-serif;
+    font-family: 'Helvetica Compressed';
   }
   @media screen and (max-width: 1024px) {
     display: flex;
@@ -701,7 +701,7 @@ const Pools = () => {
                           style={{ color: 'rgba(250, 255, 73, 1)', fontWeight: 700 }}
                         />
                       }
-                      <Text fontSize="32px" lineHeight="1.25">
+                      <Text fontSize="32px" lineHeight="1.1">
                         $
                       </Text>
                     </div>

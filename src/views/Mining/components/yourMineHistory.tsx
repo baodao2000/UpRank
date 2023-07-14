@@ -21,7 +21,7 @@ import { isMobile } from 'react-device-detect'
 // STYLE
 const Warpper = styled.div`
   * {
-    font-family: Poppins, sans-serif;
+    font-family: 'Helvetica Compressed';
   }
   height: 400px;
 `
@@ -103,6 +103,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
   ...props
 }) => {
   const { account, chainId } = useActiveWeb3React()
+
   const minesContract = getPoolsContract(chainId)
   const { t } = useTranslation()
   const [usersClaimed, setUserClaimed] = useState([])
@@ -301,7 +302,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
             return (
               <tr key={index}>
                 <Td textAlign={'center'}>
-                  <Text fontSize={responsiveTextSize}> {moment.unix(claimHistory.date * 300).format('L')}</Text>
+                  <Text fontSize={responsiveTextSize}> {moment.unix(claimHistory.date * 30).format('L')}</Text>
                 </Td>
                 <Td textAlign={'center'}>
                   <Text fontSize={responsiveTextSize}>
@@ -313,7 +314,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                       decimals={2}
                       duration={0.5}
                     ></CountUp>{' '}
-                    X
+                    x
                   </Text>
                 </Td>
                 <Td textAlign={'center'}>
@@ -330,7 +331,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                           decimals={mine.totalMined > 0 ? 4 : 0}
                           duration={0.5}
                         />{' '}
-                        <Image src="/images/trendiCoin.png" width={16} height={16} alt="" />
+                        <Image src="/images/trendyloop.png" width={16} height={16} alt="" />
                       </Text>
                     </AmountData>
                   )}
@@ -366,7 +367,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                           decimals={claimHistory.amount > 0 ? 6 : 0}
                           duration={0.5}
                         />{' '}
-                        <Image src="/images/trendiCoin.png" width={16} height={16} alt="" />
+                        <Image src="/images/trendyloop.png" width={16} height={16} alt="" />
                       </Text>
                     </AmountData>
                   )}
@@ -389,11 +390,12 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                   )}
                 </Td>
                 <Td textAlign={'center'}>
-                  {claimHistory.totalMined === 0 ? (
+                  {/* {claimHistory.totalMined === 0 ? (
                     <Text fontSize={responsiveTextSize}>0</Text>
                   ) : (
                     <AmountData>
                       <Text fontSize={responsiveTextSizeBNB}>
+                        ${' '}
                         <CountUp
                           start={0}
                           preserveValue
@@ -401,11 +403,11 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                           end={claimHistory.totalMined}
                           decimals={claimHistory.totalMined > 0 ? 4 : 0}
                           duration={0.5}
-                        />{' '}
-                        ${mine.unit}
+                        />
                       </Text>
                     </AmountData>
-                  )}
+                  )} */}
+                  <Text fontSize={responsiveTextSize}>$ 0</Text>
                 </Td>
                 <Td textAlign={'center'}>
                   {/* {claimHistory.totalMined > 0 ? (
@@ -425,7 +427,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                       </Text>
                     </AmountData>
                   )} */}
-                  <Text>0</Text>
+                  <Text fontSize={responsiveTextSize}>$ 0</Text>
                 </Td>
                 <Td textAlign={'center'}>
                   <Text fontSize={responsiveTextSize}>Claimed</Text>
@@ -438,14 +440,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
   }
   return (
     <>
-      {isLoading === true ? (
-        <ThreeDots style={{ textAlign: 'center' }} className="loading">
-          Loading
-          <span>.</span>
-          <span>.</span>
-          <span>.</span>
-        </ThreeDots>
-      ) : (
+      {isLoading === true ? null : (
         <>
           <Warpper>
             <TableHeader>
