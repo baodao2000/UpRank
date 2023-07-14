@@ -28,7 +28,7 @@ const StyledMenuItem = styled.a<StyledMenuItemProps>`
   font-size: 25px;
   text-transform: uppercase;
   font-weight: 800;
-  font-family: "Helvetica Compressed";
+  font-family: Popins, sans-serif;
 
   color: ${({ $isActive }) => ($isActive ? "rgb(0, 240, 225)" : "#d2d6ef")};
   opacity: ${({ $isDisabled }) => ($isDisabled ? 0.5 : 1)};

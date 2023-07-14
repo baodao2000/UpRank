@@ -209,7 +209,7 @@ const LogoAndName = styled.div`
     font-style: normal;
     color: #ffffff;
     font-weight: 700;
-    font-family: Helvetica, sans-serif;
+    font-family: Poppins, sans-serif;
   }
   @media screen and (max-width: 1024px) {
     display: flex;
@@ -687,7 +687,7 @@ const Pools = () => {
                     alignItems="center"
                     style={{ gap: '24px' }}
                   >
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <div style={{ display: 'flex', alignItems: 'flex-end', gap: '10px' }}>
                       {
                         <CountUp
                           separator=","
@@ -713,7 +713,7 @@ const Pools = () => {
                         borderRadius: '20px',
                       }}
                     ></div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <div style={{ display: 'flex', alignItems: 'flex-end', gap: '10px' }}>
                       {
                         <CountUp
                           separator=","
