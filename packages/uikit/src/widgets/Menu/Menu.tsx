@@ -18,15 +18,17 @@ import { MenuContext } from "./context";
 const Wrapper = styled.div`
   position: relative;
   width: 100%;
+  background-color: var(--black-black-60, rgba(0, 0, 0, 0.6));
 `;
 
 const StyledNav = styled.nav`
   display: flex;
-  justify-content: space-between;
+  margin: 0 auto;
   align-items: center;
+  max-width: 1389px;
+  justify-content: space-between;
   width: 100%;
   height: ${MENU_HEIGHT}px;
-  background-color: black;
   /* border-bottom: 1px solid ${({ theme }) => theme.colors.cardBorder}; */
   transform: translate3d(0, 0, 0);
   padding-left: 24px;
