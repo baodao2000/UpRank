@@ -9,22 +9,21 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(90deg, #9e86ff 0%, #2b0864 111.24%);
+  background: black;
   gap: 10px;
   padding: 0 20px !important;
 `
 const OverviewText = styled.div`
   margin-top: 30px;
-  color: #95ffec;
   text-align: center;
-  text-shadow: 0px 4px 20px 0px rgba(255, 255, 255, 0.36), 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   font-family: Raleway, sans-serif;
-  font-size: 48px;
-  font-style: normal;
+  font-size: 60px;
   font-weight: 700;
-  line-height: 110%;
+  line-height: 72px;
   letter-spacing: 1.92px;
-  text-transform: uppercase;
+  background: linear-gradient(180deg, #7b3fe4 0%, #a726c1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   @media screen and (max-width: 575px) {
     font-size: 28px;
     width: 70%;
@@ -91,11 +90,12 @@ const BoxContain = styled.div`
   backdrop-filter: blur(5px);
 `
 const SupplyText = styled.div`
+  width: 785px;
   text-align: center;
   font-family: Poppins, sans-serif;
-  font-weight: 600;
-  font-size: 20px;
-  line-height: 22px;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 28px;
   color: #fff;
 `
 const Container = styled.div`
@@ -347,12 +347,6 @@ const BoxTwoRes = styled.div`
   @media screen and (max-width: 575px) {
     width: 350px;
     display: flex !important;
-<<<<<<< HEAD
-  }
-  @media screen and (max-width: 768px) {
-    display: flex !important;
-=======
->>>>>>> 3408364b42ef0af339a4726ee2c567892d927ce0
   }
   @media screen and (max-width: 1024px) {
     display: flex !important;
@@ -724,14 +718,12 @@ const Label = styled(Text)`
 `
 const dataLeft = [
   {
-    title: 'Bounty - Marketing',
-    label: '3%',
-    color: '#B0FF9B',
+    title: 'Team foundation',
+    label: '15.00%',
   },
   {
-    title: 'Early Contributors',
-    label: '5%',
-    color: '#94FFFF',
+    title: 'Platform',
+    label: '17.00%',
   },
   {
     title: 'Market Maker',
@@ -942,18 +934,15 @@ function Tokenomic() {
   return (
     <Wrapper>
       <Container>
-        <OverviewText>TREND Token Overview</OverviewText>
-        <BoxContain>
-          <SupplyText>Supply: 21,000,000 TREND</SupplyText>
-        </BoxContain>
+        <OverviewText>Tokenomic Overview</OverviewText>
+
+        <SupplyText>
+          Welcome to our member count section! Here, you can track the growth of our community and get a sense of the
+          scale of our website&apos;s audience.
+        </SupplyText>
         <Token>
           <ImageOverview>
-            <Image
-              src="/images/token.png"
-              alt="tokenomic"
-              width={isMobile ? 280 : 410}
-              height={isMobile ? 290 : isTablet ? 300 : 334}
-            />
+            <Image src="/images/newTokenomic.png" alt="tokenomic" width="500px" height="500px" />
           </ImageOverview>
           <Card>
             <div>
@@ -962,6 +951,12 @@ function Tokenomic() {
                   <Item>
                     <Icon style={{ background: item.color }}></Icon>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                        <h1 style={{ fontSize: '20px', lineHeight: '30px', fontWeight: 500 }}>Supply</h1>
+                        <SupplyText style={{ fontSize: '54px', lineHeight: '64px', fontWeight: 700 }}>
+                          21,000,000 TREND
+                        </SupplyText>
+                      </div>
                       <Title>{item.title}</Title>
                       <Label>{item.label}</Label>
                     </div>

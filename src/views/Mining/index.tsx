@@ -106,7 +106,7 @@ const BoxContain = styled.div`
     width: 642px !important;
   }
   @media screen and (max-width: 1024px) {
-    width: 700px;
+    width: 600px;
   }
 `
 const Box = styled.div`
@@ -376,7 +376,7 @@ function Mining() {
         <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : isTablet ? 'column' : 'row', gap: '20px' }}>
           <Table
             style={{
-              width: isMobile ? '350px' : isTablet ? '670px' : '735px',
+              width: isMobile ? '350px' : isTablet ? '670px' : '635px',
               background: ' linear-gradient(313deg, rgba(228, 228, 228, 0.00) 0%, rgba(228, 228, 228, 0.00) 100%)',
               backdropFilter: 'blur(50px)',
             }}
@@ -533,7 +533,14 @@ function Mining() {
                             alt=""
                           />
 
-                          <ContentText style={{ fontSize: isMobile ? '24px' : '36px', fontWeight: 700 }}>
+                          <ContentText
+                            style={{
+                              fontSize: isMobile ? '24px' : '36px',
+                              fontWeight: 700,
+                              display: 'flex',
+                              flexWrap: 'wrap',
+                            }}
+                          >
                             <CountUp
                               start={0}
                               preserveValue
@@ -808,7 +815,7 @@ function Mining() {
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '35px' }}>
                       <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '10px' }}>
                         <Image src="/images/trendiCoin.png" width={40} height={40} alt="" />
-                        <ContentText style={{ fontWeight: 700, fontSize: isMobile ? '20px' : '36px' }}>
+                        <ContentText style={{ fontWeight: 700, fontSize: '36px' }}>
                           <CountUp
                             start={0}
                             preserveValue
@@ -864,7 +871,7 @@ function Mining() {
                           alt=""
                         />
 
-                        <ContentText style={{ fontWeight: 700, fontSize: isMobile ? '20px' : '36px' }}>
+                        <ContentText style={{ fontWeight: 700, fontSize: '36px' }}>
                           <CountUp
                             start={0}
                             preserveValue
