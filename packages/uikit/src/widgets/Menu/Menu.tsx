@@ -33,6 +33,7 @@ const StyledNav = styled.nav`
   transform: translate3d(0, 0, 0);
   padding-left: 24px;
   padding-right: 24px;
+  background-color: var(--black-black-60, rgba(0, 0, 0, 0.6));
 `;
 
 const FixedContainer = styled.div<{ showMenu: boolean; height: number }>`

@@ -6,22 +6,24 @@ import SocialLinks from "./Components/SocialLinks";
 export const StyledFooter = styled(Flex)`
   flex-direction: column;
   align-items: center;
-  background: #2d2828;
+  background: #121216;
 `;
 
-export const StyledList = styled.ul`
-  list-style: none;
-
+export const StyledList = styled.div`
+  display: flex;
+  flex-direction: column;
   ${({ theme }) => theme.mediaQueries.md} {
     margin-bottom: 0px;
   }
 `;
 
-export const StyledListItem = styled.li`
-  font-size: 16px;
-  margin-bottom: 8px;
-  text-transform: capitalize;
-
+export const StyledListItem = styled.span`
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  color: rgba(173, 171, 178, 1);
+  margin-bottom: 16px;
   /* &:first-child {
     color: ${darkColors.secondary};
     font-weight: 600;
