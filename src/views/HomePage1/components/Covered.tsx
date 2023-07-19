@@ -4,47 +4,21 @@ import { Heading, Text, Button } from '@pancakeswap/uikit'
 import 'aos/dist/aos.css'
 
 const Title = styled(Heading)`
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 18px;
-  text-align: center;
-
-  ${({ theme }) => theme.mediaQueries.md} {
-    font-size: 40px;
-    line-height: 46px;
-    text-align: start;
-  }
-
-  ${({ theme }) => theme.mediaQueries.xl} {
-    font-size: 48px;
-    line-height: 60px;
-  }
+  font-size: 48px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 60px; /* 125% */
+  letter-spacing: -0.96px;
+  color: rgba(173, 171, 178, 1);
+  margin-bottom: 16px;
 `
 
 const TitleM = styled(Text)`
   font-weight: 400;
   font-size: 16px;
   line-height: 23px;
-  color: #ced8e1;
   margin-top: 6px;
-
-  ${({ theme }) => theme.mediaQueries.md} {
-    padding-left: 0;
-  }
-  ${({ theme }) => theme.mediaQueries.xl} {
-    font-size: 24px;
-    line-height: 23px;
-  }
-`
-
-const StyledText = styled.p`
-  color: #8145ff;
-  display: inline;
-  text-align: center;
-
-  ${({ theme }) => theme.mediaQueries.sm} {
-    text-align: start;
-  }
+  color: rgba(173, 171, 178, 1);
 `
 
 const Wrapper = styled.div`
@@ -52,119 +26,119 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   position: relative;
+  width: 100%
   z-index: 1;
+  * {
+    font-family: Inter, sans-serif;
+  }
+  span {
+    background: var(--primary-priamry-gradient, linear-gradient(180deg, #8A46FF 0%, #6E38CC 100%));
+background-clip: text;
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+  }
   @media screen and (max-width: 600px) {
     display: flex;
     align-items: center;
     text-align: center;
   }
 `
-
-const CoveredList = styled.div`
+const Card = styled.div`
+  border-radius: 24px;
+  position: relative;
+  border: 1px solid var(--white-white-12, rgba(255, 255, 255, 0.12));
+  background: var(--white-white-6, rgba(255, 255, 255, 0.06));
+  backdrop-filter: blur(5.5px);
+  width: 585px;
+  height: 460px;
+  margin-bottom: 56px;
+  padding: 40px;
+  gap: 16px;
+  .imgCard {
+    position: absolute;
+    bottom: 10%;
+  }
+`
+const CardList = styled.div`
   display: flex;
-  flex-wrap: wrap;
-  // background: url(${images.bgcovered}) no-repeat;
-  // background-attachment: fixed, scroll;
-  // background-size: cover;
-  gap: 30px;
-  row-gap: 50px;
-  padding-left: 10%;
-  @media screen and (max-width: 600px) {
-    padding-left: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  ${({ theme }) => theme.mediaQueries.md} {
-    padding-left: 20%;
-  }
+  // flex-wrap: wrap;
+  flex-direction: row;
+  gap: 56px;
+  jutify-content: center;
+  margin-top: 120px;
+  background: url(${images.bgV3}) no-repeat;
+  width: 100%;
+  height: auto;
+  background-size: contain;
+  background-position: center;
 `
-
-const CoveredItem = styled.div`
-  flex: 40%;
-  @media screen and (max-width: 500px) {
-    flex: 0%;
-    text-align: center;
-  }
+const CardTitle = styled(Text)`
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 38px;
+  color: rgba(226, 225, 229, 1);
+  margin-bottom: 16px;
 `
-
-const TagCustom = styled(Text)`
-  margin-bottom: 24px;
-  margin-top: 24px;
-  font-weight: 700;
-  font-size: 20px;
-  font-family: 'Helvetica Rounded', sans-serif;
-
-  ${({ theme }) => theme.mediaQueries.md} {
-    font-size: 32px;
-    line-height: 39px;
-  }
-`
-
-const ContentCustom = styled(Text)`
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 18px;
-  font-family: Helvetica, sans-serif;
-  max-width: 284px;
-  @media screen and (max-width: 600px) {
-    margin-bottom: 15px;
-    margin-top: 15px;
-    width: 100%;
-  }
-  ${({ theme }) => theme.mediaQueries.md} {
-    font-size: 18px;
-    line-height: 20px;
-    max-width: 284px;
-  }
+const CardLabel = styled(Text)`
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 28px;
+  color: rgba(173, 171, 178, 1);
 `
 
 const coverdList = [
   {
-    img: images.key2,
+    img: './images/V3/Custodial.png',
     title: 'Non-Custodial',
     detail: 'We never have access to any of your data or funds. Ever.',
   },
   {
-    img: images.bookOpen,
+    img: './images/V3/Privacy.png',
+    title: 'Privacy',
+    detail: 'Phantom doesn’t track any personal identifiable information, your account addresses, or asset balances.',
+  },
+]
+const coverdListRight = [
+  {
+    img: './images/V3/Ledger.png',
     title: 'Ledger Support',
     detail: 'For additional security you can connect your hardware wallet.',
   },
   {
-    img: images.lock2,
-    title: 'Privacy',
-    detail: 'Phantom doesn’t track any personal identifiable information, your account addresses, or asset balances.',
-  },
-  {
-    img: images.person,
+    img: './images/V3/Bio.png',
     title: 'Biometric authentication',
     detail: 'Protect your assets on the go with the convenience you expect.',
   },
 ]
-
 const Covered = () => {
   return (
     <Wrapper className="block">
-      <Title color="mainColor">We’ve got you covered</Title>
-      <TitleM color="mainColor">
-        <StyledText>Only you</StyledText> can access your wallet.
-      </TitleM>
-      <TitleM color="mainColor" style={{ marginBottom: 50 }}>
-        We <StyledText>don’t collect</StyledText> any personal data.
-      </TitleM>
-      <CoveredList>
-        {coverdList.map((n, i) => {
-          i += 600
-          return (
-            <CoveredItem data-aos="zoom-in" data-aos-duration={i} data-aos-easing="linear" key={n.title}>
-              <img style={{ width: '140px', height: '140px', objectFit: 'contain' }} src={n.img} alt="" />
-              <TagCustom color="mainColor">{n.title}</TagCustom>
-              <ContentCustom color="mainColor">{n.detail}</ContentCustom>
-            </CoveredItem>
-          )
-        })}
-      </CoveredList>
+      <Title>
+        We’ve got you <span>covered</span>
+      </Title>
+      <TitleM>Only you can access your wallet. We don’t collect any personal data.</TitleM>
+      <CardList>
+        <div>
+          {coverdList.map((items, t) => (
+            <Card key={t}>
+              <CardTitle>{items.title}</CardTitle>
+              <CardLabel>{items.detail}</CardLabel>
+              <img className="imgCard" src={items.img} />
+            </Card>
+          ))}
+        </div>
+        <div style={{ marginTop: '175px' }}>
+          {coverdListRight.map((items, r) => (
+            <Card key={r}>
+              <CardTitle>{items.title}</CardTitle>
+              <CardLabel>{items.detail}</CardLabel>
+              <img className="imgCard" src={items.img} />
+            </Card>
+          ))}
+        </div>
+      </CardList>
     </Wrapper>
   )
 }

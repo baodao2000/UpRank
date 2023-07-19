@@ -3,7 +3,7 @@ import { Heading, Card } from '@pancakeswap/uikit'
 import images from 'configs/images'
 
 const Wrapper = styled.div`
-  max-width: 1152px;
+  width: 100%;
   margin: 0 auto;
 `
 
@@ -36,19 +36,21 @@ const ListTransparency = styled.div`
 `
 
 const CardTransparency = styled.div`
-  width: 358px;
+  width: 386px;
   height: auto;
-  background: linear-gradient(160.75deg, #00f0e1 -56.08%, #a6e5e1 121.17%);
-  border: 1px solid #000000;
-  box-shadow: 6px 10px 25px rgba(0, 0, 0, 0.1), inset 0px 4px 16px rgba(238, 190, 255, 0.63);
-  border-radius: 20px;
-  padding: 32px;
+  border-radius: 24px;
+  border: 1px solid var(--white-white-12, rgba(255, 255, 255, 0.12));
+  background: var(--white-white-6, rgba(255, 255, 255, 0.06));
+  backdrop-filter: blur(5.5px);
+  padding: 40px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  ${({ theme }) => theme.mediaQueries.md} {
-    height: 318px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  img {
+    width: 166px;
+    height: 200px;
+    margin-bottom: 24px;
   }
 `
 
@@ -57,46 +59,39 @@ const WrapperImage = styled.div`
 `
 
 const StyledTitleCard = styled(Heading)`
-  font-weight: 700;
-  font-size: 18px;
-  line-height: 100%;
-  color: #02736c;
-  margin: 16px 0;
-  ${({ theme }) => theme.mediaQueries.md} {
-    font-size: 24px;
-    line-height: 120%;
-    margin: 20px 0;
-  }
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 38px;
+  color: rgba(255, 255, 255, 1);
+  margin-bottom: 16px;
 `
 
 const DescCard = styled.p`
+  font-family: Inter;
+  font-size: 18px;
+  font-style: normal;
   font-weight: 400;
-  font-size: 16px;
-  line-height: 20px;
-  text-align: center;
-  letter-spacing: 0.001em;
-  color: #4f4f4f;
-  ${({ theme }) => theme.mediaQueries.md} {
-    font-size: 18px;
-    line-height: 20px;
-  }
+  line-height: 28px;
+  color: rgba(173, 171, 178, 1);
 `
 
 const Transparency = () => {
   const data = [
     {
-      image: images.trans1,
-      title: 'DAO mechanism applied',
-      description: 'Using the DAO mechanism to vote on the monthly profit',
-    },
-    {
-      image: images.trans2,
+      image: './images/V3/feature01.png',
       title: 'User are in full control',
       description:
         'Users have authority over their money, allowing them to deal safely without the need for confirmation from a third party.',
     },
     {
-      image: images.trans3,
+      image: './images/V3/feature02.png',
+      title: 'DAO mechanism applied',
+
+      description: 'Using the DAO mechanism to vote on the monthly profit',
+    },
+    {
+      image: './images/V3/feature03.png',
       title: 'Audited by Certik',
       description:
         'TrendyDefi is audited by CertiK, Audits Platform for Industry-Leading Security. The Dev team is only permitted to adjust the interest rate depending on user vote results.',
@@ -105,7 +100,7 @@ const Transparency = () => {
   return (
     <Wrapper className="block">
       <Title>Transparency & Security</Title>
-      <ListTransparency data-aos="flip-up">
+      <ListTransparency>
         {data.map((item, index) => (
           <CardTransparency key={index}>
             <WrapperImage>

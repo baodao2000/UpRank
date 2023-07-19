@@ -83,6 +83,9 @@ const images = {
   chart4down: '/images/homepage/chart4down.gif',
   iconpoolsV2: '/images/IconPoolsV2.svg',
   bg: '/images/BG.png',
+  Illustrations: '/images/Illustrations.png',
+  bgV3: '/images/V3/BG.png',
+  roadmapV3: '/images/Roadmap.svg',
 }
 
 export default images

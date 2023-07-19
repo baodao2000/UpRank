@@ -4,7 +4,6 @@
       { "internalType": "contract IRefferal", "name": "_refer", "type": "address" },
       { "internalType": "address", "name": "gnosisSafeAddress", "type": "address" },
       { "internalType": "contract ILiquidity", "name": "_liquidity", "type": "address" },
-      { "internalType": "address", "name": "mm", "type": "address" },
       { "internalType": "address", "name": "trend", "type": "address" }
     ],
     "stateMutability": "nonpayable",
@@ -137,13 +136,6 @@
   },
   {
     "inputs": [],
-    "name": "MM",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
     "name": "TREND",
     "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
     "stateMutability": "view",
@@ -153,13 +145,6 @@
     "inputs": [],
     "name": "TREND2USDT",
     "outputs": [{ "internalType": "uint256", "name": "price", "type": "uint256" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "addLPAmount",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },
@@ -461,13 +446,6 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "isLP",
-    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
     "name": "lineStaked",
     "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
@@ -592,17 +570,9 @@
     "stateMutability": "nonpayable",
     "type": "function"
   },
-  { "inputs": [], "name": "setIsLP", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
   {
     "inputs": [{ "internalType": "contract ILiquidity", "name": "_liquidity", "type": "address" }],
     "name": "setLiquidity",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [{ "internalType": "address", "name": "mm", "type": "address" }],
-    "name": "setMM",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

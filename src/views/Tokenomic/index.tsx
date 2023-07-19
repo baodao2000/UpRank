@@ -54,7 +54,6 @@ const Container = styled.div`
   gap: 10px;
   height: 100%;
 `
-
 const Token = styled.div`
   display: flex;
   flex-direction: row;
