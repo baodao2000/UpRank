@@ -455,7 +455,7 @@ const Background = styled.div`
   justify-content: center;
   flex-direction: column;
 `
-const Pools = () => {
+const PoolsV2 = () => {
   const { account, chainId } = useActiveWeb3React()
   const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId
   const getPoolV3Contract = getPoolsV3Contract(CHAIN_ID)
@@ -1166,4 +1166,4 @@ const Pools = () => {
     </Container>
   )
 }
-export default Pools
+export default PoolsV2
