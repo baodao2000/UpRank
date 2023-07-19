@@ -22,14 +22,17 @@ import { shortenURL } from 'views/Pools2/util'
 import { getBlockExploreLink } from 'utils'
 
 const Wrapper = styled.div`
+  * {
+    font-family: Inter, sans-serif;
+  }
   width: 100%;
-  max-width: 1500px;
+  max-width: 1320px;
   height: auto;
   min-height: 500px;
   margin-top: 30px;
   margin-left: auto;
   margin-right: auto;
-  padding: 0 20px;
+  display: flex;
   th {
     border-top: 1px solid #e7e3eb;
     border-bottom: 1px solid #e7e3eb;
@@ -46,23 +49,21 @@ const ReferralPage = styled.div`
   display: flex;
   flex-wrap: wrap;
   position: relative;
-  justify-content: center;
-  margin-top: 32px;
+  justify-content: flex-start;
   gap: 20px;
-  margin-bottom: 30px;
 `
 
 const CardRegister = styled.div`
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
   flex-wrap: wrap;
   gap: 30px;
-  max-width: 800px;
   width: 100%;
   height: auto;
-  padding: 15px;
-  border-radius: 20px;
-  background: linear-gradient(153.15deg, rgb(124, 7, 216) 8.57%, rgba(129, 69, 255, 0.02) 100%);
+  padding: 40px;
+  border-radius: 16px;
+  background: var(--greyscale-grayscale-3, #141217);
+  box-shadow: 0px 64px 64px -48px rgba(15, 15, 15, 0.1);
 
   ${({ theme }) => theme.mediaQueries.md} {
     padding: 30px 37px;
@@ -102,12 +103,15 @@ const CardInfoUser = styled.div`
 `
 
 const StyledHead = styled(Heading)`
-  text-align: center;
-  font-weight: 700;
-  color: #00f0e1;
-  font-size: 24px;
-  line-height: 29px;
-  margin-bottom: 20px;
+  font-size: 48px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 60px; /* 125% */
+  letter-spacing: -0.96px;
+  background: var(--primary-primary-gradient-2, linear-gradient(180deg, #7b3fe4 0%, #a726c1 100%));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 
   ${({ theme }) => theme.mediaQueries.md} {
     font-size: 48px;
@@ -116,40 +120,51 @@ const StyledHead = styled(Heading)`
 `
 
 const StyledSubtitle = styled(Text)`
-  color: #e6e6e6;
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 144.5%;
-  text-align: center;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 28px;
+  color: rgba(173, 171, 178, 1);
 `
 
 const GroupLinkRef = styled.div`
   flex-direction: column;
-  align-items: center;
   display: flex;
 `
 
-const GroupSearchByCode = styled.div``
+const GroupSearchByCode = styled.div`
+  .search {
+    position: absolute;
+    top: 20%;
+    width: 24px;
+    height: 24px;
+    right: 2%;
+  }
+`
 
 const WrapperLinkRef = styled.div`
   display: flex;
   position: relative;
+  flex-direction: column;
+
   flex-wrap: wrap;
   justify-content: space-around;
-  max-width: 650px;
   width: 100%;
-  gap: 20px;
+  border-radius: 16px;
+  border: 1px solid var(--white-white-8, rgba(255, 255, 255, 0.08));
+  background: var(--black-black-5, rgba(0, 0, 0, 0.05));
+  padding: 32px;
+  gap: 32px;
 `
 
 const StyledLabelLinkRef = styled.label`
+  font-size: 48px;
+  font-style: normal;
   font-weight: 600;
-  font-size: 24px;
-  line-height: 144.5%;
-  color: #e6e6e6;
-  text-align: center;
-  display: block;
-  margin: 20px 0 12px 0;
-
+  line-height: 40px; /* 125% */
+  letter-spacing: -0.96px;
+  color: rgba(255, 255, 255, 1);
+  margin-bottom: 48px;
   ${({ theme }) => theme.mediaQueries.md} {
     font-size: 32px;
   }
@@ -157,19 +172,18 @@ const StyledLabelLinkRef = styled.label`
 
 const StyledLink = styled.div`
   width: 100%;
-  max-width: 450px;
-  background: #00f0e1;
-  border-radius: 10px;
+  border-radius: 12px;
+  background: var(--greyscale-grayscale-4, #2d2c33);
   border: none;
   outline: none;
   color: black;
   font-size: 18px;
-  padding: 10px 10px;
   min-height: 34px;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
   row-gap: 20px;
+  padding: 12px 16px;
 
   ${({ theme }) => theme.mediaQueries.md} {
     min-height: 44px;
@@ -199,24 +213,28 @@ const StyledLinkCode = styled.div`
 
 const StyledButton = styled(Button)`
   background: rgb(217, 217, 217);
-  border-radius: 8px;
-  font-weight: 800;
+  font-weight: 500;
   color: rgb(98, 22, 176);
   margin-top: 30px;
   font-size: 16px;
-  line-height: 17px;
+  line-height: 20px;
+  border-radius: 90px;
+  width: 192px;
+  border: 2px solid var(--greyscale-grey-scale-text-seconday, #adabb2);
 `
 
-const StyledButtonSearch = styled(Button)`
-  background: rgb(217, 217, 217);
-  border-radius: 8px;
-  font-weight: 800;
-  color: rgb(98, 22, 176);
+const StyledButtonSearch = styled.button`
+  font-weight: 500;
+  color: rgba(255, 255, 255, 1);
+  margin-top: 30px;
   font-size: 16px;
-  line-height: 17px;
-  height: 35px;
-  max-width: 80px;
-  text-align: center;
+  line-height: 20px;
+  border-radius: 90px;
+  width: 192px;
+  height: 56px;
+  background: var(--greyscale-grayscale-3, #141217);
+  /* depth/4 */
+  box-shadow: 0px 64px 64px -48px rgba(15, 15, 15, 0.1);
 `
 
 const StyledIconRef = styled.img`
@@ -318,17 +336,18 @@ const StyledLinkAccount = styled.a`
 
 const StyledInput = styled(Input)`
   outline: none;
-  border: 3px solid #009571;
-  border-radius: '10px';
-  margin-top: 10px;
-  max-width: 200px;
+  border-radius: 12px;
+  background: var(--greyscale-grayscale-4, #2d2c33);
+  padding: 12px 16px;
+  height: 44px;
 `
 
 const StyledInputSearch = styled(Input)`
   outline: none;
-  border: 3px solid #009571;
-  border-radius: '10px';
-  max-width: 200px;
+  height: 48px;
+  border-radius: 12px;
+  background: var(--greyscale-grayscale-4, #2d2c33);
+  padding: 12px 16px;
 `
 
 const LinkItem = styled.div`
@@ -338,17 +357,12 @@ const LinkItem = styled.div`
 `
 
 const StyledHeadSearchUser = styled(Heading)`
-  text-align: center;
-  font-weight: 700;
-  color: #00f0e1;
-  font-size: 24px;
-  line-height: 29px;
-  margin-bottom: 20px;
-
-  ${({ theme }) => theme.mediaQueries.md} {
-    font-size: 30px;
-    line-height: 59px;
-  }
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 18px;
+  color: rgba(255, 255, 255, 1);
+  margin-bottom: 12px;
 `
 
 export const copyText = (text) => {
@@ -359,7 +373,71 @@ export const copyText = (text) => {
   document.execCommand('copy')
   document.body.removeChild(el)
 }
-
+const Menu = styled.div`
+  width: 292px;
+`
+const MenuItemActive = styled.div`
+display: flex;
+flex-direction: row;
+align-items: center;
+gap: 8px;
+padding 8px 16px;
+width: 292px;
+img{
+  width: 24px;
+  height: 24px;
+}
+.title {
+  font-size: 18px;
+font-style: normal;
+font-weight: 500;
+line-height: 20px; 
+color: rgba(252, 252, 253, 1);
+}
+`
+const MenuItemDisabled = styled.div`
+display: flex;
+flex-direction: row;
+align-items: center;
+gap: 8px;
+padding 8px 16px;
+img{
+  width: 24px;
+  height: 24px;
+}
+.title {
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px;
+color: rgba(103, 102, 110, 1);
+}
+`
+const StyledText = styled(Text)`
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px;
+  color: rgba(173, 171, 178, 1);
+`
+const GroupLink = styled.div`
+  display: flex;
+  width: 100%;
+  gap: 16px;
+`
+const ButtonLink = styled.button`
+  width: 192px;
+  border-radius: 90px;
+  border: 2px solid var(--greyscale-grey-scale-text-seconday, #adabb2);
+  display: flex;
+  padding: 16px 24px;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  color: rgba(255, 255, 255, 1);
+  background: rgba(20, 18, 23, 1);
+  cursor: pointer;
+`
 const Referral = () => {
   const [linkRef, setLinkRef] = React.useState('')
   const [showCopied, setShowCopied] = React.useState(false)
@@ -410,44 +488,45 @@ const Referral = () => {
     totalComms: 0,
   })
 
-  const getTotalRefferChild = async (page, accountChild) => {
-    if (!account) {
-      setLoadingPage(true)
-    }
-    setLoadingTable(true)
-    const limit = 5
-    const data = await Promise.all([
-      refferCT.getTotalUserByUp(accountChild ? accountChild : account, limit, page),
-      refferCT.userInfos(accountChild ? accountChild : account),
-    ])
-    const countPage = Math.ceil(Number(data[0].totalItem.toString()) / limit)
-    const arr = data[0].list.map((item) => item.user)
-    const list = await Promise.all(
-      arr.map(async (item) => {
-        const dataItem = await Promise.all([
-          getPoolContract.volumeOntree(item),
-          getPoolContract.userTotalLock(item),
-          refferCT.userInfos(item),
-        ])
-        const dataItem2 = await Promise.all([
-          getPoolV2Contract.volumeOntree(item),
-          getPoolV2Contract.userTotalLock(item),
-          refferCT.userInfos(item),
-        ])
-        return {
-          account: item,
-          volume: Number(formatEther(dataItem[0].add(dataItem2[0]))).toFixed(3),
-          locked: Number(formatEther(dataItem[1].add(dataItem2[1]))).toFixed(3),
-          child: Number(dataItem[2].totalRefer7.toString()),
-        }
-      }),
-    )
-    setTotalItemChild(Number(data[0].totalItem.toString()))
-    setCountPage(countPage)
-    setTotal7Level(data[1].totalRefer7.toString())
-    setListChild(list.map((l) => ({ ...l, showChild: false })))
-    setLoadingTable(false)
-  }
+  // const getTotalRefferChild = async (page, accountChild) => {
+  //   if (!account) {
+  //     setLoadingPage(true)
+  //   }
+  //   setLoadingPage(true)
+  //   const limit = 5
+  //   const data = await Promise.all([
+  //     refferCT.getTotalUserByUp(accountChild ? accountChild : account, limit, page),
+  //     refferCT.userInfos(account ? account : accountChild),
+  //   ])
+
+  //   const countPage = Math.ceil(Number(data[0].totalItem.toString()) / limit)
+  //   const arr = data[0].list.map((item) => item.user)
+  //   const list = await Promise.all(
+  //     arr.map(async (item) => {
+  //       const dataItem = await Promise.all([
+  //         getPoolContract.volumeOntree(item),
+  //         getPoolContract.userTotalLock(item),
+  //         refferCT.userInfos(item),
+  //       ])
+  //       const dataItem2 = await Promise.all([
+  //         getPoolV2Contract.volumeOntree(item),
+  //         getPoolV2Contract.userTotalLock(item),
+  //         refferCT.userInfos(item),
+  //       ])
+  //       return {
+  //         account: item,
+  //         volume: Number(formatEther(dataItem[0].add(dataItem2[0]))).toFixed(3),
+  //         locked: Number(formatEther(dataItem[1].add(dataItem2[1]))).toFixed(3),
+  //         child: Number(dataItem[2].totalRefer7.toString()),
+  //       }
+  //     }),
+  //   )
+  //   setTotalItemChild(Number(data[0].totalItem.toString()))
+  //   setCountPage(countPage)
+  //   setTotal7Level(data[1].totalRefer7.toString())
+  //   setListChild(list.map((l) => ({ ...l, showChild: false })))
+  //   setLoadingTable(false)
+  // }
 
   const validateReferByWallet = async (e) => {
     setReferCode(e.target.value)
@@ -464,7 +543,7 @@ const Referral = () => {
   const handleClickPage = (index) => {
     const limit = 5
     const skip = index * limit
-    getTotalRefferChild(skip, acountChild[acountChild.length - 1])
+    // getTotalRefferChild(skip, acountChild[acountChild.length - 1])
     setActivePage(index)
   }
 
@@ -486,7 +565,7 @@ const Referral = () => {
     }
     const limit = 5
     const skip = index * limit
-    getTotalRefferChild(skip, acountChild[acountChild.length - 1])
+    // getTotalRefferChild(skip, acountChild[acountChild.length - 1])
     setActivePage(Number(index))
   }
 
@@ -494,6 +573,7 @@ const Referral = () => {
     if (!account) {
       setLoadingPage(true)
     }
+    setLoadingPage(false)
     const infos = await Promise.all([
       refferCT.userInfos(account),
       getPoolContract.directStaked(account),
@@ -566,7 +646,7 @@ const Referral = () => {
     }
     checkUserRegister()
     getRefer()
-    getUserInfo()
+    // getUserInfo()
 
     if (userIsRegister && account) {
       setLinkRef(getLinkRef())
@@ -580,7 +660,7 @@ const Referral = () => {
     const newArr = [...acountChild]
     newArr.pop()
     setAccountChild(newArr)
-    getTotalRefferChild(0, newArr[newArr.length - 1])
+    // getTotalRefferChild(0, newArr[newArr.length - 1])
   }
 
   React.useEffect(() => {
@@ -591,7 +671,7 @@ const Referral = () => {
     if (!account) {
       return
     }
-    getTotalRefferChild(0, account)
+    // getTotalRefferChild(0, account)
     setMyCode(account.slice(account.length - 6, account.length).toLocaleLowerCase())
     getRefferCode()
     if (!acountChild.length && account) {
@@ -721,79 +801,114 @@ const Referral = () => {
         <TrendyPageLoader />
       ) : (
         <Wrapper>
+          <Menu>
+            <MenuItemActive>
+              <img src="./images/V3/person.png" />
+              <Text className="title">Profile</Text>
+            </MenuItemActive>
+            <MenuItemActive>
+              <img src="./images/V3/Line.png" />
+              <Text className="title">Referrals</Text>
+            </MenuItemActive>
+            <MenuItemActive>
+              <img src="./images/V3/group.png" />
+              <Text className="title">Friend list</Text>
+            </MenuItemActive>
+          </Menu>
           <ReferralPage>
+            <StyledHead>Referral</StyledHead>
+            <StyledSubtitle>
+              Welcome to our member count section! Here, you can track the growth of our community and get a sense of
+              the scale of our website&#39;s audience.{' '}
+            </StyledSubtitle>
             <CardRegister>
               <GroupLinkRef>
-                <StyledHead>Referral</StyledHead>
-                <StyledSubtitle>Refer a friend and get reward together up to {interest}%</StyledSubtitle>
-                <StyledLabelLinkRef>My Referral Link</StyledLabelLinkRef>
+                <StyledText>Refer a friend and get reward together</StyledText>
+                <StyledLabelLinkRef
+                  style={{ fontSize: '14px', lineHeight: '20px', marginBottom: '0', marginTop: '12px' }}
+                >
+                  Up to
+                </StyledLabelLinkRef>
+                <StyledLabelLinkRef>20%</StyledLabelLinkRef>
                 <WrapperLinkRef>
-                  <StyledLink>
-                    <LinkItem>
-                      <StyledIconRef
-                        id="iconRef"
-                        src="/images/referral/copy.svg"
-                        onClick={handleRef}
-                        onMouseLeave={handleLeave}
+                  <Text fontSize="24px" fontWeight="600" lineHeight="32px" style={{ color: 'rgba(255, 255, 255, 1)' }}>
+                    {' '}
+                    Invite friends to earn 20%
+                  </Text>
+                  <GroupLink>
+                    <div style={{ width: '50%' }}>
+                      <StyledText
+                        style={{ color: 'rgba(255, 255, 255, 1)', marginBottom: '12px' }}
+                        color="rgba(255, 255, 255, 1)"
+                      >
+                        Referral link
+                      </StyledText>
+                      <StyledLink>
+                        <LinkItem>
+                          <StyledIconRef
+                            id="iconRef"
+                            src="/images/referral/copy.svg"
+                            onClick={handleRef}
+                            onMouseLeave={handleLeave}
+                          />
+                          <Tooltip
+                            anchorId="iconRef"
+                            content={userIsRegister ? (showCopied ? 'Copied' : 'Copy') : 'Please Register'}
+                          />
+                          <ShowLinkRefPc>{formatLinkRef(linkRef, 50, 4)}</ShowLinkRefPc>
+                          <ShowLinkRefMobile>{formatLinkRef(linkRef, 20, 4)}</ShowLinkRefMobile>
+                        </LinkItem>
+                      </StyledLink>
+                    </div>
+                    <div style={{ width: '50%' }}>
+                      <StyledText
+                        style={{ color: 'rgba(255, 255, 255, 1)', marginBottom: '12px' }}
+                        color="rgba(255, 255, 255, 1)"
+                      >
+                        Referral link
+                      </StyledText>
+                      {!userIsRegister && (
+                        <StyledInput
+                          value={referCode}
+                          autoFocus={true}
+                          onChange={validateReferByWallet}
+                          placeholder={`refer code`}
+                        />
+                      )}
+                      {showError && referCode && <span style={{ color: 'red' }}>Invalid code</span>}
+                    </div>
+                  </GroupLink>
+                  <StyledButton onClick={onRegister} disabled={userIsRegister || showError}>
+                    Register
+                  </StyledButton>
+                  <div style={{ display: 'flex', gap: '32px', alignItems: 'center', justifyContent: 'center' }}>
+                    <div style={{ width: '120px', height: '1px', background: 'rgba(255, 255, 255, 0.10)' }}></div>
+                    <Text fontSize="18px" fontWeight="500" lineHeight="20px">
+                      Or
+                    </Text>
+                    <div style={{ width: '120px', height: '1px', background: 'rgba(255, 255, 255, 0.10)' }}></div>
+                  </div>
+                  <GroupSearchByCode>
+                    <StyledHeadSearchUser>Search By Code</StyledHeadSearchUser>
+                    <div style={{ position: 'relative' }}>
+                      <StyledInputSearch
+                        value={userSearch}
+                        autoFocus={true}
+                        onChange={(e) => setUserSearch(e.target.value)}
+                        placeholder={`Enter code`}
                       />
-                      <Tooltip
-                        anchorId="iconRef"
-                        content={userIsRegister ? (showCopied ? 'Copied' : 'Copy') : 'Please Register'}
-                      />
-                      <ShowLinkRefPc>{formatLinkRef(linkRef, 50, 4)}</ShowLinkRefPc>
-                      <ShowLinkRefMobile>{formatLinkRef(linkRef, 20, 4)}</ShowLinkRefMobile>
-                    </LinkItem>
-                  </StyledLink>
-                  <StyledLinkCode>
-                    <LinkItem>
-                      <StyledIconRef
-                        id="iconCode"
-                        src="/images/referral/copy.svg"
-                        onClick={() =>
-                          handleCode(account.slice(account.length - 6, account.length).toLocaleLowerCase())
-                        }
-                        onMouseLeave={handleLeave}
-                      />
-                      <Tooltip
-                        anchorId="iconCode"
-                        content={userIsRegister ? (showCopied ? 'Copied' : 'Copy') : 'Please Register'}
-                      />
-                      <span>
-                        {userIsRegister &&
-                          account &&
-                          account.slice(account.length - 6, account.length).toLocaleLowerCase()}
-                      </span>
-                    </LinkItem>
-                  </StyledLinkCode>
-                </WrapperLinkRef>
-                {!userIsRegister && (
-                  <StyledInput
-                    value={referCode}
-                    autoFocus={true}
-                    onChange={validateReferByWallet}
-                    placeholder={`refer code`}
-                  />
-                )}
-                {showError && referCode && <span style={{ color: 'red' }}>Invalid code</span>}
-                <StyledButton onClick={onRegister} disabled={userIsRegister || showError}>
-                  Register
-                </StyledButton>
-              </GroupLinkRef>
-              <GroupSearchByCode>
-                <StyledHeadSearchUser>Search By Code</StyledHeadSearchUser>
-                <StyledInputSearch
-                  value={userSearch}
-                  autoFocus={true}
-                  onChange={(e) => setUserSearch(e.target.value)}
-                  placeholder={`Enter code`}
-                />
-                <div style={{ textAlign: 'center', marginTop: 16 }}>
+                      {/* <img onClick={handleSearchUserCode} className='search' src='./images/V3/search.png' /> */}
+                    </div>
+                    {/* <div>
                   <StyledButtonSearch onClick={handleSearchUserCode}>Search</StyledButtonSearch>
-                </div>
-                {showResultSearch()}
-              </GroupSearchByCode>
+                </div> */}
+                    {showResultSearch()}
+                  </GroupSearchByCode>
+                </WrapperLinkRef>
+              </GroupLinkRef>
+              <ButtonLink>Check my refer list</ButtonLink>
             </CardRegister>
-            <CardInfoUser>
+            {/* <CardInfoUser>
               <StyledHead>Info User</StyledHead>
               <BlockInfo>
                 <InfoItem>
@@ -847,9 +962,9 @@ const Referral = () => {
                   </Value>
                 </InfoItem>
               </BlockInfo>
-            </CardInfoUser>
+            </CardInfoUser> */}
           </ReferralPage>
-          <CardReferral>
+          {/* <CardReferral>
             <StyledHead>Friends list</StyledHead>
             {loadingTable ? (
               <ThreeDots style={{ textAlign: 'center' }} className="loading">
@@ -943,7 +1058,7 @@ const Referral = () => {
               ) : null}
               {getButtonChangePage(2)}
             </GroupChangePage>
-          </CardReferral>
+          </CardReferral> */}
         </Wrapper>
       )}
     </>
