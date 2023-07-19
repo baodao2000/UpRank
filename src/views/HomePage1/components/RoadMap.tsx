@@ -4,6 +4,9 @@ import images from 'configs/images'
 
 const Wrapper = styled.div`
   margin-top: 100px;
+  * {
+    font-family: Inter, sans-serif;
+  }
   @media only screen and (max-width: 600px) {
     margin-top: 0;
   }
@@ -13,17 +16,14 @@ const Wrapper = styled.div`
 `
 
 const StyledHeading = styled(Text)`
+  font-size: 48px;
+  font-style: normal;
   font-weight: 700;
-  line-height: 60px;
+  line-height: 60px; /* 125% */
+  letter-spacing: -0.96px;
   text-align: center;
-  letter-spacing: 0.12em;
   margin-bottom: 50px;
-  text-transform: capitalize;
-  background: linear-gradient(91.97deg, #00f0e1 12.26%, #2951b7 122.85%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-fill-color: transparent;
+  color: rgba(226, 225, 229, 1);
   text-shadow: 0px 4px 20px rgba(43, 143, 241, 0.2);
 
   @media only screen and (max-width: 600px) {
@@ -35,6 +35,7 @@ const Container = styled.div`
   img {
     width: 100%;
   }
+  margin-top: 80px;
   @media screen and (max-width: 780px) {
     display: none;
   }
@@ -58,9 +59,18 @@ const Mobile = styled.div`
 const RoadMap = () => {
   return (
     <Wrapper>
-      <StyledHeading fontSize={['20px', '36px', '64px']}>ROADMAP</StyledHeading>
+      <StyledHeading fontSize={['20px', '36px', '64px']}>Roadmap</StyledHeading>
+      <Text
+        fontSize="18px"
+        fontWeight="400"
+        style={{ color: 'rgba(173, 171, 178, 1)' }}
+        lineHeight="28px"
+        textAlign="center"
+      >
+        Stacks is a production-ready library of stackable content blocks built in React Native.
+      </Text>
       <Container>
-        <img src={images.roadmap} />
+        <img src={images.roadmapV3} />
       </Container>
       <Mobile>
         <img src={images.roadmobile} />

@@ -1,4 +1,4 @@
-import { Flex, useModal } from '@pancakeswap/uikit'
+import { Button, Flex, useModal } from '@pancakeswap/uikit'
 import styled from 'styled-components'
 import images from 'configs/images'
 import 'aos/dist/aos.css'
@@ -11,8 +11,10 @@ const Head = styled(Flex)`
   position: relative;
   z-index: 1;
   width: 100%;
-  flex-direction: column;
-
+  display: flex;
+  * {
+    font-family: Inter, sans-serif;
+  }
   ${({ theme }) => theme.mediaQueries.md} {
     padding: 100px 0;
     flex-direction: row;
@@ -28,59 +30,44 @@ const Head = styled(Flex)`
 
 const ContentHead = styled.div`
   width: 100%;
+  max-width: 696px;
   z-index: 1;
+  padding-top: 50px;
 
   ${({ theme }) => theme.mediaQueries.md} {
-    max-width: 55%;
+    max-width: 696px;
   }
 
-  h2 {
-    font-weight: 700;
-    font-size: 20px;
-    line-height: 25px;
-    text-align: center;
-    letter-spacing: 0.001em;
-    text-transform: uppercase;
-    color: #816bf2;
-    text-align: center;
+p {
+  width: 696px;
+  
     margin-bottom: 20px;
-    word-wrap: break-word;
-
-    ${({ theme }) => theme.mediaQueries.md} {
-      font-size: 30px;
-      line-height: 36px;
-      text-align: start;
-      margin-bottom: 0;
+      .p1 {
+        font-size: 60px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 72px;
+        letter-spacing: -1.2px;
+        letter-spacing: 0.001em;
+        color: rgba(133, 68, 245, 1);
+      }
+      .p2 {
+        font-size: 60px;
+    font-weight: 700;
+    line-height: 72px;
+    letter-spacing: -1.2px;
+    letter-spacing: 0.001em;
+    background: var(--primary-primary-gradient-2, linear-gradient(180deg, #7B3FE4 0%, #A726C1 100%));
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+      }
     }
-    ${({ theme }) => theme.mediaQueries.xl} {
-      font-size: 50px;
-      line-height: 58px;
-      text-align: start;
-    }
-  }
+}
 
-  p {
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 23px;
-    color: #d9d1ff;
-    display: none;
-
-    ${({ theme }) => theme.mediaQueries.md} {
-      font-size: 20px;
-      line-height: 26px;
-      display: block;
-    }
-  }
 `
 const ContentHeadRight = styled.div`
   width: 100%;
   z-index: 1;
-
-  ${({ theme }) => theme.mediaQueries.md} {
-    max-width: 55%;
-  }
-
   h5 {
     font-weight: 700;
     font-size: 20px;
@@ -116,10 +103,8 @@ const ContentHeadRight = styled.div`
 `
 
 const ImageHead = styled.img`
-  width: 45% !important;
-  display: none;
-  max-width: 515px;
-  margin: 0 auto;
+  width: 883px !important;
+  height: 669px !important;
   ${({ theme }) => theme.mediaQueries.md} {
     display: block;
   }
@@ -136,19 +121,18 @@ const ImageShowMb = styled.img`
   }
 `
 const H5ShowMb = styled.h5`
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 25px;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 28px;
   text-align: center;
   letter-spacing: 0.001em;
-  text-transform: uppercase;
-  color: #816bf2;
-  text-align: center;
-  margin: 20px;
+  text-align: left;
+  margin: 20px 0;
   word-wrap: break-word;
-
-  ${({ theme }) => theme.mediaQueries.md} {
-    display: none;
+  margin-bottom: 70px;
+  span {
+    color: rgba(173, 171, 178, 1);
   }
 `
 
@@ -205,21 +189,59 @@ const ListImgButtonMb = styled.div`
     display: none;
   }
 `
+const Staking = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  p {
+    color: rgba(131, 131, 145, 1);
+    font-size: 14px;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 20px;
+    margin-bottom: 0px;
+    span {
+      color: #8544f5;
+    }
+  }
+`
+const ButtonStaking = styled(Button)`
+  border-radius: var(--border-radius-lg, 8px);
+  background: var(--primary-primary-1, #8544f5);
+  box-shadow: 2px 2px 8px 16px rgba(0, 0, 0, 0.1);
+  color: white;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px;
+  width: 130px;
+  padding: 16px;
+`
+
 const HeadHome = (isModalOpen) => {
   return (
     <Head>
       {/* <VoteModal /> */}
-      <ContentHead data-aos="fade-up-right">
-        <h2>
-          Trendy Defi<br></br> is an open network for <br></br>storing and moving money
-        </h2>
-        <p>Own your own data. Earn passive income with crypto.</p>
+      <ContentHead>
+        <p>
+          <span className="p1">TrendyDefi is an open network for</span>
+          <span className="p2"> storing </span>
+          <span className="p1">and </span> <span className="p2">moving money</span>
+        </p>
+
         <H5ShowMb>
-          Stake Matic, you can earn an APR of <span style={{ color: 'green' }}>85.1%</span> up to{' '}
-          <span style={{ color: 'green' }}>127.75%</span>. Start staking now to maximize your earnings!
+          <span>Own your own data. Earn passive income with crypto.</span>
         </H5ShowMb>
-        <ImageShowMb data-aos="fade-up-left" src={images.coinHead} alt="" />
-        <LinkToDownload>
+        <Staking>
+          <ButtonStaking>Staking Now</ButtonStaking>
+          <div>
+            <p>*Start staking now to maximize your earnings!</p>
+            <p>
+              Stake Matic, you can earn an APR of<span> 85.1%</span> up to<span> 127.75%</span>{' '}
+            </p>
+          </div>
+        </Staking>
+        {/* <LinkToDownload>
           <ListImgButton>
             <a href="">
               <img src={images.downloadIOS} alt="" />
@@ -242,14 +264,10 @@ const HeadHome = (isModalOpen) => {
               <img src={images.android} alt="" />
             </a>
           </ListImgButtonMb>
-        </LinkToDownload>
+        </LinkToDownload> */}
       </ContentHead>
-      <ContentHeadRight data-aos="fade-up-right">
-        <ImageHead data-aos="fade-up-left" src={images.coinHead} alt="" />
-        <h5>
-          Stake Matic, you can earn an APR of <span style={{ color: 'green' }}>85.1%</span> up to{' '}
-          <span style={{ color: 'green' }}>127.75%</span>. Start staking now to maximize your earnings!
-        </h5>
+      <ContentHeadRight>
+        <ImageHead src={images.Illustrations} alt="" />
       </ContentHeadRight>
     </Head>
   )

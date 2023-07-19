@@ -14,20 +14,22 @@ import Transparency from './components/Transparency'
 import Tranditional from './components/Tranditional'
 import RoadMap from './components/RoadMap'
 import CountDown from './components/CountDown'
+import Download from './components/Download'
 
 const Wrapper = styled.div`
   font-style: normal;
   background-color: #13171b;
   margin-bottom: 48px;
+  background-color: var(--black-black-60, rgba(0, 0, 0, 0.6));
+  max-width: 1980px;
 `
 
 const Container = styled.div`
   width: 100%;
-  max-width: 1389px;
+  max-width: 1320px;
   margin: 0 auto;
   padding: 0 20px;
   position: relative;
-
   .buttonSpace {
   }
   .block {
@@ -86,18 +88,19 @@ const HomePage: React.FC<React.PropsWithChildren> = () => {
       `}</style>
       <Wrapper>
         <Container>
-          <StyledBackground src={images.bgTrendy} />
+          {/* <StyledBackground src={images.bgTrendy} /> */}
           <HeadHome />
           <Crypto handleClick={handleClick} />
           <div ref={ref}>
             <Exchange data-aos="fade-up" />
           </div>
           <StepBlock />
-          <Insurance />
+          {/* <Insurance /> */}
           <Covered />
           <Transparency />
           <Tranditional />
           <RoadMap />
+          <Download />
         </Container>
       </Wrapper>
     </>

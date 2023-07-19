@@ -123,7 +123,7 @@ const ClaimPoolModal = ({
                 preserveValue
                 delay={0}
                 end={Number(mine.currentReward)}
-                decimals={mine.currentReward === 0 ? 0 : 6}
+                decimals={mine.currentReward === 0 ? 0 : 8}
                 duration={0.5}
               />
               &ensp; ${/* <img src={`/images/chains/${chainId}.png`} alt="mine name" width={18} /> */}

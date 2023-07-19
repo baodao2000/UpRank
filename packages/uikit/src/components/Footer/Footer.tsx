@@ -23,10 +23,13 @@ import { FooterProps } from "./types";
 import NextLink from "next/link";
 import images from "../../../../../src/configs/images";
 
-const FooterItem = styled(StyledListItem)`
+const FooterItem = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
+`;
+const TextLink = styled(Text)`
+  margin: 8px 0;
 `;
 
 const ListImgButton = styled.div`
@@ -87,8 +90,9 @@ const BlockListItem = styled.div`
   gap: 20px;
   row-gap: 20px;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1320px;
   margin: 0 auto;
+  align-items: flex-start;
 `;
 
 const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
@@ -104,37 +108,11 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
 }) => {
   return (
     <StyledFooter data-theme="dark" p={["40px 16px", null, "56px 40px 32px 40px"]} {...props}>
-      <BlockDownload>
-        <StyledTitle>
-          So what are you waiting for? <span>Download here</span>
-        </StyledTitle>
-        <ListImgButton>
-          <a href="">
-            <img src={images.downloadIOS} alt="" />
-          </a>
-          <a href="">
-            <img src={images.downloadPlay} alt="" />
-          </a>
-          <a href="">
-            <img src={images.downloadAPK} alt="" />
-          </a>
-        </ListImgButton>
-        {/* <ListImgButtonMb>
-        <a href="">
-          <img src={images.apple} alt="" />
-        </a>
-        <a href="">
-          <img src={images.chPlay} alt="" />
-        </a>
-        <a href="">
-          <img src={images.android} alt="" />
-        </a>
-      </ListImgButtonMb> */}
-      </BlockDownload>
       <BlockListItem>
+        <img src="./images/V3/Logo.png" />
         {items?.map((item) => (
           <StyledList key={item.label}>
-            {/* <StyledListItem>{item.label}</StyledListItem> */}
+            <StyledListItem>{item.label}</StyledListItem>
             {item.items?.map(({ label, href, image, isHighlighted = false, border }) => (
               <FooterItem key={href}>
                 {image &&
@@ -155,10 +133,10 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
                     color={isHighlighted ? vars.colors.warning : "text"}
                     bold={false}
                   >
-                    {label}
+                    <TextLink>{label}</TextLink>
                   </Link>
                 ) : (
-                  <StyledText>{label}</StyledText>
+                  <TextLink>{label}</TextLink>
                 )}
               </FooterItem>
             ))}

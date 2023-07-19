@@ -12,6 +12,9 @@ const Wrapper = styled.div`
   background: black;
   gap: 10px;
   padding: 0 20px !important;
+  * {
+    font-family: 'Helvetica Compressed';
+  }
 `
 const OverviewText = styled.div`
   margin-top: 30px;
@@ -32,7 +35,7 @@ const OverviewText = styled.div`
 `
 const PoolText = styled.div`
   margin-top: 300px;
-  font-family: Raleway, sans-serif;
+  // font-family: Raleway, sans-serif;
   font-size: 48px;
   font-weight: 700;
   text-align: center;
@@ -51,7 +54,7 @@ const PoolText = styled.div`
 `
 const RankText = styled.div`
   margin-top: 50px;
-  font-family: Raleway, sans-serif;
+  // font-family: Raleway, sans-serif;
   font-size: 48px;
   font-weight: 700;
   text-align: center;
@@ -109,7 +112,7 @@ const Container = styled.div`
 const ImageOverview = styled.div``
 const GetTrendText = styled.div`
   margin-top: 100px;
-  font-family: Raleway, sans-serif;
+  // font-family: Raleway, sans-serif;
   font-size: 40px;
   font-weight: 600;
   text-align: center;
@@ -227,7 +230,7 @@ const BoxOneContain = styled.div`
   }
 `
 const BoxOneContainText = styled.div`
-  font-family: Impact;
+  // font-family: Impact;
   font-weight: 400;
   font-size: 36px;
   line-height: 36px;
@@ -247,7 +250,7 @@ const BoxOneContainText = styled.div`
 `
 const BoxOneText = styled.div`
   width: 260px;
-  font-family: Poppins;
+  font-family: 'Helvetica Compressed';
   font-weight: 600;
   font-size: 16px;
   line-height: 17.6px;
@@ -380,7 +383,7 @@ const BoxTwoContain = styled.div`
   box-shadow: 0px 4px 4px 0px rgba(255, 255, 255, 0.25) inset;
 `
 const BoxTwoContainText = styled.div`
-  font-family: Impact;
+  // font-family: Impact;
   font-weight: 400;
   font-size: 36px;
   line-height: 36px;
@@ -399,7 +402,7 @@ const BoxTwoContainText = styled.div`
 `
 const BoxTwoText = styled.div`
   width: 220px;
-  font-family: Poppins, sans-serif;
+  font-family: 'Helvetica Compressed';
   font-weight: 600;
   font-size: 16px;
   line-height: 17.6px;
@@ -488,7 +491,7 @@ const BoxThreeContain = styled.div`
   }
 `
 const BoxThreeContainText = styled.div`
-  font-family: Impact;
+  // font-family: Impact;
   font-weight: 400;
   font-size: 36px;
   line-height: 36px;
@@ -508,7 +511,7 @@ const BoxThreeContainText = styled.div`
 `
 const BoxThreeText = styled.div`
   width: 220px;
-  font-family: Poppins, sans-serif;
+  font-family: 'Helvetica Compressed';
   font-weight: 500;
   font-size: 16px;
   line-height: 17.6px;
@@ -516,7 +519,7 @@ const BoxThreeText = styled.div`
 `
 const RankContent = styled.div`
   width: 802px;
-  font-family: Raleway, sans-serif;
+  // font-family: Raleway, sans-serif;
   font-weight: 500;
   font-size: 20px;
   line-height: 22px;
@@ -524,13 +527,13 @@ const RankContent = styled.div`
   text-align: center;
   color: rgba(200, 200, 200, 1);
   @media screen and (max-width: 575px) {
-    width: 370px;
+    width: 350px;
     font-size: 15px;
   }
 `
 const PoolContent = styled.div`
   width: 680px;
-  font-family: Raleway, sans-serif;
+  // font-family: Raleway, sans-serif;
   font-weight: 500;
   font-size: 20px;
   line-height: 22px;
@@ -564,7 +567,7 @@ const ButtonStake = styled.div`
   top: 170%;
   left: 53%;
   transform: translate(-50%, -50%);
-  font-family: Poppins, sans-serif;
+  font-family: 'Helvetica Compressed';
   font-weight: 700;
   font-size: 20px;
   cursor: pointer;
@@ -580,7 +583,7 @@ const ButtonStakeRes = styled.div`
   top: 200px;
   left: 53%;
   transform: translate(-50%, -50%);
-  font-family: Poppins, sans-serif;
+  font-family: 'Helvetica Compressed';
   font-weight: 700;
   font-size: 20px;
   cursor: pointer;
@@ -597,7 +600,7 @@ const ButtonContain = styled.div`
 `
 
 const GlobalTextContent = styled.div`
-  font-family: Dosis;
+  // font-family: Dosis;
   top: 140%;
 
   font-weight: 400;
@@ -634,13 +637,13 @@ const Table = styled.div`
   }
 `
 const TitleText = styled.div`
-  font-family: Poppins, sans-serif;
+  font-family: 'Helvetica Compressed';
   font-weight: 700;
   font-size: 16px;
   color: rgba(255, 255, 255, 1);
 `
 const ContentText = styled.div`
-  font-family: Poppins, sans-serif;
+  font-family: 'Helvetica Compressed';
   font-weight: 700;
   font-size: 22px;
   color: rgba(255, 255, 255, 1);
@@ -699,7 +702,7 @@ const Item = styled.div`
 `
 const Title = styled(Text)`
   color: #f3f2f9;
-  font-family: Poppins, sans-serif;
+  font-family: 'Helvetica Compressed';
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
@@ -709,7 +712,7 @@ const Title = styled(Text)`
 `
 const Label = styled(Text)`
   color: #f3f2f9;
-  font-family: Poppins, sans-serif;
+  font-family: 'Helvetica Compressed';
   font-size: 24px;
   font-style: normal;
   font-weight: 700;
@@ -1083,7 +1086,7 @@ function Tokenomic() {
               style={{
                 position: 'absolute',
                 left: isMobile ? '30px' : '20px',
-                top: isMobile ? '35px' : '50px',
+                top: isMobile ? '40px' : '50px',
                 padding: ' 0 30px',
                 maxWidth: isMobile ? '300px' : '350px',
                 width: '100%',
@@ -1105,7 +1108,7 @@ function Tokenomic() {
               style={{
                 position: 'absolute',
                 left: isMobile ? '40px' : isTablet ? '50px' : '60px',
-                top: isMobile ? '40px' : isTablet ? '40px' : '40px',
+                top: isMobile ? '45px' : isTablet ? '50px' : '50px',
                 padding: ' 0 10px',
                 maxWidth: isTablet ? '300px' : '300px',
                 width: '100%',
@@ -1139,17 +1142,17 @@ function Tokenomic() {
                 flexDirection: 'column',
                 position: 'absolute',
                 left: '40px',
-                top: '20px',
+                top: '25px',
                 padding: ' 0 30px',
-                maxWidth: isMobile ? '300px' : isTablet ? '700px' : '800px',
+                maxWidth: isMobile ? '300px' : isTablet ? '700px' : '750px',
                 width: '100%',
               }}
             >
-              <GlobalTextContent style={{ fontSize: '18px' }}>
+              <GlobalTextContent style={{ fontSize: '16px' }}>
                 For example, when the price of TREND increases by 100% and doubles, the claiming rate would decrease by
                 two times, resulting in a claiming rate of 1/1460 per day.
               </GlobalTextContent>
-              <GlobalTextContent style={{ fontSize: '18px' }}>
+              <GlobalTextContent style={{ fontSize: '16px' }}>
                 For example, if A has been gifted 730 TREND, they can claim 1 TREND per day. However, if the price of
                 TREND is $2, then A can only claim 0.5 TREND per day.
               </GlobalTextContent>
@@ -1171,18 +1174,20 @@ function Tokenomic() {
                   display: 'flex',
                   flexDirection: 'column',
                   position: 'absolute',
-                  left: isMobile ? '30px' : '80px',
-                  top: '25px',
+                  left: isMobile ? '40px' : '60px',
+                  top: isMobile ? '20px' : '20px',
                   padding: ' 0 25px',
-                  maxWidth: isMobile ? '320px' : '350px',
+                  maxWidth: isMobile ? '320px' : isTablet ? '320px' : '350px',
                   width: '100%',
                 }}
               >
-                <GlobalTextContent style={{ fontWeight: 700, fontSize: '27px' }}>Pool Standard</GlobalTextContent>
+                <GlobalTextContent style={{ fontWeight: 700, fontSize: isMobile ? '25px' : '27px' }}>
+                  Pool Standard
+                </GlobalTextContent>
                 <GlobalTextContent style={{ fontSize: '15px' }}>
                   Claim speed is increased by an additional{' '}
-                  <span style={{ fontWeight: 700, fontSize: '25px' }}>0.25% </span>mean
-                  <span style={{ fontWeight: 700, fontSize: '25px' }}> 1/730 * 1.25</span>
+                  <span style={{ fontWeight: 700, fontSize: isMobile ? '20px' : '25px' }}>0.25% </span>mean
+                  <span style={{ fontWeight: 700, fontSize: isMobile ? '20px' : '25px' }}> 1/730 * 1.25</span>
                 </GlobalTextContent>
               </div>
             </div>
@@ -1193,10 +1198,10 @@ function Tokenomic() {
                   display: 'flex',
                   flexDirection: 'column',
                   position: 'absolute',
-                  left: isMobile ? '1px' : isTablet ? '370px' : '400px',
-                  top: isMobile ? '140px' : '20px',
+                  left: isMobile ? '1px' : isTablet ? '370px' : '410px',
+                  top: isMobile ? '130px' : '20px',
                   padding: ' 0 30px',
-                  maxWidth: isMobile ? '350px' : isTablet ? '350px' : '400px',
+                  maxWidth: isMobile ? '320px' : isTablet ? '350px' : '400px',
                   width: '100%',
                 }}
               >
@@ -1225,12 +1230,12 @@ function Tokenomic() {
             <GlobalTextContent
               style={{
                 position: 'absolute',
-                left: isMobile ? '20px' : isTablet ? '30px' : '55px',
-                top: isMobile ? '20px' : '25px',
+                left: isMobile ? '20px' : isTablet ? '30px' : '40px',
+                top: isMobile ? '30px' : '25px',
                 padding: ' 0 30px',
-                maxWidth: '750px',
+                maxWidth: '800px',
                 width: '100%',
-                fontSize: '20px',
+                fontSize: isTablet ? '18px' : '20px',
               }}
             >
               The claim speed is determined by the highest pool that the user participates in .
@@ -1252,7 +1257,7 @@ function Tokenomic() {
             <GlobalTextContent
               style={{
                 position: 'absolute',
-                left: isMobile ? '10px' : isTablet ? '30px' : '55px',
+                left: isMobile ? '10px' : isTablet ? '5px' : '55px',
                 top: '20px',
                 padding: ' 0 30px',
                 maxWidth: isMobile ? '700px' : '750px',
@@ -1269,7 +1274,10 @@ function Tokenomic() {
         <Table
           style={{
             width: isMobile ? '300px' : isTablet ? '700px' : '1280px',
-            overflow: 'auto',
+            overflowX: 'auto',
+            overflowY: 'auto',
+            display: isTablet || isMobile ? 'block' : 'flex',
+            justifyContent: 'center',
           }}
         >
           {' '}
@@ -1278,8 +1286,8 @@ function Tokenomic() {
             <tr style={{ gap: '10px', display: 'flex' }}>
               <th
                 style={{
-                  width: '140px',
-                  height: '76px',
+                  width: isMobile ? '100px' : '140px',
+                  height: isMobile ? '40px' : '76px',
                   borderRadius: '8px',
                   border: '1px solid white',
                   display: 'flex',
@@ -1293,8 +1301,8 @@ function Tokenomic() {
               </th>
               <th
                 style={{
-                  width: '140px',
-                  height: '76px',
+                  width: isMobile ? '100px' : '140px',
+                  height: isMobile ? '40px' : '76px',
                   borderRadius: '8px',
                   border: '1px solid white',
                   display: 'flex',
@@ -1308,8 +1316,8 @@ function Tokenomic() {
               </th>
               <th
                 style={{
-                  width: '231px',
-                  height: '76px',
+                  width: '200px',
+                  height: isMobile ? '40px' : '76px',
                   borderRadius: '8px',
                   border: '1px solid white',
                   display: 'flex',
@@ -1323,8 +1331,8 @@ function Tokenomic() {
               </th>
               <th
                 style={{
-                  width: '231px',
-                  height: '76px',
+                  width: '200px',
+                  height: isMobile ? '40px' : '76px',
                   borderRadius: '8px',
                   border: '1px solid white',
                   display: 'flex',
@@ -1338,8 +1346,8 @@ function Tokenomic() {
               </th>
               <th
                 style={{
-                  width: '231px',
-                  height: '76px',
+                  width: '200px',
+                  height: isMobile ? '40px' : '76px',
                   borderRadius: '8px',
                   display: 'flex',
                   justifyContent: 'center',
@@ -1353,8 +1361,8 @@ function Tokenomic() {
               </th>
               <th
                 style={{
-                  width: '231px',
-                  height: '76px',
+                  width: '200px',
+                  height: isMobile ? '40px' : '76px',
                   borderRadius: '8px',
                   display: 'flex',
                   justifyContent: 'center',
@@ -1372,8 +1380,8 @@ function Tokenomic() {
                 <td
                   style={{
                     marginTop: '10px',
-                    width: '140px',
-                    height: '76px',
+                    width: isMobile ? '100px' : '140px',
+                    height: isMobile ? '40px' : '76px',
                     borderRadius: '8px',
                     display: 'flex',
                     justifyContent: 'flex-end',
@@ -1389,8 +1397,8 @@ function Tokenomic() {
                   style={{
                     marginTop: '10px',
 
-                    width: '140px',
-                    height: '76px',
+                    width: isMobile ? '100px' : '140px',
+                    height: isMobile ? '40px' : '76px',
                     borderRadius: '8px',
                     display: 'flex',
                     justifyContent: 'flex-end',
@@ -1407,8 +1415,8 @@ function Tokenomic() {
                   style={{
                     marginTop: '10px',
 
-                    width: '231px',
-                    height: '76px',
+                    width: '200px',
+                    height: isMobile ? '40px' : '76px',
                     borderRadius: '8px',
                     display: 'flex',
                     justifyContent: 'flex-end',
@@ -1424,8 +1432,8 @@ function Tokenomic() {
                   style={{
                     marginTop: '10px',
 
-                    width: '231px',
-                    height: '76px',
+                    width: '200px',
+                    height: isMobile ? '40px' : '76px',
                     borderRadius: '8px',
                     display: 'flex',
                     justifyContent: 'flex-end',
@@ -1443,8 +1451,8 @@ function Tokenomic() {
 
                     background:
                       'radial-gradient(101.36% 117.36% at 0% -2.74%, rgba(135, 125, 196, 0.6) 0%, rgba(136, 168, 206, 0.411) 77.08%, rgba(136, 224, 214, 0.264) 100%) ',
-                    width: '231px',
-                    height: '76px',
+                    width: '200px',
+                    height: isMobile ? '40px' : '76px',
                     borderRadius: '8px',
                     display: 'flex',
                     justifyContent: 'flex-end',
@@ -1458,8 +1466,8 @@ function Tokenomic() {
                   style={{
                     marginTop: '10px',
 
-                    width: '231px',
-                    height: '76px',
+                    width: '200px',
+                    height: isMobile ? '40px' : '76px',
                     borderRadius: '8px',
                     display: 'flex',
                     justifyContent: 'flex-end',

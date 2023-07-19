@@ -12,10 +12,11 @@ import AOS from 'aos'
 import 'aos/dist/aos.css'
 
 const Title = styled(Heading)`
-  text-align: center;
+  font-size: 48px;
+  font-style: normal;
   font-weight: 700;
-  font-size: 24px;
-  line-height: 25px;
+  line-height: 60px;
+  letter-spacing: -0.96px;
   margin-bottom: 20px;
 
   ${({ theme }) => theme.mediaQueries.md} {
@@ -33,18 +34,13 @@ const StyledText = styled.p`
 `
 
 const TitleM = styled(Text)`
+  font-size: 18px;
+  font-style: normal;
   font-weight: 400;
-  font-size: 16px;
-  line-height: 23px;
-  color: #ced8e1;
+  line-height: 28px;
+  color: rgba(173, 171, 178, 1);
   margin-top: 6px;
-  text-align: center;
   margin-bottom: 30px;
-
-  ${({ theme }) => theme.mediaQueries.xl} {
-    font-size: 20px;
-    line-height: 23px;
-  }
 `
 
 const TitleMb = styled(Text)`
@@ -57,17 +53,15 @@ const TitleMb = styled(Text)`
 `
 
 const Wrapper = styled.div`
+  * {
+    font-family: Inter, sans-serif;
+  }
   position: relative;
   z-index: 1;
   margin-top: 14%;
-  max-width: 1000px;
   width: 100%;
-
-  ${({ theme }) => theme.mediaQueries.xl} {
-    width: 85%;
-    margin-left: auto;
-    margin-right: auto;
-  }
+  display: flex;
+  flex-direction: row;
 
   .ant-input-number-input {
     font-family: 'Helvetica Compressed';
@@ -83,27 +77,14 @@ const Wrapper = styled.div`
   }
 `
 const Table = styled.div`
-  padding: 40px 20px 0 20px;
   display: flex;
   border-radius: 20px;
   flex-direction: column;
   background: #0a0d10;
   border: 2px solid #0a0d10;
   box-shadow: inset -2px 4px 8px #000000, inset -4px 4px 32px #171717;
-
-  ${({ theme }) => theme.mediaQueries.md} {
-    padding: 40px 40px 0 40px;
-    flex-direction: row;
-  }
-  ${({ theme }) => theme.mediaQueries.xxl} {
-    padding: 70px 84px 0 84px;
-  }
-
-  .showMb {
-    ${({ theme }) => theme.mediaQueries.md} {
-      display: none;
-    }
-  }
+  max-width: 553px;
+  margin-top: 80px;
 `
 const ExchangePart = styled.div`
   flex-basis: calc(100% / 3);
@@ -123,25 +104,29 @@ const ExchangePart = styled.div`
 `
 const CryptoSelect = styled.div`
   margin-bottom: 16px;
-  .ant-select {
-    .ant-select-selector {
-      height: 52px;
-      border-radius: 25px;
-      background: #f9f7ff;
-    }
-  }
-
-  ${({ theme }) => theme.mediaQueries.md} {
-    margin-bottom: 26px;
-  }
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #141217;
+  box-shadow: 0px 0px 11px 0px rgba(0, 0, 0, 0.49);
 `
 const SelectCustom = styled(Select)`
   width: 100%;
   position: relative;
 
+  border-radius: 15px !important;
+  background: rgba(20, 18, 23, 1) !important;
+  box-shadow: 0px 0px 11px 0px rgba(0, 0, 0, 0.49) inset !important;
+  border: 1px solid var(--white-white-12, rgba(255, 255, 255, 0.12)) !important;
+  padding: 16px 24px !important;
+  .ant-select-selector {
+    height: 49px !important;
+    background: rgba(20, 18, 23, 1) !important;
+
+    border: none !important;
+  }
   .nameCry {
-    width: 40px;
-    height: 40px;
+    width: 32px;
+    height: 32px;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -156,22 +141,37 @@ const SelectCustom = styled(Select)`
     font-family: 'Helvetica, sans-serif';
 
     .number {
-      font-size: 16px;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 28px;
       position: absolute;
       bottom: -2px;
-      font-family: Helvetica, sans-serif;
+      color: rgba(226, 225, 229, 1);
     }
   }
 `
 const InputContainer = styled.div`
+  position: relative;
+  border-radius: 10px;
+  border: 1px solid var(--white-white-12, rgba(255, 255, 255, 0.12));
+  background: var(--greyscale-grayscale-3, #141217);
+  box-shadow: 0px 0px 11px 0px rgba(0, 0, 0, 0.49) inset;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
   @media screen and (max-width: 820px) {
     margin-top: 4%;
   }
   .ant-input-number {
-    background: #f9f7ff;
+    background: #141217;
     width: 100%;
-    border-radius: 25px;
+    font-size: 24px;
+    font-style: normal;
     font-weight: 700;
+    line-height: 32px;
+    border: none;
+    color: rgba(226, 225, 229, 1);
 
     .ant-input-number-input-wrap {
       width: 80%;
@@ -198,7 +198,10 @@ const TextCustom = styled(Text)`
 const ChartPart = styled.div`
   height: 100%;
   flex-basis: calc(100% * 2 / 3);
-
+  padding: 40px 0;
+  border-radius: 24px;
+  gap: 24px;
+  background: var(--greyscale-blue, #150a27);
   .notOnPC {
     display: none;
   }
@@ -208,9 +211,6 @@ const ChartPart = styled.div`
       display: block;
     }
   }
-  ${({ theme }) => theme.mediaQueries.md} {
-    padding-left: 10%;
-  }
 `
 const HeadingCustom = styled(Heading)`
   font-weight: 700;
@@ -218,15 +218,14 @@ const HeadingCustom = styled(Heading)`
   line-height: 59px;
 
   .style-countup {
-    color: #00ffc2;
+    background: var(--primary-primary-gradient-2, linear-gradient(180deg, #7b3fe4 0%, #a726c1 100%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 60px;
+    font-style: normal;
     font-weight: 700;
-    font-size: 24px;
-    font-family: Helvetica, sans-serif;
-
-    ${({ theme }) => theme.mediaQueries.md} {
-      font-size: 55px;
-      line-height: 66px;
-    }
+    line-height: 72px; /* 120% */
+    letter-spacing: -1.2px;
   }
 `
 const Column = styled.div`
@@ -234,13 +233,6 @@ const Column = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 20%;
-
-  img {
-    width: 100%;
-    height: auto;
-  }
-
   @media screen and (max-width: 415px) {
     align-items: center;
     width: 30%;
@@ -248,16 +240,22 @@ const Column = styled.div`
 `
 
 const ChartInfo = styled.div`
-  margin-top: 20px;
-
-  ${({ theme }) => theme.mediaQueries.md} {
-    margin-top: 0;
-  }
+  display: flex;
+  max-width: 499px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 56px;
+  padding: 0 40px;
 `
 
 const WrapperInfoText = styled.div`
   display: flex;
   align-items: center;
+  flex-direction: column;
+  .price {
+    color: #8544f5;
+  }
 `
 
 const Chart = styled.div`
@@ -265,12 +263,8 @@ const Chart = styled.div`
   flex-direction: row;
   align-items: flex-end;
   justify-content: center;
-  gap: 4%;
   transform: translateY(-14%);
-
-  ${({ theme }) => theme.mediaQueries.sm} {
-    gap: 8%;
-  }
+  margin-top: 34px;
 `
 
 const ButtonCustom = styled(Button)`
@@ -320,17 +314,16 @@ const ChartBase = styled.div`
 `
 
 const StyledTextProject = styled(Text)`
-  font-size: 20px;
-  line-height: 23px;
-  font-weight: 700;
-  font-family: Helvetica, sans-serif;
-
-  ${({ theme }) => theme.mediaQueries.md} {
-    font-size: 28px;
-    line-height: 32px;
-  }
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 32px;
+`
+const ContentLeft = styled.div`
+  width: 705px;
 `
 
+const ContentRight = styled.div``
 const Items = [
   // {
   //   value: '13.81',
@@ -344,6 +337,13 @@ const Items = [
   },
 ]
 
+const TextRight = styled(Text)`
+  position: absolute;
+  right: 5%;
+  color: #9665ff;
+  text-align: start;
+  top: 40%;
+`
 const { Option } = Select
 
 const Exchange = (props) => {
@@ -413,130 +413,117 @@ const Exchange = (props) => {
 
   return (
     <Wrapper data-aos="fade-up">
-      <Title className="showPc" color="mainColor">
-        Calculate your crypto <StyledText>earnings</StyledText>
-      </Title>
-      <TitleM className="showPc">
-        Enter an amount, pick a cryptocurrency, and select a time frame to find out how much interest you can earn.
-      </TitleM>
-      <Table>
-        <Title className="showMb" color="mainColor">
-          Calculate your crypto <StyledText>earnings</StyledText>
-        </Title>
-        <TitleMb className="showMb">
-          Enter an amount, pick a cryptocurrency, and select a time frame to find out how much interest you can earn.
-        </TitleMb>
-        <ExchangePart>
-          <div>
-            <CryptoSelect>
-              <TextName color="mainColor" style={{ fontFamily: 'Helvetica, sans-serif' }}>
-                Crypto
-              </TextName>
-              <SelectCustom
-                value={{
-                  value: percen,
-                  label: (
-                    <Row>
-                      <Col className="nameCry">
-                        <img src={images.iconMatic} alt="" />
-                      </Col>
-                      <Col className="depositNumb">
-                        <span>
-                          <b style={{ fontFamily: 'Helvetica, sans-serif', fontSize: 16 }}>POLYGON</b>
-                        </span>
-                        <p className="number"> {numeral(percen * 100).format('0,0.0')}% (Monthly)</p>
-                      </Col>
-                    </Row>
-                  ),
-                }}
-                onChange={handleChange}
-              >
-                {Items.map((item) => (
-                  <Option key={item.label} value={item.value}>
-                    <div>
+      <ContentLeft>
+        <Table>
+          <Title className="showPc" color="mainColor">
+            Calculate your crypto <StyledText>earnings</StyledText>
+          </Title>
+          <TitleM className="showPc">
+            Enter an amount, pick a cryptocurrency, and select a time frame to find out how much interest you can earn.
+          </TitleM>
+          <ExchangePart>
+            <div>
+              <CryptoSelect>
+                {/* <TextName color="mainColor" style={{ fontFamily: 'Helvetica, sans-serif' }}>
+                    Crypto
+                  </TextName> */}
+                <SelectCustom
+                  value={{
+                    value: percen,
+                    label: (
                       <Row>
-                        <Col style={{ paddingTop: '1%' }}>
-                          <img src={`${item.img}`} alt="" />
+                        <Col className="nameCry">
+                          <img width="32px" height="32px" src={images.iconMatic} alt="" />
                         </Col>
-                        <Col style={{ marginLeft: '20px', fontWeight: 700 }}>
-                          <p>
-                            <b>{item.label}</b>
-                          </p>
-                          <span style={{ fontFamily: 'Helvetica, sans-serif' }}>
-                            {numeral(percen * 100).format('0,0.0')}% (Monthly)
+                        <Col className="depositNumb">
+                          <span>
+                            <b style={{ fontSize: 20, color: 'rgba(226, 225, 229, 1)' }}>POLYGON</b>
                           </span>
+                          <p className="number"> {numeral(percen * 100).format('0,0.0')}% (Monthly)</p>
                         </Col>
                       </Row>
-                    </div>
-                  </Option>
-                ))}
-              </SelectCustom>
-            </CryptoSelect>
+                    ),
+                  }}
+                  onChange={handleChange}
+                >
+                  {Items.map((item) => (
+                    <Option key={item.label} value={item.value}>
+                      <div
+                        style={{
+                          borderRadius: '15px',
+                        }}
+                      >
+                        <Row>
+                          <Col style={{ paddingTop: '1%' }}>
+                            <img src={`${item.img}`} alt="" />
+                          </Col>
+                          <Col style={{ marginLeft: '20px', fontWeight: 700 }}>
+                            <p>
+                              <b>{item.label}</b>
+                            </p>
+                            <span style={{ fontFamily: 'Helvetica, sans-serif' }}>
+                              {numeral(percen * 100).format('0,0.0')}% (Monthly)
+                            </span>
+                          </Col>
+                        </Row>
+                      </div>
+                    </Option>
+                  ))}
+                </SelectCustom>
+              </CryptoSelect>
 
-            <InputContainer>
-              <TextName color="mainColor" style={{ fontFamily: 'Helvetica, sans-serif' }}>
-                Deposit Amount
-              </TextName>
-              <InputNumber
-                formatter={(value) => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                min={0}
-                defaultValue={deposit}
-                onChange={onChange}
-              />
-            </InputContainer>
-            <Text style={{ color: '#9665FF', textAlign: 'start', fontFamily: 'Helvetica, sans-serif' }}>
-              approx. {numeral(deposit / price).format('0,0.00')} {` `} MATIC/USD
-            </Text>
-          </div>
-          <TextCustom color="mainColor">
-            Annual Percentage Yield (APY) as of the {Date}. The APY may vary before or after the account is created.
-            This calculator is solely for illustration purposes and may not apply to our specific situation. Calculated
-            figures are rounded to the closest dollar and assume that principle and interest stay on deposit. All
-            interest rates are subject to change.
-          </TextCustom>
-        </ExchangePart>
+              <InputContainer>
+                {/* <TextName color="mainColor" style={{ fontFamily: 'Helvetica, sans-serif' }}>
+                    Deposit Amount
+                  </TextName> */}
+                <img width="32px" height="32px" src="./images/V3/coin.png" alt="" />
+                <InputNumber
+                  formatter={(value) => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                  min={0}
+                  defaultValue={deposit}
+                  onChange={onChange}
+                />
+                <TextRight style={{}}>
+                  approx. {numeral(deposit / price).format('0,0.00')} {` `} MATIC/USD
+                </TextRight>
+              </InputContainer>
+            </div>
+          </ExchangePart>
+        </Table>
+      </ContentLeft>
+      <ContentRight>
         <ChartPart>
           <ChartInfo>
+            <img width="206px" height="206px" src="./images/V3/bsc.svg" alt="" />
             <WrapperInfoText>
-              <img src={images.chartIcon} alt="" />
-              <StyledTextProject color="mainColor" style={{ display: 'inline', marginLeft: 10, color: '#FFFFFF' }}>
+              <StyledTextProject style={{ display: 'inline', marginLeft: 10, color: 'rgba(173, 171, 178, 1)' }}>
                 Projected {period.current} years interest
               </StyledTextProject>
+              <HeadingCustom>
+                <CountUp
+                  separator=","
+                  delay={3}
+                  duration={1}
+                  end={Number((deposit * (percen * 12 * period.current)).toFixed(2))}
+                  prefix="$"
+                  decimals={2}
+                  className="style-countup"
+                >
+                  {numeral(deposit * (percen * 12 * period.current)).format('0,0.00')}
+                </CountUp>
+              </HeadingCustom>
+              <Text
+                textAlign="center"
+                style={{ color: 'rgba(173, 171, 178, 1)', fontSize: 18, fontWeight: '600', lineHeight: '28px' }}
+              >
+                Calculated based on the current MATIC/USD price of{' '}
+                <span className="price">${numeral(price).format('0,0.00')}</span>
+              </Text>
             </WrapperInfoText>
-            <HeadingCustom color="mainColor">
-              <CountUp
-                separator=","
-                delay={3}
-                duration={1}
-                end={Number((deposit * (percen * 12 * period.current)).toFixed(2))}
-                prefix="$"
-                decimals={2}
-                className="style-countup"
-              >
-                {numeral(deposit * (percen * 12 * period.current)).format('0,0.00')}
-              </CountUp>
-            </HeadingCustom>
-            <Text style={{ color: '#CED8E1', fontSize: 16, fontFamily: 'Helvetica Light, sans-serif' }}>
-              Calculated based on the current MATIC/USD price of ${numeral(price).format('0,0.00')}
-            </Text>
           </ChartInfo>
+          <img width="499px" src="./images/V3/Indicator.png" />
           <Chart>
-            {/* <Column>
-              <img src={images.chart1up} alt="" />
-              <ButtonCustom
-                className={period.current === 1 ? 'active' : ''}
-                variant="secondary"
-                onClick={() => {
-                  setTimeout(() => {
-                    setPeriod((past) => ({ old: past.current, current: 1 }))
-                  }, 400)
-                }}
-              >
-                1 year
-              </ButtonCustom>
-            </Column> */}
-            <Column>
-              {period.current >= 2 ? <img src={images.chart4up} alt="" /> : <img src={images.chart1down} alt="" />}
+            {/* {period.current >= 2 ? <img src={images.chart4up} alt="" /> : <img src={images.chart1down} alt="" />}
               <ButtonCustom
                 className={period.current === 2 ? 'active' : ''}
                 variant="secondary"
@@ -547,39 +534,11 @@ const Exchange = (props) => {
                 }}
               >
                 2 year
-              </ButtonCustom>
-            </Column>
-            {/* <Column>
-              {period.current >= 3 ? <img src={images.chart2up} alt="" /> : <img src={images.chart2down} alt="" />}
-              <ButtonCustom
-                className={period.current === 3 ? 'active' : ''}
-                variant="secondary"
-                onClick={() => {
-                  setTimeout(() => {
-                    setPeriod((past) => ({ old: past.current, current: 3 }))
-                  }, 400)
-                }}
-              >
-                3 year
-              </ButtonCustom>
-            </Column> */}
-            {/* <Column>
-              {period.current >= 4 ? <img src={images.chart3up} alt="" /> : <img src={images.chart3down} alt="" />}
-              <ButtonCustom
-                className={period.current === 4 ? 'active' : ''}
-                variant="secondary"
-                onClick={() => {
-                  setTimeout(() => {
-                    setPeriod((past) => ({ old: past.current, current: 4 }))
-                  }, 400)
-                }}
-              >
-                4 year
-              </ButtonCustom>
-            </Column> */}
+              </ButtonCustom> */}
+            <img width="385px" height="196px" src="./images/V3/Chart2.png" />
           </Chart>
         </ChartPart>
-      </Table>
+      </ContentRight>
     </Wrapper>
   )
 }

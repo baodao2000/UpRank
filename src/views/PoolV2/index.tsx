@@ -37,7 +37,7 @@ background:var(--bg-1, linear-gradient(90deg, #9E86FF 0%, #2B0864 100%));
   align-items: center;
   background-color: var(--bg-1, linear-gradient(90deg, #9E86FF 0%, #2B0864 100%));
   * {
-    font-family: Poppins, sans-serif;
+    font-family: "Helvetica Compressed";
   }
   @media screen and (max-width: 1024px) {
     background: none;
@@ -209,7 +209,7 @@ const LogoAndName = styled.div`
     font-style: normal;
     color: #ffffff;
     font-weight: 700;
-    font-family: Helvetica, sans-serif;
+    font-family: 'Helvetica Compressed';
   }
   @media screen and (max-width: 1024px) {
     display: flex;
@@ -648,7 +648,6 @@ const Pools = () => {
 
     return () => clearInterval(timerId)
   }, [countDown])
-  console.log(arr.map((i) => i[0]))
 
   return (
     <Container style={{ backgroundColor: 'var(--bg-1, linear-gradient(90deg, #9E86FF 0%, #2B0864 100%))' }}>
@@ -688,7 +687,7 @@ const Pools = () => {
                     alignItems="center"
                     style={{ gap: '24px' }}
                   >
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <div style={{ display: 'flex', alignItems: 'flex-end', gap: '10px' }}>
                       {
                         <CountUp
                           separator=","
@@ -702,7 +701,7 @@ const Pools = () => {
                           style={{ color: 'rgba(250, 255, 73, 1)', fontWeight: 700 }}
                         />
                       }
-                      <Text fontSize="32px" lineHeight="1.25">
+                      <Text fontSize="32px" lineHeight="1.1">
                         $
                       </Text>
                     </div>
@@ -714,7 +713,7 @@ const Pools = () => {
                         borderRadius: '20px',
                       }}
                     ></div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <div style={{ display: 'flex', alignItems: 'flex-end', gap: '10px' }}>
                       {
                         <CountUp
                           separator=","
@@ -1076,8 +1075,11 @@ const Pools = () => {
                           <Button
                             style={{
                               color: 'rgba(243, 243, 243, 1)',
+                              borderRadius: '15px',
+                              border: '1px solid rgba(245, 251, 242, 0.20)',
                               background:
-                                'radial-gradient(136.39% 160.48% at 0% 0%, rgba(192, 240, 255, 0.8) 0%, rgba(159, 169, 213, 0.289866) 87.18%, rgba(2, 0, 98, 0) 100%),linear-gradient(0deg, rgba(245, 251, 242, 0.2), rgba(245, 251, 242, 0.2))',
+                                'radial-gradient(157.74% 210.61% at 0.00% 0.00%, rgba(192, 240, 255, 0.80) 0%, rgba(159, 169, 213, 0.29) 87.18%, rgba(2, 0, 98, 0.00) 100%)',
+                              backdropFilter: 'blur(50px)',
                             }}
                             variant="primary"
                             width={'180px'}
@@ -1091,8 +1093,11 @@ const Pools = () => {
                           <Button
                             style={{
                               color: 'rgba(243, 243, 243, 1)',
+                              borderRadius: '15px',
+                              border: '1px solid rgba(245, 251, 242, 0.20)',
                               background:
-                                'radial-gradient(136.39% 160.48% at 0% 0%, rgba(192, 240, 255, 0.8) 0%, rgba(159, 169, 213, 0.289866) 87.18%, rgba(2, 0, 98, 0) 100%),linear-gradient(0deg, rgba(245, 251, 242, 0.2), rgba(245, 251, 242, 0.2))',
+                                'radial-gradient(157.74% 210.61% at 0.00% 0.00%, rgba(192, 240, 255, 0.80) 0%, rgba(159, 169, 213, 0.29) 87.18%, rgba(2, 0, 98, 0.00) 100%)',
+                              backdropFilter: 'blur(50px)',
                             }}
                             variant="primary"
                             width={'180px'}
