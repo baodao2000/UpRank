@@ -1253,7 +1253,7 @@ const Referral = () => {
                     </GroupSearchByCode>
                   </WrapperLinkRef>
                 </GroupLinkRef>
-                <ButtonLink>Check my refer list</ButtonLink>
+                <ButtonLink onClick={() => setTab(3)}>Check my refer list</ButtonLink>
               </CardRegister>
               <Step>
                 <TitleStep>How to get started</TitleStep>

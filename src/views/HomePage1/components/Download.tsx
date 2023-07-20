@@ -152,8 +152,12 @@ const Download = () => {
           <CardLabel>Download Metamask and Trust Wallet</CardLabel>
           <CardContent>
             <div className="imgA">
-              <img src="./images/V3/Metamask.svg" />
-              <img src="./images/V3/TrustWallet.svg" />
+              <div style={{ cursor: 'pointer' }} onClick={() => window.open('https://metamask.io/', '_blank')}>
+                <img src="./images/V3/Metamask.svg" />
+              </div>
+              <div style={{ cursor: 'pointer' }} onClick={() => window.open('https://trustwallet.com/', '_blank')}>
+                <img src="./images/V3/TrustWallet.svg" />
+              </div>
             </div>
             <div className="imgB">
               <img src="./images/V3/Googleplay.png" />
