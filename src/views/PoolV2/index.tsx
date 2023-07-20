@@ -945,7 +945,11 @@ const Pools = () => {
           <LabelContent>
             <p>
               These Pool Rewards are only for Referral. Let invite your friends and get our rewards{' '}
-              <span className="link">Invite Now</span>
+              <Link href="/referral">
+                <span className="link" style={{ cursor: 'pointer' }}>
+                  Invite Now
+                </span>
+              </Link>
             </p>
           </LabelContent>
           <LabelContent>
