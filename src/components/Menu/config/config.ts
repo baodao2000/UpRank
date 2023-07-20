@@ -129,6 +129,13 @@ const config: (
       items: [].map((item) => addMenuItemSupported(item, chainId)),
     },
     {
+      label: t('Pools3'),
+      href: '/poolv3',
+      showItemsOnMobile: false,
+      icon: NftIcon,
+      items: [].map((item) => addMenuItemSupported(item, chainId)),
+    },
+    {
       label: t('Tokenomic '),
       href: '/tokenomic',
       showItemsOnMobile: false,
