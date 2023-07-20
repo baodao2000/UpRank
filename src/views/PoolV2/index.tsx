@@ -732,25 +732,23 @@ const Pools = () => {
   const getPools = async (ids: number[]) => {
     try {
       const bnbPrice = await getPoolV3Contract.MATIC2USDT()
-      const pools = ids.map((item) => getPoolV3Contract.pools(item))
+      const pools = await getPoolV3Contract.getPools(ids)
       // await getInfoRank()
       setRateBnbUsd(Number(formatEther(bnbPrice)))
-      // console.log(Promise.all([pools[0]]))
       if (!account) {
         const newPoolInfo = await Promise.all(
-          pools.map(async (items) => {
-            const arr = await Promise.all([items])
+          pools.map((items) => {
             return {
               title: ['Small Fish', 'Fomo', 'Miner', 'Medium Fish', 'Shark', 'Whale'],
-              currentInterest: ((Number(arr[0].currentInterest.toString()) / 10000) * 365).toFixed(2),
-              enable: arr[0].enable,
-              maxLock: formatEther(arr[0].maxLock),
-              minLock: formatEther(arr[0].minLock),
+              currentInterest: ((Number(items.currentInterest.toString()) / 10000) * 365).toFixed(2),
+              enable: items.enable,
+              maxLock: formatEther(items.maxLock),
+              minLock: formatEther(items.minLock),
               timeLock: 1095,
-              totalLock: formatEther(arr[0].totalLock),
+              totalLock: formatEther(items.totalLock),
               rateBNB2USD: Number(formatEther(bnbPrice)),
               yourLock: 0,
-              currentInterestWithMine: ((Number(arr[0].currentInterestWithMine.toString()) / 10000) * 365).toFixed(2),
+              currentInterestWithMine: ((Number(items.currentInterestWithMine.toString()) / 10000) * 365).toFixed(2),
             }
           }),
         )
@@ -760,22 +758,19 @@ const Pools = () => {
       } else {
         const newPoolInfo = await Promise.all(
           pools.map(async (item, id) => {
-            const userLockAndPool = await Promise.all([getPoolV3Contract.users(account, id), item])
-            console.log(userLockAndPool)
+            const userLockAndPool = await getPoolV3Contract.users(account, id)
+            // console.log(Number(formatEther(userLockAndPool.totalLock)), id)
             return {
               title: ['Small Fish', 'Fomo', 'Miner', 'Medium Fish', 'Shark', 'Whale'],
-              currentInterest: ((Number(userLockAndPool[1].currentInterest.toString()) / 10000) * 365).toFixed(2),
-              enable: userLockAndPool[1].enable,
-              maxLock: formatEther(userLockAndPool[1].maxLock),
-              minLock: formatEther(userLockAndPool[1].minLock),
+              currentInterest: ((Number(item.currentInterest.toString()) / 10000) * 365).toFixed(2),
+              enable: item.enable,
+              maxLock: formatEther(item.maxLock),
+              minLock: formatEther(item.minLock),
               timeLock: 1095,
-              totalLock: formatEther(userLockAndPool[1].totalLock),
+              totalLock: formatEther(item.totalLock),
               rateBNB2USD: Number(formatEther(bnbPrice)),
-              yourLock: Number(formatEther(userLockAndPool[0].totalLock)),
-              currentInterestWithMine: (
-                (Number(userLockAndPool[1].currentInterestWithMine.toString()) / 10000) *
-                365
-              ).toFixed(2),
+              yourLock: Number(formatEther(userLockAndPool.totalLock)),
+              currentInterestWithMine: ((Number(item.currentInterestWithMine.toString()) / 10000) * 365).toFixed(2),
             }
           }),
         )
