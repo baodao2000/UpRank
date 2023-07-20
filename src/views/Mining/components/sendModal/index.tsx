@@ -28,6 +28,7 @@ const Wrapper = styled.div`
   height: 300px;
   justify-content: center;
   gap: 1em;
+  /* padding: 0 10px; */
 `
 const ClaimAmount = styled.div`
   display: flex;
@@ -36,7 +37,7 @@ const ClaimAmount = styled.div`
 `
 const StyledButton = styled(Button)`
   border-radius: 24px;
-  background: radial-gradient(131.77% 143.25% at -0% -2.74%, #bae4e7 0%, rgba(136, 139, 224, 0.44) 100%);
+  background: linear-gradient(180deg, #7b3fe4 0%, #a726c1 100%);
   backdrop-filter: blur(5px);
   width: 378px;
 `
@@ -88,11 +89,11 @@ const InputAmount = styled(Input)`
   width: 378px;
   border-radius: 36px;
   border: 1px solid #3749aa;
-  background: #f2f3f4;
+  background: #2d2c33;
   backdrop-filter: blur(5px);
   height: 20px;
   padding: 20px 16px;
-  color: black;
+  color: #fffff;
 `
 
 const SendTrendModal = ({
@@ -176,20 +177,29 @@ const SendTrendModal = ({
       onDismiss={onDismiss}
       hideCloseButton={false}
       borderRadius={25}
-      headerBackground="rgba(238, 238, 241, 0.51)"
-      background={'linear-gradient(112deg, rgba(34, 39, 45, 0.40) 0%, rgba(50, 73, 95, 0.40) 100%)'}
+      headerBackground="#24272A"
+      background="#24272A"
       width="800px"
+      bodyPadding="0 10px 30px"
     >
       <Wrapper>
         <ClaimAmount>
           <Text fontSize="18px">To</Text>
-          <InputAmount style={{ fontSize: '14px' }} value={address} onChange={(e) => onChange(e.target.value)} />
+          <InputAmount
+            style={{ fontSize: '14px', borderRadius: '12px' }}
+            value={address}
+            onChange={(e) => onChange(e.target.value)}
+          />
         </ClaimAmount>
         {checkError === true ? <Error>You do not enter an address !!!</Error> : null}
         <ClaimAmount>
           <Text fontSize="18px">Amount</Text>
           <div style={{ position: 'relative' }}>
-            <InputAmount value={valueAmount} onChange={(e) => handleInputChange(e.target.value)} />
+            <InputAmount
+              style={{ borderRadius: '12px' }}
+              value={valueAmount}
+              onChange={(e) => handleInputChange(e.target.value)}
+            />
             <ButtonMax onClick={setAmountMax}>Max</ButtonMax>
           </div>
         </ClaimAmount>

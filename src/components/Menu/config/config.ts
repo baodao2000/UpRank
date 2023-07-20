@@ -146,16 +146,16 @@ const config: (
       label: t('Mining'),
       href: '/mining',
       showItemsOnMobile: false,
-      icon: TrophyIcon,
-      items: [].map((item) => addMenuItemSupported(item, chainId)),
-    },
-    {
-      label: t('Voting'),
-      href: '/vote',
-      showItemsOnMobile: false,
       icon: VoteIcon,
       items: [].map((item) => addMenuItemSupported(item, chainId)),
     },
+    // {
+    //   label: t('Voting'),
+    //   href: '/vote',
+    //   showItemsOnMobile: false,
+    //   icon: TrophyIcon,
+    //   items: [].map((item) => addMenuItemSupported(item, chainId)),
+    // },
 
     // {
     //   label: t('Dao'),

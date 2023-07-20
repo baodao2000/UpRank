@@ -13,6 +13,7 @@ import { ToastDescriptionWithTx } from 'components/Toast'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { ChainId } from '../../../../../../packages/swap-sdk/src/constants'
 import { ClaimPoolModalProps } from './type'
+import images from 'configs/images'
 
 // STYLE
 const Wrapper = styled.div`
@@ -20,16 +21,30 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   height: 200px;
-  justify-content: center;
+  justify-content: start;
   gap: 1em;
+  .imagesvector {
+    margin-left: 4px;
+    padding: 3px;
+    display: flex;
+    width: 18px;
+    height: 18px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 4px;
+    background: var(--white-white-8, rgba(255, 255, 255, 0.08));
+  }
 `
 const ClaimAmount = styled.div`
+  padding-top: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
 `
 const StyledButton = styled(Button)`
-  background: #1fc7d4;
+  background: #8544f5;
 `
 const depositModal = {}
 const depositInput = {
@@ -97,17 +112,17 @@ const ClaimPoolModal: React.FC<React.PropsWithChildren<ClaimPoolModalProps>> = (
   return (
     <Modal
       style={depositModal}
-      title={'CLAIM'}
+      title={'Claim'}
       onDismiss={onDismiss}
       hideCloseButton={false}
       borderRadius={25}
-      headerBackground="rgb(105 84 156 / 77%)"
-      background={'linear-gradient(139.08deg, #171718 1.7%, rgba(86, 27, 211, 0.84) 108.66%)'}
+      headerBackground="#24272A"
+      background={'#24272A'}
     >
       <Wrapper>
         <ClaimAmount>
           <Text fontSize="18px">Current reward:</Text>
-          <Text fontSize="16px" style={{ display: 'flex' }}>
+          <Text fontSize="16px" style={{ display: 'flex', color: '#8544F5' }}>
             {
               <CountUp
                 separator=","
@@ -131,7 +146,7 @@ const ClaimPoolModal: React.FC<React.PropsWithChildren<ClaimPoolModalProps>> = (
                 duration={0.5}
               />
               &ensp;
-              <img src={`/images/chains/${chainId}.png`} alt="pool name" width={18} />
+              <img className="imagesvector" src={images.vector} alt="pool name" width={18} />
             </div>
           </Text>
         </ClaimAmount>

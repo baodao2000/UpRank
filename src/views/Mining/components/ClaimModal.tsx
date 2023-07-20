@@ -14,6 +14,7 @@ import useActiveWeb3React from 'hooks/useActiveWeb3React'
 // import { ChainId } from '../../../../../../../packages/swap-sdk/src/constants'
 import { ClaimPoolModalProps } from './type'
 import { Mine } from 'views/PoolV2/util'
+import Image from 'next/image'
 
 // STYLE
 const Wrapper = styled.div`
@@ -30,9 +31,12 @@ const ClaimAmount = styled.div`
   align-items: center;
 `
 const StyledButton = styled(Button)`
-  background: #1fc7d4;
+  /* background: #1fc7d4; */
+  background: linear-gradient(180deg, #7b3fe4 0%, #a726c1 100%);
 `
-const depositModal = {}
+const depositModal = {
+  padding: '-10px',
+}
 const depositInput = {
   borderRadius: '10px',
 }
@@ -108,15 +112,23 @@ const ClaimPoolModal = ({
       onDismiss={onDismiss}
       hideCloseButton={false}
       borderRadius={25}
-      headerBackground="rgb(105 84 156 / 77%)"
-      background={'linear-gradient(139.08deg, #171718 1.7%, rgba(86, 27, 211, 0.84) 108.66%)'}
+      headerBackground="#24272A"
+      background="#24272A"
+      bodyPadding="0"
     >
       <Wrapper>
         <ClaimAmount>
-          <Text fontSize="18px">Current reward trend:</Text>
+          <Text fontSize="18px">Current reward TREND:</Text>
           <Text fontSize="16px" style={{ display: 'flex' }}>
             {/* $&ensp;~&ensp; */}
-            <div style={{ display: 'flex', alignItems: 'center' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+              <Image
+                src="/images/trendyloop.png"
+                width={24}
+                height={24}
+                alt=""
+                /* style={{marginRight: '10px'}} */
+              />
               <CountUp
                 separator=","
                 start={0}
@@ -126,7 +138,7 @@ const ClaimPoolModal = ({
                 decimals={mine.currentReward === 0 ? 0 : 8}
                 duration={0.5}
               />
-              &ensp; ${/* <img src={`/images/chains/${chainId}.png`} alt="mine name" width={18} /> */}
+              &ensp;
             </div>
           </Text>
           <Text></Text>

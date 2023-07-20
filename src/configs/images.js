@@ -98,6 +98,7 @@ const images = {
   vector: '/images/V3/Vector.svg',
   bronze: 'images/V3/bronzebg.png',
   homeMobile: '/images/Frame1.svg',
+  checkk: 'images/V3/check.svg',
 }
 
 export default images

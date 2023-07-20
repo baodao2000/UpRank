@@ -1,4 +1,4 @@
-import { Button, Flex, Heading, LinkExternal, useModal, Text } from '@pancakeswap/uikit'
+import { Button, Flex, Heading, LinkExternalDepo, useModal, Text, LinkExternal } from '@pancakeswap/uikit'
 import PageHeader from 'components/PageHeader'
 import styled from 'styled-components'
 import images from 'configs/images'
@@ -33,9 +33,19 @@ const PoolDetail = styled.div`
       margin-top: 20px;
     }
   }
+  .root {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    @media (max-width: 398px) {
+      gap: 8px;
+      display: flex;
+      flex-direction: column;
+    }
+  }
   .headingg {
     margin-left: 105px;
-    @media (max-width: 557px) {
+    @media (max-width: 575px) {
       margin-left: 0;
       margin-top: 10px;
     }
@@ -107,13 +117,13 @@ const ButtonArea = styled.div`
   //   gap: 20px;
   // }
 `
-const NoteDeposit = styled.span`
-  color: #fff;
-  //background: #ffffcc;
-  max-width: 600px;
-  padding: 16px;
-  border-radius: 10px;
-`
+// const NoteDeposit = styled.span`
+//   color: #fff;
+//   //background: #ffffcc;
+//   max-width: 600px;
+//   padding: 16px;
+//   border-radius: 10px;
+// `
 const BtnBack = styled.a`
   margin-top: 60px;
   display: flex;
@@ -131,7 +141,6 @@ const BtnBack = styled.a`
 
 const Pool = ({ poolId }) => {
   const { account, chainId } = useActiveWeb3React()
-  // account = '0xe024af9AD5518468abFb617eEAbE10219498ee50'
   const [isLoading, setIsLoading] = useState(true)
   const [now, setNow] = useState(0)
   const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId
@@ -182,33 +191,33 @@ const Pool = ({ poolId }) => {
     maxUSD2BNB: 0,
     currentInterestWithMine: 0,
   })
-  const getNoteDeposit = () => {
-    let note
-    if (chainId === 97 && now - poolInfo.startTime > 3600) {
-      note = (
-        <NoteDeposit>
-          <i>
-            <b>Please note:</b> after <b style={{ textDecoration: 'underline' }}>{timeDisplayLong(3600)}</b> of deposit,
-            you can&apos;t add more to this pool. If you would like to stake more, you can stake a different wallet or a
-            different pool.
-          </i>
-        </NoteDeposit>
-      )
-    } else if (chainId === 137 && now - poolInfo.startTime > 604800) {
-      note = (
-        <NoteDeposit>
-          <i>
-            <b>Please note:</b> after <b style={{ textDecoration: 'underline' }}>{timeDisplayLong(604800)}</b> of
-            deposit, you can&apos;t add more to this pool. If you would like to stake more, you can stake a different
-            wallet or a different pool.
-          </i>
-        </NoteDeposit>
-      )
-    } else {
-      note = null
-    }
-    return note
-  }
+  // const getNoteDeposit = () => {
+  //   let note
+  //   if (chainId === 97 && now - poolInfo.startTime > 3600) {
+  //     note = (
+  //       <NoteDeposit>
+  //         <i>
+  //           <b>Please note:</b> after <b style={{ textDecoration: 'underline' }}>{timeDisplayLong(3600)}</b> of deposit,
+  //           you can&apos;t add more to this pool. If you would like to stake more, you can stake a different wallet or a
+  //           different pool.
+  //         </i>
+  //       </NoteDeposit>
+  //     )
+  //   } else if (chainId === 137 && now - poolInfo.startTime > 604800) {
+  //     note = (
+  //       <NoteDeposit>
+  //         <i>
+  //           <b>Please note:</b> after <b style={{ textDecoration: 'underline' }}>{timeDisplayLong(604800)}</b> of
+  //           deposit, you can&apos;t add more to this pool. If you would like to stake more, you can stake a different
+  //           wallet or a different pool.
+  //         </i>
+  //       </NoteDeposit>
+  //     )
+  //   } else {
+  //     note = null
+  //   }
+  //   return note
+  // }
 
   const getPool = async () => {
     try {
@@ -328,37 +337,65 @@ const Pool = ({ poolId }) => {
                   {unit}
                 </Text>
               </PoolName>
-              <Heading className="headingg" scale="md" color="text">
+              <Heading
+                className="headingg"
+                scale="md"
+                color="text"
+                style={{ display: 'flex', flexDirection: 'row', gap: '12px', alignItems: 'center' }}
+              >
+                {/* <div className="root">
+                  <div>
+                    <span
+                      style={{
+                        fontSize: '14px',
+                        lineHeight: '20px',
+                        fontWeight: '500',
+                        color: '#ADABB2',
+                      }}
+                    >
+                      Root Contract:
+                    </span>
+                  </div>
+                  <div style={{display: 'flex', flexDirection: "row", gap: "12px"}}>
+                    <LinkExternalDepo
+                      fontSize={'14px'}
+                      // href={getBlockExploreLink(contracts.poolsV3[CHAIN_ID], 'address', CHAIN_ID)}
+                      ellipsis={true}
+                      color="#ffffff"
+                      style={{ color: '#ffffff', fontWeight: '700', textDecoration: 'none' }}
+                    >
+                      {shortenURL(`${contracts.poolsV3[CHAIN_ID]}`, 20)}
+                    </LinkExternalDepo>
+                    <LinkExternalDepo
+                      fontSize={'14px'}
+                      href={getBlockExploreLink(contracts.poolsV3[CHAIN_ID], 'address', CHAIN_ID)}
+                      ellipsis={true}
+                      color="#ffffff"
+                      style={{ color: '#ffffff', fontWeight: '700' }}
+                    >
+                      {/* {shortenURL(`${contracts.poolsV3[CHAIN_ID]}`, 20)} */}
+                {/* <span
+                        style={{
+                          fontSize: '14px',
+                          lineHeight: '20px',
+                          fontWeight: '400',
+                          color: '#8544F5',
+                        }}
+                      >
+                        Check Details
+                      </span>
+                    </LinkExternalDepo>
+                  </div>
+                </div> */}
                 <LinkExternal
-                  fontSize={['14px', '16px', '18px', '20px', '20px']}
+                  fontSize={['14px', '16px', '18px', '20px', '22px']}
                   href={getBlockExploreLink(contracts.poolsV3[CHAIN_ID], 'address', CHAIN_ID)}
                   ellipsis={true}
-                  color="#ffffff"
-                  style={{ color: '#ffffff' }}
+                  color="#fff"
+                  style={{ color: '#fff' }}
                 >
-                  <span>Root Contract:</span>
-                  {shortenURL(`${contracts.poolsV3[CHAIN_ID]}`, 20)}
+                  {shortenURL(`Contract: ${contracts.poolsV3[CHAIN_ID]}`, 35)}
                 </LinkExternal>
-                <span
-                  style={{
-                    paddingLeft: '12px',
-                    fontSize: '14px',
-                    lineHeight: '20xp',
-                    fontWeight: '400',
-                    color: '#8544F5',
-                  }}
-                >
-                  Check Details
-                </span>
-                {/* <LinkExternal
-                  fontSize={['14px', '16px', '18px', '20px', '22px']}
-                  href={getBlockExploreLink(contracts.poolsV2[CHAIN_ID], 'address', CHAIN_ID)}
-                  ellipsis={true}
-                  color="#00F0E1"
-                  style={{ color: '#00F0E1' }}
-                >
-                  {shortenURL(`Root Contract 2: ${contracts.poolsV2[CHAIN_ID]}`, 35)}
-                </LinkExternal> */}
               </Heading>
             </Flex>
           </PageHeader>
@@ -370,7 +407,7 @@ const Pool = ({ poolId }) => {
           </PageHeader>
 
           <Body>
-            {getNoteDeposit()}
+            {/* {getNoteDeposit()} */}
             <ButtonArea>
               <Button
                 style={{ color: '#000', backgroundColor: '#D9D9D9' }}
