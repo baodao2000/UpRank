@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { trendyColors } from 'style/trendyTheme'
 import { Table, Th, Td, Text } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
-import { getPoolsContract } from 'utils/contractHelpers'
+import { getPoolsV3Contract } from 'utils/contractHelpers'
 import CountUp from 'react-countup'
 import { Pool, timeDisplay } from 'views/PoolV2/util'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
@@ -121,7 +121,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
   ...props
 }) => {
   const { account, chainId } = useActiveWeb3React()
-  const poolsContract = getPoolsContract(chainId)
+  const poolsContract = getPoolsV3Contract(chainId)
   const { t } = useTranslation()
   const [usersClaimed, setUserClaimed] = useState([])
 
