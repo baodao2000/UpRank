@@ -10,6 +10,7 @@ import CountUp from 'react-countup'
 
 import AOS from 'aos'
 import 'aos/dist/aos.css'
+import Image from 'next/image'
 
 const Title = styled(Heading)`
   font-size: 48px;
@@ -53,7 +54,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
   gap: 20px;
-
+  margin-bottom: 90px;
   .ant-input-number-input {
     font-family: 'Helvetica Compressed';
     font-weight: 700;
@@ -257,6 +258,7 @@ const StyledTextProject = styled(Text)`
   }
 `
 const ContentLeft = styled.div`
+  margin-top: 30px;
   width: 60%;
   @media (max-width: 796px) {
     width: 100%;
@@ -377,8 +379,14 @@ const Exchange = (props) => {
     <Wrapper className="block" data-aos="fade-up">
       <ContentLeft>
         <Table>
-          <Title color="mainColor">
-            Calculate your crypto <StyledText>earnings</StyledText>
+          <Title color="mainColor" style={{ position: 'relative' }}>
+            Calculate your crypto{' '}
+            <StyledText>
+              earnings
+              <span style={{ position: 'absolute', top: 50 }}>
+                <Image src="/images/info.svg" width={20} height={20} alt="" />
+              </span>{' '}
+            </StyledText>
           </Title>
           <TitleM>
             Enter an amount, pick a cryptocurrency, and select a time frame to find out how much interest you can earn.
@@ -440,7 +448,7 @@ const Exchange = (props) => {
                   onChange={onChange}
                 />
                 <TextRight>
-                  approx. {numeral(deposit / price).format('0,0.00')} {` `} MATIC/USD
+                  approx. {numeral(deposit / price).format('0,0.00')} {` `} MATIC
                 </TextRight>
               </InputContainer>
             </div>

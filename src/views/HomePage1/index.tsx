@@ -30,7 +30,7 @@ const Container = styled.div`
   .buttonSpace {
   }
   .block {
-    margin-top: 160px;
+    margin-top: 100px;
     @media screen and (max-width: 1024px) {
       margin-top: 100px;
     }
@@ -42,7 +42,15 @@ const Container = styled.div`
     }
   }
 `
-
+const ContainerNew = styled.div`
+  background: #141416;
+  // max-width: 1320px;
+  height:
+  width: 100%;
+  margin: 0 auto ;
+  padding: 40px 20px 80px;
+  position: relative;
+`
 const StyledBackground = styled.img`
   position: absolute;
   z-index: 0;
@@ -81,7 +89,11 @@ const HomePage: React.FC<React.PropsWithChildren> = () => {
           <HeadHome />
           <Crypto />
           <Exchange data-aos="fade-up" />
+        </Container>
+        <ContainerNew>
           <StepBlock />
+        </ContainerNew>
+        <Container>
           <Covered />
           <Transparency />
           <Tranditional />

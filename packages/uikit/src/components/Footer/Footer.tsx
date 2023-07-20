@@ -167,9 +167,15 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
             © 2023 Trendydefi. All rights reserved.
           </Text>
           <Flex style={{ gap: "32px" }}>
-            <img src="./images/githubV3.png" style={{ height: 35, width: 35 }} />
-            <img src="./images/community.png" style={{ height: 35, width: 35 }} />
-            <img src="./images/youtube.png" style={{ height: 35, width: 35 }} />
+            <Link href="https://github.com/trendydefi">
+              <img src="./images/githubV3.png" style={{ height: 35, width: 35 }} />
+            </Link>
+            <Link href="https://medium.com/@trendydefi">
+              <img src="./images/Community.png" style={{ height: 35, width: 35 }} />
+            </Link>
+            <Link href="https://www.youtube.com/@trendydefi">
+              <img src="./images/youtube.png" style={{ height: 35, width: 35 }} />
+            </Link>
           </Flex>
         </Flex>
       </BlockListItem>

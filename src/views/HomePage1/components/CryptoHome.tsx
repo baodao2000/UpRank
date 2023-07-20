@@ -30,7 +30,7 @@ const Content = styled.div`
   margin-top: 32px;
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
   gap: 40px;
@@ -108,25 +108,25 @@ const data = [
   },
   {
     image: './images/V3/Highest.png',
-    title: 'Exchange Instantly',
-    label: 'and faster than ever',
+    title: 'Highest Private ',
+    label: 'Most Secure',
   },
   {
     image: './images/V3/Time.png',
-    title: 'Exchange Instantly',
-    label: 'and faster than ever',
+    title: 'Earn Passive Income',
+    label: 'Every month',
   },
   {
     image: './images/V3/MoneyTree.png',
-    title: 'Exchange Instantly',
-    label: 'and faster than ever',
+    title: 'Convenient',
+    label: 'and simple to use',
   },
 ]
 const CryptoHome = () => {
   return (
     <Crypto className="block">
       <Title color="mainColor" className="title colorchange">
-        Why TrendyDefi?
+        Why TrendyDefi ?
       </Title>
       <Content data-aos="fade-left">
         {data.map((items, r) => (

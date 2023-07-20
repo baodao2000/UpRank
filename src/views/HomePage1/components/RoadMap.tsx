@@ -68,7 +68,7 @@ const Boder = styled.div`
 const Mobile = styled.div`
   display: none;
   @media screen and (max-width: 780px) {
-    width: 1000px;
+    width: 700px;
     display: flex;
     align-items: center;
     img {

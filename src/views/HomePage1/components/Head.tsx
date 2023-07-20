@@ -2,11 +2,15 @@ import { Button, Flex, useModal } from '@pancakeswap/uikit'
 import styled from 'styled-components'
 import images from 'configs/images'
 import 'aos/dist/aos.css'
+import { isMobile } from 'react-device-detect'
+import Link from 'next/link'
 
 const Head = styled(Flex)`
   * {
     font-family: Inter, sans-serif;
   }
+  margin: 0 auto;
+  // max-width: 1320px;
   padding-top: 24px;
   position: relative;
   z-index: 1;
@@ -176,17 +180,24 @@ const HeadHome = () => {
           <span>Own your own data. Earn passive income with crypto.</span>
         </H5ShowMb>
         <Staking>
-          <ButtonStaking>Staking Now</ButtonStaking>
+          <Link href="/pools">
+            <ButtonStaking>Staking Now</ButtonStaking>
+          </Link>
           <div>
             <p>*Start staking now to maximize your earnings!</p>
             <p>
-              Stake Matic, you can earn an APR of<span> 85.1%</span> up to<span> 127.75%</span>{' '}
+              Stake Matic, you can earn an APR of<span style={{ fontWeight: 700 }}> 85.1%</span> up to
+              <span style={{ fontWeight: 700 }}> 127.75%</span>{' '}
             </p>
           </div>
         </Staking>
       </ContentHead>
       <ContentHeadRight data-aos="fade-left">
-        <ImageHead src={images.headhome} alt="" />
+        {isMobile ? (
+          <ImageHead src={images.homeMobile} alt="" loading="eager" />
+        ) : (
+          <ImageHead src={images.headhome} alt="" loading="eager" />
+        )}
       </ContentHeadRight>
     </Head>
   )

@@ -73,13 +73,13 @@ const CardContainer = styled.div`
   flex-direction: column;
   gap: 24px;
   width: 1224px;
-  @media screen and (max-width: 575px) {
+  @media screen and (max-width: 1440px) {
     width: 100%;
   }
   @media screen and (max-width: 900px) {
     width: 100%;
   }
-  @media screen and (max-width: 1440px) {
+  @media screen and (max-width: 575px) {
     width: 100%;
   }
 `
