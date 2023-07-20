@@ -749,7 +749,7 @@ function Mining() {
                                 preserveValue
                                 delay={0}
                                 end={available}
-                                decimals={available > 0 ? 8 : 0}
+                                decimals={available > 0 ? 6 : 0}
                                 duration={0.5}
                               />
                             </ContentText>
@@ -777,7 +777,7 @@ function Mining() {
                       </div>
 
                       <ContentText style={{ fontSize: '20px', fontWeight: 400, color: '#FFFFFF' }}>
-                        Available Trend
+                        Available TREND
                       </ContentText>
                     </div>
                   </div>
