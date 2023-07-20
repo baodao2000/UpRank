@@ -11,7 +11,7 @@ export const StyledUserMenu = styled(Flex)`
   align-items: center;
   background-color: #353547;
   * {
-    font-family: "Helvetica Rounded";
+    font-family: Inter, sans-serif;
   }
   border-radius: 16px;
   box-shadow: inset 0px -2px 0px rgba(0, 0, 0, 0.1);
@@ -40,6 +40,8 @@ export const LabelText = styled.div`
 `;
 
 const Menu = styled.div<{ isOpen: boolean }>`
+  position: absolute;
+  top: 100px;
   background-color: #27262c;
   border: 1px solid #383241;
   border-radius: 16px;
@@ -52,14 +54,23 @@ const Menu = styled.div<{ isOpen: boolean }>`
   * {
     font-family: Inter, sans-serif;
   }
-
   ${({ isOpen }) =>
     !isOpen &&
     `
     pointer-events: none;
     visibility: hidden;
   `}
-
+  ${({ isOpen }) =>
+    isOpen &&
+    `@media screen and (max-width: 1440px ) {
+      right: 2%;
+    top: 100%;
+  }
+  @media screen and (min-width:1450px ) {
+    right: 0;
+    top: 100%;
+  }
+  `}
   ${UserMenuItem}:first-child {
     border-radius: 8px 8px 0 0;
   }
@@ -122,7 +133,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
         {!disabled && <ChevronDownIcon color="text" width="24px" />}
       </StyledUserMenu>
       {!disabled && (
-        <Menu style={styles.popper} ref={setTooltipRef} {...attributes.popper} isOpen={isOpen}>
+        <Menu ref={setTooltipRef} {...attributes.popper} isOpen={isOpen}>
           <Box onClick={() => setIsOpen(false)}>{children?.({ isOpen })}</Box>
         </Menu>
       )}

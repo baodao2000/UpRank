@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Heading, Flex, Text, Card, Button, useToast } from '@pancakeswap/uikit'
+import { Heading, Flex, Text, Card, Button, useToast, useMatchBreakpoints } from '@pancakeswap/uikit'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { ThreeDots } from 'views/Pool/components/DepositModal'
 import useConfirmTransaction from 'hooks/useConfirmTransaction'
@@ -22,6 +22,7 @@ const ListPoolRanks = styled.div`
   flex-direction: row;
   @media screen and (max-width: 575px) {
     padding: 16px;
+    grid-row-gap: 16px;
   }
   @media screen and (max-width: 1300px) {
     justify-content: center;
@@ -339,6 +340,8 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
       onSuccess()
     },
   })
+  const { isMobile } = useMatchBreakpoints()
+
   const canUpRank1 = userRank.locked >= nextRankRequire[userRank.rank].locked
   const canUpRank2 = userRank.volumnOnTree >= nextRankRequire[userRank.rank].volumnOnTree
   const canUpRank3 = userRank.direct >= nextRankRequire[userRank.rank].direct
@@ -369,7 +372,7 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
             <ImageRank src={userRank.image} alt="" />
             <TitleHeadRight style={{ color: '#fff' }}>Bronze</TitleHeadRight>
           </HeadLeft>
-          <HeadRight style={{ color: getColor('') }}>
+          <HeadRight style={{ color: getColor(''), display: isMobile ? 'none' : 'block' }}>
             <TitleHeadRightBronze style={{ color: '#fff' }}>Your Rank</TitleHeadRightBronze>
           </HeadRight>
         </CardHead>

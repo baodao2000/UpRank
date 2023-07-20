@@ -1,3 +1,3 @@
-import Pools from 'views/Pools2'
+import poolsv2 from 'views/PoolV2'
 
-export default Pools
+export default poolsv2

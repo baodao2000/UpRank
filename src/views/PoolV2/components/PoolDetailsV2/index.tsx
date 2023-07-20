@@ -317,7 +317,7 @@ const Pool = ({ poolId }) => {
             alt="iconback"
           />
           <PageHeader background="none">
-            <BtnBack href="/poolv2">
+            <BtnBack href="/pools">
               <img src={images.iconback} alt="iconback" />
               Back
             </BtnBack>

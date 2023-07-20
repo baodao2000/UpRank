@@ -82,6 +82,7 @@ const PoolsList = styled.div`
     flex-direction: column;
     width: 100%;
     align-items: center;
+    grid-row-gap: 32px;
   }
   @media screen and (max-width: 1300px) {
     grid-column-gap: 20px;
@@ -663,7 +664,7 @@ const ButtonDetails = styled.div`
   border: 1px solid var(--color-bg-color-bg-container, #fff);
   width: 70px;
 `
-const PoolsV2 = () => {
+const Pools = () => {
   const { account, chainId } = useActiveWeb3React()
   const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId
   const getPoolV3Contract = getPoolsV3Contract(CHAIN_ID)
@@ -939,8 +940,10 @@ const PoolsV2 = () => {
         <div>
           <TitleContent>Pools Rewards</TitleContent>
           <LabelContent>
-            These Pool Rewards are only for Referral. Let invite your friends and get our rewards{' '}
-            <span className="link">Invite Now</span>
+            <p>
+              These Pool Rewards are only for Referral. Let invite your friends and get our rewards{' '}
+              <span className="link">Invite Now</span>
+            </p>
           </LabelContent>
           <LabelContent>
             <span style={{ color: 'rgba(173, 171, 178, 1)' }}>Root Contract:</span>
@@ -1097,7 +1100,7 @@ const PoolsV2 = () => {
                         <Info>
                           <Reward>
                             <Lineleft>
-                              <Line style={{ height: '70px' }}>
+                              <Line>
                                 <span>Interest</span>
                                 <Text
                                   style={{
@@ -1122,7 +1125,7 @@ const PoolsV2 = () => {
                                   %
                                 </Text>
                               </Line>
-                              <Line style={{ height: '70px' }}>
+                              <Line>
                                 <span>Interest With Mine</span>
                                 <Text
                                   style={{
@@ -1222,7 +1225,7 @@ const PoolsV2 = () => {
                               </Line>
                             </Lineleft>
                             <Lineright>
-                              <Line style={{ height: '70px' }}>
+                              <Line>
                                 <span>Time Lock</span>
                                 <span
                                   style={{
@@ -1392,4 +1395,4 @@ const PoolsV2 = () => {
     </Wraper>
   )
 }
-export default PoolsV2
+export default Pools

@@ -3,6 +3,9 @@ import { StyledMenuItemProps } from "./types";
 
 export const StyledMenuItemContainer = styled.div<StyledMenuItemProps>`
   position: relative;
+  @media screen and (min-width: 1440px) {
+    margin: 10px 20px;
+  }
 `;
 
 const StyledMenuItem = styled.a<StyledMenuItemProps>`
@@ -13,9 +16,9 @@ const StyledMenuItem = styled.a<StyledMenuItemProps>`
   font-size: 25px;
   font-weight: 800;
   font-family: Inter, sans-serif;
-  margin: 10px 30px;
+
   background: ${({ $isActive }) => ($isActive ? "rgba(175, 137, 238, 0.20)" : "blackrgba(39,38,44,0.7)")};
-  border-radius: ${({ $isActive }) => ($isActive ? "8px" : "0")};
+  border-radius: ${({ $isActive }) => ($isActive ? "16px" : "16px")};
   background: ${({ $isActive }) => ($isActive ? "rgba(175, 137, 238, 0.20)" : "black")};
   opacity: ${({ $isDisabled }) => ($isDisabled ? 0.5 : 1)};
 
@@ -39,7 +42,7 @@ const StyledMenuItem = styled.a<StyledMenuItemProps>`
     height: 48px;
   `
       : `
-    padding: 4px 4px 0px 4px;
+    padding: 20px;
     height: 42px;
   `}
 
