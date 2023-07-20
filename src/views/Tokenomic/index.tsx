@@ -1,105 +1,50 @@
 import { Text, useMatchBreakpoints } from '@pancakeswap/uikit'
 import Image from 'next/image'
-import React from 'react'
-import { IOSView, isDesktop } from 'react-device-detect'
-import { Global } from 'recharts'
 import styled from 'styled-components'
+import images from 'configs/images'
+
 const Wrapper = styled.div`
+  background: url(${images.bg}) no-repeat;
+  background-size: cover;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: black;
   gap: 10px;
   padding: 0 20px !important;
   * {
-    font-family: 'Helvetica Compressed';
+    font-family: Inter, sans-serif;
+  }
+  @media screen and (max-width: 575px) {
+    background: black;
   }
 `
 const OverviewText = styled.div`
-  margin-top: 30px;
-  text-align: center;
-  font-family: Raleway, sans-serif;
   font-size: 60px;
   font-weight: 700;
   line-height: 72px;
-  letter-spacing: 1.92px;
+  letter-spacing: -0.02em;
+  text-align: left;
+
+  margin-top: 30px;
   background: linear-gradient(180deg, #7b3fe4 0%, #a726c1 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   @media screen and (max-width: 575px) {
-    font-size: 28px;
-    width: 70%;
-    font-weight: 700;
+    font-size: 24px;
   }
 `
-const PoolText = styled.div`
-  margin-top: 300px;
-  // font-family: Raleway, sans-serif;
-  font-size: 48px;
-  font-weight: 700;
-  text-align: center;
-  color: #ffffff;
-  letter-spacing: 0.04em;
-  @media screen and (max-width: 575px) {
-    font-size: 30px;
-    margin-top: 300px !important;
-  }
-  @media screen and (max-width: 900px) {
-    margin-top: 100px;
-  }
-  @media screen and (max-width: 1440px) {
-    margin-top: 170px;
-  }
-`
-const RankText = styled.div`
-  margin-top: 50px;
-  // font-family: Raleway, sans-serif;
-  font-size: 48px;
-  font-weight: 700;
-  text-align: center;
-  color: #ffffff;
-  letter-spacing: 0.04em;
-  @media screen and (max-width: 575px) {
-    font-size: 30px;
-    margin-top: 100px;
-  }
-  @media screen and (max-width: 900px) {
-    margin-top: 100px;
-  }
-  @media screen and (max-width: 1440px) {
-    margin-top: 50px;
-  }
-`
-const BoxContain = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 20px;
-  width: 350px;
-  height: 70px;
-  padding: 24px 32px 24px 32px;
-  gap: 4px;
-  border-radius: 8px;
-  background: linear-gradient(
-    88deg,
-    rgba(147, 255, 229, 0.06) 0%,
-    rgba(229, 255, 251, 0.22) 29.82%,
-    rgba(114, 255, 237, 0.17) 58.86%,
-    rgba(183, 255, 248, 0.29) 79.19%,
-    rgba(87, 255, 244, 0.27) 100%
-  );
-  box-shadow: 0px 4px 12px 0px rgba(255, 255, 255, 0.31) inset;
-  backdrop-filter: blur(5px);
-`
-const SupplyText = styled.div`
-  width: 785px;
-  text-align: center;
-  font-family: Poppins, sans-serif;
-  font-weight: 400;
+
+const OverviewContent = styled(Text)`
   font-size: 18px;
+  font-weight: 400;
   line-height: 28px;
-  color: #fff;
+  letter-spacing: 0em;
+  color: #adabb2;
+  text-align: center;
+  @media screen and (max-width: 575px) {
+    font-size: 16px;
+  }
 `
 const Container = styled.div`
   margin-bottom: 100px;
@@ -108,546 +53,6 @@ const Container = styled.div`
   align-items: center;
   gap: 10px;
   height: 100%;
-`
-const ImageOverview = styled.div``
-const GetTrendText = styled.div`
-  margin-top: 100px;
-  // font-family: Raleway, sans-serif;
-  font-size: 40px;
-  font-weight: 600;
-  text-align: center;
-  color: #ffffff;
-  letter-spacing: 0.04em;
-  @media screen and (max-width: 575px) {
-    font-size: 25px;
-    margin-top: 50px;
-  }
-  @media screen and (max-width: 900px) {
-    margin-top: 50px;
-  }
-  @media screen and (max-width: 900px) {
-    margin-top: 50px;
-  }
-  @media screen and (max-width: 1440px) {
-    margin-top: 50px;
-  }
-`
-const ContainerBox = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1px;
-  @media screen and (max-width: 575px) {
-    flex-direction: column;
-  }
-  @media screen and (max-width: 900px) {
-    flex-direction: column;
-  }
-  @media screen and (max-width: 1100px) {
-    flex-direction: column;
-  }
-`
-const BoxOne = styled.div`
-  display: flex;
-  gap: 10px;
-  flex-direction: row;
-  border-radius: 8px;
-  width: 431px;
-  height: 96px;
-  padding: 16px;
-  margin-top: 50px;
-  transform: rotate(-12.75deg) skew(-10deg);
-  background: linear-gradient(
-      99.62deg,
-      #8f92e9 6.45%,
-      rgba(190, 192, 247, 0.96) 30.76%,
-      rgba(200, 202, 246, 0.673081) 42.16%,
-      rgba(151, 154, 219, 0.621643) 60.38%,
-      #676ad5 104.82%
-    ),
-    linear-gradient(
-      108.29deg,
-      #f5fbf2 12.78%,
-      rgba(245, 251, 242, 0) 35.95%,
-      rgba(245, 251, 242, 0.19) 71.1%,
-      #f5fbf2 87.02%
-    );
-
-  border: 3px solid;
-  border-image-slice: 1;
-  border-image-source: linear-gradient(
-    108.29deg,
-    #f5fbf2 12.78%,
-    rgba(245, 251, 242, 0) 35.95%,
-    rgba(245, 251, 242, 0.19) 71.1%,
-    #f5fbf2 87.02%
-  );
-  //   box-shadow: 5px 1px 1px 5px rgba(139, 142, 227, 1);
-  //   animation: mymove 5s infinite ;
-  //    transition: box-shadow 0.3s ease-in-out;
-
-  // @keyframes mymove {
-  //   50% {box-shadow: 10px 20px 30px #676ad5;}
-  @media screen and (max-width: 575px) {
-    transform: none;
-    width: 350px;
-  }
-  @media screen and (max-width: 900px) {
-    transform: none;
-  }
-  @media screen and (max-width: 1100px) {
-    transform: none;
-  }
-`
-const BoxOneContain = styled.div`
-  padding: 16px;
-  border-radius: 8px;
-  border: 1px solid #ffffff4f;
-  align-items: center;
-  display: flex;
-  border: 3px solid
-    linear-gradient(
-      179.96deg,
-      #f5fbf2 0.04%,
-      rgba(245, 251, 242, 0.13) 60.6%,
-      rgba(245, 251, 242, 0) 86.72%,
-      rgba(245, 251, 242, 0.35) 99.96%
-    );
-  justify-content: center;
-  transform: rotate(-1deg);
-
-  background: radial-gradient(
-    87.25% 105.06% at 14.12% -6.25%,
-    rgba(205, 207, 255, 0.6) 0%,
-    rgba(136, 139, 224, 0.264) 100%
-  );
-
-  box-shadow: 0px 4px 4px 0px rgba(255, 255, 255, 0.25) inset;
-
-  @media screen and (max-width: 575px) {
-    transform: none;
-  }
-`
-const BoxOneContainText = styled.div`
-  // font-family: Impact;
-  font-weight: 400;
-  font-size: 36px;
-  line-height: 36px;
-  align-items: center;
-  letter-spacing: 0.04em;
-  transform: rotate(-1);
-  background: -webkit-linear-gradient(0deg, rgba(136, 234, 234, 0.2), rgba(136, 234, 234, 0.2)),
-    linear-gradient(
-      168.94deg,
-      #f9ffff 26.97%,
-      rgba(154, 254, 254, 0.298811) 57.93%,
-      rgba(121, 254, 254, 0.23) 77.16%,
-      rgba(203, 250, 250, 0.59) 94.98%
-    );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-`
-const BoxOneText = styled.div`
-  width: 260px;
-  font-family: 'Helvetica Compressed';
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 17.6px;
-  letter-spacing: 0.04em;
-  color: #fff;
-`
-const BoxTwo = styled.div`
-  display: flex;
-  gap: 10px;
-  flex-direction: row;
-  border-radius: 8px;
-  width: 431px;
-  height: 96px;
-  padding: 16px;
-  margin-top: 20px;
-  border: 3px solid;
-  color: #fff;
-
-  border-image-source: linear-gradient(
-    1.29deg,
-    #f5fbf2 12.78%,
-    rgba(245, 251, 242, 0) 35.95%,
-    rgba(245, 251, 242, 0.19) 71.1%,
-    #f5fbf2 87.02%
-  );
-  background: linear-gradient(
-      122.88deg,
-      #8f92e9 3.11%,
-      rgba(176, 178, 246, 0.710616) 16.24%,
-      rgba(192, 194, 240, 0.673081) 24.11%,
-      rgba(151, 154, 219, 0.621643) 43.85%,
-      #676ad5 100.23%
-    ),
-    linear-gradient(
-      108.29deg,
-      #f5fbf2 12.78%,
-      rgba(245, 251, 242, 0) 35.95%,
-      rgba(245, 251, 242, 0.19) 71.1%,
-      #f5fbf2 87.02%
-    );
-
-  border-image-slice: 1;
-  // box-shadow: 5px 1px 1px 5px rgba(139, 142, 227, 1);
-
-  //    transition: box-shadow 0.3s ease-in-out;
-
-  //   animation: mymove 5s infinite;
-
-  // @keyframes mymove {
-  //   50% {box-shadow: 10px 20px 30px #676ad5;}
-  @media screen and (max-width: 575px) {
-    display: none;
-  }
-  @media screen and (max-width: 900px) {
-    display: none;
-  }
-  @media screen and (max-width: 1100px) {
-    display: none;
-  }
-`
-const BoxTwoRes = styled.div`
-  display: flex;
-  gap: 10px;
-  flex-direction: row;
-  border-radius: 8px;
-  width: 431px;
-  height: 96px;
-  padding: 16px;
-  margin-top: 20px;
-  border: 3px solid;
-  border-image-slice: 1;
-  color: #fff;
-
-  border-image-source: linear-gradient(
-    108.29deg,
-    #f5fbf2 12.78%,
-    rgba(245, 251, 242, 0) 35.95%,
-    rgba(245, 251, 242, 0.19) 71.1%,
-    #f5fbf2 87.02%
-  );
-  background: linear-gradient(
-      122.88deg,
-      #8f92e9 3.11%,
-      rgba(176, 178, 246, 0.710616) 16.24%,
-      rgba(192, 194, 240, 0.673081) 24.11%,
-      rgba(151, 154, 219, 0.621643) 43.85%,
-      #676ad5 100.23%
-    ),
-    linear-gradient(
-      108.29deg,
-      #f5fbf2 12.78%,
-      rgba(245, 251, 242, 0) 35.95%,
-      rgba(245, 251, 242, 0.19) 71.1%,
-      #f5fbf2 87.02%
-    );
-
-  @media screen and (max-width: 575px) {
-    width: 350px;
-    display: flex !important;
-  }
-  @media screen and (max-width: 1024px) {
-    display: flex !important;
-  }
-  @media screen and (min-width: 1440px) {
-    display: none;
-  }
-  @media screen and (max-width: 1438px) {
-    display: none;
-  }
-`
-const BoxTwoContain = styled.div`
-  padding: 16px;
-  border-radius: 8px;
-  border: 1px solid #ffffff4f;
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  background: radial-gradient(
-      87.25% 105.06% at 14.12% -6.25%,
-      rgba(205, 207, 255, 0.6) 0%,
-      rgba(136, 139, 224, 0.264) 100%
-    )
-    linear-gradient(
-      179.96deg,
-      #f5fbf2 0.04%,
-      rgba(245, 251, 242, 0.13) 60.6%,
-      rgba(245, 251, 242, 0) 86.72%,
-      rgba(245, 251, 242, 0.35) 99.96%
-    );
-  box-shadow: 0px 4px 4px 0px rgba(255, 255, 255, 0.25) inset;
-`
-const BoxTwoContainText = styled.div`
-  // font-family: Impact;
-  font-weight: 400;
-  font-size: 36px;
-  line-height: 36px;
-  align-items: center;
-  letter-spacing: 0.04em;
-  background: -webkit-linear-gradient(0deg, rgba(136, 234, 234, 0.2), rgba(136, 234, 234, 0.2)),
-    linear-gradient(
-      168.94deg,
-      #f9ffff 26.97%,
-      rgba(154, 254, 254, 0.298811) 57.93%,
-      rgba(121, 254, 254, 0.23) 77.16%,
-      rgba(203, 250, 250, 0.59) 94.98%
-    );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-`
-const BoxTwoText = styled.div`
-  width: 220px;
-  font-family: 'Helvetica Compressed';
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 17.6px;
-  letter-spacing: 0.04em;
-`
-const BoxThree = styled.div`
-  display: flex;
-  gap: 10px;
-  flex-direction: row;
-  border-radius: 8px;
-  width: 431px;
-  height: 96px;
-  padding: 16px;
-  margin-top: 50px;
-  transform: rotate(12.75deg) skew(10deg);
-  background: linear-gradient(
-      122.88deg,
-      #8f92e9 3.11%,
-      rgba(176, 178, 246, 0.710616) 16.24%,
-      rgba(192, 194, 240, 0.673081) 24.11%,
-      rgba(151, 154, 219, 0.621643) 43.85%,
-      #676ad5 100.23%
-    ),
-    linear-gradient(
-      108.29deg,
-      #f5fbf2 12.78%,
-      rgba(245, 251, 242, 0) 35.95%,
-      rgba(245, 251, 242, 0.19) 71.1%,
-      #f5fbf2 87.02%
-    );
-
-  border: 3px solid;
-  border-image-slice: 1;
-  //     box-shadow: 5px 1px 1px 5px rgba(139, 142, 227, 1);
-
-  //   animation: mymove 5s infinite alternate;
-  //    transition: box-shadow 0.3s ease-in-out;
-
-  // @keyframes mymove {
-  //   50% {box-shadow: 10px 20px 30px #676ad5;}
-  border-image-source: linear-gradient(
-    108.29deg,
-    #f5fbf2 12.78%,
-    rgba(245, 251, 242, 0) 35.95%,
-    rgba(245, 251, 242, 0.19) 71.1%,
-    #f5fbf2 87.02%
-  );
-  @media screen and (max-width: 575px) {
-    transform: none;
-    width: 350px;
-    margin-top: 20px !important;
-  }
-  @media screen and (max-width: 900px) {
-    transform: none;
-    margin-top: 190px;
-  }
-  @media screen and (max-width: 1100px) {
-    transform: none;
-    margin-top: 190px;
-  }
-`
-const BoxThreeContain = styled.div`
-  width: 64px;
-  height: 64px;
-  border-radius: 8px;
-  border: 1px solid #ffffff4f;
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  transform: rotate(12.75deg);
-  background: radial-gradient(
-      87.25% 105.06% at 14.12% -6.25%,
-      rgba(205, 207, 255, 0.6) 0%,
-      rgba(136, 139, 224, 0.264) 100%
-    )
-    linear-gradient(
-      179.96deg,
-      #f5fbf2 0.04%,
-      rgba(245, 251, 242, 0.13) 60.6%,
-      rgba(245, 251, 242, 0) 86.72%,
-      rgba(245, 251, 242, 0.35) 99.96%
-    );
-  box-shadow: 0px 4px 4px 0px rgba(255, 255, 255, 0.25) inset;
-  @media screen and (max-width: 575px) {
-    transform: none;
-  }
-`
-const BoxThreeContainText = styled.div`
-  // font-family: Impact;
-  font-weight: 400;
-  font-size: 36px;
-  line-height: 36px;
-  align-items: center;
-  letter-spacing: 0.04em;
-  transform: rotate(12.75deg);
-  background: -webkit-linear-gradient(0deg, rgba(136, 234, 234, 0.2), rgba(136, 234, 234, 0.2)),
-    linear-gradient(
-      168.94deg,
-      #f9ffff 26.97%,
-      rgba(154, 254, 254, 0.298811) 57.93%,
-      rgba(121, 254, 254, 0.23) 77.16%,
-      rgba(203, 250, 250, 0.59) 94.98%
-    );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-`
-const BoxThreeText = styled.div`
-  width: 220px;
-  font-family: 'Helvetica Compressed';
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 17.6px;
-  // letter-spacing: 0.04em;
-`
-const RankContent = styled.div`
-  width: 802px;
-  // font-family: Raleway, sans-serif;
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 22px;
-  letter-spacing: 0.04em;
-  text-align: center;
-  color: rgba(200, 200, 200, 1);
-  @media screen and (max-width: 575px) {
-    width: 350px;
-    font-size: 15px;
-  }
-`
-const PoolContent = styled.div`
-  width: 680px;
-  // font-family: Raleway, sans-serif;
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 22px;
-  letter-spacing: 0.04em;
-  text-align: center;
-  color: rgba(200, 200, 200, 1);
-  @media screen and (max-width: 575px) {
-    width: 370px;
-    font-size: 15px;
-  }
-`
-const RankImage = styled.div`
-  display: flex;
-  flex-direction: row;
-  margin-bottom: 50px;
-  @media screen and (max-width: 575px) {
-    flex-direction: column;
-  }
-`
-const GlobeImage = styled.div`
-  width: 450px;
-  height: 150px;
-  position: relative;
-  @media screen and (max-width: 575px) {
-    width: 350px;
-    height: 1px;
-  }
-`
-const ButtonStake = styled.div`
-  position: absolute;
-  top: 170%;
-  left: 53%;
-  transform: translate(-50%, -50%);
-  font-family: 'Helvetica Compressed';
-  font-weight: 700;
-  font-size: 20px;
-  cursor: pointer;
-  align-items: center;
-  display: flex;
-  background: linear-gradient(167.91deg, #a3d8d5 13.8%, #cafbf8 26.11%, #f2fdff 37.78%, #cfeaeb 49.33%, #7bf7ff 89.87%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-`
-const ButtonStakeRes = styled.div`
-  position: absolute;
-  top: 200px;
-  left: 53%;
-  transform: translate(-50%, -50%);
-  font-family: 'Helvetica Compressed';
-  font-weight: 700;
-  font-size: 20px;
-  cursor: pointer;
-  align-items: center;
-  display: flex;
-  background: linear-gradient(167.91deg, #a3d8d5 13.8%, #cafbf8 26.11%, #f2fdff 37.78%, #cfeaeb 49.33%, #7bf7ff 89.87%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-`
-const ButtonContain = styled.div`
-  background: linear-gradient(167.91deg, #a3d8d5 13.8%, #cafbf8 26.11%, #f2fdff 37.78%, #cfeaeb 49.33%, #7bf7ff 89.87%);
-  boxshadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-`
-
-const GlobalTextContent = styled.div`
-  // font-family: Dosis;
-  top: 140%;
-
-  font-weight: 400;
-  font-size: 18px;
-  color: rgba(255, 255, 255, 1);
-`
-const GlobalPool = styled.div`
-  position: relative;
-`
-const Table = styled.div`
-  overflow: auto;
-  height: 1930px;
-  margin-top: 270px;
-  left: 100px;
-  padding: 24px 12px 24px 12px;
-  border-radius: 15px;
-  border: 1px;
-  background: radial-gradient(
-    100% 115.26% at 0% -2.74%,
-    rgba(125, 128, 196, 0.7) 0%,
-    rgba(71, 74, 155, 0.253633) 80.17%,
-    rgba(164, 164, 164, 0.308) 100%
-  );
-  @media screen and (max-width: 1024px) {
-    width: 1000px !important;
-  }
-  @media screen and (max-width: 768px) {
-    width: 700px !important;
-  }
-  @media screen and (max-width: 575px) {
-    width: 300px !important;
-    height: 600px;
-    margin-top: 300px;
-  }
-`
-const TitleText = styled.div`
-  font-family: 'Helvetica Compressed';
-  font-weight: 700;
-  font-size: 16px;
-  color: rgba(255, 255, 255, 1);
-`
-const ContentText = styled.div`
-  font-family: 'Helvetica Compressed';
-  font-weight: 700;
-  font-size: 22px;
-  color: rgba(255, 255, 255, 1);
-  text-align: right;
 `
 const Token = styled.div`
   display: flex;
@@ -661,39 +66,31 @@ const Token = styled.div`
 `
 const Card = styled.div`
   border-radius: 8px;
-  background: linear-gradient(
-    351deg,
-    rgba(143, 146, 233, 0.5) 3.65%,
-    rgba(176, 178, 246, 0.36) 16.67%,
-    rgba(192, 194, 240, 0.34) 24.48%,
-    rgba(151, 154, 219, 0.31) 44.06%,
-    rgba(103, 106, 212, 0.5) 100%
-  );
-  backdrop-filter: blur(50px);
   display: flex;
-  width: 714px;
-  height: 323px;
-  padding: 48px 56px;
+  width: 490px;
+  height: 300px;
+  line-height: 100px;
   gap: 44px;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   @media screen and (max-width: 575px) {
-    width: 100%;
-    flex-direction: column;
     height: 100%;
-    padding: 24px;
+    width: 320px;
   }
 `
 const ContentRight = styled.div`
   display: flex;
-  gap: 10px;
+  width: 216px;
+  gap: 20px;
   flex-direction: column;
 `
 const ContentLeft = styled.div`
   display: flex;
-  gap: 10px;
+  width: 310px;
+  gap: 20px;
   flex-direction: column;
+  justify-content: flex-end;
 `
 const Item = styled.div`
   display: flex;
@@ -701,788 +98,124 @@ const Item = styled.div`
   gap: 15px;
 `
 const Title = styled(Text)`
-  color: #f3f2f9;
-  font-family: 'Helvetica Compressed';
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 110%;
-  letter-spacing: 0.64px;
-  width: 250px;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 30px;
+  letter-spacing: 0em;
+  text-align: left;
+  @media screen and (max-width: 575px) {
+    font-size: 14px;
+  }
 `
 const Label = styled(Text)`
-  color: #f3f2f9;
-  font-family: 'Helvetica Compressed';
-  font-size: 24px;
-  font-style: normal;
+  font-size: 30px;
   font-weight: 700;
-  line-height: 110%;
-  letter-spacing: 0.96px;
+  line-height: 38px;
+  letter-spacing: 0em;
+  text-align: left;
+  @media screen and (max-width: 575px) {
+    font-size: 20px;
+  }
+`
+const SupplyText = styled(Text)`
+  line-height: 30px;
+  font-weight: 500;
+  color: #adabb2;
+  font-size: 20px;
+  @media screen and (max-width: 575px) {
+    font-size: 18px;
+  }
+`
+const SupplyNumber = styled(Text)`
+  font-size: 54px;
+  line-height: 64px;
+  font-weight: 700;
+  @media screen and (max-width: 575px) {
+    font-size: 20px;
+  }
 `
 const dataLeft = [
   {
     title: 'Team foundation',
     label: '15.00%',
+    text: '#FF703B',
   },
   {
-    title: 'Platform',
-    label: '17.00%',
+    title: 'Miners Reward',
+    label: '50.00%',
+    text: '#8544F5',
   },
   {
-    title: 'Market Maker',
-    label: '10%',
-    color: '#30E3FF',
+    title: 'Bounty - Marketing',
+    label: '3.00%',
+    text: '#AF89EE',
   },
 ]
 const dataRight = [
   {
-    title: 'Miners Reward',
-    label: '50%',
-    color: '#B128FF',
+    title: 'Platform',
+    label: '17.00%',
+    text: '#8ED556',
+  },
+
+  {
+    title: 'Market Maker',
+    label: '10.00%',
+    text: '#1250B0',
   },
   {
-    title: 'Community and close partners',
-    label: '17%',
-    color: '#8500F9',
-  },
-  {
-    title: 'Team Foundation',
-    label: '15%',
-    color: '#1F31F3',
+    title: 'Early Contributors',
+    label: '5.00%',
+    text: '#3AA6FF',
   },
 ]
 
-const Icon = styled.div`
-width: 24px;
-height: 24px;
-border-radius: 4px;
-box-shadow: 0px 4px 4px 0px rgba(246, 246, 246, 0.27) inset, 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-1x
-
-`
-const data = [
-  {
-    day: 1,
-    price: 1,
-    speed: 0.001369863014,
-    perDay: '',
-    remain: 730,
-    claim: 1,
-  },
-  {
-    day: 2,
-    price: 1.1,
-    speed: 0.001245330012,
-    perDay: 1,
-    remain: 729,
-    claim: 1,
-  },
-  {
-    day: 3,
-    price: 1.2,
-    speed: 0.001369863014,
-    perDay: 0.9090909091,
-    remain: 728.0909091,
-    claim: 1,
-  },
-  {
-    day: 4,
-    price: 1.3,
-    speed: 0.00105374078,
-    perDay: 0.8333333333,
-    remain: 727.2575758,
-    claim: 1,
-  },
-  {
-    day: 5,
-    price: 1.4,
-    speed: 0.0009784735812,
-    perDay: 0.7692307692,
-    remain: 726.488345,
-    claim: 1,
-  },
-  {
-    day: 6,
-    price: 1.5,
-    speed: 0.0009132420091,
-    perDay: 0.7142857143,
-    remain: 725.7740593,
-    claim: 1,
-  },
-  {
-    day: 7,
-    price: 1.6,
-    speed: 0.0008561643836,
-    perDay: 0.6666666667,
-    remain: 725.1073926,
-    claim: 1,
-  },
-  {
-    day: 8,
-    price: 1.7,
-    speed: 0.0008058017728,
-    perDay: 0.625,
-    remain: 724.4823926,
-    claim: 1,
-  },
-  {
-    day: 9,
-    price: 1.8,
-    speed: 0.0007610350076,
-    perDay: 0.5882352941,
-    remain: 723.8941573,
-    claim: 1,
-  },
-  {
-    day: 10,
-    price: 1.9,
-    speed: 0.0007209805335,
-    perDay: 0.5555555556,
-    remain: 723.3386018,
-    claim: 1,
-  },
-  {
-    day: 11,
-    price: 2.0,
-    speed: 0.0006849315068,
-    perDay: 0.5263157895,
-    remain: 722.812286,
-    claim: 1,
-  },
-  {
-    day: 12,
-    price: 2.1,
-    speed: 0.0006523157208,
-    perDay: 0.5,
-    remain: 722.312286,
-    claim: 1,
-  },
-  {
-    day: 13,
-    price: 2.2,
-    speed: 0.0006226650062,
-    perDay: 0.4761904762,
-    remain: 721.8360955,
-    claim: 1,
-  },
-  {
-    day: 14,
-    price: 2.3,
-    speed: 0.0005955926147,
-    perDay: 0.4545454545,
-    remain: 721.38155,
-    claim: 1,
-  },
-  {
-    day: 15,
-    price: 2.4,
-    speed: 0.0005707762557,
-    perDay: 0.4347826087,
-    remain: 720.9467674,
-    claim: 1,
-  },
-  {
-    day: 16,
-    price: 2.5,
-    speed: 0.0005479452055,
-    perDay: 0.4166666667,
-    remain: 720.5301008,
-    claim: 1,
-  },
-  {
-    day: 17,
-    price: 2.6,
-    speed: 0.0005268703899,
-    perDay: 0.4,
-    remain: 0.3846153846,
-    claim: 1,
-  },
-  {
-    day: 18,
-    price: 2.7,
-    speed: 0.0005073566717,
-    perDay: 0.3846153846,
-    remain: 0.3703703704,
-    claim: 1,
-  },
-
-  {
-    day: 19,
-    price: 2.8,
-    speed: 0.0004892367906,
-    perDay: 0.3703703704,
-    remain: 0.3571428571,
-    claim: 1,
-  },
-  {
-    day: 20,
-    price: 2.9,
-    speed: 0.0004723665564,
-    perDay: 0.3571428571,
-    remain: 0.3448275862,
-    claim: 1,
-  },
-  {
-    day: 21,
-    price: 3,
-    speed: 0.0004566210046,
-    perDay: 0.3448275862,
-    remain: 0.3333333333,
-    claim: 1,
-  },
-]
 function Tokenomic() {
-  const { isMobile, isTablet, isDesktop, isXl } = useMatchBreakpoints()
+  const { isMobile, isTablet } = useMatchBreakpoints()
 
   return (
     <Wrapper>
       <Container>
         <OverviewText>Tokenomic Overview</OverviewText>
 
-        <SupplyText>
+        <OverviewContent style={{ width: isMobile ? '343px' : isTablet ? '743px' : '785px' }}>
           Welcome to our member count section! Here, you can track the growth of our community and get a sense of the
           scale of our website&apos;s audience.
-        </SupplyText>
+        </OverviewContent>
         <Token>
-          <ImageOverview>
-            <Image src="/images/newTokenomic.png" alt="tokenomic" width="500px" height="500px" />
-          </ImageOverview>
-          <Card>
-            <div>
+          <Image
+            src="/images/newTokenomic.png"
+            alt="tokenomic"
+            width={isMobile ? '343px' : '500px'}
+            height={isMobile ? '343px' : '500px'}
+          />
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <SupplyText>Supply</SupplyText>
+            <SupplyNumber>21,000,000 TREND</SupplyNumber>
+            <Card>
               <ContentLeft>
-                {dataLeft.map((item) => (
+                {dataLeft.map((item, index) => (
                   <Item>
-                    <Icon style={{ background: item.color }}></Icon>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                        <h1 style={{ fontSize: '20px', lineHeight: '30px', fontWeight: 500 }}>Supply</h1>
-                        <SupplyText style={{ fontSize: '54px', lineHeight: '64px', fontWeight: 700 }}>
-                          21,000,000 TREND
-                        </SupplyText>
-                      </div>
+                      <Label style={{ color: dataLeft[index].text }}>{item.label}</Label>
                       <Title>{item.title}</Title>
-                      <Label>{item.label}</Label>
                     </div>
                   </Item>
                 ))}
               </ContentLeft>
-            </div>
-            <div>
               <ContentRight>
-                {dataRight.map((item) => (
+                {dataRight.map((item, index) => (
                   <Item>
-                    <Icon style={{ background: item.color }}></Icon>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                      <Label style={{ color: dataRight[index].text }}>{item.label}</Label>
                       <Title>{item.title}</Title>
-                      <Label>{item.label}</Label>
                     </div>
                   </Item>
                 ))}
               </ContentRight>
-            </div>
-          </Card>
+            </Card>
+          </div>
         </Token>
-        <GetTrendText>
-          How to get <span style={{ color: '#95ffec' }}> TREND</span> Token
-        </GetTrendText>
-        <BoxTwo>
-          <BoxTwoContain>
-            <Image src="/images/iconMining.png" width={35} height={40} style={{ filter: 'brightness(950%)' }} />
-          </BoxTwoContain>
-          <BoxTwoText>Earn profits and rewards by developing the Pool Standard system</BoxTwoText>
-        </BoxTwo>
-
-        <ContainerBox>
-          <BoxOne>
-            <BoxOneContain>
-              <Image src="/images/iconMining.png" width={35} height={40} style={{ filter: 'brightness(950%)' }} />
-            </BoxOneContain>
-            <BoxOneText>Mint Trend Token through Pool Starter</BoxOneText>
-          </BoxOne>
-          <BoxTwoRes>
-            <BoxTwoContain>
-              <Image src="/images/iconMining.png" width={35} height={40} style={{ filter: 'brightness(950%)' }} />
-            </BoxTwoContain>
-            <BoxTwoText>Earn profits and rewards by developing the Pool Standard system</BoxTwoText>
-          </BoxTwoRes>
-          <GlobeImage>
-            <div style={{ display: isMobile ? 'none' : 'flex' }}>
-              <Image src="/images/globefinal2.svg" alt="global" width={2600} height={2000} />
-            </div>
-
-            <ButtonContain>
-              <div style={{ display: isMobile ? 'none' : 'flex' }}>
-                <ButtonStake>
-                  STAKE NOW
-                  <span>
-                    <Image src="/images/arrowIcon.png" alt="global" width={20} height={20} />
-                  </span>
-                </ButtonStake>
-              </div>
-            </ButtonContain>
-          </GlobeImage>
-          <BoxThree>
-            <BoxOneContain>
-              <Image src="/images/iconMining.png" width={35} height={40} style={{ filter: 'brightness(950%)' }} />
-            </BoxOneContain>
-            <BoxOneText>Engage in Bounty and Airdrop programs on Trendy DeFi community platforms</BoxOneText>
-          </BoxThree>
-          <div style={{ display: isMobile ? 'flex' : 'none' }}>
-            <GlobeImage>
-              <div style={{ display: isMobile ? 'flex' : 'none' }}>
-                <Image src="/images/globefinal2.svg" alt="global" width={2600} height={2000} />
-              </div>
-
-              <ButtonContain>
-                <div style={{ display: isMobile ? 'flex' : 'none' }}>
-                  <ButtonStakeRes>
-                    STAKE NOW
-                    <span>
-                      <Image src="/images/arrowIcon.png" alt="global" width={20} height={20} />
-                    </span>
-                  </ButtonStakeRes>
-                </div>
-              </ButtonContain>
-            </GlobeImage>
-          </div>
-        </ContainerBox>
-        <PoolText>Pool’s mining speed</PoolText>
-        <PoolContent>The mining speed of the TREND token depends on the highest pool you participate in.</PoolContent>
-        <RankImage>
-          <Image src="/images/starterPool.png" alt="rank" width={200} height={200} />
-          <Image src="/images/standardPool.png" alt="rank" width={200} height={200} />
-          <Image src="/images/proPool.png" alt="rank" width={200} height={200} />
-          <Image src="/images/advancePool.png" alt="rank" width={200} height={200} />
-          <Image src="/images/premiumPool.png" alt="rank" width={200} height={200} />
-        </RankImage>
-
-        <Image src="/images/+.png" alt="+" width={50} height={50} />
-        <RankText>Rank Introduction</RankText>
-        <RankContent>
-          Supercharge your minting speed with Trendy DeFi! Increase your Rank level to accelerate the minting process
-          and unlock faster token acquisition.
-        </RankContent>
-        <RankImage>
-          <Image src="/images/silverRank.png" alt="rank" width={200} height={200} />
-          <Image src="/images/goldRank.png" alt="rank" width={200} height={200} />
-          <Image src="/images/titaniumRank.png" alt="rank" width={200} height={200} />
-          <Image src="/images/platinumRank.png" alt="rank" width={200} height={200} />
-          <Image src="/images/diamondRank.png" alt="rank" width={200} height={200} />
-        </RankImage>
-        <GlobalPool>
-          <div style={{ display: isMobile ? 'none' : 'flex' }}>
-            <Image src="/images/poolGlobal.png" alt="" width={900} height={600} />
-          </div>
-          <div
-            style={{
-              position: 'absolute',
-              top: isMobile ? '10px' : isTablet ? '-10px' : '20px',
-              left: isMobile ? '10px' : isTablet ? '1px' : '-30px',
-              maxWidth: '400px',
-            }}
-          >
-            <Image src="/images/box1.png" alt="" width={400} height={170} />
-            <GlobalTextContent
-              style={{
-                position: 'absolute',
-                left: isMobile ? '30px' : '20px',
-                top: isMobile ? '40px' : '50px',
-                padding: ' 0 30px',
-                maxWidth: isMobile ? '300px' : '350px',
-                width: '100%',
-              }}
-            >
-              The regulation states that for every 1 dollar deposited, the user will receive a 20% conversion to TREND
-              in contract mining.
-            </GlobalTextContent>
-          </div>
-          <div
-            style={{
-              position: 'absolute',
-              top: isMobile ? '130px' : isTablet ? '-10px' : '30px',
-              left: isMobile ? '1px' : isTablet ? '400px' : '500px',
-            }}
-          >
-            <Image src="/images/box2.png" alt="" width={550} height={250} />
-            <GlobalTextContent
-              style={{
-                position: 'absolute',
-                left: isMobile ? '40px' : isTablet ? '50px' : '60px',
-                top: isMobile ? '45px' : isTablet ? '50px' : '50px',
-                padding: ' 0 10px',
-                maxWidth: isTablet ? '300px' : '300px',
-                width: '100%',
-                textAlign: 'right',
-              }}
-            >
-              The claim speed of TREND per day is 1/730, which is equivalent to 2 years. However, it will be inversely
-              proportional to the price of TREND on the pool.
-            </GlobalTextContent>
-          </div>
-          <div style={{ display: isMobile ? 'flex' : 'none', marginTop: '300px' }}>
-            <Image src="/images/poolGlobal.png" alt="" width={900} height={600} />
-          </div>
-          <div
-            style={{
-              display: isMobile ? 'none' : 'flex',
-              position: 'absolute',
-              left: isMobile ? '10px' : isTablet ? '30px' : '60px',
-              top: isMobile ? '600px' : '470px',
-            }}
-          >
-            <Image
-              src="/images/box3.png"
-              alt=""
-              width={isMobile ? 350 : isTablet ? 750 : 800}
-              height={isMobile ? 100 : 110}
-            />
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                position: 'absolute',
-                left: '40px',
-                top: '25px',
-                padding: ' 0 30px',
-                maxWidth: isMobile ? '300px' : isTablet ? '700px' : '750px',
-                width: '100%',
-              }}
-            >
-              <GlobalTextContent style={{ fontSize: '16px' }}>
-                For example, when the price of TREND increases by 100% and doubles, the claiming rate would decrease by
-                two times, resulting in a claiming rate of 1/1460 per day.
-              </GlobalTextContent>
-              <GlobalTextContent style={{ fontSize: '16px' }}>
-                For example, if A has been gifted 730 TREND, they can claim 1 TREND per day. However, if the price of
-                TREND is $2, then A can only claim 0.5 TREND per day.
-              </GlobalTextContent>
-            </div>
-          </div>
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: isMobile ? 'column' : 'row',
-              position: 'relative',
-              top: isMobile ? '1px' : isTablet ? '50px' : '30px',
-              left: isMobile ? '30px' : isTablet ? '30px' : '50px',
-            }}
-          >
-            <div>
-              <Image src="/images/box6.png" alt="" width={isMobile ? 320 : isTablet ? 370 : 400} height={110} />
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  position: 'absolute',
-                  left: isMobile ? '40px' : '60px',
-                  top: isMobile ? '20px' : '20px',
-                  padding: ' 0 25px',
-                  maxWidth: isMobile ? '320px' : isTablet ? '320px' : '350px',
-                  width: '100%',
-                }}
-              >
-                <GlobalTextContent style={{ fontWeight: 700, fontSize: isMobile ? '25px' : '27px' }}>
-                  Pool Standard
-                </GlobalTextContent>
-                <GlobalTextContent style={{ fontSize: '15px' }}>
-                  Claim speed is increased by an additional{' '}
-                  <span style={{ fontWeight: 700, fontSize: isMobile ? '20px' : '25px' }}>0.25% </span>mean
-                  <span style={{ fontWeight: 700, fontSize: isMobile ? '20px' : '25px' }}> 1/730 * 1.25</span>
-                </GlobalTextContent>
-              </div>
-            </div>
-            <div style={{ marginTop: '3px' }}>
-              <Image src="/images/box7png.png" alt="" width={isMobile ? 320 : isTablet ? 370 : 400} height={110} />
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  position: 'absolute',
-                  left: isMobile ? '1px' : isTablet ? '370px' : '410px',
-                  top: isMobile ? '130px' : '20px',
-                  padding: ' 0 30px',
-                  maxWidth: isMobile ? '320px' : isTablet ? '350px' : '400px',
-                  width: '100%',
-                }}
-              >
-                <GlobalTextContent style={{ fontSize: '15px' }}>
-                  <GlobalTextContent style={{ fontWeight: 700, fontSize: '27px' }}>Pool Pro</GlobalTextContent>
-                  Claim speed is increased by an additional{' '}
-                  <span style={{ fontWeight: 700, fontSize: '25px' }}>0.25% </span>mean
-                  <span style={{ fontWeight: 700, fontSize: '25px' }}> 1/730 * 1.25</span>
-                </GlobalTextContent>
-              </div>
-            </div>
-          </div>
-          <div
-            style={{
-              position: 'absolute',
-              left: isMobile ? '40px' : isTablet ? '40px' : '50px',
-              top: isMobile ? '770px' : '750px',
-            }}
-          >
-            <Image
-              src="/images/box4.png"
-              alt=""
-              width={isMobile ? 300 : isTablet ? 730 : 800}
-              height={isMobile ? 120 : 70}
-            />
-            <GlobalTextContent
-              style={{
-                position: 'absolute',
-                left: isMobile ? '20px' : isTablet ? '30px' : '40px',
-                top: isMobile ? '30px' : '25px',
-                padding: ' 0 30px',
-                maxWidth: '800px',
-                width: '100%',
-                fontSize: isTablet ? '18px' : '20px',
-              }}
-            >
-              The claim speed is determined by the highest pool that the user participates in .
-            </GlobalTextContent>
-          </div>
-          <div
-            style={{
-              position: 'absolute',
-              left: isMobile ? '40px' : isTablet ? '40px' : '50px',
-              top: isMobile ? '880px' : '830px',
-            }}
-          >
-            <Image
-              src="/images/box5.png"
-              alt=""
-              width={isMobile ? 300 : isTablet ? 730 : 800}
-              height={isMobile ? 160 : 90}
-            />
-            <GlobalTextContent
-              style={{
-                position: 'absolute',
-                left: isMobile ? '10px' : isTablet ? '5px' : '55px',
-                top: '20px',
-                padding: ' 0 30px',
-                maxWidth: isMobile ? '700px' : '750px',
-                width: '100%',
-                fontSize: '20px',
-                lineHeight: isMobile ? '20px' : '25px',
-              }}
-            >
-              When the user reaches the target level, for example Silver, the claim speed increases by x0.5 =&gt; every
-              day claim <span style={{ fontWeight: 600, fontSize: '20px' }}>1/730 * 1.5 + (1/730 * 1.5 * 0.5)</span>
-            </GlobalTextContent>
-          </div>
-        </GlobalPool>
-        <Table
-          style={{
-            width: isMobile ? '300px' : isTablet ? '700px' : '1280px',
-            overflowX: 'auto',
-            overflowY: 'auto',
-            display: isTablet || isMobile ? 'block' : 'flex',
-            justifyContent: 'center',
-          }}
-        >
-          {' '}
-          <div style={{ display: isMobile ? 'flex' : 'none' }}></div>
-          <table>
-            <tr style={{ gap: '10px', display: 'flex' }}>
-              <th
-                style={{
-                  width: isMobile ? '100px' : '140px',
-                  height: isMobile ? '40px' : '76px',
-                  borderRadius: '8px',
-                  border: '1px solid white',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  background:
-                    'radial-gradient(101.36% 117.36% at 0% -2.74%, #7D84C4 0%, rgba(112, 110, 222, 0.73) 100%) ',
-                }}
-              >
-                <TitleText>Day</TitleText>
-              </th>
-              <th
-                style={{
-                  width: isMobile ? '100px' : '140px',
-                  height: isMobile ? '40px' : '76px',
-                  borderRadius: '8px',
-                  border: '1px solid white',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  background:
-                    'radial-gradient(101.36% 117.36% at 0% -2.74%, #7D84C4 0%, rgba(112, 110, 222, 0.73) 100%) ',
-                }}
-              >
-                <TitleText>TREND Price</TitleText>
-              </th>
-              <th
-                style={{
-                  width: '200px',
-                  height: isMobile ? '40px' : '76px',
-                  borderRadius: '8px',
-                  border: '1px solid white',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  background:
-                    'radial-gradient(101.36% 117.36% at 0% -2.74%, #7D84C4 0%, rgba(112, 110, 222, 0.73) 100%) ',
-                }}
-              >
-                <TitleText>Mine Speed</TitleText>
-              </th>
-              <th
-                style={{
-                  width: '200px',
-                  height: isMobile ? '40px' : '76px',
-                  borderRadius: '8px',
-                  border: '1px solid white',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  background:
-                    'radial-gradient(101.36% 117.36% at 0% -2.74%, #7D84C4 0%, rgba(112, 110, 222, 0.73) 100%) ',
-                }}
-              >
-                <TitleText> The number of 730 TREND claimed per day</TitleText>
-              </th>
-              <th
-                style={{
-                  width: '200px',
-                  height: isMobile ? '40px' : '76px',
-                  borderRadius: '8px',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  border: '1px solid white',
-                  background:
-                    'radial-gradient(101.36% 117.36% at 0% -2.74%, #7D84C4 0%, rgba(112, 110, 222, 0.73) 100%) ',
-                }}
-              >
-                <TitleText>Remained TREND per day</TitleText>
-              </th>
-              <th
-                style={{
-                  width: '200px',
-                  height: isMobile ? '40px' : '76px',
-                  borderRadius: '8px',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  border: '1px solid white',
-                  background:
-                    'radial-gradient(101.36% 117.36% at 0% -2.74%, #7D84C4 0%, rgba(112, 110, 222, 0.73) 100%) ',
-                }}
-              >
-                <TitleText>The number of USD claimed</TitleText>
-              </th>
-            </tr>
-            {data.map((i) => (
-              <tr style={{ gap: '10px', display: 'flex' }}>
-                <td
-                  style={{
-                    marginTop: '10px',
-                    width: isMobile ? '100px' : '140px',
-                    height: isMobile ? '40px' : '76px',
-                    borderRadius: '8px',
-                    display: 'flex',
-                    justifyContent: 'flex-end',
-                    padding: '17px',
-                    alignItems: 'center',
-                    background:
-                      'radial-gradient(101.36% 117.36% at 0% -2.74%, rgba(135, 125, 196, 0.6) 0%, rgba(136, 168, 206, 0.411) 77.08%, rgba(136, 224, 214, 0.264) 100%) ',
-                  }}
-                >
-                  <ContentText>{i.day}</ContentText>
-                </td>
-                <td
-                  style={{
-                    marginTop: '10px',
-
-                    width: isMobile ? '100px' : '140px',
-                    height: isMobile ? '40px' : '76px',
-                    borderRadius: '8px',
-                    display: 'flex',
-                    justifyContent: 'flex-end',
-                    padding: '17px',
-                    alignItems: 'center',
-                    background:
-                      'radial-gradient(101.36% 117.36% at 0% -2.74%, rgba(135, 125, 196, 0.6) 0%, rgba(136, 168, 206, 0.411) 77.08%, rgba(136, 224, 214, 0.264) 100%) ',
-                  }}
-                >
-                  <ContentText>{i.price}</ContentText>{' '}
-                </td>
-
-                <td
-                  style={{
-                    marginTop: '10px',
-
-                    width: '200px',
-                    height: isMobile ? '40px' : '76px',
-                    borderRadius: '8px',
-                    display: 'flex',
-                    justifyContent: 'flex-end',
-                    padding: '17px',
-                    alignItems: 'center',
-                    background:
-                      'radial-gradient(101.36% 117.36% at 0% -2.74%, rgba(135, 125, 196, 0.6) 0%, rgba(136, 168, 206, 0.411) 77.08%, rgba(136, 224, 214, 0.264) 100%) ',
-                  }}
-                >
-                  <ContentText>{i.speed}</ContentText>
-                </td>
-                <td
-                  style={{
-                    marginTop: '10px',
-
-                    width: '200px',
-                    height: isMobile ? '40px' : '76px',
-                    borderRadius: '8px',
-                    display: 'flex',
-                    justifyContent: 'flex-end',
-                    padding: '17px',
-                    alignItems: 'center',
-                    background:
-                      'radial-gradient(101.36% 117.36% at 0% -2.74%, rgba(135, 125, 196, 0.6) 0%, rgba(136, 168, 206, 0.411) 77.08%, rgba(136, 224, 214, 0.264) 100%) ',
-                  }}
-                >
-                  <ContentText>{i.perDay}</ContentText>
-                </td>
-                <td
-                  style={{
-                    marginTop: '10px',
-
-                    background:
-                      'radial-gradient(101.36% 117.36% at 0% -2.74%, rgba(135, 125, 196, 0.6) 0%, rgba(136, 168, 206, 0.411) 77.08%, rgba(136, 224, 214, 0.264) 100%) ',
-                    width: '200px',
-                    height: isMobile ? '40px' : '76px',
-                    borderRadius: '8px',
-                    display: 'flex',
-                    justifyContent: 'flex-end',
-                    padding: '17px',
-                    alignItems: 'center',
-                  }}
-                >
-                  <ContentText>{i.remain}</ContentText>
-                </td>
-                <td
-                  style={{
-                    marginTop: '10px',
-
-                    width: '200px',
-                    height: isMobile ? '40px' : '76px',
-                    borderRadius: '8px',
-                    display: 'flex',
-                    justifyContent: 'flex-end',
-                    padding: '17px',
-                    alignItems: 'center',
-                    background:
-                      'radial-gradient(101.36% 117.36% at 0% -2.74%, rgba(135, 125, 196, 0.6) 0%, rgba(136, 168, 206, 0.411) 77.08%, rgba(136, 224, 214, 0.264) 100%) ',
-                  }}
-                >
-                  <ContentText>{i.claim}</ContentText>
-                </td>
-              </tr>
-            ))}
-          </table>
-        </Table>
       </Container>
     </Wrapper>
   )
