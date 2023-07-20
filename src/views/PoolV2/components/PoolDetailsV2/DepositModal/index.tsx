@@ -74,7 +74,7 @@ const CheckMine = styled.div`
   width: 100%;
   align-items: center;
   justify-content: flex-start;
-  margin-bottom: 32px;
+  margin-bottom: 24px;
   gap: 8px;
 `
 const Switch = styled.div`
@@ -382,8 +382,8 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
           background={'#24272A'}
         >
           <InputArea>
-            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-              <div>
+            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
                 <span>
                   <span style={{ fontSize: '18px', lineHeight: '24px', fontWeight: '400', color: '#E2E1E5' }}>
                     {' '}
@@ -444,37 +444,39 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
                   <div
                     style={{
                       display: 'flex',
-                      flexDirection: 'row',
+                      flexDirection: 'column',
                       gap: '4px',
                       fontWeight: '500',
                       fontSize: '18px',
                       lineHeight: '24px',
                     }}
                   >
-                    Balance:{' '}
-                    {
-                      <CountUp
-                        start={0}
-                        preserveValue
-                        delay={0}
-                        end={Number(userBalance)}
-                        decimals={4}
-                        duration={0.5}
-                      ></CountUp>
-                    }{' '}
-                    <img className="imagesvector" src={images.vector} alt="logo" width="12px" />
-                    {'  ~'}
-                    {
-                      <CountUp
-                        start={0}
-                        preserveValue
-                        delay={0}
-                        end={Number(userBalance) * pool.rateBNB2USD}
-                        decimals={4}
-                        duration={0.5}
-                      ></CountUp>
-                    }
-                    {'$'}
+                    <div>Balance: </div>
+                    <div style={{ display: 'flex', flexDirection: 'row' }}>
+                      {
+                        <CountUp
+                          start={0}
+                          preserveValue
+                          delay={0}
+                          end={Number(userBalance)}
+                          decimals={4}
+                          duration={0.5}
+                        ></CountUp>
+                      }{' '}
+                      <img className="imagesvector" src={images.vector} alt="logo" width="12px" />
+                      {'  ~'}
+                      {
+                        <CountUp
+                          start={0}
+                          preserveValue
+                          delay={0}
+                          end={Number(userBalance) * pool.rateBNB2USD}
+                          decimals={4}
+                          duration={0.5}
+                        ></CountUp>
+                      }
+                      {'$'}
+                    </div>
                   </div>
                 </UserBalance>
                 {mine === true ? (
@@ -531,7 +533,9 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
                   </UserBalance>
                 )}
               </div>
-              <div>{mine ? <img src="/images/V3/cup.svg" alt="cup" /> : null}</div>
+              <div style={{ width: 'auto' }}>
+                {mine ? <img style={{ width: '100%' }} src="/images/V3/cup.svg" alt="cup" /> : null}
+              </div>
             </div>
 
             <StyledInput
