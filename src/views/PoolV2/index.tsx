@@ -417,7 +417,8 @@ const Line = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: stretch;
+  // align-items: flex-start;
   justify-content: space-between;
   .value {
     font-size: 20px;
@@ -478,12 +479,6 @@ const Lineleft = styled.div``
 const Lineright = styled.div``
 const LineText = styled.div`
   text-align: center;
-  border: 1px solid transparent;
-  border-image-slice: 1;
-
-  background-image: linear-gradient(#18171b, #18171b), radial-gradient(circle at top left, #7b3fe4 0%, #a726c1 100%);
-  background-origin: border-box;
-  background-clip: padding-box, border-box;
   backdrop-filter: blur(5.5px);
   flex-direction: column;
   align-items: center;
@@ -761,7 +756,6 @@ const Pools = () => {
         const newPoolInfo = await Promise.all(
           pools.map(async (item, id) => {
             const userLockAndPool = await Promise.all([getPoolV3Contract.users(account, id), item])
-            console.log(userLockAndPool)
             return {
               title: ['Small Fish', 'Fomo', 'Miner', 'Medium Fish', 'Shark', 'Whale'],
               currentInterest: ((Number(userLockAndPool[1].currentInterest.toString()) / 10000) * 365).toFixed(2),
@@ -1201,7 +1195,7 @@ const Pools = () => {
                                       display: 'flex',
                                       flexWrap: 'wrap',
                                       gap: 10,
-                                      marginTop: 10,
+                                      // marginTop: 10,
                                       fontSize: isMobile ? '16px' : '20px',
                                     }}
                                   >
@@ -1270,7 +1264,7 @@ const Pools = () => {
                                       display: 'flex',
                                       flexWrap: 'wrap',
                                       gap: 10,
-                                      marginTop: 10,
+                                      // marginTop: 10,
 
                                       fontSize: isMobile ? '16px' : '20px',
                                     }}
