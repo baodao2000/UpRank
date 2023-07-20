@@ -3,6 +3,7 @@ import { Text, useMatchBreakpoints, useModal } from '@pancakeswap/uikit'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useWallet } from 'hooks/useWallet'
 import Image from 'next/image'
+import images from 'configs/images'
 import numeral from 'numeral'
 import { useEffect, useState } from 'react'
 import CountUp from 'react-countup'
@@ -13,22 +14,31 @@ import { ChainId } from '../../../packages/swap-sdk/src/constants'
 import ClaimPoolModal from './components/ClaimModal'
 import SendTrendModal from './components/sendModal'
 import TableDataPool from './components/yourMineHistory'
+
+const responsiveTextSizeHeader = ['20px', '24px', '28px', '32px', '32px']
+
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(90deg, #9e86ff 0%, #2b0864 111.24%);
-  gap: 10px;
-  height: 1200px;
+  // background: linear-gradient(90deg, #9e86ff 0%, #2b0864 111.24%);
+  // background: black;
+  background: url(${images.bg}) no-repeat;
+  background-size: cover;
+  /* margin-top: 30px; */
+
+  gap: 32px;
+  /* height: 1200px; */
+
   * {
-    font-family: 'Helvetica Compressed';
+    font-family: Inter, sans-serif;
   }
   @media screen and (max-width: 900px) {
     height: 80% !important;
   }
   @media screen and (max-width: 1440px) {
-    height: 1200px;
+    /* height: 1200px; */
     justify-content: flex-start;
   }
   margin-bottom: 20px;
@@ -38,7 +48,8 @@ const Container = styled.div`
   flex-direction: column;
   gap: 20px;
   margin-bottom: 20px;
-
+  width: 95%;
+  max-width: 1240px;
   @media screen and (max-width: 575px) {
     flex-direction: column;
   }
@@ -53,35 +64,78 @@ const Container = styled.div`
     margin-top: 100px;
   }
 `
+
+const IntroWapper = styled.div`
+  display: flex;
+  /* flex-direction: row; */
+  justify-content: space-between;
+  @media screen and (max-width: 575px) {
+    flex-direction: column;
+  }
+`
+
+const Title = styled.div`
+  font-size: 60px;
+  font-weight: 700;
+  line-height: 72px;
+  letter-spacing: -0.02em;
+  text-align: left;
+  /* letter-spacing: -1.2px; */
+  margin-top: 30px;
+  background: linear-gradient(180deg, #7b3fe4 0%, #a726c1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  @media screen and (max-width: 575px) {
+    font-size: 24px;
+    text-align: center;
+    line-height: 32px;
+  }
+`
+
+const IntrotText = styled.div`
+  color: #adabb2;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 28px;
+  @media screen and (max-width: 575px) {
+    width: 90%;
+    margin: auto;
+    text-align: center;
+    line-height: 24px;
+  }
+`
+
 const Table = styled.div`
-  height: 490px;
-  width: 585px;
+  min-width: 50%;
+  min-height: 490px;
+  /* width: 585px; */
   padding: 2px 1px;
-  border-radius: 15px;
-  border: 1px;
-  border: 1px solid;
-  border: 1px solid rgba(203, 205, 255, 0.44);
+  border-radius: 24px;
+  border: 1px solid var(--white-white-12, rgba(255, 255, 255, 0.12));
 
   @media screen and (max-width: 575px) {
-    width: 350px !important;
-    height: 580px !important;
+    /* width: 350px !important;
+    height: 580px !important; */
     margin-top: 1px !important;
   }
-  @media screen and (max-width: 900px) {
-    width: 670px;
-    height: 450px;
+  @media screen and (max-width: 1024px) {
+    /* width: 670px; */
+    /* height: 450px; */
   }
   @media screen and (max-width: 1440px) {
   }
 `
 const TableSystem = styled.div`
-  height: 490px;
+  min-height: 490px;
   width: 585px;
-  padding: 20px 15px 15px 15px;
-  border-radius: 15px;
-  border: 1px;
-  border: 1px solid rgba(203, 205, 255, 0.44);
-
+  padding: 40px;
+  border-radius: 24px;
+  /* border: 1px;
+  border: 1px solid rgba(203, 205, 255, 0.44); */
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(5.5px);
+  background: rgba(0, 0, 0, 0.2);
   screen and (max-width: 575px) {
     width: 350px;
     margin-top: 50px;
@@ -89,39 +143,41 @@ const TableSystem = styled.div`
 
   @media screen and (max-width: 1024px) {
     width: 100%;
+    padding: 16px;
   }
 `
 const BoxContain = styled.div`
-  height: 400px;
-  padding: 16px;
+  min-height: 400px;
+  padding: 40px;
   border-radius: 15px;
   border: 1px;
-  gap: 12px;
-  margin-top: 10px;
+  gap: 32px;
+  /* margin-top: 10px; */
   display: flex;
   flex-direction: column;
 
   @media screen and (max-width: 575px) {
-    width: 330px !important;
+    /* width: 330px !important; */
+    gap: 16px;
   }
   @media screen and (max-width: 768px) {
-    width: 642px !important;
+    /* width: 642px !important; */
   }
   @media screen and (max-width: 1024px) {
-    width: 600px;
+    /* width: 600px; */
+    padding: 16px;
   }
 `
 const Box = styled.div`
-  width: 300px;
-  padding: 12px 12px 10px 16px;
+  /* width: 300px; */
+  padding: 24px;
   border-radius: 15px;
-  border: 1px solid;
-  border: 1px solid rgba(203, 205, 255, 0.44);
+  /* border: 1px solid;
+  border: 1px solid rgba(203, 205, 255, 0.44); */
 
-  background: linear-gradient(313deg, 0%, rgba(228, 228, 228, 0) 100%),
-    radial-gradient(131.77% 143.25% at -0% -2.74%, rgba(125, 128, 195, 0.6) 0%, rgba(136, 139, 224, 0.26) 100%);
+  background: rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(50px);
-
+  border: 1px solid rgba(255, 255, 255, 0.12);
   // @media screen and (max-width: 575px) {
   //   width: 300px !important;
   // }
@@ -142,8 +198,8 @@ const Button = styled.button`
   display: flex;
   justify-content: center;
   cursor: pointer;
-  height: 54px;
-  width: 100px;
+  height: 40px;
+  width: 66px;
   margin-top: 10px;
   border-radius: 8px;
   border: 1px;
@@ -166,18 +222,18 @@ const Button = styled.button`
 
 const TableMine = styled.div`
   border: 2px solid #00f0e1;
-  padding: 28px 28px 46px 28px;
+  padding: 16px;
   border: 1px solid rgba(245, 251, 242, 0.2);
   border-radius: 16px;
   max-width: 1240px;
   width: 95%;
-  background: linear-gradient(
+  /* background: linear-gradient(
     131deg,
     rgba(125, 128, 195, 0.7) 0%,
     rgba(71, 74, 155, 0.25) 57.58%,
     rgba(153, 159, 204, 0.28) 82.49%,
     rgba(239, 248, 255, 0.31) 100%
-  );
+  ); */
   backdrop-filter: blur(50px);
   height: 380px;
   margin-bottom: 150px;
@@ -190,9 +246,9 @@ const SystemContent = styled.div`
 `
 function Mining() {
   const { isMobile, isTablet } = useMatchBreakpoints()
-  const { account, chainId } = useActiveWeb3React()
+  let { account, chainId } = useActiveWeb3React()
   // const { chainId } = useActiveWeb3React()
-  // const account = '0x1ec0f8875B7fc2400a6F44788c6710959614e68A'
+  // account = '0x1ec0f8875B7fc2400a6F44788c6710959614e68A'
   const [loadingPage, setLoadingPage] = useState(true)
   const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId
   const [isLoading, setIsLoading] = useState(false)
@@ -376,7 +432,22 @@ function Mining() {
   return (
     <Wrapper>
       <Container>
-        <ContentText
+        <IntroWapper>
+          <div>
+            <Title>Mining</Title>
+            <IntrotText>
+              Blockchain mining validates transactions, secures the network, and maintains decentralized integrity.
+            </IntrotText>
+          </div>
+          <Image
+            src="/images/Mining.png"
+            width={isMobile ? 196 : 228}
+            height={isMobile ? 196 : 228}
+            objectFit="contain"
+            alt="mining"
+          />
+        </IntroWapper>
+        {/* <ContentText
           style={{
             fontSize: '36px',
             fontWeight: 700,
@@ -386,50 +457,64 @@ function Mining() {
           }}
         >
           Dashboard
-        </ContentText>
+        </ContentText> */}
         <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : isTablet ? 'column' : 'row', gap: '20px' }}>
           <Table
             style={{
-              width: isMobile ? '350px' : isTablet ? '670px' : '635px',
-              background: ' linear-gradient(313deg, rgba(228, 228, 228, 0.00) 0%, rgba(228, 228, 228, 0.00) 100%)',
-              backdropFilter: 'blur(50px)',
+              // width: isMobile ? '350px' : isTablet ? '670px' : '635px',
+              background: 'rgba(0, 0, 0, 0.20)',
+              backdropFilter: 'blur(5.5px)',
             }}
           >
             <BoxContain>
-              <ContentText style={{ fontSize: '32px' }}>Your Wallet</ContentText>
+              <ContentText
+                style={{
+                  fontSize: isMobile ? '24px' : '32px',
+                  lineHeight: isMobile ? '32px' : '38px',
+                  fontWeight: '400',
+                }}
+              >
+                Your Wallet
+              </ContentText>
 
-              <div style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: isMobile ? 'column' : 'row',
+                  gap: isMobile ? '16px' : '32px',
+                  order: isMobile ? 2 : 1,
+                }}
+              >
                 <Box
                   style={{
-                    width: isMobile ? '145px' : isTablet ? '900px' : '268px',
+                    width: isMobile ? '100%' : '40%',
                     display: 'flex',
                     flexDirection: 'column',
                     gap: isTablet ? '5px' : '15px',
-                    height: isMobile ? '120px' : isTablet ? '120px' : '172px',
-                    background:
-                      'linear-gradient(313deg, rgba(228, 228, 228, 0.10) 0%, rgba(228, 228, 228, 0.00) 100%), radial-gradient(131.77% 143.25% at -0.00% -2.74%, rgba(125, 128, 195, 0.60) 0%, rgba(136, 139, 224, 0.26) 100%)',
+                    // height: isMobile ? '120px' : isTablet ? '120px' : '172px',
+
                     backdropFilter: 'blur(50px)',
                   }}
                 >
                   <div>
-                    <Image src="/images/speedV2.png" width={30} height={30} alt="" />
+                    <Image src="/images/V3/speed.svg" width={30} height={30} alt="" />
                   </div>
-                  <ContentText style={{ fontSize: isMobile ? '30px' : isTablet ? '45px' : '64px', fontWeight: 700 }}>
+                  <ContentText style={{ fontSize: isMobile ? '20px' : isTablet ? '36px' : '36px', fontWeight: 700 }}>
                     {Number(mineData.mineSpeed / 100 + mineData.mineSpeedLevel)}
                     <span style={{ fontSize: '26px', fontWeight: 700 }}>x</span>
                   </ContentText>
 
-                  <ContentText style={{ fontSize: '16px', fontWeight: 500, color: '#D1D1D1' }}>Mine Speed</ContentText>
+                  <ContentText style={{ fontSize: '20px', fontWeight: 400, color: '#ADABB2' }}>Your Speed</ContentText>
                 </Box>
                 <Box
                   style={{
-                    width: isMobile ? '145px' : isTablet ? '900px' : '100%',
+                    // width: isMobile ? '145px' : isTablet ? '900px' : '100%',
+                    // width: isMobile ? '100%' : '60%',
+                    width: '100%',
                     display: 'flex',
                     flexDirection: 'column',
-                    gap: isMobile ? '5px' : isTablet ? '5px' : '30px',
-                    height: isMobile ? '120px' : isTablet ? '120px' : '172px',
-                    background:
-                      'linear-gradient(313deg, rgba(228, 228, 228, 0.10) 0%, rgba(228, 228, 228, 0.00) 100%), radial-gradient(131.77% 143.25% at -0.00% -2.74%, rgba(125, 128, 195, 0.60) 0%, rgba(136, 139, 224, 0.26) 100%)',
+                    gap: isMobile ? '5px' : isTablet ? '5px' : '15px',
+                    // height: isMobile ? '120px' : isTablet ? '120px' : '172px',
                     backdropFilter: 'blur(50px)',
                   }}
                 >
@@ -446,7 +531,7 @@ function Mining() {
                       style={{
                         display: 'flex',
                         flexDirection: 'column',
-                        gap: isMobile ? '15px' : isTablet ? '10px' : '30px',
+                        gap: isMobile ? '15px' : isTablet ? '10px' : '15px',
                       }}
                     >
                       {!account ? (
@@ -468,7 +553,7 @@ function Mining() {
                               height={isMobile ? 30 : 40}
                               alt=""
                             />
-                            <ContentText style={{ fontSize: isMobile ? '24px' : '36px', fontWeight: 700 }}>
+                            <ContentText style={{ fontSize: isMobile ? '20px' : '30px', fontWeight: 700 }}>
                               <CountUp
                                 start={0}
                                 preserveValue
@@ -482,12 +567,16 @@ function Mining() {
                         </>
                       )}
                       {!account ? (
-                        <ContentText style={{ fontSize: '24px', fontWeight: 600, color: '#DBDBDB' }}>
+                        <ContentText
+                          style={{ fontSize: isMobile ? '20px' : '30px', fontWeight: 600, color: '#DBDBDB' }}
+                        >
                           {' '}
                           ~ $ 0
                         </ContentText>
                       ) : (
-                        <ContentText style={{ fontSize: '24px', fontWeight: 600, color: '#DBDBDB' }}>
+                        <ContentText
+                          style={{ fontSize: isMobile ? '20px' : '30px', fontWeight: 600, color: '#DBDBDB' }}
+                        >
                           ${' '}
                           <CountUp
                             start={0}
@@ -501,24 +590,128 @@ function Mining() {
                       )}
                     </div>
                   </div>
-                  <ContentText style={{ fontSize: isMobile ? '12px' : '15px', fontWeight: 500, color: '#D1D1D1' }}>
-                    Remained TREND
-                    <span style={{ fontSize: isMobile ? '10px' : '13px', fontWeight: 500, color: '#D1D1D1' }}>
-                      (Locking)
-                    </span>
+                  <ContentText style={{ fontSize: '20px', fontWeight: 400, color: '#ADABB2' }}>
+                    {`Remained TREND `}
+                    <span style={{ fontSize: '20px', fontWeight: 400, color: '#ADABB2' }}>(Locking)</span>
                   </ContentText>
                 </Box>
               </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: isMobile ? '16px' : '40px',
+                  order: isMobile ? 1 : 2,
+                }}
+              >
                 <Box
                   style={{
-                    height: isMobile ? '150px' : '103px',
+                    // height: isMobile ? '150px' : '103px',
+
                     display: 'flex',
                     flexDirection: isMobile ? 'column' : 'row',
-                    width: isMobile ? '50%' : '100%',
-                    background:
-                      'linear-gradient(313deg, rgba(228, 228, 228, 0.10) 0%, rgba(228, 228, 228, 0.00) 100%), radial-gradient(131.77% 143.25% at -0.00% -2.74%, rgba(125, 128, 195, 0.60) 0%, rgba(136, 139, 224, 0.26) 100%)',
+                    gap: isMobile ? '10px' : isTablet ? '20px' : '55px',
+                    // width: isMobile ? '50%' : '100%',
                     backdropFilter: 'blur(50px)',
+                    order: isMobile ? 2 : 1,
+                  }}
+                >
+                  <div
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'flex-start',
+                      width: '100%',
+                      gap: '10px',
+                    }}
+                  >
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', alignItems: 'center' }}>
+                      <div style={{ display: 'flex', flexDirection: 'row', gap: '10px', alignItems: 'center' }}>
+                        <Image
+                          src="/images/trendyloop.png"
+                          width={isMobile ? 30 : 40}
+                          height={isMobile ? 30 : 40}
+                          alt=""
+                        />
+                        {!account ? (
+                          <ContentText style={{ fontSize: isMobile ? '20px' : '30px', fontWeight: 700 }}>0</ContentText>
+                        ) : (
+                          <ContentText style={{ fontSize: isMobile ? '20px' : '30px', fontWeight: 700 }}>
+                            {
+                              <CountUp
+                                separator=","
+                                start={0}
+                                preserveValue
+                                delay={0}
+                                end={Number(mineData.balanceTrend)}
+                                decimals={1}
+                                duration={0.5}
+                              />
+                            }
+                            {/* {numeral(Number(formatEther(mineData.balanceTrend))).format('0,0')} */}
+                          </ContentText>
+                        )}
+                        {!account ? (
+                          <ContentText
+                            style={{ fontSize: isMobile ? '15px' : '20px', fontWeight: 600, color: '#FFFFFF' }}
+                          >
+                            ~ $ 0
+                          </ContentText>
+                        ) : (
+                          <ContentText
+                            style={{ fontSize: isMobile ? '20px' : '24px', fontWeight: 500, color: '#ADABB2' }}
+                          >
+                            ~ ${' '}
+                            <CountUp
+                              separator=","
+                              start={0}
+                              preserveValue
+                              delay={0}
+                              end={Number(mineData.balanceTrend) * mineData.trend2USDT}
+                              decimals={Number(mineData.balanceTrend) > 0 ? 3 : 0}
+                              duration={0.5}
+                            />
+                          </ContentText>
+                        )}
+                      </div>
+                    </div>
+                    <ContentText style={{ fontSize: '20px', fontWeight: 500, color: '#FFFFFF' }}>
+                      Your Wallet Balance
+                    </ContentText>
+                  </div>
+
+                  <Button
+                    style={{
+                      background: 'rgba(175, 137, 238, 0.20)',
+                      boxShadow: '0px 2px 0px 0px rgba(0, 0, 0, 0.02)',
+                      // backdropFilter: 'blur(50px)',
+                      padding: '0 30px',
+                      alignSelf: 'center',
+                    }}
+                    onClick={handleSend}
+                    disabled={sendDisable}
+                  >
+                    <ContentText
+                      style={{
+                        fontFamily: 'Poppins, sans-serif',
+                        fontWeight: 400,
+                        fontSize: 14,
+                        color: '#E2E1E5',
+                      }}
+                    >
+                      Send
+                    </ContentText>
+                  </Button>
+                </Box>
+                <Box
+                  style={{
+                    // height: isMobile ? '150px' : '103px',
+                    display: 'flex',
+                    flexDirection: isMobile ? 'column' : 'row',
+                    // width: isMobile ? '50%' : '100%',
+                    backdropFilter: 'blur(50px)',
+                    background: 'linear-gradient(180deg, #7B3FE4 0%, #A726C1 100%)',
+                    order: isMobile ? 1 : 2,
                   }}
                 >
                   <div
@@ -550,7 +743,7 @@ function Mining() {
                               gap: '10px',
                             }}
                           >
-                            <ContentText style={{ fontSize: isMobile ? '18px' : '30px', fontWeight: 700 }}>
+                            <ContentText style={{ fontSize: '36px', fontWeight: 700 }}>
                               <CountUp
                                 start={0}
                                 preserveValue
@@ -563,12 +756,12 @@ function Mining() {
                           </div>
                         )}
                         {!account ? (
-                          <ContentText style={{ fontSize: '20px', fontWeight: 600, color: '#D1D1D1' }}>
+                          <ContentText style={{ fontSize: '20px', fontWeight: 600, color: '#FFFFFF' }}>
                             ~ $ 0
                           </ContentText>
                         ) : (
                           <ContentText
-                            style={{ fontSize: isMobile ? '15px' : '20px', fontWeight: 600, color: '#D1D1D1' }}
+                            style={{ fontSize: isMobile ? '20px' : '24px', fontWeight: 500, color: '#ADABB2' }}
                           >
                             ~ ${' '}
                             <CountUp
@@ -583,138 +776,35 @@ function Mining() {
                         )}
                       </div>
 
-                      <ContentText style={{ fontSize: '16px', fontWeight: 500, color: '#D1D1D1' }}>
-                        Available TREND
+                      <ContentText style={{ fontSize: '20px', fontWeight: 400, color: '#FFFFFF' }}>
+                        Available Trend
                       </ContentText>
                     </div>
                   </div>
 
-                  <div style={{ display: 'flex', justifyContent: 'center' }}>
-                    <Button
-                      style={{
-                        background:
-                          'linear-gradient(0deg, rgba(245, 251, 242, 0.5), rgba(245, 251, 242, 0.5)),radial-gradient(170.62% 269.44% at 0% 0%, #FBFDFF 0%, rgba(192, 203, 251, 0.362332) 87.18%, rgba(2, 0, 98, 0) 100%)',
-                        backdropFilter: 'blur(50px)',
-                      }}
-                      onClick={handleClick}
-                      disabled={claimDisable}
-                    >
-                      <ContentText
-                        style={{
-                          fontFamily: 'Poppins, sans-serif',
-                          fontWeight: 700,
-                          fontSize: 16,
-                          background: 'linear-gradient(89.3deg, #8B16FF -6.75%, #0D1664 105.61%)',
-                          WebkitBackgroundClip: 'text',
-                          WebkitTextFillColor: 'transparent',
-                        }}
-                      >
-                        Claim
-                      </ContentText>
-                    </Button>
-                  </div>
-                </Box>
-                <Box
-                  style={{
-                    height: isMobile ? '150px' : '103px',
-
-                    display: 'flex',
-                    flexDirection: isMobile ? 'column' : 'row',
-                    gap: isMobile ? '10px' : isTablet ? '20px' : '55px',
-                    width: isMobile ? '50%' : '100%',
-                    background:
-                      'linear-gradient(313deg, rgba(228, 228, 228, 0.10) 0%, rgba(228, 228, 228, 0.00) 100%), radial-gradient(131.77% 143.25% at -0.00% -2.74%, rgba(125, 128, 195, 0.60) 0%, rgba(136, 139, 224, 0.26) 100%)',
-                    backdropFilter: 'blur(50px)',
-                  }}
-                >
-                  <div
+                  {/* <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}> */}
+                  <Button
                     style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'flex-start',
-                      width: '100%',
-                      gap: '10px',
+                      background: 'rgba(175, 137, 238, 0.20)',
+                      boxShadow: '0px 2px 0px 0px rgba(0, 0, 0, 0.02)',
+                      alignSelf: 'center',
+                      // backdropFilter: 'blur(50px)',
                     }}
+                    onClick={handleClick}
+                    disabled={claimDisable}
                   >
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', alignItems: 'center' }}>
-                      <div style={{ display: 'flex', flexDirection: 'row', gap: '10px', alignItems: 'center' }}>
-                        <Image
-                          src="/images/trendyloop.png"
-                          width={isMobile ? 30 : 40}
-                          height={isMobile ? 30 : 40}
-                          alt=""
-                        />
-                        {!account ? (
-                          <ContentText style={{ fontSize: isMobile ? '15px' : '30px', fontWeight: 700 }}>0</ContentText>
-                        ) : (
-                          <ContentText style={{ fontSize: isMobile ? '18px' : '30px', fontWeight: 700 }}>
-                            {
-                              <CountUp
-                                separator=","
-                                start={0}
-                                preserveValue
-                                delay={0}
-                                end={Number(mineData.balanceTrend)}
-                                decimals={1}
-                                duration={0.5}
-                              />
-                            }
-                            {/* {numeral(Number(formatEther(mineData.balanceTrend))).format('0,0')} */}
-                          </ContentText>
-                        )}
-                        {!account ? (
-                          <ContentText
-                            style={{ fontSize: isMobile ? '15px' : '20px', fontWeight: 600, color: '#D1D1D1' }}
-                          >
-                            ~ $ 0
-                          </ContentText>
-                        ) : (
-                          <ContentText
-                            style={{ fontSize: isMobile ? '15px' : '20px', fontWeight: 600, color: '#D1D1D1' }}
-                          >
-                            ~ ${' '}
-                            <CountUp
-                              separator=","
-                              start={0}
-                              preserveValue
-                              delay={0}
-                              end={Number(mineData.balanceTrend) * mineData.trend2USDT}
-                              decimals={Number(mineData.balanceTrend) > 0 ? 3 : 0}
-                              duration={0.5}
-                            />
-                          </ContentText>
-                        )}
-                      </div>
-                    </div>
-                    <ContentText style={{ fontSize: '16px', fontWeight: 500, color: '#D1D1D1' }}>
-                      Your Wallet Balance
-                    </ContentText>
-                  </div>
-
-                  <div style={{ display: 'flex', justifyContent: 'center' }}>
-                    <Button
+                    <ContentText
                       style={{
-                        background:
-                          'linear-gradient(0deg, rgba(245, 251, 242, 0.5), rgba(245, 251, 242, 0.5)),radial-gradient(170.62% 269.44% at 0% 0%, #FBFDFF 0%, rgba(192, 203, 251, 0.362332) 87.18%, rgba(2, 0, 98, 0) 100%)',
-                        backdropFilter: 'blur(50px)',
+                        fontFamily: 'Poppins, sans-serif',
+                        fontWeight: 400,
+                        fontSize: 14,
+                        color: '#E2E1E5',
                       }}
-                      onClick={handleSend}
-                      disabled={sendDisable}
                     >
-                      <ContentText
-                        style={{
-                          fontFamily: 'Poppins, sans-serif',
-                          fontWeight: 700,
-                          fontSize: 16,
-                          background: 'linear-gradient(89.3deg, #8B16FF -6.75%, #0D1664 105.61%)',
-                          WebkitBackgroundClip: 'text',
-                          WebkitTextFillColor: 'transparent',
-                        }}
-                      >
-                        Send
-                      </ContentText>
-                    </Button>
-                  </div>
+                      Claim
+                    </ContentText>
+                  </Button>
+                  {/* </div> */}
                 </Box>
               </div>
             </BoxContain>
@@ -724,62 +814,63 @@ function Mining() {
             style={{
               background: ' linear-gradient(313deg, rgba(228, 228, 228, 0.00) 0%, rgba(228, 228, 228, 0.00) 100%)',
               backdropFilter: 'blur(50px)',
+              flexShrink: '1',
+              width: '100%',
             }}
           >
             <SystemContent
               style={{
                 display: 'flex',
                 flexDirection: 'column',
-                gap: '10px',
+                gap: isMobile ? '16px' : '32px',
 
                 marginTop: '5px',
               }}
             >
-              <ContentText style={{ fontSize: '32px', marginBottom: '5px' }}>System</ContentText>
+              <ContentText style={{ fontSize: isMobile ? '24px' : '30px', marginBottom: '5px', fontWeight: '500' }}>
+                System
+              </ContentText>
 
-              <div style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
+              <div
+                style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? '16px' : '32px' }}
+              >
                 <Box
                   style={{
-                    width: '100%',
-                    height: '120px',
+                    // width: '50%',
+                    // height: '120px',
+                    // flex:
+                    // minWidth: '290px',
                     display: 'flex',
                     flexDirection: 'column',
-                    gap: '25px',
-                    background:
-                      'linear-gradient(313deg, rgba(228, 228, 228, 0.10) 0%, rgba(228, 228, 228, 0.00) 100%), radial-gradient(131.77% 143.25% at -0.00% -2.74%, rgba(125, 128, 195, 0.60) 0%, rgba(136, 139, 224, 0.26) 100%)',
+                    gap: '10px',
                     backdropFilter: 'blur(50px)',
                   }}
                 >
-                  <ContentText
+                  <span>
+                    <Image src="/images/V3/miner.svg" alt="" width={isMobile ? 30 : 30} height={isMobile ? 30 : 30} />
+                  </span>
+                  <CountUp
+                    start={0}
+                    preserveValue
+                    delay={0}
+                    end={Number(systemData.totalMiner)}
+                    // decimals={Number((mineData.balanceTrend)) > 0 ? 4 : 0}
+                    duration={0.5}
                     style={{
-                      display: 'flex',
-
-                      alignItems: 'center',
-                      gap: '10px',
-                      fontSize: isMobile ? '40px' : '54px',
+                      color: '#E2E1E5',
+                      fontSize: '36px',
+                      fontWeight: '700',
+                      lineHeight: '44px',
                     }}
-                  >
-                    <CountUp
-                      start={0}
-                      preserveValue
-                      delay={0}
-                      end={Number(systemData.totalMiner)}
-                      // decimals={Number((mineData.balanceTrend)) > 0 ? 4 : 0}
-                      duration={0.5}
-                    />
-                    <span>
-                      <Image src="/images/humanV2.png" alt="" width={isMobile ? 30 : 30} height={isMobile ? 30 : 30} />
-                    </span>
-                  </ContentText>
-                  <ContentText style={{ fontSize: '16px', fontWeight: 500, color: '#D1D1D1' }}>Miners</ContentText>
+                  />
+
+                  <ContentText style={{ fontSize: '20px', fontWeight: 400, color: '#ADABB2' }}>Miners</ContentText>
                 </Box>
                 <Box
                   style={{
                     width: '100%',
-                    background:
-                      'linear-gradient(313deg, rgba(228, 228, 228, 0.10) 0%, rgba(228, 228, 228, 0.00) 100%), radial-gradient(131.77% 143.25% at -0.00% -2.74%, rgba(125, 128, 195, 0.60) 0%, rgba(136, 139, 224, 0.26) 100%)',
                     backdropFilter: 'blur(50px)',
-                    height: '120px',
+                    // height: '120px',
                     display: 'flex',
                     flexDirection: 'column',
                     gap: isMobile ? '30px' : isTablet ? '40px' : '25px',
@@ -789,8 +880,8 @@ function Mining() {
                     1 TREND
                   </Text>
                   <div style={{ display: 'flex', gap: '5px' }}>
-                    <ContentText style={{ fontSize: '22px', lineHeight: '16px', color: '#D1D1D1' }}>~</ContentText>
-                    <ContentText style={{ fontSize: '18px', fontWeight: 500, color: '#D1D1D1' }}>
+                    <ContentText style={{ fontSize: '22px', lineHeight: '16px', color: '#FFFFFF' }}>~</ContentText>
+                    <ContentText style={{ fontSize: isMobile ? '20px' : '24px', fontWeight: 400, color: '#ADABB2' }}>
                       ${' '}
                       <CountUp
                         start={0}
@@ -808,47 +899,39 @@ function Mining() {
                 style={{
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: '10px',
+                  gap: isMobile ? '16px' : '40px',
                 }}
               >
                 <Box
                   style={{
                     display: 'flex',
                     flexDirection: 'column',
-                    gap: '5px',
-                    height: '130px',
+                    gap: '12px',
+                    // height: '130px',
                     width: '100%',
-                    background:
-                      'linear-gradient(313deg, rgba(228, 228, 228, 0.10) 0%, rgba(228, 228, 228, 0.00) 100%), radial-gradient(131.77% 143.25% at -0.00% -2.74%, rgba(125, 128, 195, 0.60) 0%, rgba(136, 139, 224, 0.26) 100%)',
                     backdropFilter: 'blur(50px)',
                   }}
                 >
-                  <div
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'row',
-                      gap: '5px',
-                      alignItems: 'flex-start',
-                      justifyContent: 'space-between',
-                    }}
-                  >
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-                      <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '10px' }}>
-                        <Image src="/images/trendyloop.png" width={40} height={40} alt="" />
-                        <ContentText style={{ fontWeight: 700, fontSize: '36px' }}>
-                          <CountUp
-                            start={0}
-                            preserveValue
-                            delay={0}
-                            end={Number(systemData.totalMined)}
-                            decimals={Number(systemData.totalMined) > 0 ? 4 : 0}
-                            duration={0.5}
-                          />
-                        </ContentText>
-                      </div>
-
-                      <ContentText style={{ fontSize: isMobile ? '20px' : '24px', fontWeight: 700, color: '#D1D1D1' }}>
-                        ${' '}
+                  <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '10px' }}>
+                    <Image src="/images/trendyloop.png" width={40} height={40} alt="" />
+                    <ContentText style={{ fontWeight: 700, alignItems: 'center' }}>
+                      <CountUp
+                        start={0}
+                        preserveValue
+                        delay={0}
+                        end={Number(systemData.totalMined)}
+                        decimals={Number(systemData.totalMined) > 0 ? 4 : 0}
+                        duration={0.5}
+                      />
+                      <ContentText
+                        style={{
+                          fontSize: isMobile ? '15px' : '20px',
+                          fontWeight: 400,
+                          color: '#ADABB2',
+                          alignItems: 'center',
+                        }}
+                      >
+                        {' ~ $ '}
                         <CountUp
                           start={0}
                           preserveValue
@@ -858,53 +941,41 @@ function Mining() {
                           duration={0.5}
                         />
                       </ContentText>
-                    </div>
+                    </ContentText>
                   </div>
-                  <ContentText style={{ fontSize: '16px', fontWeight: 500, color: '#CACACA' }}>Total Mined</ContentText>
+                  <ContentText style={{ fontSize: '20px', fontWeight: 400, color: '#CACACA' }}>Total Mined</ContentText>
                 </Box>
+
                 <Box
                   style={{
-                    width: '100%',
                     display: 'flex',
                     flexDirection: 'column',
-                    height: '130px',
-                    gap: '5px',
-                    background:
-                      'linear-gradient(313deg, rgba(228, 228, 228, 0.10) 0%, rgba(228, 228, 228, 0.00) 100%), radial-gradient(131.77% 143.25% at -0.00% -2.74%, rgba(125, 128, 195, 0.60) 0%, rgba(136, 139, 224, 0.26) 100%)',
+                    gap: '12px',
+                    // height: '130px',
+                    width: '100%',
                     backdropFilter: 'blur(50px)',
                   }}
                 >
-                  <div
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'row',
-                      gap: '15px',
-                      width: '100%',
-                    }}
-                  >
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-                      <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '10px' }}>
-                        <Image
-                          src="/images/trendyloop.png"
-                          width={isMobile ? 20 : 40}
-                          height={isMobile ? 20 : 40}
-                          alt=""
-                        />
-
-                        <ContentText style={{ fontWeight: 700, fontSize: '36px' }}>
-                          <CountUp
-                            start={0}
-                            preserveValue
-                            delay={0}
-                            end={Number(systemData.totalClaimed)}
-                            decimals={Number(systemData.totalClaimed) > 0 ? 4 : 0}
-                            duration={0.5}
-                          />
-                        </ContentText>
-                      </div>
-
-                      <ContentText style={{ fontSize: '24px', fontWeight: 700, color: '#D1D1D1' }}>
-                        ${' '}
+                  <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '10px' }}>
+                    <Image src="/images/trendyloop.png" width={40} height={40} alt="" />
+                    <ContentText style={{ fontWeight: 700, alignItems: 'center' }}>
+                      <CountUp
+                        start={0}
+                        preserveValue
+                        delay={0}
+                        end={Number(systemData.totalClaimed)}
+                        decimals={Number(systemData.totalClaimed) > 0 ? 4 : 0}
+                        duration={0.5}
+                      />
+                      <ContentText
+                        style={{
+                          fontSize: isMobile ? '15px' : '20px',
+                          fontWeight: 400,
+                          color: '#ADABB2',
+                          alignItems: 'center',
+                        }}
+                      >
+                        {' ~ $ '}
                         <CountUp
                           start={0}
                           preserveValue
@@ -914,9 +985,9 @@ function Mining() {
                           duration={0.5}
                         />
                       </ContentText>
-                    </div>
+                    </ContentText>
                   </div>
-                  <ContentText style={{ fontSize: '16px', fontWeight: 500, color: '#CACACA' }}>
+                  <ContentText style={{ fontSize: '20px', fontWeight: 400, color: '#CACACA' }}>
                     Total Claimed
                   </ContentText>
                 </Box>
@@ -925,6 +996,22 @@ function Mining() {
           </TableSystem>
         </div>
       </Container>
+      {account && (
+        <Text
+          style={{
+            color: '#F5F5F6',
+            fontWeight: 500,
+            paddingTop: '40px',
+            textAlign: 'start',
+            maxWidth: '1240px',
+            width: '96%',
+            // padding: '0 10px'
+          }}
+          fontSize={responsiveTextSizeHeader}
+        >
+          Your Mined History
+        </Text>
+      )}
       {!account ? null : (
         <TableMine style={{ fontFamily: 'Poppins, sans-serif !important' }}>
           <TableDataPool
