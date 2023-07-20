@@ -1,5 +1,5 @@
-import styled, { keyframes } from 'styled-components'
-import { Heading, Text, Button } from '@pancakeswap/uikit'
+import styled from 'styled-components'
+import { Heading, Text } from '@pancakeswap/uikit'
 import images from 'configs/images'
 import 'aos/dist/aos.css'
 import { useState } from 'react'
@@ -10,36 +10,74 @@ const Wrapper = styled.div`
   }
   position: relative;
   z-index: 1;
+  width: 100%;
+  .pc {
+    @media (max-width: 796px) {
+      display: none;
+    }
+  }
+  .mb {
+    display: none;
+    @media (max-width: 796px) {
+      display: block;
+    }
+  }
+`
+const Group = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
-  @media screen and (max-width: 414px) {
-    margin-top: 0;
+  @media screen and (max-width: 796px) {
+    flex-direction: column-reverse;
   }
-  width: 100%;
 `
 
 const Title = styled(Heading)`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
   font-weight: 700;
   font-size: 20px;
   line-height: 18px;
+  @media (max-width: 796px) {
+    align-items: center;
+    text-align: center;
+  }
 `
 
 const StyledText = styled.p`
+  ax-width: 448px;
   color: rgba(255, 255, 255, 1);
   font-size: 48px;
   font-style: normal;
   font-weight: 500;
   line-height: 60px;
-  letter-spacing: -0.96px;
+  @media (max-width: 1024px) {
+    max-width: 100%;
+    font-size: 42px;
+    line-height: 42px;
+  }
+  @media (max-width: 796px) {
+    max-width: 100%;
+  }
+  @media (max-width: 575px) {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 32px;
+  }
 `
 
 const TitleM = styled(Text)`
+  margin: 16px 0;
   font-size: 18px;
   font-style: normal;
   font-weight: 400;
   line-height: 28px;
   color: rgba(173, 171, 178, 1);
+  @media (max-width: 796px) {
+  }
 `
 const Step = styled.div`
   display: flex;
@@ -59,6 +97,10 @@ const TextTitle = styled(Text)`
   font-weight: 400;
   line-height: 32px;
   color: rgba(255, 255, 255, 1);
+  @media (max-width: 575px) {
+    font-size: 16px;
+    line-height: 24px;
+  }
 `
 const TextLabel = styled(Text)`
   font-size: 14px;
@@ -66,77 +108,99 @@ const TextLabel = styled(Text)`
   font-weight: 400;
   line-height: 20px;
   color: rgba(119, 126, 144, 1);
+  @media (max-width: 575px) {
+    font-size: 14px;
+    line-height: 20px;
+  }
 `
 const Right = styled.div`
-  .step2 {
-    margin-left: 200px;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @media screen and (max-width: 796px) {
+    width: 500px;
   }
-  .step3 {
-    margin-left: 200px;
+  @media screen and (max-width: 575px) {
+    width: 400px;
   }
 `
 const Left = styled.div`
-  width: 448px;
+  margin-left: 30px;
+  width: 50%;
+  @media screen and (max-width: 796px) {
+    margin-left: 0px;
+    width: 100%;
+  }
 `
 const StepBlock = () => {
   const [step, setStep] = useState(1)
   return (
     <Wrapper className="block">
-      <Left>
-        <Title>
-          <StyledText>Get started in 3 simple steps </StyledText>
-        </Title>
+      <Title className="mb">
+        <StyledText>Get started in 3 simple steps </StyledText>
         <TitleM>It only takes a few minutes</TitleM>
-        <div style={{ marginTop: '64px' }}>
-          <Step onClick={() => setStep(1)}>
-            {step === 1 ? <img src="./images/V3/active1.png" /> : <img src="./images/V3/disabled1.png" />}
-            <GruopRight>
-              <TextLabel>Step 1</TextLabel>
-              <TextTitle>Create your wallet</TextTitle>
-              <TextLabel>
-                Create your Trust wallet or Metamask <span>Download now</span>
-              </TextLabel>
-            </GruopRight>
-          </Step>
-          <div
-            style={{
-              borderRadius: '5px',
-              height: '1px',
-              alignItems: 'stretch',
-              margin: '32px 0',
-              background: 'rgba(53, 57, 69, 1)',
-            }}
-          ></div>
-          <Step onClick={() => setStep(2)}>
-            {step === 2 ? <img src="./images/V3/active2.png" /> : <img src="./images/V3/disabled2.png" />}
-            <GruopRight>
-              <TextLabel>Step 2</TextLabel>
-              <TextTitle>Connect with Trendy Defi Dapp</TextTitle>
-            </GruopRight>
-          </Step>
-          <div
-            style={{
-              borderRadius: '5px',
-              height: '1px',
-              alignItems: 'stretch',
-              margin: '32px 0',
-              background: 'rgba(53, 57, 69, 1)',
-            }}
-          ></div>
-          <Step onClick={() => setStep(3)}>
-            {step === 3 ? <img src="./images/V3/disabled3.png" /> : <img src="./images/V3/disabled3.png" />}
-            <GruopRight>
-              <TextLabel>Step 3</TextLabel>
-              <TextTitle>Discover Trendy Defi solution</TextTitle>
-            </GruopRight>
-          </Step>
-        </div>
-      </Left>
-      <Right>
-        {step === 1 && <img src="./images/V3/Wallet.svg" />}
-        {step === 2 && <img className="step2" src="./images/V3/connet.svg" />}
-        {step === 3 && <img className="step3" src="./images/V3/Step3.svg" />}
-      </Right>
+      </Title>
+      <Group>
+        <Left>
+          <Title className="pc">
+            <StyledText>Get started in 3 simple steps </StyledText>
+            <TitleM>It only takes a few minutes</TitleM>
+          </Title>
+          <div style={{ marginTop: '64px' }}>
+            <Step onClick={() => setStep(1)}>
+              {step === 1 ? <img src="./images/V3/active1.png" /> : <img src="./images/V3/disabled1.png" />}
+              <GruopRight>
+                <TextLabel>Step 1</TextLabel>
+                <TextTitle>Create your wallet</TextTitle>
+                <TextLabel>
+                  Create your Trust wallet or Metamask{' '}
+                  <a href="https://metamask.io/" style={{ color: '#8544F5' }}>
+                    Download now
+                  </a>
+                </TextLabel>
+              </GruopRight>
+            </Step>
+            <div
+              style={{
+                borderRadius: '5px',
+                height: '1px',
+                alignItems: 'stretch',
+                margin: '30px 0',
+                background: 'rgba(53, 57, 69, 1)',
+              }}
+            ></div>
+            <Step onClick={() => setStep(2)}>
+              {step === 2 ? <img src="./images/V3/active2.png" /> : <img src="./images/V3/disabled2.png" />}
+              <GruopRight>
+                <TextLabel>Step 2</TextLabel>
+                <TextTitle>Connect with Trendy Defi Dapp</TextTitle>
+              </GruopRight>
+            </Step>
+            <div
+              style={{
+                borderRadius: '5px',
+                height: '1px',
+                alignItems: 'stretch',
+                margin: '30px 0',
+                background: 'rgba(53, 57, 69, 1)',
+              }}
+            ></div>
+            <Step onClick={() => setStep(3)}>
+              {step === 3 ? <img src="./images/V3/active3.png" /> : <img src="./images/V3/disabled3.png" />}
+              <GruopRight>
+                <TextLabel>Step 3</TextLabel>
+                <TextTitle>Discover Trendy Defi solution</TextTitle>
+              </GruopRight>
+            </Step>
+          </div>
+        </Left>
+        <Right>
+          {step === 1 && <img data-aos="fade-left" width="70%" src={images.step1} />}
+          {step === 2 && <img data-aos="fade-left" width="70%" className="step2" src={images.step2} />}
+          {step === 3 && <img data-aos="fade-left" width="70%" className="step3" src={images.step3} />}
+        </Right>
+      </Group>
     </Wrapper>
   )
 }

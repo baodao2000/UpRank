@@ -16,4 +16,5 @@ export const trendyColors = {
   DARK_GRAY_DISABLE: '#393939',
   WHITE_DISABLE: '#ECECEC',
   PURPLE_NEW: 'var(--primary-primary-1, #8544F5)',
+  COLORTABLE: '#777E90',
 }

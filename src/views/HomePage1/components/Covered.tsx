@@ -7,30 +7,39 @@ const Title = styled(Heading)`
   font-size: 48px;
   font-style: normal;
   font-weight: 500;
-  line-height: 60px; /* 125% */
-  letter-spacing: -0.96px;
+  line-height: 60px;
   color: rgba(173, 171, 178, 1);
-  margin-bottom: 16px;
+  margin-bottom: 14px;
+  @media (max-width: 1024px) {
+    font-size: 42px;
+    line-height: 42px;
+  }
+  @media (max-width: 575px) {
+    margin-bottom: 16px;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 32px;
+  }
 `
 
 const TitleM = styled(Text)`
   font-weight: 400;
   font-size: 16px;
   line-height: 23px;
-  margin-top: 6px;
   color: rgba(173, 171, 178, 1);
 `
 
 const Wrapper = styled.div`
+* {
+  font-family: Inter, sans-serif;
+}
+  margin-top: 60px;
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative;
   width: 100%
   z-index: 1;
-  * {
-    font-family: Inter, sans-serif;
-  }
   span {
     background: var(--primary-priamry-gradient, linear-gradient(180deg, #8A46FF 0%, #6E38CC 100%));
 background-clip: text;
@@ -57,20 +66,52 @@ const Card = styled.div`
   .imgCard {
     position: absolute;
     bottom: 10%;
+    @media (max-width: 600px) {
+      width: 140px;
+      height: 140px;
+      display: flex;
+      justify-content: flex-start;
+    }
+  }
+  @media (max-width: 1266px) {
+    margin-bottom: 20px;
+    width: 500px;
+  }
+  @media (max-width: 1062px) {
+    width: 340px;
+  }
+  @media (max-width: 740px) {
+    padding: 30px;
+    height: 360px;
+    width: 100%;
+  }
+  @media (max-width: 575px) {
+    padding: 25px;
   }
 `
 const CardList = styled.div`
   display: flex;
-  // flex-wrap: wrap;
   flex-direction: row;
   gap: 56px;
-  jutify-content: center;
+  justify-content: center;
+  align-items: start;
   margin-top: 120px;
   background: url(${images.bgV3}) no-repeat;
   width: 100%;
   height: auto;
   background-size: contain;
   background-position: center;
+  @media (max-width: 1266px) {
+    gap: 20px;
+  }
+  @media (max-width: 740px) {
+    flex-direction: column;
+    gap: 0;
+  }
+  @media (max-width: 575px) {
+    margin-top: 20px;
+    flex-direction: column;
+  }
 `
 const CardTitle = styled(Text)`
   font-size: 30px;
@@ -79,6 +120,12 @@ const CardTitle = styled(Text)`
   line-height: 38px;
   color: rgba(226, 225, 229, 1);
   margin-bottom: 16px;
+  text-align: start;
+  @media (max-width: 575px) {
+    font-size: 20px;
+    line-height: 30px;
+    font-weight: 700;
+  }
 `
 const CardLabel = styled(Text)`
   font-size: 18px;
@@ -86,6 +133,13 @@ const CardLabel = styled(Text)`
   font-weight: 400;
   line-height: 28px;
   color: rgba(173, 171, 178, 1);
+  text-align: start;
+`
+const CardItem = styled.div`
+  margin-top: 175px;
+  @media (max-width: 740px) {
+    margin-top: 0;
+  }
 `
 
 const coverdList = [
@@ -114,30 +168,30 @@ const coverdListRight = [
 ]
 const Covered = () => {
   return (
-    <Wrapper className="block">
+    <Wrapper>
       <Title>
-        We’ve got you <span>covered</span>
+        We’ve got you <span style={{ fontWeight: '700' }}>covered</span>
       </Title>
       <TitleM>Only you can access your wallet. We don’t collect any personal data.</TitleM>
       <CardList>
         <div>
           {coverdList.map((items, t) => (
-            <Card key={t}>
+            <Card data-aos="fade-up" data-aos-anchor-placement="bottom-bottom" key={t}>
               <CardTitle>{items.title}</CardTitle>
               <CardLabel>{items.detail}</CardLabel>
               <img className="imgCard" src={items.img} />
             </Card>
           ))}
         </div>
-        <div style={{ marginTop: '175px' }}>
+        <CardItem>
           {coverdListRight.map((items, r) => (
-            <Card key={r}>
+            <Card data-aos="fade-up" data-aos-anchor-placement="bottom-bottom" key={r}>
               <CardTitle>{items.title}</CardTitle>
               <CardLabel>{items.detail}</CardLabel>
               <img className="imgCard" src={items.img} />
             </Card>
           ))}
-        </div>
+        </CardItem>
       </CardList>
     </Wrapper>
   )

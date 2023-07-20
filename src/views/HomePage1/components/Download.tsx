@@ -23,14 +23,20 @@ const StyledHeading = styled(Text)`
   font-size: 48px;
   font-style: normal;
   font-weight: 700;
-  line-height: 60px; /* 125% */
-  letter-spacing: -0.96px;
+  line-height: 60px;
   max-width: 836px;
   text-align: center;
-  margin-bottom: 50px;
+  margin: 20px 0;
   text-shadow: 0px 4px 20px rgba(43, 143, 241, 0.2);
-  @media only screen and (max-width: 600px) {
-    margin-bottom: 20px;
+
+  @media (max-width: 1024px) {
+    font-size: 42px;
+    line-height: 42px;
+  }
+  @media (max-width: 575px) {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 32px;
   }
 `
 const TextLabel = styled(Text)`
@@ -39,12 +45,16 @@ const TextLabel = styled(Text)`
   font-size: 18px;
   font-style: normal;
   font-weight: 400;
-  line-height: 28px; /* 155.556% */
+  line-height: 28px;
   color: rgba(173, 171, 178, 1);
+  @media (max-width: 575px) {
+    font-size: 18px;
+    line-height: 28px;
+  }
 `
 const Card = styled.div`
   display: flex;
-  padding: 40px;
+  padding: 40px 30px;
   flex-direction: row;
   justify-content: center;
   align-items: center;
@@ -53,10 +63,24 @@ const Card = styled.div`
   border-radius: 24px;
   border: 1px solid var(--white-white-12, rgba(255, 255, 255, 0.12));
   background: var(--white-white-6, rgba(255, 255, 255, 0.06));
-  margin-top: 40px;
+  margin-top: 60px;
+  @media (max-width: 955px) {
+    flex-direction: column;
+  }
+  @media (max-width: 575px) {
+    padding: 20px 16px;
+  }
 `
 const CardLeft = styled.div`
-  padding: 32px 0;
+  @media (max-width: 955px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  @media (max-width: 575px) {
+    align-items: start;
+  }
 `
 const CardTitle = styled(Text)`
   font-size: 24px;
@@ -64,6 +88,11 @@ const CardTitle = styled(Text)`
   font-weight: 500;
   line-height: 32px;
   color: rgba(252, 252, 253, 1);
+  @media (max-width: 575px) {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 28px;
+  }
 `
 const CardLabel = styled(Text)`
   font-size: 16px;
@@ -71,6 +100,11 @@ const CardLabel = styled(Text)`
   font-weight: 500;
   line-height: 24px;
   color: rgba(103, 102, 110, 1);
+  @media (max-width: 575px) {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+  }
 `
 const CardContent = styled.div`
   display: flex;
@@ -80,13 +114,29 @@ const CardContent = styled.div`
   .imgA {
     display: flex;
     gap: 12px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
   }
   .imgB {
     display: flex;
     gap: 25px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    @media (max-width: 575px) {
+      gap: 12px;
+    }
   }
 `
-const CardRight = styled.div``
+const CardRight = styled.div`
+  img {
+    @media (max-width: 450px) {
+      width: 100%;
+      padding: 20px;
+    }
+  }
+`
 const Download = () => {
   return (
     <Wrapper>
