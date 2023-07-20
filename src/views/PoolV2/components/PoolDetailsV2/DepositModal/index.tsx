@@ -164,6 +164,8 @@ export const ThreeDots = styled.p`
 const Error = styled.span`
   margin: -0.5em 0 1em;
   color: ${trendyColors.ORANGE};
+  font-size: 18px;
+  margin: 10px 0;
 `
 const UserBalance = styled.div`
   span {
@@ -261,6 +263,8 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
   const [checked, setChecked] = useState(false)
   const [pid, setPid] = useState(pool.pid)
   const [isLoading, setIsLoading] = useState(true)
+  const [userTime, setUserTime] = useState(0)
+  const [disabledDiposit, setDisabledDeposit] = useState(false)
   const checkAmount = (value: any) => {
     if (
       // value > Number((pool.maxLock / pool.rateBNB2USD).toFixed(4)) ||
@@ -269,6 +273,7 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
       setIsValidAmount(false)
     } else setIsValidAmount(true)
   }
+  const timeStamp = Math.floor(Date.now() / 1000)
   const minMaxBalanceHandle = (per: number) => {
     switch (per) {
       case 1: {
@@ -339,9 +344,14 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
       setIsLoading(true)
     } else {
       setIsLoading(false)
-
       const users = await poolContract.users(account, pid)
+      const period = await poolContract.period()
+      console.log(Number(7 * Number(period)))
+
       setChecked(users.isMine)
+      if (timeStamp - Number(users.startTime) >= 7 * Number(period)) {
+        setDisabledDeposit(true)
+      }
       setMine(users.isMine)
       if (users.totalLock.toString() === '0') {
         setUserTotal(false)
@@ -654,10 +664,15 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
           )}
 
           {isValidAmount ? <></> : <Error>Amount is out of acceptable range !!</Error>}
+          {disabledDiposit === false ? (
+            <></>
+          ) : (
+            <Error>You have deposited more than 7 days, please choose another pool to join</Error>
+          )}
           <div style={{ textAlign: 'center' }}>
             <StyledButton
               variant={!isValidAmount ? 'light' : 'primary'}
-              disabled={isConfirming || (!isValidAmount ? true : false)}
+              disabled={isConfirming || (!isValidAmount ? true : false) || disabledDiposit}
               onClick={handleConfirm}
             >
               {isConfirming ? (

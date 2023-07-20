@@ -96,16 +96,16 @@ const config: (
     //   items: [].map((item) => addMenuItemSupported(item, chainId)),
     // },
     {
-      label: t('Pool'),
+      label: t('Pools'),
       showItemsOnMobile: false,
-      href: '/poolv2',
+      href: '/pools',
       icon: PoolIcon,
       fillIcon: PoolIcon,
       items: [
         {
           label: t('V2'),
-          labelItem: t('Pools V2'),
-          href: '/poolv2',
+          labelItem: t('Pools'),
+          href: '/pools',
           showItemsOnMobile: true,
           icon: PoolIcon,
           items: [].map((item) => addMenuItemSupported(item, chainId)),
@@ -113,7 +113,7 @@ const config: (
         {
           label: t('V1'),
           labelItem: t('Pools V1'),
-          href: '/pools',
+          href: '/pools_V1',
           showItemsOnMobile: false,
           icon: PoolIcon,
           items: [].map((item) => addMenuItemSupported(item, chainId)),
@@ -128,13 +128,13 @@ const config: (
       icon: NftIcon,
       items: [].map((item) => addMenuItemSupported(item, chainId)),
     },
-    {
-      label: t('Pools3'),
-      href: '/poolv3',
-      showItemsOnMobile: false,
-      icon: NftIcon,
-      items: [].map((item) => addMenuItemSupported(item, chainId)),
-    },
+    // {
+    //   label: t('Pools3'),
+    //   href: '/poolv3',
+    //   showItemsOnMobile: false,
+    //   icon: NftIcon,
+    //   items: [].map((item) => addMenuItemSupported(item, chainId)),
+    // },
     {
       label: t('Tokenomic '),
       href: '/tokenomic',

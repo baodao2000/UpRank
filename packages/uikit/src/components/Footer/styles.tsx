@@ -7,6 +7,9 @@ export const StyledFooter = styled(Flex)`
   flex-direction: column;
   align-items: center;
   background: #121216;
+  * {
+    font-family: Inter, sans-serif;
+  }
 `;
 
 export const StyledList = styled.div`

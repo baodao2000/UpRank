@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Heading, Flex, Text, Card, Button, useToast } from '@pancakeswap/uikit'
+import { Heading, Flex, Text, Card, Button, useToast, useMatchBreakpoints } from '@pancakeswap/uikit'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { ThreeDots } from 'views/Pool/components/DepositModal'
 import useConfirmTransaction from 'hooks/useConfirmTransaction'
@@ -15,19 +15,23 @@ import images from 'configs/images'
 const ListPoolRanks = styled.div`
   display: flex;
   align-items: stretch;
-  justify-content: space-evenly;
+  justify-content: space-between;
   flex-wrap: wrap;
   grid-column-gap: 32px;
   grid-row-gap: 30px;
   flex-direction: row;
   @media screen and (max-width: 575px) {
     padding: 16px;
+    grid-row-gap: 16px;
+  }
+  @media screen and (max-width: 1300px) {
+    justify-content: center;
   }
 `
 
 export const ImageRank = styled.img`
   @media screen and (min-width: 1024px) {
-    width: 64px;
+    width: 58px;
     height: 64px;
   }
   @media (max-width: 1023px) {
@@ -52,21 +56,33 @@ const CardNextRanks = styled.div`
   @media screen and (max-width: 575px) {
     padding: 16px;
   }
+  @media screen and (max-width: 800px) {
+    width: 336px;
+  }
 `
 const CardYourRanks = styled.div`
   max-width: 386px;
   height: auto;
   color: #fff;
   border-radius: 24px;
-  background: var(--white-white-6, rgba(255, 255, 255, 0.06));
+  border: 1px solid transparent;
+  border-image-slice: 1;
+
+  background-image: linear-gradient(#18171b, #18171b), radial-gradient(circle at top left, #7b3fe4 0%, #a726c1 100%);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
   backdrop-filter: blur(5.5px);
   padding: 40px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   width: 100%;
+  gap: 24px;
   @media screen and (max-width: 575px) {
     padding: 16px;
+  }
+  @media screen and (max-width: 800px) {
+    width: 336px;
   }
 `
 const CardRanksGold = styled.div`
@@ -81,6 +97,8 @@ const CardRanksGold = styled.div`
   flex-direction: column;
   justify-content: space-between;
   width: 100%;
+  gap: 24px;
+
   @media screen and (max-width: 575px) {
     padding: 16px;
   }
@@ -141,9 +159,10 @@ const TitleHeadRight = styled.div`
 `
 
 const TitleHeadRightBronze = styled.div`
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 120%;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px;
   display: flex;
   align-items: center;
   text-transform: capitalize;
@@ -210,7 +229,6 @@ const Value = styled.span`
   display: flex;
   align-items: center;
   text-transform: capitalize;
-  gap: 6px;
   color: #fff;
 
   @media (max-width: 739px) {
@@ -322,6 +340,8 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
       onSuccess()
     },
   })
+  const { isMobile } = useMatchBreakpoints()
+
   const canUpRank1 = userRank.locked >= nextRankRequire[userRank.rank].locked
   const canUpRank2 = userRank.volumnOnTree >= nextRankRequire[userRank.rank].volumnOnTree
   const canUpRank3 = userRank.direct >= nextRankRequire[userRank.rank].direct
@@ -352,13 +372,13 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
             <ImageRank src={userRank.image} alt="" />
             <TitleHeadRight style={{ color: '#fff' }}>Bronze</TitleHeadRight>
           </HeadLeft>
-          <HeadRight style={{ color: getColor('') }}>
+          <HeadRight style={{ color: getColor(''), display: isMobile ? 'none' : 'block' }}>
             <TitleHeadRightBronze style={{ color: '#fff' }}>Your Rank</TitleHeadRightBronze>
           </HeadRight>
         </CardHead>
         <CardBody>
           <ItemInfoCard>
-            <Label>Locked:</Label>
+            <Label>Locked</Label>
             <ValueLocked>
               {userRank.locked}
               <div
@@ -378,16 +398,16 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
             </ValueLocked>
           </ItemInfoCard>
           <ItemInfoCard>
-            <Label>Volumn on tree:</Label>
-            <Value>{userRank.volumnOnTree} $</Value>
+            <Label>Volumn on tree</Label>
+            <Value>${userRank.volumnOnTree}</Value>
           </ItemInfoCard>
           <ItemInfoCard>
-            <Label>Member direct:</Label>
-            <Value>{userRank.direct}</Value>
+            <Label>Member direct</Label>
+            <Value>${userRank.direct}</Value>
           </ItemInfoCard>
           <ItemInfoCard>
             <Label>Member downline:</Label>
-            <Value>{userRank.downline}</Value>
+            <Value>${userRank.downline}</Value>
           </ItemInfoCard>
         </CardBody>
       </CardNextRanks>
@@ -401,7 +421,7 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
         </CardHead>
         <CardBody>
           <ItemInfoCard style={{ color: canUpRank1 ? '#fff' : 'gray' }}>
-            <Label>Locked:</Label>
+            <Label>Locked</Label>
             <ValueLocked>
               {userRank.locked}
               <div
@@ -421,9 +441,9 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
             </ValueLocked>
           </ItemInfoCard>
           <ItemInfoCard style={{ color: canUpRank2 ? '#fff' : 'gray' }}>
-            <Label>Volumn on tree:</Label>
+            <Label>Volumn on tree</Label>
             <Value>
-              ${''}
+              $
               <CountUp
                 separator=","
                 start={0}
@@ -437,11 +457,11 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
             </Value>
           </ItemInfoCard>
           <ItemInfoCard style={{ color: canUpRank3 ? '#fff' : 'gray' }}>
-            <Label>Member direct:</Label>
+            <Label>Member direct</Label>
             <Value>${nextRankRequire[userRank.rank].direct}</Value>
           </ItemInfoCard>
           <ItemInfoCard style={{ color: canUpRank4 ? '#fff' : 'gray' }}>
-            <Label>Member downline:</Label>
+            <Label>Member downline</Label>
             <Value>${nextRankRequire[userRank.rank].downline}</Value>
           </ItemInfoCard>
         </CardBody>
@@ -455,7 +475,7 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
         </CardHead>
         <CardBody>
           <ItemInfoCard style={{ color: canUpRank1 ? '#fff' : 'gray' }}>
-            <Label>Locked:</Label>
+            <Label>Locked</Label>
             <ValueLocked style={{ color: 'rgba(226, 225, 229, 1)' }}>
               {userRank.locked}
               <div
@@ -475,7 +495,7 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
             </ValueLocked>
           </ItemInfoCard>
           <ItemInfoCard style={{ color: canUpRank2 ? '#fff' : 'gray' }}>
-            <Label>Volumn on tree:</Label>
+            <Label>Volumn on tree</Label>
             <Value>
               $
               <CountUp
@@ -491,11 +511,11 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
             </Value>
           </ItemInfoCard>
           <ItemInfoCard style={{ color: canUpRank3 ? '#fff' : 'gray' }}>
-            <Label>Member direct:</Label>
+            <Label>Member direct</Label>
             <Value>${nextRankRequire[userRank.rank].direct}</Value>
           </ItemInfoCard>
           <ItemInfoCard style={{ color: canUpRank4 ? '#fff' : 'gray' }}>
-            <Label>Member downline:</Label>
+            <Label>Member downline</Label>
             <Value>${nextRankRequire[userRank.rank].downline}</Value>
           </ItemInfoCard>
         </CardBody>

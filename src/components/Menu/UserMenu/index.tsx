@@ -5,6 +5,7 @@ import {
   Flex,
   LogoutIcon,
   RefreshIcon,
+  Text,
   useModal,
   UserMenu as UIKitUserMenu,
   UserMenuDivider,
@@ -15,6 +16,7 @@ import ConnectWalletButton from 'components/ConnectWalletButton'
 import Trans from 'components/Trans'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import useAuth from 'hooks/useAuth'
+import Image from 'next/image'
 import NextLink from 'next/link'
 import { useEffect, useState } from 'react'
 import { useProfile } from 'state/profile/hooks'
@@ -62,12 +64,18 @@ const UserMenu = () => {
       <>
         <WalletUserMenuItem isWrongNetwork={isWrongNetwork} onPresentWalletModal={onClickWalletMenu} />
         <UserMenuItem as="button" disabled={isWrongNetwork} onClick={onPresentTransactionModal}>
-          {t('Recent Transactions')}
+          <Flex alignItems="center" justifyContent="center" style={{ gap: '8px' }}>
+            <Image src="/images/trans.png" width={15} height={15} alt="" />
+            <Text> {t('Recent Transactions')}</Text>
+          </Flex>
           {hasPendingTransactions && <RefreshIcon spin />}
         </UserMenuItem>
         <UserMenuItem>
           <NextLink href="/referral" passHref>
-            {t('Referral')}
+            <Flex alignItems="center" style={{ gap: '8px' }}>
+              <Image src="/images/referral.png" width={15} height={15} alt="" />
+              <Text> {t('Referral')}</Text>
+            </Flex>
           </NextLink>
         </UserMenuItem>
         <UserMenuDivider />
@@ -81,11 +89,10 @@ const UserMenu = () => {
         {/*   hasProfile={hasProfile} */}
         {/*   disabled={isWrongNetwork || chainId !== ChainId.BSC} */}
         {/* /> */}
-        <UserMenuDivider />
         <UserMenuItem as="button" onClick={logout}>
-          <Flex alignItems="center" justifyContent="space-between" width="100%">
-            {t('Disconnect')}
-            <LogoutIcon />
+          <Flex alignItems="center" style={{ gap: '8px' }}>
+            <Image src="/images/logout.png" width={15} height={15} alt="logout" />
+            <Text> {t('Disconnect')}</Text>
           </Flex>
         </UserMenuItem>
       </>

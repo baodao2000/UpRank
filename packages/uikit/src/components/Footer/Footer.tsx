@@ -13,7 +13,7 @@ import {
   StyledText,
   StyledToolsContainer,
 } from "./styles";
-
+import { useMatchBreakpoints } from "@pancakeswap/uikit";
 import { Button } from "../Button";
 import CakePrice from "../CakePrice/CakePrice";
 import LangSelector from "../LangSelector/LangSelector";
@@ -21,7 +21,7 @@ import { ArrowForwardIcon, LogoWithTextIcon } from "../Svg";
 import { ThemeSwitcher } from "../ThemeSwitcher";
 import { FooterProps } from "./types";
 import NextLink from "next/link";
-import images from "../../../../../src/configs/images";
+import Image from "next/image";
 
 const FooterItem = styled.div`
   display: flex;
@@ -106,13 +106,17 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
   buyCakeLabel,
   ...props
 }) => {
+  const { isMobile, isTablet } = useMatchBreakpoints();
+
   return (
     <StyledFooter data-theme="dark" p={["40px 16px", null, "56px 40px 32px 40px"]} {...props}>
       <BlockListItem>
         <img src="./images/V3/Logo.png" />
+
         {items?.map((item) => (
           <StyledList key={item.label}>
             <StyledListItem>{item.label}</StyledListItem>
+
             {item.items?.map(({ label, href, image, isHighlighted = false, border }) => (
               <FooterItem key={href}>
                 {image &&
@@ -142,6 +146,32 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
             ))}
           </StyledList>
         ))}
+        <div style={{ width: "100%", height: "2px", backgroundColor: " rgba(255, 255, 255, 0.10)" }} />
+        <Flex
+          style={{
+            width: "100%",
+            justifyContent: "space-between",
+            flexDirection: isMobile ? "column-reverse" : "row",
+            gap: "16px",
+          }}
+        >
+          <Text
+            style={{
+              color: "var(--greyscale-grey-scale-text-seconday, #ADABB2)",
+              fontSize: "18px",
+              fontStyle: "normal",
+              fontWeight: "400",
+              lineHeight: "28px",
+            }}
+          >
+            © 2023 Trendydefi. All rights reserved.
+          </Text>
+          <Flex style={{ gap: "32px" }}>
+            <img src="./images/githubV3.png" style={{ height: 35, width: 35 }} />
+            <img src="./images/community.png" style={{ height: 35, width: 35 }} />
+            <img src="./images/youtube.png" style={{ height: 35, width: 35 }} />
+          </Flex>
+        </Flex>
       </BlockListItem>
     </StyledFooter>
   );
