@@ -58,6 +58,9 @@ const Container = styled.div`
         font-size: 48px;
       }
   }
+  @media screen and (max-width: 575px) {
+    padding: 16px;
+  }
 `
 const Body = styled.div`
   background: none;
@@ -75,10 +78,14 @@ const PoolsList = styled.div`
   grid-row-gap: 40px;
   align-items: stretch;
   justify-content: center;
-  @media screen and (max-width: 720px) {
+  @media screen and (max-width: 800px) {
     display: flex;
     flex-direction: column;
     width: 100%;
+    align-items: center;
+  }
+  @media screen and (max-width: 1300px) {
+    grid-column-gap: 20px;
   }
 `
 const ThreeDots = styled.p`
@@ -168,12 +175,9 @@ const Card = styled.div`
   background: var(--black-black-20, rgba(255, 255, 255, 0.06));
   backdrop-filter: blur(5.5px);
   @media screen and (max-width: 1300px) {
-    width: 100%;
+    width: 90%;
     height: auto;
-  }
-  @media screen and (max-width: 1024px) {
-    width: 100%;
-    height: auto;
+    padding: 10px;
   }
   @media screen and (max-width: 575px) {
     width: 100%;
@@ -181,14 +185,7 @@ const Card = styled.div`
   }
   @media screen and (max-width: 825px) {
     padding: 10px;
-  }
-  @media screen and (max-width: 375px) {
-    width: 100%;
-    padding: 10px;
-  }
-  @media screen and (max-width: 320px) {
-    width: 100%;
-    padding: 10px;
+    width: 70%;
   }
 `
 const LogoAndName = styled.div`
@@ -208,7 +205,7 @@ const LogoAndName = styled.div`
   @media screen and (max-width: 1024px) {
     display: flex;
     gap: 10px;
-    justify-content: space-between;
+    justify-content: flex-start;
   }
   @media screen and (max-width: 800px) {
     span {
@@ -407,23 +404,15 @@ const LineStake = styled.div`
     justify-content: center;
     margin: 5px 0 10px;
   }
-  @media screen and (max-width: 1024px) {
-    span {
-      font-size: 15px;
-    }
-  }
-  @media screen and (max-width: 852px) {
-    span {
-      font-size: 12px;
-    }
-  }
-  @media screen and (max-width: 720px) {
-    span {
-      font-size: 16px;
-    }
-  }
-  @meida screen and (max-width: 575px ) {
+  @media screen and (max-width: 575px) {
     .value {
+      display: flex;
+      flex-wrap: wrap;
+    }
+  }
+  @media screen and (max-width: 1300px) {
+    .value {
+      display: flex;
       flex-wrap: wrap;
     }
   }
@@ -462,6 +451,10 @@ const ImageMine = styled.img`
   position: absolute;
   top: 0;
   right: 0;
+  @media screen and (max-width: 575px) {
+    width: 50px;
+    height: 60 px;
+  }
 `
 const Background = styled.div`
   // background: url(${images.mask}) no-repeat;
@@ -697,7 +690,7 @@ const PoolsV2 = () => {
                 {arr.map((i, r) => {
                   return (
                     <Card key={r}>
-                      {r === 0 ? null : <ImageMine src="./images/Mine.png" />}
+                      {r === 0 ? null : <ImageMine src="./images/V3/mine.png" />}
                       <LogoAndName>
                         <Logo src="./images/V3/bsc.svg" alt="logo" />
                         <span>{i.title[r]}</span>
@@ -711,6 +704,7 @@ const PoolsV2 = () => {
                             $
                             {
                               <CountUp
+                                style={{ fontSize: '20px', lineHeight: '30px' }}
                                 separator=","
                                 start={0}
                                 preserveValue
@@ -720,9 +714,9 @@ const PoolsV2 = () => {
                                 duration={1}
                               />
                             }
-                            ~
                             {
                               <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                                ~
                                 <CountUp
                                   separator=","
                                   style={{ color: 'rgba(173, 171, 178, 1)' }}
@@ -759,6 +753,7 @@ const PoolsV2 = () => {
                             $
                             {
                               <CountUp
+                                style={{ fontSize: '20px', lineHeight: '30px' }}
                                 separator=","
                                 start={0}
                                 preserveValue
@@ -773,7 +768,7 @@ const PoolsV2 = () => {
                                 {` ~ `}
                                 <CountUp
                                   separator=","
-                                  style={{ color: 'rgba(173, 171, 178, 1)' }}
+                                  style={{ color: 'rgba(173, 171, 178, 1)', fontSize: isMobile ? '16px' : '18px' }}
                                   start={0}
                                   preserveValue
                                   delay={0}
@@ -822,10 +817,7 @@ const PoolsV2 = () => {
                                     decimals={2}
                                     duration={1}
                                     className="value"
-                                    style={{
-                                      borderRadius: '4px',
-                                      color: 'rgba(228, 230, 231, 1)',
-                                    }}
+                                    style={{ fontSize: '20px', lineHeight: '30px' }}
                                   />
                                 }{' '}
                                 %
@@ -886,9 +878,7 @@ const PoolsV2 = () => {
                                         decimals={2}
                                         duration={1}
                                         className="value"
-                                        style={{
-                                          color: 'rgba(228, 230, 231, 1)',
-                                        }}
+                                        style={{ fontSize: '20px', lineHeight: '30px' }}
                                       />
                                     }
                                   </div>
@@ -969,9 +959,7 @@ const PoolsV2 = () => {
                                         decimals={2}
                                         duration={1}
                                         className="value"
-                                        style={{
-                                          color: 'rgba(228, 230, 231, 1)',
-                                        }}
+                                        style={{ fontSize: '20px', lineHeight: '30px' }}
                                       />
                                     }
                                   </div>

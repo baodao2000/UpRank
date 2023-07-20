@@ -20,6 +20,9 @@ const ListPoolRanks = styled.div`
   grid-column-gap: 32px;
   grid-row-gap: 30px;
   flex-direction: row;
+  @media screen and (max-width: 575px) {
+    padding: 16px;
+  }
 `
 
 export const ImageRank = styled.img`
@@ -32,7 +35,7 @@ export const ImageRank = styled.img`
   }
 `
 const CardNextRanks = styled.div`
-  min-width: 386px;
+  max-width: 386px;
   height: auto;
   color: #fff;
   border-radius: 24px;
@@ -45,9 +48,13 @@ const CardNextRanks = styled.div`
   justify-content: space-between;
   position: relative;
   gap: 24px;
+  width: 100%;
+  @media screen and (max-width: 575px) {
+    padding: 16px;
+  }
 `
 const CardYourRanks = styled.div`
-  min-width: 386px;
+  max-width: 386px;
   height: auto;
   color: #fff;
   border-radius: 24px;
@@ -57,9 +64,13 @@ const CardYourRanks = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  width: 100%;
+  @media screen and (max-width: 575px) {
+    padding: 16px;
+  }
 `
 const CardRanksGold = styled.div`
-  min-width: 386px;
+  max-width: 386px;
   height: auto;
   color: #fff;
   border-radius: 24px;
@@ -69,6 +80,10 @@ const CardRanksGold = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  width: 100%;
+  @media screen and (max-width: 575px) {
+    padding: 16px;
+  }
 `
 
 const CardPoolRanks = styled.div`

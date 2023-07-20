@@ -29,6 +29,12 @@ const Wraper = styled.div`
   margin-left: auto;
   margin-right: auto;
   padding: 96px 0;
+  @media screen and (max-width: 575px) {
+    padding: 40px 16px;
+  }
+  @media screen and (max-width: 1440px) {
+    padding: 40px;
+  }
 `
 const StyledHead = styled(Heading)`
   font-size: 48px;
@@ -58,6 +64,12 @@ const Head = styled.div`
   display: flex;
   gap: 40px;
   margin-bottom: 90px;
+  width: 100%;
+  align-items: center;
+  @media screen and (max-width: 575px) {
+    flex-direction: column;
+    margin-bottom: 24px;
+  }
 `
 const Left = styled.div`
   display: flex;
@@ -65,6 +77,9 @@ const Left = styled.div`
   gap: 16px;
   width: 80%;
   border-bottom: 1px solid var(--white-white-12, rgba(255, 255, 255, 0.12));
+  @media screen and (max-width: 575px) {
+    width: 100%;
+  }
 `
 const Right = styled.div`
   display: flex;
@@ -78,6 +93,9 @@ const Right = styled.div`
   background: var(--greyscale-grayscale-3, #141217);
   /* depth/4 */
   box-shadow: 0px 64px 64px -48px rgba(15, 15, 15, 0.1);
+  @media screen and (max-width: 575px) {
+    width: 100%;
+  }
 `
 const Label = styled(Text)`
   color: var(--greyscale-grey-scale-text-seconday, #adabb2);
@@ -99,6 +117,10 @@ const Total = styled(Text)`
   font-weight: 600;
   line-height: 60px; /* 125% */
   letter-spacing: -0.96px;
+  @media screen and (max-width: 575px) {
+    font-size: 24px;
+    line-height: 32px; /* 125% */
+  }
 `
 const TotalUsd = styled(Text)`
   color: var(--greyscale-grey-scale-text-seconday, #adabb2);
@@ -109,6 +131,10 @@ const TotalUsd = styled(Text)`
   font-style: normal;
   font-weight: 700;
   line-height: 30px;
+  @media screen and (max-width: 575px) {
+    font-size: 24px;
+    line-height: 24px;
+  }
 `
 const Version = styled.div`
   display: flex;
@@ -138,6 +164,9 @@ const HeadContent = styled.div`
     bottom: 20%;
     right: 5%;
   }
+  @media screen and (max-width: 575px) {
+    padding: 16px;
+  }
 `
 const TitleContent = styled(Text)`
   color: var(--white-white, #fff);
@@ -160,6 +189,9 @@ const LabelContent = styled(Text)`
   .link {
     color: rgba(133, 68, 245, 1);
   }
+  @media screen and (max-width: 575px) {
+    flex-wrap: wrap;
+  }
 `
 const PoolV3 = () => {
   const { account, chainId } = useActiveWeb3React()
@@ -170,6 +202,7 @@ const PoolV3 = () => {
   const getPoolContract = getPoolsContract(CHAIN_ID)
   const getPoolV2Contract = getPoolsV2Contract(CHAIN_ID)
   const getPoolV3Contract = getPoolsV3Contract(CHAIN_ID)
+  const { isMobile } = useMatchBreakpoints()
 
   const { data, isFetched } = useBalance({
     addressOrName: pool === 'poolV1' ? contracts.pools[CHAIN_ID] : contracts.poolsV3[CHAIN_ID],
@@ -341,9 +374,13 @@ const PoolV3 = () => {
               </>
             )}
           </div>
-          <img className="pool" src="./images/V3/pools.svg" />
-          {/* <div className='circle' style={{width: '84px', height: '84px', background: 'linear-gradient(180deg, #7b3fe4 0%, #a726c1 100%)', borderRadius: '50px'}}></div> */}
+          {isMobile ? null : <img className="pool" src="./images/V3/pools.svg" />}
         </HeadContent>
+        {isMobile ? (
+          <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+            <img src="./images/V3/pools.svg" />
+          </div>
+        ) : null}
         {pool === 'poolV2' && <PoolsV2 />}
         {pool === 'poolV1' && <Pools />}
       </Wraper>
