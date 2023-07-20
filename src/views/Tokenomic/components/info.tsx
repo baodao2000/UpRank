@@ -17,10 +17,8 @@ const Card = styled.div`
   background: var(--white-white-6, rgba(255, 255, 255, 0.06));
   backdrop-filter: blur(5.5px);
   border: 1px solid transparent;
-  //   border-image: radial-gradient(circle at top left, #7b3fe4 0%, #a726c1 100%);
   border-image-slice: 1;
-  //   border: double 4px transparent;
-  //   border-radius: 80px;
+
   background-image: linear-gradient(#18171b, #18171b), radial-gradient(circle at top left, #7b3fe4 0%, #a726c1 100%);
   background-origin: border-box;
   background-clip: padding-box, border-box;

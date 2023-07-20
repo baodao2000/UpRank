@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Heading, Text, Flex, Button, useToast, Input, LinkExternal } from '@pancakeswap/uikit'
+import { Heading, Text, Flex, Button, useToast, Input, LinkExternal, useMatchBreakpoints } from '@pancakeswap/uikit'
 import React, { useState } from 'react'
 import { Tooltip } from 'react-tooltip'
 import 'react-tooltip/dist/react-tooltip.css'
@@ -20,6 +20,8 @@ import CountUp from 'react-countup'
 import Child from './child'
 import { shortenURL } from 'views/Pools2/util'
 import { getBlockExploreLink } from 'utils'
+import Image from 'next/image'
+import { isTablet } from 'react-device-detect'
 
 const Wrapper = styled.div`
   * {
@@ -29,19 +31,28 @@ const Wrapper = styled.div`
   max-width: 1320px;
   height: auto;
   min-height: 500px;
-  margin-top: 30px;
   margin-left: auto;
   margin-right: auto;
+  padding: 96px 0;
   display: flex;
+  gap: 32px;
   th {
-    border-top: 1px solid #e7e3eb;
-    border-bottom: 1px solid #e7e3eb;
     border-collapse: collapse;
   }
   th,
   td {
     padding: 10px;
     text-align: center;
+  }
+  @media screen and (max-width: 900px) {
+    flex-direction: column;
+    padding: 40px 0;
+    width: 100%;
+  }
+  @media screen and (max-width: 575px) {
+    flex-direction: column;
+    padding: 40px 0;
+    width: 100%;
   }
 `
 
@@ -50,7 +61,23 @@ const ReferralPage = styled.div`
   flex-wrap: wrap;
   position: relative;
   justify-content: flex-start;
-  gap: 20px;
+  gap: 48px;
+  width: 78%;
+  @media screen and (max-width: 1440px) {
+    padding 0px 16px;
+  width: 100%;
+
+  }
+  @media screen and (max-width: 900px) {
+    padding 0px 16px;
+  width: 100%;
+
+  }
+  @media screen and (max-width: 575px) {
+    padding 0px 16px;
+  width: 100%;
+
+  }
 `
 
 const CardRegister = styled.div`
@@ -64,41 +91,84 @@ const CardRegister = styled.div`
   border-radius: 16px;
   background: var(--greyscale-grayscale-3, #141217);
   box-shadow: 0px 64px 64px -48px rgba(15, 15, 15, 0.1);
-
-  ${({ theme }) => theme.mediaQueries.md} {
-    padding: 30px 37px;
+  position: relative;
+  .upto {
+    position: absolute;
+    top: -12%;
+    right: -7%;
+  }
+  @media screen and (max-width: 575px) {
+    padding: 40px 16px;
+    .upto {
+      position: relative;
+      top: 0;
+      right: 0;
+      width: 343px;
+    }
   }
 `
 
 const CardReferral = styled.div`
-  max-width: 1000px;
+  max-width: 1220px;
   min-height: 300px;
   width: 100%;
-  margin: 0 auto 30px auto;
   height: auto;
-  padding: 15px;
   border-radius: 20px;
-  background: linear-gradient(153.15deg, rgb(124, 7, 216) 8.57%, rgba(129, 69, 255, 0.02) 100%);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  color: #e6e6e6;
+  padding: 0 16px;
 
-  ${({ theme }) => theme.mediaQueries.md} {
-    padding: 30px 37px;
+  color: #e6e6e6;
+  @media screen and (max-width: 1440px) {
+    width: 75%;
+  }
+  @media screen and (max-width: 900px) {
+    padding: 0 16px;
+    width: 100%;
+  }
+  @media screen and (max-width: 575px) {
+    padding: 0 16px;
+    width: 100%;
   }
 `
-
+const FriendsList = styled.div`
+  border-radius: 16px;
+  background: var(--greyscale-grayscale-3, #141217);
+  box-shadow: 0px 64px 64px -48px rgba(15, 15, 15, 0.1);
+  display: flex;
+  padding: 40px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 48px;
+  align-self: stretch;
+  margin-top: 48px;
+  @media screen and (max-width: 575px) {
+    padding: 40px 16px;
+    margin-top: 28px;
+  }
+`
+const CardFriends = styled.div`
+  display: flex;
+  padding: 16px 24px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  border-radius: 10px;
+  border: 1px solid var(--white-white-12, rgba(255, 255, 255, 0.12));
+  background: var(--white-white-6, rgba(255, 255, 255, 0.06));
+  backdrop-filter: blur(6px);
+  width: 257px;
+  @media screen and (max-width: 575px) {
+    padding: 10px;
+  }
+`
 const CardInfoUser = styled.div`
-  max-width: 400px;
   width: 100%;
   height: auto;
-  padding: 15px;
-  border-radius: 20px;
-  background: linear-gradient(153.15deg, rgb(124, 7, 216) 8.57%, rgba(129, 69, 255, 0.02) 100%);
-
-  ${({ theme }) => theme.mediaQueries.md} {
-    padding: 30px 37px;
+  padding: 0 16px;
+  @media screen and (max-width: 575px) {
+    padding: 0 16px;
   }
 `
 
@@ -106,16 +176,15 @@ const StyledHead = styled(Heading)`
   font-size: 48px;
   font-style: normal;
   font-weight: 600;
-  line-height: 60px; /* 125% */
+  line-height: 56px; /* 125% */
   letter-spacing: -0.96px;
   background: var(--primary-primary-gradient-2, linear-gradient(180deg, #7b3fe4 0%, #a726c1 100%));
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-
-  ${({ theme }) => theme.mediaQueries.md} {
-    font-size: 48px;
-    line-height: 59px;
+  @media screen and (max-width: 575px) {
+    font-size: 24px;
+    line-height: 32px;
   }
 `
 
@@ -124,12 +193,20 @@ const StyledSubtitle = styled(Text)`
   font-style: normal;
   font-weight: 400;
   line-height: 28px;
+  margin-top: 24px;
   color: rgba(173, 171, 178, 1);
+  @media screen and (max-width: 575px) {
+    font-size: 16px;
+    margin-top: 16px;
+    line-height: 24px;
+  }
 `
 
 const GroupLinkRef = styled.div`
   flex-direction: column;
   display: flex;
+  gap: 48px;
+  width: 100%;
 `
 
 const GroupSearchByCode = styled.div`
@@ -146,7 +223,6 @@ const WrapperLinkRef = styled.div`
   display: flex;
   position: relative;
   flex-direction: column;
-
   flex-wrap: wrap;
   justify-content: space-around;
   width: 100%;
@@ -155,6 +231,10 @@ const WrapperLinkRef = styled.div`
   background: var(--black-black-5, rgba(0, 0, 0, 0.05));
   padding: 32px;
   gap: 32px;
+  @media screen and (max-width: 575px) {
+    padding: 16px;
+    width: 100%;
+  }
 `
 
 const StyledLabelLinkRef = styled.label`
@@ -164,7 +244,6 @@ const StyledLabelLinkRef = styled.label`
   line-height: 40px; /* 125% */
   letter-spacing: -0.96px;
   color: rgba(255, 255, 255, 1);
-  margin-bottom: 48px;
   ${({ theme }) => theme.mediaQueries.md} {
     font-size: 32px;
   }
@@ -178,6 +257,7 @@ const StyledLink = styled.div`
   outline: none;
   color: black;
   font-size: 18px;
+  flex-direction: row-reverse;
   min-height: 34px;
   display: flex;
   justify-content: space-between;
@@ -221,6 +301,9 @@ const StyledButton = styled(Button)`
   border-radius: 90px;
   width: 192px;
   border: 2px solid var(--greyscale-grey-scale-text-seconday, #adabb2);
+  @media screen and (max-width: 575px) {
+    margin-top: 0px;
+  }
 `
 
 const StyledButtonSearch = styled.button`
@@ -260,35 +343,105 @@ const ShowLinkRefMobile = styled.span`
 `
 
 const BlockInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-  row-gap: 10px;
+display: flex;
+padding: 40px;
+flex-direction: column;
+align-items: flex-start;
+gap: 48px;
+align-self: stretch;
+  border-radius: 16px;
+  margin-top: 48px;
+background: var(--greyscale-grayscale-3, #141217);
+/* depth/4 */
+box-shadow: 0px 64px 64px -48px rgba(15, 15, 15, 0.10);
+@media screen and (max-width: 575px ) {
+  padding 40px 16px;
+  margin-top: 28px;
+
+}
 `
 
 const InfoItem = styled.div`
   display: flex;
   justify-content: space-between;
+  flex-direction: column;
   width: 100%;
   color: #e6e6e6;
+  border-radius: 10px;
+  max-width: 286px;
+  gap: 12px;
+  border: 1px solid var(--white-white-12, rgba(255, 255, 255, 0.12));
+  background: var(--white-white-6, rgba(255, 255, 255, 0.06));
+  backdrop-filter: blur(6px);
+  padding: 16px 24px;
+  @media screen and (max-width: 575px) {
+    width: 145px;
+    padding: 16px;
+  }
 `
 
 const Table = styled.table`
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 32px;
+  align-self: stretch;
+  border-radius: 16px;
+  border: 1px solid var(--white-white-8, rgba(255, 255, 255, 0.08));
+  background: var(--black-black-5, rgba(0, 0, 0, 0.05));
+  tr {
+    width: 100%;
+  }
+  th {
+    width: 251px;
+    text-align: left;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px;
+    color: rgba(119, 126, 144, 1);
+    @media screen and (max-width: 575px) {
+      text-align: center;
+    }
+  }
+  @media screen and (max-width: 575px) {
+    padding: 0px;
+  }
 `
 
 const ChildItem = styled.tr`
   word-break: break-all;
+  width: 100%;
+  td {
+    width: 1000px;
+    text-align: left;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px;
+    color: rgba(255, 255, 255, 1);
+  }
+  @media screen and (max-width: 575px) {
+    td {
+      font-size: 14px;
+    }
+  }
 `
 
-const Label = styled.div`
-  font-weight: 700;
-  margin-right: 10px;
+const Label = styled(Text)`
   font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  color: rgba(119, 126, 144, 1);
 `
 
 const Value = styled.div`
-  word-break: break-all;
-  font-size: 14px;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 30px;
+  color: rgba(133, 68, 245, 1);
 `
 
 const GroupChangePage = styled.div`
@@ -313,25 +466,25 @@ const ButtonChangePage = styled.button`
 `
 
 const StyledItemChild = styled.span`
-  font-size: 12px;
-  margin-bottom: 10px;
-  font-weight: 600;
-
-  ${({ theme }) => theme.mediaQueries.sm} {
-    font-size: 14px;
-  }
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  color: rgba(173, 171, 178, 1);
 `
-
+const StyledTotal = styled(Text)`
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 30px;
+  color: rgba(133, 68, 245, 1);
+`
 const StyledLinkAccount = styled.a`
-  font-size: 12px;
-  margin-bottom: 10px;
-  font-weight: 600;
-  color: #00f0e1;
-  text-decoration: underline;
-
-  ${({ theme }) => theme.mediaQueries.sm} {
-    font-size: 14px;
-  }
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 30px;
+  color: rgba(133, 68, 245, 1);
 `
 
 const StyledInput = styled(Input)`
@@ -340,6 +493,9 @@ const StyledInput = styled(Input)`
   background: var(--greyscale-grayscale-4, #2d2c33);
   padding: 12px 16px;
   height: 44px;
+  &:focus:not(:disabled) {
+    border: none;
+  }
 `
 
 const StyledInputSearch = styled(Input)`
@@ -348,6 +504,13 @@ const StyledInputSearch = styled(Input)`
   border-radius: 12px;
   background: var(--greyscale-grayscale-4, #2d2c33);
   padding: 12px 16px;
+
+  &:focus:not(:disabled) {
+    border: none;
+  }
+  ::placeholder {
+    color: #67666e;
+  }
 `
 
 const LinkItem = styled.div`
@@ -374,7 +537,25 @@ export const copyText = (text) => {
   document.body.removeChild(el)
 }
 const Menu = styled.div`
-  width: 292px;
+  max-width: 300px;
+  width: 20%;
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+  @media screen and (max-width: 900px) {
+    display: flex;
+    flex-direction: row;
+    max-width: 100%;
+    width: 100%;
+    justify-content: space-between;
+  }
+  @media screen and (max-width: 575px) {
+    display: flex;
+    flex-direction: row;
+    max-width: 100%;
+    width: 100%;
+    justify-content: space-between;
+  }
 `
 const MenuItemActive = styled.div`
 display: flex;
@@ -388,11 +569,19 @@ img{
   height: 24px;
 }
 .title {
-  font-size: 18px;
+  font-size: 14px;
 font-style: normal;
 font-weight: 500;
 line-height: 20px; 
 color: rgba(252, 252, 253, 1);
+}
+@media screen and (max-width: 900px) {
+  width: 20%;
+  
+}
+@media screen and (max-width: 575px) {
+  padding: 0 8px;
+  width: 30%;
 }
 `
 const MenuItemDisabled = styled.div`
@@ -412,6 +601,11 @@ img{
   line-height: 20px;
 color: rgba(103, 102, 110, 1);
 }
+cursor: pointer;
+@media screen and (max-width: 575px) {
+  padding: 0 8px;
+  width: 30%;
+}
 `
 const StyledText = styled(Text)`
   font-size: 12px;
@@ -424,6 +618,9 @@ const GroupLink = styled.div`
   display: flex;
   width: 100%;
   gap: 16px;
+  @media screen and (max-width: 575px) {
+    flex-direction: column;
+  }
 `
 const ButtonLink = styled.button`
   width: 192px;
@@ -437,6 +634,116 @@ const ButtonLink = styled.button`
   color: rgba(255, 255, 255, 1);
   background: rgba(20, 18, 23, 1);
   cursor: pointer;
+`
+const Step = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+`
+const TitleStep = styled(Text)`
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 32px;
+  color: rgba(255, 255, 255, 1);
+`
+const LabelStep = styled(Text)`
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  color: rgba(173, 171, 178, 1);
+`
+const CardStep = styled.div`
+  display: flex;
+  margin-top: 24px;
+  gap: 24px;
+  justify-content: space-between;
+
+  @media screen and (max-width: 575px) {
+    flex-direction: column;
+    align-items: center;
+  }
+`
+const Card = styled.div`
+  width: 340px;
+  border-radius: 8px;
+  background: var(--white-white-6, rgba(255, 255, 255, 0.06));
+  padding: 29px 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  .imgStep {
+    width: 48px;
+    height: 48px;
+  }
+  @media screen and (max-width: 1440px) {
+    width: 100%;
+  }
+`
+const CardTitle = styled(Text)`
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px;
+  color: rgba(255, 255, 255, 1);
+`
+const ProfilePage = styled.div``
+const Item = styled.div`
+  display: flex;
+  gap: 24px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  @media screen and (max-width: 575px) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+`
+const ReferralInfo = styled.div`
+  border-radius: 16px;
+  border: 1px solid var(--white-white-8, rgba(255, 255, 255, 0.08));
+  background: var(--black-black-5, rgba(0, 0, 0, 0.05));
+  display: flex;
+  padding: 32px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 16px;
+  align-self: stretch;
+`
+const InfoTitle = styled(Text)`
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 32px;
+`
+const Group = styled.div`
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  @media screen and (max-width: 1440px) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    display: flex;
+    justify-content: flex-start;
+  }
+  @media screen and (max-width: 900px) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    display: flex;
+    justify-content: flex-start;
+  }
+  @media screen and (max-width: 575px) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    display: flex;
+    gap: 16px;
+  }
 `
 const Referral = () => {
   const [linkRef, setLinkRef] = React.useState('')
@@ -487,46 +794,48 @@ const Referral = () => {
     totalStaked7: 0,
     totalComms: 0,
   })
+  const { isMobile } = useMatchBreakpoints()
 
-  // const getTotalRefferChild = async (page, accountChild) => {
-  //   if (!account) {
-  //     setLoadingPage(true)
-  //   }
-  //   setLoadingPage(true)
-  //   const limit = 5
-  //   const data = await Promise.all([
-  //     refferCT.getTotalUserByUp(accountChild ? accountChild : account, limit, page),
-  //     refferCT.userInfos(account ? account : accountChild),
-  //   ])
+  const [tab, setTab] = useState(2)
+  const getTotalRefferChild = async (page, accountChild) => {
+    if (!account) {
+      setLoadingPage(true)
+    }
+    setLoadingPage(false)
+    const limit = 5
+    const data = await Promise.all([
+      refferCT.getTotalUserByUp(accountChild ? accountChild : account, limit, page),
+      refferCT.userInfos(account ? account : accountChild),
+    ])
 
-  //   const countPage = Math.ceil(Number(data[0].totalItem.toString()) / limit)
-  //   const arr = data[0].list.map((item) => item.user)
-  //   const list = await Promise.all(
-  //     arr.map(async (item) => {
-  //       const dataItem = await Promise.all([
-  //         getPoolContract.volumeOntree(item),
-  //         getPoolContract.userTotalLock(item),
-  //         refferCT.userInfos(item),
-  //       ])
-  //       const dataItem2 = await Promise.all([
-  //         getPoolV2Contract.volumeOntree(item),
-  //         getPoolV2Contract.userTotalLock(item),
-  //         refferCT.userInfos(item),
-  //       ])
-  //       return {
-  //         account: item,
-  //         volume: Number(formatEther(dataItem[0].add(dataItem2[0]))).toFixed(3),
-  //         locked: Number(formatEther(dataItem[1].add(dataItem2[1]))).toFixed(3),
-  //         child: Number(dataItem[2].totalRefer7.toString()),
-  //       }
-  //     }),
-  //   )
-  //   setTotalItemChild(Number(data[0].totalItem.toString()))
-  //   setCountPage(countPage)
-  //   setTotal7Level(data[1].totalRefer7.toString())
-  //   setListChild(list.map((l) => ({ ...l, showChild: false })))
-  //   setLoadingTable(false)
-  // }
+    const countPage = Math.ceil(Number(data[0].totalItem.toString()) / limit)
+    const arr = data[0].list.map((item) => item.user)
+    const list = await Promise.all(
+      arr.map(async (item) => {
+        const dataItem = await Promise.all([
+          getPoolContract.volumeOntree(item),
+          getPoolContract.userTotalLock(item),
+          refferCT.userInfos(item),
+        ])
+        const dataItem2 = await Promise.all([
+          getPoolV2Contract.volumeOntree(item),
+          getPoolV2Contract.userTotalLock(item),
+          refferCT.userInfos(item),
+        ])
+        return {
+          account: item,
+          volume: Number(formatEther(dataItem[0].add(dataItem2[0]))).toFixed(3),
+          locked: Number(formatEther(dataItem[1].add(dataItem2[1]))).toFixed(3),
+          child: Number(dataItem[2].totalRefer7.toString()),
+        }
+      }),
+    )
+    setTotalItemChild(Number(data[0].totalItem.toString()))
+    setCountPage(countPage)
+    setTotal7Level(data[1].totalRefer7.toString())
+    setListChild(list.map((l) => ({ ...l, showChild: false })))
+    setLoadingTable(false)
+  }
 
   const validateReferByWallet = async (e) => {
     setReferCode(e.target.value)
@@ -543,7 +852,7 @@ const Referral = () => {
   const handleClickPage = (index) => {
     const limit = 5
     const skip = index * limit
-    // getTotalRefferChild(skip, acountChild[acountChild.length - 1])
+    getTotalRefferChild(skip, acountChild[acountChild.length - 1])
     setActivePage(index)
   }
 
@@ -565,7 +874,7 @@ const Referral = () => {
     }
     const limit = 5
     const skip = index * limit
-    // getTotalRefferChild(skip, acountChild[acountChild.length - 1])
+    getTotalRefferChild(skip, acountChild[acountChild.length - 1])
     setActivePage(Number(index))
   }
 
@@ -660,7 +969,7 @@ const Referral = () => {
     const newArr = [...acountChild]
     newArr.pop()
     setAccountChild(newArr)
-    // getTotalRefferChild(0, newArr[newArr.length - 1])
+    getTotalRefferChild(0, newArr[newArr.length - 1])
   }
 
   React.useEffect(() => {
@@ -671,9 +980,10 @@ const Referral = () => {
     if (!account) {
       return
     }
-    // getTotalRefferChild(0, account)
+    getTotalRefferChild(0, account)
     setMyCode(account.slice(account.length - 6, account.length).toLocaleLowerCase())
     getRefferCode()
+    getUserInfo()
     if (!acountChild.length && account) {
       setAccountChild([...acountChild, account])
     } else {
@@ -802,263 +1112,377 @@ const Referral = () => {
       ) : (
         <Wrapper>
           <Menu>
-            <MenuItemActive>
-              <img src="./images/V3/person.png" />
-              <Text className="title">Profile</Text>
-            </MenuItemActive>
-            <MenuItemActive>
-              <img src="./images/V3/Line.png" />
-              <Text className="title">Referrals</Text>
-            </MenuItemActive>
-            <MenuItemActive>
-              <img src="./images/V3/group.png" />
-              <Text className="title">Friend list</Text>
-            </MenuItemActive>
-          </Menu>
-          <ReferralPage>
-            <StyledHead>Referral</StyledHead>
-            <StyledSubtitle>
-              Welcome to our member count section! Here, you can track the growth of our community and get a sense of
-              the scale of our website&#39;s audience.{' '}
-            </StyledSubtitle>
-            <CardRegister>
-              <GroupLinkRef>
-                <StyledText>Refer a friend and get reward together</StyledText>
-                <StyledLabelLinkRef
-                  style={{ fontSize: '14px', lineHeight: '20px', marginBottom: '0', marginTop: '12px' }}
-                >
-                  Up to
-                </StyledLabelLinkRef>
-                <StyledLabelLinkRef>20%</StyledLabelLinkRef>
-                <WrapperLinkRef>
-                  <Text fontSize="24px" fontWeight="600" lineHeight="32px" style={{ color: 'rgba(255, 255, 255, 1)' }}>
-                    {' '}
-                    Invite friends to earn 20%
-                  </Text>
-                  <GroupLink>
-                    <div style={{ width: '50%' }}>
-                      <StyledText
-                        style={{ color: 'rgba(255, 255, 255, 1)', marginBottom: '12px' }}
-                        color="rgba(255, 255, 255, 1)"
-                      >
-                        Referral link
-                      </StyledText>
-                      <StyledLink>
-                        <LinkItem>
-                          <StyledIconRef
-                            id="iconRef"
-                            src="/images/referral/copy.svg"
-                            onClick={handleRef}
-                            onMouseLeave={handleLeave}
-                          />
-                          <Tooltip
-                            anchorId="iconRef"
-                            content={userIsRegister ? (showCopied ? 'Copied' : 'Copy') : 'Please Register'}
-                          />
-                          <ShowLinkRefPc>{formatLinkRef(linkRef, 50, 4)}</ShowLinkRefPc>
-                          <ShowLinkRefMobile>{formatLinkRef(linkRef, 20, 4)}</ShowLinkRefMobile>
-                        </LinkItem>
-                      </StyledLink>
-                    </div>
-                    <div style={{ width: '50%' }}>
-                      <StyledText
-                        style={{ color: 'rgba(255, 255, 255, 1)', marginBottom: '12px' }}
-                        color="rgba(255, 255, 255, 1)"
-                      >
-                        Referral link
-                      </StyledText>
-                      {!userIsRegister && (
-                        <StyledInput
-                          value={referCode}
-                          autoFocus={true}
-                          onChange={validateReferByWallet}
-                          placeholder={`refer code`}
-                        />
-                      )}
-                      {showError && referCode && <span style={{ color: 'red' }}>Invalid code</span>}
-                    </div>
-                  </GroupLink>
-                  <StyledButton onClick={onRegister} disabled={userIsRegister || showError}>
-                    Register
-                  </StyledButton>
-                  <div style={{ display: 'flex', gap: '32px', alignItems: 'center', justifyContent: 'center' }}>
-                    <div style={{ width: '120px', height: '1px', background: 'rgba(255, 255, 255, 0.10)' }}></div>
-                    <Text fontSize="18px" fontWeight="500" lineHeight="20px">
-                      Or
-                    </Text>
-                    <div style={{ width: '120px', height: '1px', background: 'rgba(255, 255, 255, 0.10)' }}></div>
-                  </div>
-                  <GroupSearchByCode>
-                    <StyledHeadSearchUser>Search By Code</StyledHeadSearchUser>
-                    <div style={{ position: 'relative' }}>
-                      <StyledInputSearch
-                        value={userSearch}
-                        autoFocus={true}
-                        onChange={(e) => setUserSearch(e.target.value)}
-                        placeholder={`Enter code`}
-                      />
-                      {/* <img onClick={handleSearchUserCode} className='search' src='./images/V3/search.png' /> */}
-                    </div>
-                    {/* <div>
-                  <StyledButtonSearch onClick={handleSearchUserCode}>Search</StyledButtonSearch>
-                </div> */}
-                    {showResultSearch()}
-                  </GroupSearchByCode>
-                </WrapperLinkRef>
-              </GroupLinkRef>
-              <ButtonLink>Check my refer list</ButtonLink>
-            </CardRegister>
-            {/* <CardInfoUser>
-              <StyledHead>Info User</StyledHead>
-              <BlockInfo>
-                <InfoItem>
-                  <Label>Reffer by:</Label>
-                  <Value>{userInfos.refferBy}</Value>
-                </InfoItem>
-                <InfoItem>
-                  <Label>Date refferd:</Label>
-                  <Value>{userInfos.date === 0 ? 0 : moment(Number(userInfos.date)).format('MMM Do YYYY')}</Value>
-                </InfoItem>
-                <InfoItem>
-                  <Label>Total reffer:</Label>
-                  <Value>{userInfos.totalReffer}</Value>
-                </InfoItem>
-                <InfoItem>
-                  <Label>Total reffer downline:</Label>
-                  <Value>{userInfos.totalRefer7}</Value>
-                </InfoItem>
-                <InfoItem>
-                  <Label>Direct staked:</Label>
-                  <Value>{userInfos.directStaked}</Value>
-                </InfoItem>
-                <InfoItem>
-                  <Label>Total 7 level staked:</Label>
-                  <Value>
-                    <CountUp
-                      separator=","
-                      start={0}
-                      preserveValue
-                      delay={0}
-                      end={userInfos.totalStaked7}
-                      decimals={3}
-                      duration={1}
-                    />
-                    $
-                  </Value>
-                </InfoItem>
-                <InfoItem>
-                  <Label>Total commission:</Label>
-                  <Value>
-                    <CountUp
-                      separator=","
-                      start={0}
-                      preserveValue
-                      delay={0}
-                      end={userInfos.totalComms}
-                      decimals={3}
-                      duration={1}
-                    />
-                    {unit}
-                  </Value>
-                </InfoItem>
-              </BlockInfo>
-            </CardInfoUser> */}
-          </ReferralPage>
-          {/* <CardReferral>
-            <StyledHead>Friends list</StyledHead>
-            {loadingTable ? (
-              <ThreeDots style={{ textAlign: 'center' }} className="loading">
-                Loading
-                <span>.</span>
-                <span>.</span>
-                <span>.</span>
-              </ThreeDots>
+            {tab === 1 ? (
+              <MenuItemActive>
+                <img src="./images/V3/person.png" />
+                <Text className="title">Profile</Text>
+              </MenuItemActive>
             ) : (
-              <>
-                <Flex justifyContent="space-between">
-                  <StyledLinkAccount
-                    rel="noreferrer"
-                    target="_blank"
-                    href={`https://testnet.bscscan.com/address/${acountChild[acountChild.length - 1]}`}
-                  >
-                    F{acountChild.length - 1}: {truncateHash(acountChild[acountChild.length - 1], 6, 2)}
-                  </StyledLinkAccount>
-                  <StyledItemChild>
-                    Total of F{acountChild.length}: {totalItemChild}
-                  </StyledItemChild>
-                  <StyledItemChild>Total refer downline: {total7Level}</StyledItemChild>
-                </Flex>
-                <Table>
-                  <tr>
-                    <th>Friends</th>
-                    <th>Volumn</th>
-                    <th>Locked</th>
-                  </tr>
-                  {listChild.map((item, index) => (
-                    <>
-                      <ChildItem key={index}>
-                        <td>
-                          <div
-                            onClick={() => handleChangeChild(item.account)}
-                            style={{
-                              cursor: 'pointer',
-                              color: item.child > 0 ? 'gold' : '#00f0e1',
-                              textDecoration: 'underline',
-                              display: 'flex',
-                              alignItems: 'center',
-                              gap: 4,
-                              justifyContent: 'center',
-                            }}
-                          >
-                            {item.account.substring(0, 2)}...{item.account.substring(item.account.length - 4)}
-                            {item.child > 0 && <img src="/images/referral/plus.png" style={{ fill: 'white' }} />}
-                          </div>
-                        </td>
-                        <td>
-                          <CountUp
-                            separator=","
-                            start={0}
-                            preserveValue
-                            delay={0}
-                            end={item.volume}
-                            decimals={3}
-                            duration={1}
-                          />
-                          $
-                        </td>
-                        <td>
-                          <CountUp
-                            separator=","
-                            start={0}
-                            preserveValue
-                            delay={0}
-                            end={item.locked}
-                            decimals={3}
-                            duration={1}
-                          />
-                        </td>
-                      </ChildItem>
-                      {item.showChild && (
-                        <ChildItem key={index + '-' + index}>
-                          <td colSpan={3} style={{ padding: 0 }}>
-                            <Child referBy={item.account} />
-                          </td>
-                        </ChildItem>
-                      )}
-                    </>
-                  ))}
-                </Table>
-              </>
+              <MenuItemDisabled onClick={() => setTab(1)}>
+                <img src="./images/V3/personDisabled.png" />
+                <Text className="title">Profile</Text>
+              </MenuItemDisabled>
             )}
-            <GroupChangePage>
-              {acountChild.length > 1 ? (
-                <button type="button" onClick={handleBack} style={{ color: 'black' }}>
-                  Back
-                </button>
-              ) : null}
-              {getButtonChangePage(2)}
-            </GroupChangePage>
-          </CardReferral> */}
+
+            {tab === 2 ? (
+              <MenuItemActive>
+                <img src="./images/V3/Line.png" />
+                <Text className="title">Referrals</Text>
+              </MenuItemActive>
+            ) : (
+              <MenuItemDisabled onClick={() => setTab(2)}>
+                <img src="./images/V3/LineDisabled.png" />
+                <Text className="title">Referrals</Text>
+              </MenuItemDisabled>
+            )}
+
+            {tab === 3 ? (
+              <MenuItemActive>
+                <img src="./images/V3/group.png" />
+                <Text className="title">Friend list</Text>
+              </MenuItemActive>
+            ) : (
+              <MenuItemDisabled onClick={() => setTab(3)}>
+                <img src="./images/V3/groupDisabled.png" />
+                <Text className="title">Friend list</Text>
+              </MenuItemDisabled>
+            )}
+          </Menu>
+          {tab === 2 && (
+            <ReferralPage>
+              <div>
+                <StyledHead>Referral</StyledHead>
+                <StyledSubtitle>
+                  Incentivize and reward users for promoting a product or service by referring others to join or
+                  participate, fostering organic growth and user acquisition.
+                </StyledSubtitle>
+                <img style={{ display: isMobile ? 'flex' : 'none' }} className="upto" src="./images/V3/Referral.svg" />
+              </div>
+              <CardRegister>
+                <img style={{ display: isMobile ? 'none' : 'flex' }} className="upto" src="./images/V3/Referral.svg" />
+                <GroupLinkRef>
+                  <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    <StyledText>Refer a friend and get reward together</StyledText>
+                    <StyledLabelLinkRef
+                      style={{ fontSize: '14px', lineHeight: '20px', marginBottom: '0', marginTop: '12px' }}
+                    >
+                      Up to
+                    </StyledLabelLinkRef>
+                    <StyledLabelLinkRef>20%</StyledLabelLinkRef>
+                  </div>
+                  <WrapperLinkRef>
+                    <Text
+                      fontSize={['16px', '16px', '18px', '24px', '24px']}
+                      fontWeight="600"
+                      lineHeight="32px"
+                      style={{ color: 'rgba(255, 255, 255, 1)' }}
+                    >
+                      {' '}
+                      Invite friends to earn 20%
+                    </Text>
+                    <GroupLink>
+                      <div style={{ width: isMobile ? '100%' : '50%' }}>
+                        <StyledText
+                          style={{ color: 'rgba(255, 255, 255, 1)', marginBottom: '12px' }}
+                          color="rgba(255, 255, 255, 1)"
+                        >
+                          Referral link
+                        </StyledText>
+                        <StyledLink>
+                          <LinkItem>
+                            <StyledIconRef
+                              id="iconRef"
+                              src="/images/referral/copy.svg"
+                              onClick={handleRef}
+                              onMouseLeave={handleLeave}
+                            />
+                            <Tooltip
+                              anchorId="iconRef"
+                              content={userIsRegister ? (showCopied ? 'Copied' : 'Copy') : 'Please Register'}
+                            />
+                            <ShowLinkRefPc>{formatLinkRef(linkRef, 50, 4)}</ShowLinkRefPc>
+                            <ShowLinkRefMobile>{formatLinkRef(linkRef, 20, 4)}</ShowLinkRefMobile>
+                          </LinkItem>
+                        </StyledLink>
+                      </div>
+                      <div style={{ width: isMobile ? '100%' : '50%' }}>
+                        <StyledText
+                          style={{ color: 'rgba(255, 255, 255, 1)', marginBottom: '12px' }}
+                          color="rgba(255, 255, 255, 1)"
+                        >
+                          Referral code
+                        </StyledText>
+                        {!userIsRegister && (
+                          <StyledInput
+                            value={referCode}
+                            autoFocus={true}
+                            onChange={validateReferByWallet}
+                            placeholder={`refer code`}
+                          />
+                        )}
+                        {showError && referCode && <span style={{ color: 'red' }}>Invalid code</span>}
+                      </div>
+                    </GroupLink>
+                    <StyledButton onClick={onRegister} disabled={userIsRegister || showError}>
+                      Register
+                    </StyledButton>
+                    <div style={{ display: 'flex', gap: '32px', alignItems: 'center', justifyContent: 'center' }}>
+                      <div style={{ width: '100px', height: '1px', background: 'rgba(255, 255, 255, 0.10)' }}></div>
+                      <Text fontSize="18px" fontWeight="500" lineHeight="20px">
+                        Or
+                      </Text>
+                      <div style={{ width: '100px', height: '1px', background: 'rgba(255, 255, 255, 0.10)' }}></div>
+                    </div>
+                    <GroupSearchByCode>
+                      <StyledHeadSearchUser>Search By Code</StyledHeadSearchUser>
+                      <div style={{ position: 'relative' }}>
+                        <StyledInputSearch
+                          value={userSearch}
+                          autoFocus={true}
+                          onChange={(e) => setUserSearch(e.target.value)}
+                          placeholder={`Enter code`}
+                        />
+                        <div onClick={handleSearchUserCode}>
+                          <img className="search" src="./images/V3/search.png" />
+                        </div>
+                      </div>
+                      {showResultSearch()}
+                    </GroupSearchByCode>
+                  </WrapperLinkRef>
+                </GroupLinkRef>
+                <ButtonLink>Check my refer list</ButtonLink>
+              </CardRegister>
+              <Step>
+                <TitleStep>How to get started</TitleStep>
+                <LabelStep>Reveal to activate your up to 1,000 USDT trading fee rebate voucher</LabelStep>
+                <CardStep>
+                  <Card>
+                    <img className="imgStep" src="./images/V3/Step1.png" />
+                    <CardTitle>Step 1</CardTitle>
+                    <LabelStep>Grab your referral link or code.</LabelStep>
+                  </Card>
+                  <Card>
+                    <img className="imgStep" src="./images/V3/Step2.png" />
+                    <CardTitle>Step 2</CardTitle>
+                    <LabelStep>
+                      Invite friends to sign up and deposit more than $50 within 14 days of registration.
+                    </LabelStep>
+                  </Card>
+                  <Card>
+                    <img className="imgStep" src="./images/V3/Step3.png" />
+                    <CardTitle>Step 3</CardTitle>
+                    <LabelStep>
+                      Both you and your friend receive a trading fee rebate voucher of the same amount.
+                    </LabelStep>
+                  </Card>
+                </CardStep>
+              </Step>
+            </ReferralPage>
+          )}
+
+          {tab === 1 && (
+            <ProfilePage>
+              <CardInfoUser>
+                <StyledHead>Profile</StyledHead>
+                <StyledSubtitle>
+                  Create personalized user accounts that showcase individual information, preferences, and activities
+                  within a platform or network.
+                </StyledSubtitle>
+                <BlockInfo>
+                  <Item>
+                    <InfoItem>
+                      <Label>Total reffer</Label>
+                      <Value>{userInfos.totalReffer}</Value>
+                    </InfoItem>
+                    <InfoItem>
+                      <Label>Refer Downline</Label>
+                      <Value>{userInfos.totalRefer7}</Value>
+                    </InfoItem>
+                    <InfoItem>
+                      <Label>Direct staked</Label>
+                      <Value>{userInfos.directStaked}</Value>
+                    </InfoItem>
+                    <InfoItem>
+                      <Label>7 level staked</Label>
+                      <Value>
+                        <CountUp
+                          separator=","
+                          start={0}
+                          preserveValue
+                          delay={0}
+                          end={userInfos.totalStaked7}
+                          decimals={3}
+                          duration={1}
+                        />
+                        $
+                      </Value>
+                    </InfoItem>
+                  </Item>
+                  <div style={{ width: '100%' }}>
+                    <Label textAlign="right">Total commission</Label>
+                    <div
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'flex-end',
+                        alignItems: 'center',
+                        width: '100%',
+                        marginTop: '12px',
+                      }}
+                    >
+                      <Text fontSize="48px" fontWeight="600" lineHeight="60px" letterSpacing="-0.96px">
+                        <CountUp
+                          separator=","
+                          start={0}
+                          preserveValue
+                          delay={0}
+                          end={userInfos.totalComms}
+                          decimals={3}
+                          duration={1}
+                        />
+                      </Text>
+                      <div
+                        style={{
+                          background: 'var(--white-white-6, rgba(255, 255, 255, 0.06))',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          backdropFilter: 'blur(6px)',
+                          borderRadius: '12px',
+                          padding: '8px',
+                          width: '60px',
+                        }}
+                      >
+                        <img width="40px" height="34px" src="./images/V3/Vector.png" />
+                      </div>
+                    </div>
+                  </div>
+                  <ReferralInfo>
+                    <div>
+                      <Label fontWeight="600">Referred by</Label>
+                      <InfoTitle>{truncateHash(userInfos.refferBy, 6, 4)}</InfoTitle>
+                    </div>
+                    <div>
+                      <Label fontWeight="600">Date</Label>
+                      <InfoTitle>
+                        {userInfos.date === 0 ? 0 : moment(Number(userInfos.date)).format('MMM Do YYYY')}
+                      </InfoTitle>
+                    </div>
+                  </ReferralInfo>
+                </BlockInfo>
+              </CardInfoUser>
+            </ProfilePage>
+          )}
+          {tab === 3 && (
+            <CardReferral>
+              <StyledHead>Friends list</StyledHead>
+              <StyledSubtitle>
+                Welcome to our member count section! Here, you can track the growth of our community and get a sense of
+                the scale of our website&#39;s audience.{' '}
+              </StyledSubtitle>
+              <FriendsList>
+                {loadingTable ? (
+                  <ThreeDots style={{ textAlign: 'center' }} className="loading">
+                    Loading
+                    <span>.</span>
+                    <span>.</span>
+                    <span>.</span>
+                  </ThreeDots>
+                ) : (
+                  <>
+                    <Group>
+                      <CardFriends style={{ width: isMobile ? '100%' : isTablet ? '100%' : '300px' }}>
+                        <StyledItemChild>F{acountChild.length - 1}:</StyledItemChild>
+                        <StyledLinkAccount
+                          rel="noreferrer"
+                          target="_blank"
+                          href={`https://testnet.bscscan.com/address/${acountChild[acountChild.length - 1]}`}
+                        >
+                          {truncateHash(acountChild[acountChild.length - 1], 6, 2)}
+                        </StyledLinkAccount>
+                      </CardFriends>
+                      <CardFriends style={{ width: isMobile ? '147px' : isTablet ? '100%' : '300px' }}>
+                        <StyledItemChild>Total of F{acountChild.length}</StyledItemChild>
+                        <StyledTotal>{totalItemChild}</StyledTotal>
+                      </CardFriends>
+                      <CardFriends style={{ width: isMobile ? '147px' : isTablet ? '100%' : '300px' }}>
+                        <StyledItemChild>Total refer downline</StyledItemChild>
+                        <StyledTotal>{total7Level}</StyledTotal>
+                      </CardFriends>
+                    </Group>
+                    <Table>
+                      <tr>
+                        <th>Friends</th>
+                        <th>Volumn</th>
+                        <th>Locked</th>
+                      </tr>
+                      {listChild.map((item, index) => (
+                        <>
+                          <ChildItem key={index}>
+                            <td>
+                              <div
+                                onClick={() => handleChangeChild(item.account)}
+                                style={{
+                                  cursor: 'pointer',
+                                  color: item.child > 0 ? 'rgba(255, 255, 255, 1)' : 'rgba(255, 255, 255, 1)',
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  gap: 4,
+                                  fontSize: isMobile ? '14px' : '24px',
+                                  fontWeight: '400',
+                                }}
+                              >
+                                {item.account.substring(0, 2)}...{item.account.substring(item.account.length - 4)}
+                                {item.child > 0 && <img src="/images/referral/plus.png" style={{ fill: 'white' }} />}
+                              </div>
+                            </td>
+                            <td>
+                              $
+                              <CountUp
+                                style={{ color: 'rgba(255, 255, 255, 1)', fontSize: isMobile ? '14px' : '24px' }}
+                                separator=","
+                                start={0}
+                                preserveValue
+                                delay={0}
+                                end={item.volume}
+                                decimals={3}
+                                duration={1}
+                              />
+                            </td>
+                            <td>
+                              <CountUp
+                                separator=","
+                                start={0}
+                                preserveValue
+                                delay={0}
+                                end={item.locked}
+                                decimals={3}
+                                duration={1}
+                              />
+                            </td>
+                          </ChildItem>
+                          {item.showChild && (
+                            <ChildItem key={index + '-' + index}>
+                              <td colSpan={3} style={{ padding: 0 }}>
+                                <Child referBy={item.account} />
+                              </td>
+                            </ChildItem>
+                          )}
+                        </>
+                      ))}
+                    </Table>
+                  </>
+                )}
+                <GroupChangePage>
+                  {acountChild.length > 1 ? (
+                    <button type="button" onClick={handleBack} style={{ color: 'black' }}>
+                      Back
+                    </button>
+                  ) : null}
+                  {getButtonChangePage(2)}
+                </GroupChangePage>
+              </FriendsList>
+            </CardReferral>
+          )}
         </Wrapper>
       )}
     </>

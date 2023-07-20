@@ -7,7 +7,6 @@ const Wrapper = styled.div`
   background: url(${images.bg});
   background-size: cover;
   display: flex;
-
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -52,8 +51,17 @@ const Container = styled.div`
   align-items: center;
   gap: 10px;
   margin-top: 56px;
+  margin-bottom: 140px;
+
   @media screen and (max-width: 575px) {
     margin-top: 16px;
+    margin-bottom: 4px !important;
+  }
+  @media screen and (max-width: 900px) {
+    margin-bottom: 4px;
+  }
+  @media screen and (max-width: 1440px) {
+    margin-bottom: 90px;
   }
 `
 const Token = styled.div`

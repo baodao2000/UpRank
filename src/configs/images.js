@@ -86,8 +86,7 @@ const images = {
   Illustrations: '/images/Illustrations.png',
   bgV3: '/images/V3/BG.png',
   roadmapV3: '/images/Roadmap.svg',
-  bsc: '/images/V3/bsc.svg',
-  iconV3: '/images/V3/V3icon.png',
+  bronze: 'images/V3/bronzebg.png',
 }
 
 export default images

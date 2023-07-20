@@ -14,10 +14,8 @@ import CountUp from 'react-countup'
 
 const CardReferral = styled.div`
   max-width: 1000px;
-  //min-height: 300px;
-  padding: 0 0 0 15px;
   width: 100%;
-  margin: 0 auto 30px auto;
+  width: 100%;
   height: auto;
   border-radius: 20px;
   background: linear-gradient(153.15deg, rgb(124, 7, 216) 8.57%, rgba(129, 69, 255, 0.02) 100%);
@@ -25,10 +23,6 @@ const CardReferral = styled.div`
   flex-direction: column;
   justify-content: space-between;
   color: #e6e6e6;
-
-  ${({ theme }) => theme.mediaQueries.md} {
-    padding: 30px 37px;
-  }
 `
 
 const Table = styled.table`
