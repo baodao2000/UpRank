@@ -132,6 +132,7 @@ const BtnBack = styled.a`
 const Pool = ({ poolId }) => {
   const { account, chainId } = useActiveWeb3React()
   // account = '0xe024af9AD5518468abFb617eEAbE10219498ee50'
+  // account = '0x1ec0f8875B7fc2400a6F44788c6710959614e68A'
   const [isLoading, setIsLoading] = useState(true)
   const [now, setNow] = useState(0)
   const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId

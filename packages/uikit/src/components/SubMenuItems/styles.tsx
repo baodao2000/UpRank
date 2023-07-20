@@ -14,7 +14,7 @@ const StyledSubMenuItems = styled(Flex)`
   z-index: 1;
   width: 100%;
   display: flex;
-  margin-top: 24px;
+  margin-top: 10px;
   white-space: nowrap;
   scroll-behavior: smooth;
   flex-grow: 1;

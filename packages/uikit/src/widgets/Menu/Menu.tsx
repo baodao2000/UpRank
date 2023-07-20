@@ -23,7 +23,7 @@ const Wrapper = styled.div`
 
 const StyledNav = styled.nav`
   display: flex;
-  margin: 24px auto;
+  margin: 0 auto;
   align-items: center;
   width: 100%;
   max-width: 1320px;

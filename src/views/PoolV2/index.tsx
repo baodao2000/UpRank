@@ -131,6 +131,7 @@ const Wraper = styled.div`
     padding: 40px 16px;
   }
   @media screen and (max-width: 1440px) {
+    padding: 20px;
   }
 `
 const StyledHead = styled(Heading)`
@@ -282,6 +283,7 @@ const LabelContent = styled(Text)`
   margin-bottom: 12px;
   .link {
     color: rgba(133, 68, 245, 1);
+    cursor: pointer;
   }
   @media screen and (max-width: 575px) {
     flex-wrap: wrap;
@@ -397,7 +399,6 @@ const Info = styled.div`
 const Reward = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 20px;
   width: 100%;
   padding: 10px 20px;
   justify-content: space-between;
@@ -477,12 +478,13 @@ const Lineleft = styled.div``
 const Lineright = styled.div``
 const LineText = styled.div`
   text-align: center;
-  background: radial-gradient(
-    131.77% 143.25% at -0% -2.74%,
-    rgba(173, 175, 224, 0.6) 0%,
-    rgba(136, 139, 224, 0.26) 100%
-  );
-  backdrop-filter: blur(50px);
+  border: 1px solid transparent;
+  border-image-slice: 1;
+
+  background-image: linear-gradient(#18171b, #18171b), radial-gradient(circle at top left, #7b3fe4 0%, #a726c1 100%);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  backdrop-filter: blur(5.5px);
   flex-direction: column;
   align-items: center;
   padding: 20px 0;
@@ -604,12 +606,13 @@ const Logo = styled.img`
   }
 `
 const PoolsReward = styled.div`
-  background: radial-gradient(
-    131.77% 143.25% at -0% -2.74%,
-    rgba(125, 128, 195, 0.6) 0%,
-    rgba(136, 139, 224, 0.26) 100%
-  );
-  backdrop-filter: blur(50px);
+  border: 1px solid transparent;
+  border-image-slice: 1;
+
+  background-image: linear-gradient(#18171b, #18171b), radial-gradient(circle at top left, #7b3fe4 0%, #a726c1 100%);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  backdrop-filter: blur(5.5px);
   width: 1000px;
   padding: 0 10px;
   @media screen and (max-width: 1024px) {
@@ -666,6 +669,7 @@ const ButtonDetails = styled.div`
 `
 const Pools = () => {
   const { account, chainId } = useActiveWeb3React()
+  // account = '0x1ec0f8875B7fc2400a6F44788c6710959614e68A'
   const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId
   const getPoolV3Contract = getPoolsV3Contract(CHAIN_ID)
   const [arr, setArr] = useState([])
@@ -757,6 +761,7 @@ const Pools = () => {
         const newPoolInfo = await Promise.all(
           pools.map(async (item, id) => {
             const userLockAndPool = await Promise.all([getPoolV3Contract.users(account, id), item])
+            console.log(userLockAndPool)
             return {
               title: ['Small Fish', 'Fomo', 'Miner', 'Medium Fish', 'Shark', 'Whale'],
               currentInterest: ((Number(userLockAndPool[1].currentInterest.toString()) / 10000) * 365).toFixed(2),
@@ -898,7 +903,15 @@ const Pools = () => {
           <Label>Total Lock</Label>
           <Total>
             $
-            <CountUp separator="," start={0} preserveValue delay={0} end={Number(balance)} decimals={3} duration={1} />
+            <CountUp
+              separator=","
+              start={0}
+              preserveValue
+              delay={0}
+              end={Number(Number(balance) * rateBnbUsd)}
+              decimals={3}
+              duration={1}
+            />
           </Total>
           <TotalUsd>
             <div
@@ -917,7 +930,7 @@ const Pools = () => {
                 start={0}
                 preserveValue
                 delay={0}
-                end={Number(Number(balance) * rateBnbUsd)}
+                end={Number(balance)}
                 decimals={3}
                 duration={1}
               />
@@ -945,7 +958,9 @@ const Pools = () => {
           <LabelContent>
             <p>
               These Pool Rewards are only for Referral. Let invite your friends and get our rewards{' '}
-              <span className="link">Invite Now</span>
+              <Link href="/referral">
+                <span className="link">Invite Now</span>
+              </Link>
             </p>
           </LabelContent>
           <LabelContent>
@@ -978,7 +993,7 @@ const Pools = () => {
             <TrendyPageLoader />
           ) : (
             <>
-              {!account || arr.length === 0 ? null : (
+              {!account ? null : (
                 <Rank
                   unit={unit}
                   ranks={ranks}
@@ -1129,6 +1144,19 @@ const Pools = () => {
                                 </Text>
                               </Line>
                               <Line>
+                                <span>Time Lock</span>
+                                <span
+                                  style={{
+                                    color: 'rgba(228, 230, 231, 1)',
+                                    marginBottom: 10,
+                                    fontSize: isMobile ? '16px' : '20px',
+                                  }}
+                                  className="value"
+                                >
+                                  {timeDisplayLong(i.timeLock) ? timeDisplayLong(i.timeLock * 57600) : '0'}
+                                </span>
+                              </Line>
+                              <Line>
                                 <span>Interest With Mine</span>
                                 <Text
                                   style={{
@@ -1158,89 +1186,8 @@ const Pools = () => {
                                   %
                                 </Text>
                               </Line>
-                              <Line>
-                                <TitelandIcon>
-                                  <span className="label">Total Lock</span>
-                                </TitelandIcon>
-
-                                <TitelandIcon>
-                                  <span
-                                    className="value"
-                                    style={{
-                                      color: 'rgba(228, 230, 231, 1)',
-                                      display: 'flex',
-                                      flexWrap: 'wrap',
-                                      gap: 10,
-                                      fontSize: isMobile ? '16px' : '20px',
-                                    }}
-                                  >
-                                    <div>
-                                      $
-                                      {
-                                        <CountUp
-                                          separator=","
-                                          start={0}
-                                          preserveValue
-                                          delay={0}
-                                          end={Number(i.totalLock * i.rateBNB2USD)}
-                                          decimals={2}
-                                          duration={1}
-                                          className="value"
-                                          style={{ fontSize: isMobile ? '16px' : '20px', lineHeight: '30px' }}
-                                        />
-                                      }
-                                    </div>
-
-                                    {
-                                      <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                                        {` ~ `}
-                                        <CountUp
-                                          separator=","
-                                          start={0}
-                                          preserveValue
-                                          delay={0}
-                                          end={Number(i.totalLock)}
-                                          decimals={4}
-                                          duration={1}
-                                          style={{
-                                            color: 'rgba(228, 230, 231, 1)',
-                                          }}
-                                        />
-                                        <div
-                                          style={{
-                                            background: 'var(--white-white-8, rgba(255, 255, 255, 0.08))',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            backdropFilter: 'blur(6px)',
-                                            borderRadius: '16px',
-                                            width: '26px',
-                                            height: '26px',
-                                          }}
-                                        >
-                                          <img width="18px" height="16px" src="./images/V3/Vector.png" />
-                                        </div>
-                                      </span>
-                                    }
-                                    {` `}
-                                  </span>
-                                </TitelandIcon>
-                              </Line>
                             </Lineleft>
                             <Lineright>
-                              <Line>
-                                <span>Time Lock</span>
-                                <span
-                                  style={{
-                                    color: 'rgba(228, 230, 231, 1)',
-                                    marginBottom: 10,
-                                    fontSize: isMobile ? '16px' : '20px',
-                                  }}
-                                  className="value"
-                                >
-                                  {timeDisplayLong(i.timeLock) ? timeDisplayLong(i.timeLock * 57600) : '0'}
-                                </span>
-                              </Line>
                               <Line>
                                 <TitelandIcon>
                                   <span className="label">Your Lock</span>
@@ -1254,6 +1201,7 @@ const Pools = () => {
                                       display: 'flex',
                                       flexWrap: 'wrap',
                                       gap: 10,
+                                      marginTop: 10,
                                       fontSize: isMobile ? '16px' : '20px',
                                     }}
                                   >
@@ -1283,6 +1231,76 @@ const Pools = () => {
                                           preserveValue
                                           delay={0}
                                           end={Number(i.yourLock)}
+                                          decimals={4}
+                                          duration={1}
+                                          style={{
+                                            color: 'rgba(228, 230, 231, 1)',
+                                          }}
+                                        />
+                                        <div
+                                          style={{
+                                            background: 'var(--white-white-8, rgba(255, 255, 255, 0.08))',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            backdropFilter: 'blur(6px)',
+                                            borderRadius: '16px',
+                                            width: '26px',
+                                            height: '26px',
+                                          }}
+                                        >
+                                          <img width="18px" height="16px" src="./images/V3/Vector.png" />
+                                        </div>
+                                      </span>
+                                    }
+                                    {` `}
+                                  </span>
+                                </TitelandIcon>
+                              </Line>
+                              <Line>
+                                <TitelandIcon>
+                                  <span className="label">Total Lock</span>
+                                </TitelandIcon>
+
+                                <TitelandIcon>
+                                  <span
+                                    className="value"
+                                    style={{
+                                      color: 'rgba(228, 230, 231, 1)',
+                                      display: 'flex',
+                                      flexWrap: 'wrap',
+                                      gap: 10,
+                                      marginTop: 10,
+
+                                      fontSize: isMobile ? '16px' : '20px',
+                                    }}
+                                  >
+                                    <div>
+                                      $
+                                      {
+                                        <CountUp
+                                          separator=","
+                                          start={0}
+                                          preserveValue
+                                          delay={0}
+                                          end={Number(i.totalLock * i.rateBNB2USD)}
+                                          decimals={2}
+                                          duration={1}
+                                          className="value"
+                                          style={{ fontSize: isMobile ? '16px' : '20px', lineHeight: '30px' }}
+                                        />
+                                      }
+                                    </div>
+
+                                    {
+                                      <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                                        {` ~ `}
+                                        <CountUp
+                                          separator=","
+                                          start={0}
+                                          preserveValue
+                                          delay={0}
+                                          end={Number(i.totalLock)}
                                           decimals={4}
                                           duration={1}
                                           style={{
@@ -1352,45 +1370,47 @@ const Pools = () => {
                   })}
                 </PoolsList>
               </Body>
-
-              {/* <PageHeader background="none">
-              <Flex flex="1" flexDirection="column" mr={['8px', 0]} alignItems="center">
-                <PoolsReward>
-                  <Text fontSize={['24px', '36px', '48px']} fontWeight="500" textAlign="center">
-                    Pool Rewards
-                  </Text>
-                  <Text
-                    fontSize={['14px', '14px', '16px', '16px', '16px', '16px']}
-                    fontWeight="600"
-                    style={{ color: '#C5C5C5', maxWidth: 1000, margin: '10px 0', textAlign: 'center' }}
-                  >
-                    These Pool Rewards are only for Referral. Let invite your friends and get our rewards
-                    <LinkReffer href={getLinkReferral()}>[LINK]</LinkReffer>
-                  </Text>
-                  <LineText className="commission">
+              <PageHeader background="none">
+                <Flex flex="1" flexDirection="column" mr={['8px', 0]} alignItems="center">
+                  <PoolsReward>
+                    <Text fontSize={['24px', '36px', '48px']} fontWeight="500" textAlign="center">
+                      Pool Rewards
+                    </Text>
                     <Text
-                      fontSize={['14px', '16px', '18px', '24px', '26px']}
-                      className="value"
-                      style={{ color: 'rgba(103, 228, 255, 1)', fontFamily: 'Poppins, sans-serif', fontWeight: '700' }}
+                      fontSize={['14px', '14px', '16px', '16px', '16px', '16px']}
+                      fontWeight="600"
+                      style={{ color: '#C5C5C5', maxWidth: 1000, margin: '10px 0', textAlign: 'center' }}
                     >
-                      Your Commission: {remainCommission.toFixed(6)} {unit}
+                      These Pool Rewards are only for Referral. Let invite your friends and get our rewards
+                      <LinkReffer href={getLinkReferral()}>[LINK]</LinkReffer>
                     </Text>
-                    <Text style={{ color: '#C5C5C5' }} ellipsis={true}>
-                      <LinkExternal
-                        fontSize={['14px', '16px', '18px', '20px', '22px']}
-                        href={getBlockExploreLink(contracts.poolsV3[CHAIN_ID], 'address', CHAIN_ID)}
-                        ellipsis={true}
-                        style={{ color: 'rgba(249, 249, 249, 1)' }}
-                        color="#00F0E1"
+                    <LineText className="commission">
+                      <Text
+                        fontSize={['14px', '16px', '18px', '24px', '26px']}
+                        className="value"
+                        style={{
+                          color: 'rgba(103, 228, 255, 1)',
+                          fontFamily: 'Poppins, sans-serif',
+                          fontWeight: '700',
+                        }}
                       >
-                        {shortenURL(`Root Contract: ${contracts.poolsV3[CHAIN_ID]}`, 35)}
-                      </LinkExternal>
-                    </Text>
-                  </LineText>
-                </PoolsReward>
-                
-              </Flex>
-            </PageHeader> */}
+                        Your Commission: {remainCommission.toFixed(6)} {unit}
+                      </Text>
+                      <Text style={{ color: '#C5C5C5' }} ellipsis={true}>
+                        <LinkExternal
+                          fontSize={['14px', '16px', '18px', '20px', '22px']}
+                          href={getBlockExploreLink(contracts.poolsV3[CHAIN_ID], 'address', CHAIN_ID)}
+                          ellipsis={true}
+                          style={{ color: 'rgba(249, 249, 249, 1)' }}
+                          color="#00F0E1"
+                        >
+                          {shortenURL(`Root Contract: ${contracts.poolsV3[CHAIN_ID]}`, 35)}
+                        </LinkExternal>
+                      </Text>
+                    </LineText>
+                  </PoolsReward>
+                </Flex>
+              </PageHeader>
             </>
           )}
         </Background>

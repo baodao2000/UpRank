@@ -199,6 +199,9 @@ const CardBody = styled.div`
   display: flex;
   flex-direction: column;
   gap: 24px;
+  @media screen and (max-width: 575px) {
+    gap: 6px;
+  }
 `
 
 const ItemInfoCard = styled.div`
@@ -369,7 +372,7 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
       <CardNextRanks>
         <CardHead>
           <HeadLeft>
-            <ImageRank src={userRank.image} alt="" />
+            <ImageRank src="./images/V3/bronze.png" alt="" />
             <TitleHeadRight style={{ color: '#fff' }}>Bronze</TitleHeadRight>
           </HeadLeft>
           <HeadRight style={{ color: getColor(''), display: isMobile ? 'none' : 'block' }}>
@@ -414,7 +417,7 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
       <CardYourRanks>
         <CardHead>
           <HeadLeft>
-            <ImageRank src={data[userRank.rank].image} alt="" />
+            <ImageRank src="./images/V3/silver.png" alt="" />
             <TitleHeadRight style={{ color: '#fff' }}>Silver</TitleHeadRight>
           </HeadLeft>
           <HeadRight style={{ color: getColor('') }}></HeadRight>
