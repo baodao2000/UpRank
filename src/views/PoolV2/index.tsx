@@ -609,6 +609,9 @@ const PoolsReward = styled.div`
   background-clip: padding-box, border-box;
   backdrop-filter: blur(5.5px);
   width: 1000px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 0 10px;
   @media screen and (max-width: 1024px) {
     width: 100%;
@@ -689,15 +692,6 @@ const Pools = () => {
     downline: 0,
   })
   const [userClaimed, setUserClaimed] = useState(false)
-  const { isConfirming, handleConfirm } = useConfirmTransaction({
-    onConfirm: () => {
-      return callWithMarketGasPrice(commission > 0 && poolContract, 'claimComm', [account])
-    },
-    onSuccess: async ({ receipt }) => {
-      toastSuccess('Claim commission successfully !', <ToastDescriptionWithTx txHash={receipt.transactionHash} />)
-      onSuccess()
-    },
-  })
   const indexRank = [1, 2, 3, 4, 5]
   const { isMobile, isTablet } = useMatchBreakpoints()
 
@@ -715,7 +709,15 @@ const Pools = () => {
       setIsLoading(false)
     }
   }
-
+  const { isConfirming, handleConfirm } = useConfirmTransaction({
+    onConfirm: () => {
+      return callWithMarketGasPrice(commission > 0 && poolContract, 'claimComm', [account])
+    },
+    onSuccess: async ({ receipt }) => {
+      toastSuccess('Claim commission successfully !', <ToastDescriptionWithTx txHash={receipt.transactionHash} />)
+      onSuccess()
+    },
+  })
   const getLinkReferral = () => {
     if (!account) {
       return null
@@ -1398,6 +1400,50 @@ const Pools = () => {
                         </LinkExternal>
                       </Text>
                     </LineText>
+                    <Button
+                      style={{ color: '#6216B0', backgroundColor: '#D9D9D9' }}
+                      marginTop={'30px'}
+                      marginBottom={'30px'}
+                      variant="primary"
+                      width={['90px', '80px', '150px']}
+                      p={['6px', '0 8px', '10px']}
+                      scale="md"
+                      display={isMobile ? 'none' : 'block'}
+                      onClick={handleConfirm}
+                      disabled={!isClaimableCommission}
+                    >
+                      {isConfirming ? (
+                        <ThreeDots className="loading">
+                          Claiming<span>.</span>
+                          <span>.</span>
+                          <span>.</span>
+                        </ThreeDots>
+                      ) : (
+                        'Claim'
+                      )}
+                    </Button>
+                    <Button
+                      style={{ color: '#6216B0', backgroundColor: '#D9D9D9' }}
+                      marginTop={'30px'}
+                      marginBottom={'30px'}
+                      variant="primary"
+                      width={['90px', '80px', '150px']}
+                      p={['6px', '0 8px', '10px']}
+                      scale="sm"
+                      display={isMobile ? 'block' : 'none'}
+                      onClick={handleConfirm}
+                      disabled={!isClaimableCommission}
+                    >
+                      {isConfirming ? (
+                        <ThreeDots className="loading">
+                          Claiming<span>.</span>
+                          <span>.</span>
+                          <span>.</span>
+                        </ThreeDots>
+                      ) : (
+                        'Claim'
+                      )}
+                    </Button>
                   </PoolsReward>
                 </Flex>
               </PageHeader>

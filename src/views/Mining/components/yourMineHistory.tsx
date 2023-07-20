@@ -115,7 +115,6 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
   ...props
 }) => {
   const { account, chainId } = useActiveWeb3React()
-
   const minesContract = getPoolsContract(chainId)
   const { t } = useTranslation()
   const [usersClaimed, setUserClaimed] = useState([])
@@ -348,7 +347,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                           start={0}
                           preserveValue
                           delay={0}
-                          end={claimHistory.totalLock}
+                          end={claimHistory.totalLock + claimHistory.amount}
                           decimals={claimHistory.totalLock > 0 ? 4 : 0}
                           duration={0.5}
                         />
@@ -370,7 +369,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                           start={0}
                           preserveValue
                           delay={0}
-                          end={claimHistory.totalLock * claimHistory.rateUSD}
+                          end={(claimHistory.totalLock + claimHistory.amount) * claimHistory.rateUSD}
                           decimals={claimHistory.totalLock > 0 ? 4 : 0}
                           duration={0.5}
                         />
@@ -425,29 +424,56 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                   )}
                 </Td>
                 <Td textAlign={'center'}>
-                  {/* {claimHistory.totalMined === 0 ? (
-                    <Text style={{...headerStyle, color: '#ffffff', fontWeight: '400'}} fontSize={responsiveTextSize}>0</Text>
+                  {claimHistory.totalLock === 0 ? (
+                    <Text style={{ ...headerStyle, color: '#ffffff', fontWeight: '400' }} fontSize={responsiveTextSize}>
+                      0
+                    </Text>
                   ) : (
                     <AmountData>
-                      <Text fontSize={responsiveTextSizeBNB}>
-                        ${' '}
+                      <Text
+                        style={{ ...headerStyle, color: '#ffffff', fontWeight: '400' }}
+                        fontSize={responsiveTextSizeBNB}
+                      >
+                        <Image src="/images/trendyloop.png" width={16} height={16} alt="" />{' '}
                         <CountUp
                           start={0}
                           preserveValue
                           delay={0}
-                          end={claimHistory.totalMined}
-                          decimals={claimHistory.totalMined > 0 ? 4 : 0}
+                          end={claimHistory.totalLock}
+                          decimals={claimHistory.totalLock > 0 ? 4 : 0}
                           duration={0.5}
                         />
                       </Text>
                     </AmountData>
-                  )} */}
-                  <Text style={{ ...headerStyle, color: '#ffffff', fontWeight: '400' }} fontSize={responsiveTextSize}>
+                  )}
+                  {claimHistory.totalLock === 0 ? (
+                    <Text style={{ ...headerStyle, color: '#ffffff', fontWeight: '400' }} fontSize={responsiveTextSize}>
+                      0
+                    </Text>
+                  ) : (
+                    <AmountData>
+                      <Text
+                        style={{ ...headerStyle, color: '#ffffff', fontWeight: '400' }}
+                        fontSize={responsiveTextSize}
+                      >
+                        ~ ${' '}
+                        <CountUp
+                          start={0}
+                          preserveValue
+                          delay={0}
+                          end={claimHistory.totalLock * claimHistory.rateUSD}
+                          decimals={claimHistory.totalLock > 0 ? 4 : 0}
+                          duration={0.5}
+                        />
+                      </Text>
+                    </AmountData>
+                  )}
+                  {/* <Text style={{ ...headerStyle, color: '#ffffff', fontWeight: '400' }} fontSize={responsiveTextSize}>
                     $ 0
-                  </Text>
+                  </Text> */}
                 </Td>
-                <Td textAlign={'center'}>
-                  {/* {claimHistory.totalMined > 0 ? (
+                {/* <Td textAlign={'center'}>
+                  {claimHistory.totalMined > 0 ? (
                     <Text style={{...headerStyle, color: '#ffffff', fontWeight: '400'}} fontSize={responsiveTextSize}>0</Text>
                   ) : (
                     <AmountData>
@@ -463,11 +489,11 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                         ${mine.unit}
                       </Text>
                     </AmountData>
-                  )} */}
+                  )}
                   <Text style={{ ...headerStyle, color: '#ffffff', fontWeight: '400' }} fontSize={responsiveTextSize}>
                     $ 0
                   </Text>
-                </Td>
+                </Td> */}
                 <Td textAlign={'center'}>
                   <Text style={{ ...headerStyle, color: '#ffffff', fontWeight: '400' }} fontSize={responsiveTextSize}>
                     Claimed
@@ -515,11 +541,11 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                           Remain
                         </Text>
                       </Th>
-                      <Th textAlign="center">
+                      {/* <Th textAlign="center">
                         <Text style={headerStyle} fontSize={responsiveTextSize} textTransform="capitalize">
                           Available
                         </Text>
-                      </Th>
+                      </Th> */}
                       <Th textAlign="center">
                         <Text style={headerStyle} fontSize={responsiveTextSize} textTransform="capitalize">
                           Action

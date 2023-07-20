@@ -250,6 +250,8 @@ function Mining() {
   let { account, chainId } = useActiveWeb3React()
   // const { chainId } = useActiveWeb3React()
   // const account = '0x1ec0f8875B7fc2400a6F44788c6710959614e68A'
+  // account = '0x1ec0f8875B7fc2400a6F44788c6710959614e68A'
+
   const [loadingPage, setLoadingPage] = useState(true)
   const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId
   const [isLoading, setIsLoading] = useState(false)
@@ -393,7 +395,7 @@ function Mining() {
               return {
                 date: Number(claimed.date.toString()),
                 amount: Number(formatEther(claimed.amount)),
-                totalLock: Number(formatEther(claimed.totalLock)) + Number(formatEther(claimed.amount)),
+                totalLock: Number(formatEther(claimed.totalLock)),
                 power: Number(claimed.interrest.toString()) / 100,
                 currentReward: Number(formatEther(currentRewardTREND)),
                 rateUSD: Number(formatEther(trendUSD)),
