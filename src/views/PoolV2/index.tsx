@@ -713,6 +713,7 @@ const Pools = () => {
       setIsClaimableCommission(commRemain > 0)
     } else {
       setRemainCommission(0)
+      setIsLoading(false)
     }
   }
 
@@ -728,7 +729,6 @@ const Pools = () => {
     try {
       const bnbPrice = await getPoolV3Contract.MATIC2USDT()
       const pools = ids.map((item) => getPoolV3Contract.pools(item))
-      await getInfoRank(Number(formatEther(bnbPrice)))
       // await getInfoRank()
       setRateBnbUsd(Number(formatEther(bnbPrice)))
       // console.log(Promise.all([pools[0]]))
@@ -750,9 +750,11 @@ const Pools = () => {
             }
           }),
         )
+
         setArr(newPoolInfo)
         setIsLoading(false)
       } else {
+        await getInfoRank(Number(formatEther(bnbPrice)))
         const newPoolInfo = await Promise.all(
           pools.map(async (item, id) => {
             const userLockAndPool = await Promise.all([getPoolV3Contract.users(account, id), item])

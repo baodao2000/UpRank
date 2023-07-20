@@ -246,9 +246,9 @@ const SystemContent = styled.div`
 `
 function Mining() {
   const { isMobile, isTablet } = useMatchBreakpoints()
-  // let { account, chainId } = useActiveWeb3React()
-  const { chainId } = useActiveWeb3React()
-  const account = '0x1ec0f8875B7fc2400a6F44788c6710959614e68A'
+  let { account, chainId } = useActiveWeb3React()
+  // const { chainId } = useActiveWeb3React()
+  // const account = '0x1ec0f8875B7fc2400a6F44788c6710959614e68A'
   const [loadingPage, setLoadingPage] = useState(true)
   const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId
   const [isLoading, setIsLoading] = useState(false)
