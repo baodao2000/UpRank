@@ -15,4 +15,5 @@ export const trendyColors = {
   GRAY_DISABLE: '#F4F4F4',
   DARK_GRAY_DISABLE: '#393939',
   WHITE_DISABLE: '#ECECEC',
+  COLORTABLE: '#777E90',
 }

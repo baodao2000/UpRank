@@ -14,21 +14,21 @@ import 'aos/dist/aos.css'
 const Title = styled(Heading)`
   font-size: 48px;
   font-style: normal;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 60px;
-  letter-spacing: -0.96px;
   margin-bottom: 20px;
-
-  ${({ theme }) => theme.mediaQueries.md} {
-    font-size: 40px;
-    line-height: 46px;
+  @media (max-width: 1024px) {
+    font-size: 42px;
+    line-height: 42px;
   }
-  ${({ theme }) => theme.mediaQueries.xl} {
-    font-size: 50px;
-    line-height: 58px;
+  @media (max-width: 575px) {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 32px;
   }
 `
 const StyledText = styled.p`
+  font-weight: 700;
   color: #8145ff;
   display: inline;
 `
@@ -43,48 +43,39 @@ const TitleM = styled(Text)`
   margin-bottom: 30px;
 `
 
-const TitleMb = styled(Text)`
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 23px;
-  color: #ced8e1;
-  text-align: center;
-  margin-bottom: 30px;
-`
-
 const Wrapper = styled.div`
   * {
     font-family: Inter, sans-serif;
   }
   position: relative;
   z-index: 1;
-  margin-top: 14%;
   width: 100%;
   display: flex;
   flex-direction: row;
+  gap: 20px;
 
   .ant-input-number-input {
     font-family: 'Helvetica Compressed';
     font-weight: 700;
   }
-
-  .showPc {
-    display: none;
-
-    ${({ theme }) => theme.mediaQueries.md} {
-      display: block;
-    }
+  @media (max-width: 796px) {
+    flex-direction: column;
+    align-items: center;
+  }
+  @media (max-width: 575px) {
+    margin-top: 40px;
   }
 `
 const Table = styled.div`
   display: flex;
   border-radius: 20px;
   flex-direction: column;
-  background: #0a0d10;
-  border: 2px solid #0a0d10;
-  box-shadow: inset -2px 4px 8px #000000, inset -4px 4px 32px #171717;
   max-width: 553px;
-  margin-top: 80px;
+  margin-top: 60px;
+  @media (max-width: 796px) {
+    margin-top: 0;
+    max-width: 100%;
+  }
 `
 const ExchangePart = styled.div`
   flex-basis: calc(100% / 3);
@@ -104,7 +95,7 @@ const ExchangePart = styled.div`
 `
 const CryptoSelect = styled.div`
   margin-bottom: 16px;
-  border-radius: 10px;
+  border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.12);
   background: #141217;
   box-shadow: 0px 0px 11px 0px rgba(0, 0, 0, 0.49);
@@ -117,7 +108,7 @@ const SelectCustom = styled(Select)`
   background: rgba(20, 18, 23, 1) !important;
   box-shadow: 0px 0px 11px 0px rgba(0, 0, 0, 0.49) inset !important;
   border: 1px solid var(--white-white-12, rgba(255, 255, 255, 0.12)) !important;
-  padding: 16px 24px !important;
+  padding: 16px 13px !important;
   .ant-select-selector {
     height: 49px !important;
     background: rgba(20, 18, 23, 1) !important;
@@ -153,7 +144,7 @@ const SelectCustom = styled(Select)`
 `
 const InputContainer = styled.div`
   position: relative;
-  border-radius: 10px;
+  border-radius: 16px;
   border: 1px solid var(--white-white-12, rgba(255, 255, 255, 0.12));
   background: var(--greyscale-grayscale-3, #141217);
   box-shadow: 0px 0px 11px 0px rgba(0, 0, 0, 0.49) inset;
@@ -180,18 +171,6 @@ const InputContainer = styled.div`
       font-size: 20px;
       margin-top: 10px;
     }
-  }
-`
-const TextCustom = styled(Text)`
-  margin-top: 10px;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 16px;
-  font-family: 'Helvetica', sans-serif;
-  text-align: start;
-
-  ${({ theme }) => theme.mediaQueries.md} {
-    margin-top: 40px;
   }
 `
 
@@ -224,18 +203,15 @@ const HeadingCustom = styled(Heading)`
     font-size: 60px;
     font-style: normal;
     font-weight: 700;
-    line-height: 72px; /* 120% */
-    letter-spacing: -1.2px;
+    line-height: 72px;
+    @media (max-width: 575px) {
+      font-size: 36px;
+      line-height: 44px;
+    }
   }
-`
-const Column = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  @media screen and (max-width: 415px) {
-    align-items: center;
-    width: 30%;
+  @media (max-width: 575px) {
+    font-size: 36px;
+    line-height: 44px;
   }
 `
 
@@ -247,6 +223,9 @@ const ChartInfo = styled.div`
   align-items: center;
   gap: 56px;
   padding: 0 40px;
+  @media (max-width: 575px) {
+    gap: 24px;
+  }
 `
 
 const WrapperInfoText = styled.div`
@@ -267,63 +246,39 @@ const Chart = styled.div`
   margin-top: 34px;
 `
 
-const ButtonCustom = styled(Button)`
-  border: 1px solid #d2d2d2;
-  color: #ffffff;
-  background: #0a0d10;
-  margin-top: 12px;
-  font-size: 14px;
-  line-height: 16px;
-  border-radius: 8px;
-  height: 40px;
-  width: 90%;
-  padding: 0;
-
-  &:hover {
-    border-color: ${({ theme }) => theme.colors.primary};
-  }
-  &.active {
-    border-color: ${({ theme }) => theme.colors.primary};
-    color: ${({ theme }) => theme.colors.primary};
-  }
-
-  ${({ theme }) => theme.mediaQueries.md} {
-    width: 70%;
-  }
-`
-
-const TextName = styled(Text)`
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 23px;
-  margin-bottom: 6px;
-  color: #9665ff;
-  text-align: start;
-
-  @media screen and (max-width: 820px) {
-    font-size: 18px;
-  }
-`
-
-const ChartBase = styled.div`
-  width: 42px;
-  height: 3px;
-
-  background: linear-gradient(180deg, #8145ff 0%, #00fec1 100%);
-  border-radius: 8px;
-`
-
 const StyledTextProject = styled(Text)`
   font-size: 24px;
   font-style: normal;
   font-weight: 500;
   line-height: 32px;
+  @media (max-width: 575px) {
+    font-size: 20px;
+    line-height: 30px;
+  }
 `
 const ContentLeft = styled.div`
-  width: 705px;
+  width: 60%;
+  @media (max-width: 796px) {
+    width: 100%;
+  }
 `
 
-const ContentRight = styled.div``
+const ContentRight = styled.div`
+  width: 40%;
+  min-width: 360px;
+  @media (max-width: 575px) {
+    min-width: 100%;
+  }
+`
+const ImgCoin = styled.img`
+  width: 206px;
+  height: 206px;
+  @media (max-width: 575px) {
+    width: 100px;
+    height: 100px;
+  }
+`
+
 const Items = [
   // {
   //   value: '13.81',
@@ -343,6 +298,14 @@ const TextRight = styled(Text)`
   color: #9665ff;
   text-align: start;
   top: 40%;
+  @media (max-width: 575px) {
+    font-size: 12px;
+    line-height: 18px;
+  }
+  @media (max-width: 375px) {
+    display: flex;
+    flex-direction: column;
+  }
 `
 const { Option } = Select
 
@@ -361,7 +324,6 @@ const Exchange = (props) => {
   }
 
   const onChange = (value: number) => {
-    // console.log(value);
     setDeposit(value)
     checkPercen(value)
   }
@@ -412,21 +374,18 @@ const Exchange = (props) => {
   }, [])
 
   return (
-    <Wrapper data-aos="fade-up">
+    <Wrapper className="block" data-aos="fade-up">
       <ContentLeft>
         <Table>
-          <Title className="showPc" color="mainColor">
+          <Title color="mainColor">
             Calculate your crypto <StyledText>earnings</StyledText>
           </Title>
-          <TitleM className="showPc">
+          <TitleM>
             Enter an amount, pick a cryptocurrency, and select a time frame to find out how much interest you can earn.
           </TitleM>
           <ExchangePart>
             <div>
               <CryptoSelect>
-                {/* <TextName color="mainColor" style={{ fontFamily: 'Helvetica, sans-serif' }}>
-                    Crypto
-                  </TextName> */}
                 <SelectCustom
                   value={{
                     value: percen,
@@ -473,9 +432,6 @@ const Exchange = (props) => {
               </CryptoSelect>
 
               <InputContainer>
-                {/* <TextName color="mainColor" style={{ fontFamily: 'Helvetica, sans-serif' }}>
-                    Deposit Amount
-                  </TextName> */}
                 <img width="32px" height="32px" src="./images/V3/coin.png" alt="" />
                 <InputNumber
                   formatter={(value) => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
@@ -483,7 +439,7 @@ const Exchange = (props) => {
                   defaultValue={deposit}
                   onChange={onChange}
                 />
-                <TextRight style={{}}>
+                <TextRight>
                   approx. {numeral(deposit / price).format('0,0.00')} {` `} MATIC/USD
                 </TextRight>
               </InputContainer>
@@ -494,7 +450,7 @@ const Exchange = (props) => {
       <ContentRight>
         <ChartPart>
           <ChartInfo>
-            <img width="206px" height="206px" src="./images/V3/bsc.svg" alt="" />
+            <ImgCoin src="./images/V3/bsc.svg" alt="" />
             <WrapperInfoText>
               <StyledTextProject style={{ display: 'inline', marginLeft: 10, color: 'rgba(173, 171, 178, 1)' }}>
                 Projected {period.current} years interest
@@ -514,28 +470,16 @@ const Exchange = (props) => {
               </HeadingCustom>
               <Text
                 textAlign="center"
-                style={{ color: 'rgba(173, 171, 178, 1)', fontSize: 18, fontWeight: '600', lineHeight: '28px' }}
+                style={{ color: 'rgba(173, 171, 178, 1)', fontSize: 18, fontWeight: '600', lineHeight: '24px' }}
               >
                 Calculated based on the current MATIC/USD price of{' '}
                 <span className="price">${numeral(price).format('0,0.00')}</span>
               </Text>
             </WrapperInfoText>
           </ChartInfo>
-          <img width="499px" src="./images/V3/Indicator.png" />
+          <img style={{ padding: ' 0 15px' }} width="100%" src="./images/V3/Indicator.png" />
           <Chart>
-            {/* {period.current >= 2 ? <img src={images.chart4up} alt="" /> : <img src={images.chart1down} alt="" />}
-              <ButtonCustom
-                className={period.current === 2 ? 'active' : ''}
-                variant="secondary"
-                onClick={() => {
-                  setTimeout(() => {
-                    setPeriod((past) => ({ old: past.current, current: 2 }))
-                  }, 400)
-                }}
-              >
-                2 year
-              </ButtonCustom> */}
-            <img width="385px" height="196px" src="./images/V3/Chart2.png" />
+            <img width="80%" height="100%" src="./images/V3/Chart2.png" />
           </Chart>
         </ChartPart>
       </ContentRight>

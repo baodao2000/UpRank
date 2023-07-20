@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react'
 import styled from 'styled-components'
-import images from 'configs/images'
 import { useTranslation } from '@pancakeswap/localization'
 import Exchange from './components/Exchange'
 import AOS from 'aos'
@@ -8,20 +7,18 @@ import 'aos/dist/aos.css'
 import HeadHome from './components/Head'
 import Crypto from './components/CryptoHome'
 import StepBlock from './components/StepBlock'
-import Insurance from './components/Insurance'
 import Covered from './components/Covered'
 import Transparency from './components/Transparency'
 import Tranditional from './components/Tranditional'
 import RoadMap from './components/RoadMap'
-import CountDown from './components/CountDown'
 import Download from './components/Download'
 
 const Wrapper = styled.div`
+  width: 100%;
   font-style: normal;
   background-color: #13171b;
   margin-bottom: 48px;
   background-color: var(--black-black-60, rgba(0, 0, 0, 0.6));
-  max-width: 1980px;
 `
 
 const Container = styled.div`
@@ -33,14 +30,14 @@ const Container = styled.div`
   .buttonSpace {
   }
   .block {
-    margin-top: 120px;
+    margin-top: 160px;
     @media screen and (max-width: 1024px) {
       margin-top: 100px;
     }
     @media screen and (max-width: 820px) {
       margin-top: 80px;
     }
-    @media screen and (max-width: 414px) {
+    @media screen and (max-width: 575px) {
       margin-top: 60px;
     }
   }
@@ -59,13 +56,6 @@ const StyledBackground = styled.img`
 `
 
 const HomePage: React.FC<React.PropsWithChildren> = () => {
-  const ref = useRef(null)
-  const { t } = useTranslation()
-
-  const handleClick = () => {
-    ref.current?.scrollIntoView({ behavior: 'smooth' })
-  }
-
   // useEffect(() => {
   //   AOS.init({
   //     disable: function () {
@@ -88,14 +78,10 @@ const HomePage: React.FC<React.PropsWithChildren> = () => {
       `}</style>
       <Wrapper>
         <Container>
-          {/* <StyledBackground src={images.bgTrendy} /> */}
           <HeadHome />
-          <Crypto handleClick={handleClick} />
-          <div ref={ref}>
-            <Exchange data-aos="fade-up" />
-          </div>
+          <Crypto />
+          <Exchange data-aos="fade-up" />
           <StepBlock />
-          {/* <Insurance /> */}
           <Covered />
           <Transparency />
           <Tranditional />

@@ -81,11 +81,21 @@ const images = {
   chart2down: '/images/homepage/chart2down.gif',
   chart3down: '/images/homepage/chart3down.gif',
   chart4down: '/images/homepage/chart4down.gif',
+  headhome: '/images/homepage/headhome1.svg',
+  step1: '/images/homepage/step1.png',
+  step2: '/images/homepage/step2.png',
+  step3: '/images/homepage/step3.png',
+  security1: '/images/homepage/security1.png',
+  security2: '/images/homepage/security2.png',
+  security3: '/images/homepage/security3.png',
   iconpoolsV2: '/images/IconPoolsV2.svg',
   bg: '/images/BG.png',
   Illustrations: '/images/Illustrations.png',
-  bgV3: '/images/V3/BG.png',
   roadmapV3: '/images/Roadmap.svg',
+  bgV3: '/images/V3/BG.png',
+  iconback: '/images/V3/iconback.svg',
+  bscoin: '/images/V3/bscoin.svg',
+  vector: '/images/V3/Vector.svg',
 }
 
 export default images

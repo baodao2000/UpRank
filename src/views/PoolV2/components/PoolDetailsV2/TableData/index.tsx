@@ -1,22 +1,20 @@
 import { PropsWithChildren, useState, useEffect } from 'react'
-import styled, { ThemeConsumer } from 'styled-components'
+import styled from 'styled-components'
 import { trendyColors } from 'style/trendyTheme'
 import { Table, Th, Td, Text } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
 import { getPoolsContract } from 'utils/contractHelpers'
 import CountUp from 'react-countup'
-import contracts from 'config/constants/contracts'
 import { Pool, timeDisplay } from 'views/PoolV2/util'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import { getContract } from 'utils'
 import moment from 'moment'
 import { formatEther } from '@ethersproject/units'
-import Dots from 'components/Loader/Dots'
+import images from 'configs/images'
 
 // STYLE
 const TableScroll = styled.div`
-  max-width: 100%;
-  width: 100%;
+  // max-width: 100%;
+  width: auto;
   &.scroll::-webkit-scrollbar {
     width: 10px;
     height: 10px;
@@ -34,39 +32,51 @@ const TableScroll = styled.div`
   }
   Td {
     border-bottom: 0;
+    padding: 10px 20px;
   }
 `
 
 const TableHeader = styled.span`
+  width: 100%;
   font-size: 26px;
+  padding: 40px 0;
+  display: flex;
+  justify-content: start;
+  @media (max-width: 575px) {
+    padding: 30px 0;
+  }
 `
 const TablePool = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 0.5em;
   align-items: center;
+  border-radius: 16px;
+  border: 1px solid var(--white-white-8, rgba(255, 255, 255, 0.08));
+  background: var(--black-black-5, rgba(0, 0, 0, 0.05));
   table > thead {
     tr {
       font-weight: 300;
       border-bottom: 1px solid ${trendyColors.BLACK};
     }
   }
-  width: auto;
-  @media screen and (max-width: 967px) {
-    width: 700px;
-  }
-  @media screen and (max-width: 851px) {
-    width: 570px;
-  }
-  @media screen and (max-width: 575px) {
-    width: 100%;
-  }
-  @media screen and (max-width: 480px) {
-    width: 100%;
-    .hiden {
-      display: none;
-    }
-  }
+  // width: auto;
+  // @media screen and (max-width: 967px) {
+  //   width: 700px;
+  // }
+  // @media screen and (max-width: 851px) {
+  //   width: 570px;
+  // }
+  // @media screen and (max-width: 575px) {
+  //   width: 100%;
+  // }
+  // @media screen and (max-width: 480px) {
+  //   width: 100%;
+  //   .hiden {
+  //     display: none;
+  //   }
+  // }
   @media screen and (max-width: 360px) {
     width: 100%;
   }
@@ -76,6 +86,7 @@ const AmountData = styled.div`
   flex-direction: column;
   align-items: right;
 `
+const responsiveTextTH = ['11px', '12px', '16px', '16px', '16px']
 const responsiveTextSize = ['11px', '12px', '16px', '18px', '20px']
 const responsiveTextSizeBNB = ['9px', '10px', '12px', '14px', '16px']
 const responsiveTextSizeHeader = ['16px', '18px', '22px', '26px', '30px']
@@ -164,7 +175,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
                       duration={0.5}
                     />
                     &ensp;
-                    <img src={`/images/chains/${chainId}.png`} alt="pool name" width={18} />
+                    <img src={images.vector} alt="pool name" width={18} />
                   </Text>
                 </AmountData>
               )}
@@ -200,7 +211,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
                       decimals={pool.currentReward > 0 ? 4 : 0}
                       duration={0.5}
                     />
-                    <img src={`/images/chains/${chainId}.png`} alt="pool name" width={18} style={{ marginLeft: 6 }} />
+                    <img src={images.vector} alt="pool name" width={18} style={{ marginLeft: 6 }} />
                   </Text>
                 </AmountData>
               )}
@@ -313,27 +324,52 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
           <thead>
             <tr>
               <Th textAlign="left">
-                <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
+                <Text
+                  style={{ color: '#777E90', fontWeight: '600' }}
+                  color={trendyColors.COLORTABLE}
+                  fontSize={responsiveTextTH}
+                  textTransform="capitalize"
+                >
                   Date Time
                 </Text>
               </Th>
               <Th textAlign="center">
-                <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
+                <Text
+                  style={{ color: '#777E90', fontWeight: '600' }}
+                  color={trendyColors.COLORTABLE}
+                  fontSize={responsiveTextTH}
+                  textTransform="capitalize"
+                >
                   Interest (%)
                 </Text>
               </Th>
               <Th textAlign="right">
-                <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
+                <Text
+                  style={{ color: '#777E90', fontWeight: '600' }}
+                  color={trendyColors.COLORTABLE}
+                  fontSize={responsiveTextTH}
+                  textTransform="capitalize"
+                >
                   Your Lock
                 </Text>
               </Th>
               <Th textAlign="right">
-                <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
+                <Text
+                  style={{ color: '#777E90', fontWeight: '600' }}
+                  color={trendyColors.COLORTABLE}
+                  fontSize={responsiveTextTH}
+                  textTransform="capitalize"
+                >
                   Your Income
                 </Text>
               </Th>
               <Th textAlign="center">
-                <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
+                <Text
+                  style={{ color: '#777E90', fontWeight: '600' }}
+                  color={trendyColors.COLORTABLE}
+                  fontSize={responsiveTextTH}
+                  textTransform="capitalize"
+                >
                   Action
                 </Text>
               </Th>

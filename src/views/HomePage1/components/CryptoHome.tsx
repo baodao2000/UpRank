@@ -1,14 +1,16 @@
-import styled, { keyframes } from 'styled-components'
-import images from 'configs/images'
-import { Flex, Text, Button, Heading } from '@pancakeswap/uikit'
+import styled from 'styled-components'
+import { Text, Heading } from '@pancakeswap/uikit'
 import 'aos/dist/aos.css'
 
 const Crypto = styled.div`
-  position: relative;
-  z-index: 1;
-  margin-top: 14%;
   * {
     font-family: Inter, sans-serif;
+  }
+  position: relative;
+  z-index: 1;
+  margin-top: 60px;
+  @media (max-width: 575px) {
+    margin-top: 40px;
   }
 `
 
@@ -16,29 +18,49 @@ const Title = styled(Heading)`
   font-size: 60px;
   font-style: normal;
   font-weight: 500;
-  line-height: 72px; /* 120% */
-  letter-spacing: -1.2px;
+  line-height: 72px;
   text-align: center;
+  @media (max-width: 575px) {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 32px;
+  }
 `
 const Content = styled.div`
+  margin-top: 32px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
   gap: 40px;
+  @media (max-width: 575px) {
+    margin-top: 24px;
+    gap: 9px;
+  }
+  @media (max-width: 345px) {
+    margin-top: 24px;
+    gap: 6px;
+  }
 `
 const Card = styled.div`
-  margin-top: 32px;
   padding: 24px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  border: 2px solid;
   justify-content: center;
   &:hover {
     border-radius: 24px;
-    border: 2px solid var(--white-white-12, rgba(255, 255, 255, 0.12));
-    background: var(--white-white-6, rgba(255, 255, 255, 0.06));
+    border: 2px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.06);
     box-shadow: 0px 8px 32px 0px rgba(0, 0, 0, 0.1);
+  }
+  @media (max-width: 575px) {
+    padding: 13px;
+  }
+  @media (max-width: 345px) {
+    padding: 9px;
   }
 `
 const CardTitle = styled(Text)`
@@ -47,6 +69,10 @@ const CardTitle = styled(Text)`
   font-weight: 500;
   line-height: 28px;
   color: #fff;
+  @media (max-width: 575px) {
+    font-size: 14px;
+    line-height: 20px;
+  }
 `
 const CardLabel = styled(Text)`
   font-size: 14px;
@@ -55,7 +81,25 @@ const CardLabel = styled(Text)`
   line-height: 20px;
   color: rgba(103, 102, 110, 1);
   text-align: center;
+  @media (max-width: 575px) {
+    font-size: 12px;
+    line-height: 18px;
+  }
 `
+const Img = styled.img`
+  width: 120px;
+  height: 120px;
+  margin-bottom: 24px;
+  @media (max-width: 575px) {
+    width: 96px;
+    height: 96px;
+  }
+  @media (max-width: 345px) {
+    width: 93px;
+    height: 93px;
+  }
+`
+
 const data = [
   {
     image: './images/V3/MoneyExchange.png',
@@ -78,49 +122,26 @@ const data = [
     label: 'and faster than ever',
   },
 ]
-const CryptoHome = ({ handleClick }) => {
+const CryptoHome = () => {
   return (
     <Crypto className="block">
       <Title color="mainColor" className="title colorchange">
-        {/* <StyledText>All-in-One</StyledText> for Your Crypto */}Why TrendyDefi?
+        Why TrendyDefi?
       </Title>
-      <Content>
+      <Content data-aos="fade-left">
         {data.map((items, r) => (
           <Card>
-            <img width="120px" height="120px" src={items.image} style={{ marginBottom: '24px' }} />
+            <Img src={items.image} />
             <CardTitle>{items.title}</CardTitle>
             <CardLabel>{items.label}</CardLabel>
           </Card>
         ))}
         <Card>
-          <img width="120px" height="120px" src="./images/V3/autited.png" style={{ marginBottom: '24px' }} />
+          <Img src="./images/V3/autited.png" />
           <CardTitle>Audited by Certik</CardTitle>
           <CardLabel style={{ color: '#8544F5' }}>Learn more</CardLabel>
         </Card>
       </Content>
-      {/* <ImageLeftMb flexDirection="column" alignItems="center">
-          <img className="cyptophone" srcSet={images.phone} alt="" />
-        </ImageLeftMb>
-        <CustomSpan color="mainColor" className="colorchange">
-          <img src={images.star} alt="" />
-          <span>Exchange Instantly</span>
-        </CustomSpan>
-        <CustomSpan color="mainColor" className="colorchange">
-          <img src={images.star} alt="" />
-          <span>Highest Private & Secure</span>
-        </CustomSpan>
-        <CustomSpan color="mainColor" className="colorchange">
-          <img src={images.star} alt="" />
-          <span>Earn Passive Income</span>
-        </CustomSpan>
-        <CustomSpan color="mainColor" className="colorchange">
-          <img src={images.star} alt="" />
-          <span>Convenient</span>
-        </CustomSpan>
-        <CustomSpan color="mainColor" className="colorchange">
-          <img src={images.star} alt="" />
-          <span>Audited by Certik</span>
-        </CustomSpan> */}
     </Crypto>
   )
 }
