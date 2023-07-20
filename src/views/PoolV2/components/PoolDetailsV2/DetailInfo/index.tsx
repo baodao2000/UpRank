@@ -12,13 +12,29 @@ import images from 'configs/images'
 const InfoDetail = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1.5em;
+  gap: 18px;
   width: 100%;
-  padding: 24px;
+  padding: 40px;
   border-radius: 24px;
   border: 1px solid var(--white-white-12, rgba(255, 255, 255, 0.12));
   background: var(--black-black-20, rgba(0, 0, 0, 0.2));
   backdrop-filter: blur(5.5px);
+    @media (max-width: 575px) {
+      padding: 24px;
+    }
+
+  .imagesvector {
+    padding: 4px;
+    display: flex;
+    width: 24px;
+    height: 24px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 4px;
+    background: var(--white-white-8, rgba(255, 255, 255, 0.08));
+  }
 
   .note {
       font-size: 16px;
@@ -75,8 +91,15 @@ const Line = styled.div`
     background: var(--white-white-8, rgba(255, 255, 255, 0.08));
   }
 `
+const NoteDeposit = styled.span`
+  // color: #adabb2;
+  //background: #ffffcc;
+  // max-width: 600px;
+  // padding: 16px;
+  // border-radius: 10px;
+`
 const maincolor = `${trendyColors.MAIN_GREEN}`
-const responsiveTextSize = ['12px', '14px', '16px', '18px', '20px']
+const responsiveTextSize = ['16px', '16px', '16px', '18px', '20px']
 const responsiveTextSizeBNB = ['10px', '12px', '12px', '14px', '16px']
 
 const DetailInfoPool: React.FC<
@@ -94,6 +117,34 @@ const DetailInfoPool: React.FC<
   const startTime = poolInfo.startTime
   const rateBNB2USD = poolInfo.rateBNB2USD
   const [now, setNow] = useState(moment().unix())
+
+  const getNoteDeposit = () => {
+    let note
+    if (chainId === 97 && now - poolInfo.startTime > 3600) {
+      note = (
+        <NoteDeposit className="note">
+          {/* <i> */}
+          <span>Please note:</span> after <b style={{ textDecoration: 'underline' }}>{timeDisplayLong(3600)}</b> of
+          deposit, you can&apos;t add more to this pool. If you would like to stake more, you can stake a different
+          wallet or a different pool.
+          {/* </i> */}
+        </NoteDeposit>
+      )
+    } else if (chainId === 137 && now - poolInfo.startTime > 604800) {
+      note = (
+        <NoteDeposit className="note">
+          {/* <i> */}
+          <span>Please note:</span> after <b style={{ textDecoration: 'underline' }}>{timeDisplayLong(604800)}</b> of
+          deposit, you can&apos;t add more to this pool. If you would like to stake more, you can stake a different
+          wallet or a different pool.
+          {/* </i> */}
+        </NoteDeposit>
+      )
+    } else {
+      note = null
+    }
+    return note
+  }
   useEffect(() => {
     setInterval(() => {
       setNow(moment().unix())
@@ -161,7 +212,7 @@ const DetailInfoPool: React.FC<
                 decimals={totalReward > 0 ? 4 : 2}
                 duration={0.5}
               />{' '}
-              <img src={images.vector} alt="pool name" width={18} />
+              <img className="imagesvector" src={images.vector} alt="pool name" width={18} />
             </Text>
           </Amount>
         )}
@@ -202,7 +253,7 @@ const DetailInfoPool: React.FC<
                 decimals={totalReward > 0 ? 4 : 0}
                 duration={0.5}
               />{' '}
-              <img src={images.vector} alt="pool name" width={18} />
+              <img className="imagesvector" src={images.vector} alt="pool name" width={18} />
             </Text>
           </Amount>
         )}
@@ -256,6 +307,7 @@ const DetailInfoPool: React.FC<
               style={{ fontWeight: 400 }}
             />
             <img
+              className="imagesvector"
               src={images.vector}
               alt="pool name"
               width={18}
@@ -266,10 +318,12 @@ const DetailInfoPool: React.FC<
         </Text>
       </Line>
       <Line>
-        <Text className="note">
+        {getNoteDeposit()}
+
+        {/* <Text className="note">
           <span>Please note:</span> after 7 days of deposit, you can&lsquo;t add more to this pool. If you would like to
           stake more, you can stake a different wallet or a different pool.
-        </Text>
+        </Text> */}
       </Line>
     </InfoDetail>
   )

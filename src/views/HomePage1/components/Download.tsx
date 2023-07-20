@@ -58,16 +58,18 @@ const Card = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 24px;
+  gap: 108px;
   width: 100%;
   border-radius: 24px;
   border: 1px solid var(--white-white-12, rgba(255, 255, 255, 0.12));
   background: var(--white-white-6, rgba(255, 255, 255, 0.06));
   margin-top: 60px;
   @media (max-width: 955px) {
+    gap: 76px;
     flex-direction: column;
   }
   @media (max-width: 575px) {
+    gap: 56px;
     padding: 20px 16px;
   }
 `
@@ -152,8 +154,12 @@ const Download = () => {
           <CardLabel>Download Metamask and Trust Wallet</CardLabel>
           <CardContent>
             <div className="imgA">
-              <img src="./images/V3/Metamask.svg" />
-              <img src="./images/V3/TrustWallet.svg" />
+              <div style={{ cursor: 'pointer' }} onClick={() => window.open('https://metamask.io/', '_blank')}>
+                <img src="./images/V3/Metamask.svg" />
+              </div>
+              <div style={{ cursor: 'pointer' }} onClick={() => window.open('https://trustwallet.com/', '_blank')}>
+                <img src="./images/V3/TrustWallet.svg" />
+              </div>
             </div>
             <div className="imgB">
               <img src="./images/V3/Googleplay.png" />

@@ -52,16 +52,15 @@ const Container = styled.div`
   gap: 10px;
   margin-top: 56px;
   margin-bottom: 140px;
-
-  @media screen and (max-width: 575px) {
-    margin-top: 16px;
-    margin-bottom: 4px !important;
+  @media screen and (max-width: 1440px) {
+    margin-bottom: 90px;
   }
   @media screen and (max-width: 900px) {
     margin-bottom: 4px;
   }
-  @media screen and (max-width: 1440px) {
-    margin-bottom: 90px;
+  @media screen and (max-width: 575px) {
+    margin-top: 16px;
+    margin-bottom: 4px !important;
   }
 `
 const Token = styled.div`

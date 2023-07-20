@@ -1,5 +1,6 @@
 import { Flex, Text, useMatchBreakpoints } from '@pancakeswap/uikit'
 import Image from 'next/image'
+import Link from 'next/link'
 import styled from 'styled-components'
 
 const TrendTokenText = styled.div`
@@ -101,17 +102,20 @@ function TrendToken() {
               <TrendContent>Mine Trend token</TrendContent>
               <TokenText>
                 Through pool Stater {''}
-                <span
-                  style={{
-                    color: 'var(--primary-primary-1, #8544F5)',
-                    fontSize: '11px',
-                    fontStyle: 'normal',
-                    fontWeight: '400',
-                    lineHeight: '20px',
-                  }}
-                >
-                  Visit Pool
-                </span>
+                <Link href="/pools">
+                  <span
+                    style={{
+                      color: 'var(--primary-primary-1, #8544F5)',
+                      fontSize: '11px',
+                      fontStyle: 'normal',
+                      fontWeight: '400',
+                      lineHeight: '20px',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    Visit Pool
+                  </span>
+                </Link>
               </TokenText>
             </Flex>
           </CardContent>

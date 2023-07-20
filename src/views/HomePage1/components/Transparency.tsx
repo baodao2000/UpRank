@@ -228,7 +228,7 @@ const Transparency = () => {
         {data.map((item, index) => (
           <CardTransparency data-aos="zoom-out-left" key={index}>
             <WrapperImage>
-              <img src={item.image} alt="" />
+              <img style={{ width: '176px', height: '200px' }} src={item.image} alt="" />
             </WrapperImage>
             <StyledTitleCard>{item.title}</StyledTitleCard>
             <DescCard>{item.description}</DescCard>

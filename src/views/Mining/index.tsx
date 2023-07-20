@@ -98,6 +98,7 @@ const IntrotText = styled.div`
   font-style: normal;
   font-weight: 400;
   line-height: 28px;
+  max-width: 600px;
   @media screen and (max-width: 575px) {
     width: 90%;
     margin: auto;
@@ -469,7 +470,7 @@ function Mining() {
             <BoxContain>
               <ContentText
                 style={{
-                  fontSize: isMobile ? '24px' : '32px',
+                  fontSize: isMobile ? '24px' : '30px',
                   lineHeight: isMobile ? '32px' : '38px',
                   fontWeight: '400',
                 }}

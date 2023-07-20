@@ -8,7 +8,11 @@ const Wrapper = styled.div`
   * {
     font-family: Inter, sans-serif;
   }
+  margin-top: 100px;
+  background: #141416;
   position: relative;
+  max-width: 1320px;
+  margin: auto;
   z-index: 1;
   width: 100%;
   .pc {
@@ -43,7 +47,6 @@ const Title = styled(Heading)`
   line-height: 18px;
   @media (max-width: 796px) {
     align-items: center;
-    text-align: center;
   }
 `
 
@@ -147,7 +150,7 @@ const StepBlock = () => {
             <StyledText>Get started in 3 simple steps </StyledText>
             <TitleM>It only takes a few minutes</TitleM>
           </Title>
-          <div style={{ marginTop: '64px' }}>
+          <div style={{ marginTop: '20px' }}>
             <Step onClick={() => setStep(1)}>
               {step === 1 ? <img src="./images/V3/active1.png" /> : <img src="./images/V3/disabled1.png" />}
               <GruopRight>

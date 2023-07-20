@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { Text, Heading } from '@pancakeswap/uikit'
 import 'aos/dist/aos.css'
+import Link from 'next/link'
 
 const Crypto = styled.div`
   * {
@@ -30,7 +31,7 @@ const Content = styled.div`
   margin-top: 32px;
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
   gap: 40px;
@@ -108,25 +109,25 @@ const data = [
   },
   {
     image: './images/V3/Highest.png',
-    title: 'Exchange Instantly',
-    label: 'and faster than ever',
+    title: 'Highest Private ',
+    label: 'Most Secure',
   },
   {
     image: './images/V3/Time.png',
-    title: 'Exchange Instantly',
-    label: 'and faster than ever',
+    title: 'Earn Passive Income',
+    label: 'Every month',
   },
   {
     image: './images/V3/MoneyTree.png',
-    title: 'Exchange Instantly',
-    label: 'and faster than ever',
+    title: 'Convenient',
+    label: 'and simple to use',
   },
 ]
 const CryptoHome = () => {
   return (
     <Crypto className="block">
       <Title color="mainColor" className="title colorchange">
-        Why TrendyDefi?
+        Why TrendyDefi ?
       </Title>
       <Content data-aos="fade-left">
         {data.map((items, r) => (
@@ -139,7 +140,9 @@ const CryptoHome = () => {
         <Card>
           <Img src="./images/V3/autited.png" />
           <CardTitle>Audited by Certik</CardTitle>
-          <CardLabel style={{ color: '#8544F5' }}>Learn more</CardLabel>
+          <Link href="https://trendydefi.com/REP-final.pdf">
+            <CardLabel style={{ color: '#8544F5', cursor: 'pointer' }}>Learn more</CardLabel>
+          </Link>
         </Card>
       </Content>
     </Crypto>
