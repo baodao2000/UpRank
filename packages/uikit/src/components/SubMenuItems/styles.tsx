@@ -14,14 +14,11 @@ const StyledSubMenuItems = styled(Flex)`
   z-index: 1;
   width: 100%;
   display: flex;
+  margin-top: 24px;
   white-space: nowrap;
   scroll-behavior: smooth;
-  ${({ theme }) => theme.mediaQueries.md} {
-    width: auto;
-    display: flex;
-  }
   flex-grow: 1;
-  background-color: rgba(39, 38, 44, 0.7);
+  background-color: black;
   box-shadow: inset 0px -2px 0px -8px rgba(133, 133, 133, 0.1);
   overflow-x: scroll;
   scrollbar-width: none;
