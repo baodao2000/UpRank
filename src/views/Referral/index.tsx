@@ -329,6 +329,7 @@ const StyledIconRef = styled.img`
 const ShowLinkRefPc = styled.span`
   display: none;
   word-break: break-all;
+  color: #fff;
   ${({ theme }) => theme.mediaQueries.sm} {
     display: block;
   }
@@ -337,6 +338,8 @@ const ShowLinkRefPc = styled.span`
 const ShowLinkRefMobile = styled.span`
   display: block;
   word-break: break-all;
+  color: #fff;
+
   ${({ theme }) => theme.mediaQueries.sm} {
     display: none;
   }
@@ -516,7 +519,9 @@ const StyledInputSearch = styled(Input)`
 const LinkItem = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 6px;
+  width: 100%;
 `
 
 const StyledHeadSearchUser = styled(Heading)`
@@ -942,29 +947,25 @@ const Referral = () => {
 
   const getData = () => {
     if (!account) {
-      return
-    }
-    const checkUserRegister = async () => {
-      if (account) {
-        setLoadingPage(true)
-      } else {
-        setLoadingPage(false)
+      setLoadingPage(true)
+    } else {
+      setLoadingPage(false)
+      const checkUserRegister = async () => {
         const isRegister = await refferCT.isReferrer(account)
         setUserIsRegister(isRegister)
       }
-    }
-    checkUserRegister()
-    getRefer()
-    // getUserInfo()
+      checkUserRegister()
+      getRefer()
+      // getUserInfo()
 
-    if (userIsRegister && account) {
-      setLinkRef(getLinkRef())
-    } else {
-      setLinkRef('')
+      if (userIsRegister && account) {
+        setLinkRef(getLinkRef())
+      } else {
+        setLinkRef('')
+      }
+      setLoadingPage(false)
     }
-    setLoadingPage(false)
   }
-
   const handleBack = () => {
     const newArr = [...acountChild]
     newArr.pop()
@@ -994,7 +995,7 @@ const Referral = () => {
   const getLinkRef = () => {
     const param = window.location.origin
     const text = `${param}?ref=${account.slice(account.length - 6, account.length).toLocaleLowerCase()}`
-
+    console.log(text)
     return text
   }
 
@@ -1190,6 +1191,8 @@ const Referral = () => {
                         </StyledText>
                         <StyledLink>
                           <LinkItem>
+                            <ShowLinkRefPc>{formatLinkRef(linkRef, 50, 4)}</ShowLinkRefPc>
+                            <ShowLinkRefMobile>{formatLinkRef(linkRef, 20, 4)}</ShowLinkRefMobile>
                             <StyledIconRef
                               id="iconRef"
                               src="/images/referral/copy.svg"
@@ -1200,32 +1203,32 @@ const Referral = () => {
                               anchorId="iconRef"
                               content={userIsRegister ? (showCopied ? 'Copied' : 'Copy') : 'Please Register'}
                             />
-                            <ShowLinkRefPc>{formatLinkRef(linkRef, 50, 4)}</ShowLinkRefPc>
-                            <ShowLinkRefMobile>{formatLinkRef(linkRef, 20, 4)}</ShowLinkRefMobile>
                           </LinkItem>
                         </StyledLink>
                       </div>
-                      <div style={{ width: isMobile ? '100%' : '50%' }}>
-                        <StyledText
-                          style={{ color: 'rgba(255, 255, 255, 1)', marginBottom: '12px' }}
-                          color="rgba(255, 255, 255, 1)"
-                        >
-                          Referral code
-                        </StyledText>
-                        {!userIsRegister && (
-                          <StyledInput
-                            value={referCode}
-                            autoFocus={true}
-                            onChange={validateReferByWallet}
-                            placeholder={`refer code`}
-                          />
-                        )}
-                        {showError && referCode && <span style={{ color: 'red' }}>Invalid code</span>}
-                      </div>
+                      {!userIsRegister && (
+                        <>
+                          <div style={{ width: isMobile ? '100%' : '50%' }}>
+                            <StyledText
+                              style={{ color: 'rgba(255, 255, 255, 1)', marginBottom: '12px' }}
+                              color="rgba(255, 255, 255, 1)"
+                            >
+                              Referral code
+                            </StyledText>
+                            <StyledInput
+                              value={referCode}
+                              autoFocus={true}
+                              onChange={validateReferByWallet}
+                              placeholder={`refer code`}
+                            />
+                            {showError && referCode && <span style={{ color: 'red' }}>Invalid code</span>}
+                          </div>
+                          <StyledButton onClick={onRegister} disabled={userIsRegister || showError}>
+                            Register
+                          </StyledButton>
+                        </>
+                      )}
                     </GroupLink>
-                    <StyledButton onClick={onRegister} disabled={userIsRegister || showError}>
-                      Register
-                    </StyledButton>
                     <div style={{ display: 'flex', gap: '32px', alignItems: 'center', justifyContent: 'center' }}>
                       <div style={{ width: '100px', height: '1px', background: 'rgba(255, 255, 255, 0.10)' }}></div>
                       <Text fontSize="18px" fontWeight="500" lineHeight="20px">

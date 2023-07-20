@@ -23,7 +23,7 @@ const Wrapper = styled.div`
 
 const StyledNav = styled.nav`
   display: flex;
-  margin: 0px auto;
+  margin: 24px auto;
   align-items: center;
   width: 100%;
   max-width: 1320px;
@@ -38,7 +38,6 @@ const StyledNav = styled.nav`
 
 const FixedContainer = styled.div<{ showMenu: boolean; height: number }>`
   position: fixed;
-  background: black;
   top: ${({ showMenu, height }) => (showMenu ? 0 : `-${height}px`)};
   left: 0;
   transition: top 0.2s;

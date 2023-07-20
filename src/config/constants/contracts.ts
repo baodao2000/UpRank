@@ -39,7 +39,7 @@ export default {
     56: '',
   },
   trend: {
-    137: '0x68ADA85d2D7fFF3cA4d223c8E0D742aFc19a1847',
+    137: '0x12016b4E07866c962e29b7597eCd66B3B89a3a58',
     56: '',
   },
   sow: {
