@@ -10,63 +10,67 @@ import { ethers } from 'ethers'
 import { timeDisplayLong } from 'views/Pools2/util'
 import { formatEther } from '@ethersproject/units'
 import CountUp from 'react-countup'
+import images from 'configs/images'
 
 const ListPoolRanks = styled.div`
   display: flex;
   align-items: stretch;
   justify-content: space-evenly;
   flex-wrap: wrap;
-  grid-column-gap: 20px;
+  grid-column-gap: 32px;
   grid-row-gap: 30px;
+  flex-direction: row;
 `
 
 export const ImageRank = styled.img`
   @media screen and (min-width: 1024px) {
-    width: 75px;
+    width: 64px;
+    height: 64px;
   }
   @media (max-width: 1023px) {
     width: 60px;
   }
 `
 const CardNextRanks = styled.div`
-  min-width: 235px;
+  min-width: 386px;
   height: auto;
   color: #fff;
-  // background: #7a67ed;
-  /* box-shadow: 6px 10px 25px rgba(0, 0, 0, 0.1), inset 0px 4px 16px rgba(255, 233, 190, 0.63); */
-  background: radial-gradient(
-    101.36% 117.36% at 0% -2.74%,
-    rgba(125, 128, 196, 0.6) 0%,
-    rgba(136, 139, 224, 0.264) 100%
-  );
-  border: 1px solid rgba(245, 251, 242, 0.2);
-  backdrop-filter: blur(50px);
-  border-radius: 15px;
-  padding: 20px 20px;
+  border-radius: 24px;
+  border: 1px solid var(--white-white-12, rgba(255, 255, 255, 0.12));
+  background: var(--black-black-20, rgba(0, 0, 0, 0.2));
+  backdrop-filter: blur(5.5px);
+  padding: 40px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  position: relative;
+  gap: 24px;
 `
 const CardYourRanks = styled.div`
-  min-width: 235px;
+  min-width: 386px;
   height: auto;
   color: #fff;
-  // background: #3a3e41;
-  // /* box-shadow: 6px 10px 25px rgba(0, 0, 0, 0.1), inset 0px 4px 16px rgba(255, 233, 190, 0.63); */
-  // border-radius: 20px;
-  background: radial-gradient(
-    101.36% 117.36% at 0% -2.74%,
-    rgba(125, 128, 196, 0.6) 0%,
-    rgba(136, 139, 224, 0.264) 100%
-  );
-  border: 1px solid rgba(245, 251, 242, 0.2);
-  backdrop-filter: blur(50px);
-  border-radius: 15px;
-  padding: 20px 20px;
+  border-radius: 24px;
+  background: var(--white-white-6, rgba(255, 255, 255, 0.06));
+  backdrop-filter: blur(5.5px);
+  padding: 40px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 `
+const CardRanksGold = styled.div`
+  min-width: 386px;
+  height: auto;
+  color: #fff;
+  border-radius: 24px;
+  background: var(--primary-primary-2, rgba(117, 60, 216, 0.8));
+  backdrop-filter: blur(5.5px);
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`
+
 const CardPoolRanks = styled.div`
   position: relative;
   width: auto;
@@ -94,20 +98,21 @@ const CardHead = styled.div`
   justify-content: flex-start;
   align-items: center;
   gap: 15px;
-  margin-bottom: 10px;
 `
 
 const HeadLeft = styled.div`
-  position: absolute;
-  top: -2px;
-  right: 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 `
 
 const HeadRight = styled.div`
-  width: 230px;
+  position: absolute;
+  top: 10%;
+  right: -2%;
 `
 
-const TitleHeadRight = styled(Heading)`
+const TitleHeadRight = styled.div`
   font-weight: 700;
   font-size: 20px;
   line-height: 120%;
@@ -120,6 +125,22 @@ const TitleHeadRight = styled(Heading)`
   }
 `
 
+const TitleHeadRightBronze = styled.div`
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 120%;
+  display: flex;
+  align-items: center;
+  text-transform: capitalize;
+  justify-content: center;
+  color: inherit;
+  @media (max-width: 739px) {
+    font-size: 20px;
+  }
+  background: url(${images.bronze}) no-repeat;
+  width: 128px;
+  height: 44px;
+`
 const MinMaxPrice = styled.div`
   display: flex;
   justify-content: flex-start;
@@ -140,7 +161,11 @@ const MinMaxItem = styled.span`
   color: #67e4ff;
 `
 
-const CardBody = styled.div``
+const CardBody = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+`
 
 const ItemInfoCard = styled.div`
   display: flex;
@@ -150,13 +175,13 @@ const ItemInfoCard = styled.div`
 `
 
 const Label = styled.span`
-  font-weight: 500;
+  color: var(--greyscale-grey-scale-text-seconday, #adabb2);
+  /* Text md/regular */
+  font-family: Inter;
   font-size: 16px;
-  line-height: 100%;
-  display: flex;
-  color: #fff;
-  align-items: center;
-  text-transform: capitalize;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
 
   @media (max-width: 739px) {
     font-size: 12px;
@@ -210,6 +235,18 @@ const StyledButtonRank = styled.button`
     color: #f3f3f3;
     font-weight: 700;
   }
+`
+const ValueLocked = styled(Text)`
+  color: var(--primary-primary-1, #8544f5);
+  /* Display xs/Bold */
+  font-family: Inter;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 32px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
 `
 const nextRankRequire = [
   {
@@ -291,24 +328,39 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
         return '#fff'
     }
   }
-  // console.log(userRank)
+  // console.log(data[userRank.rank].image)
   return (
     <ListPoolRanks>
       <CardNextRanks>
         <CardHead>
           <HeadLeft>
             <ImageRank src={userRank.image} alt="" />
+            <TitleHeadRight style={{ color: '#fff' }}>Bronze</TitleHeadRight>
           </HeadLeft>
           <HeadRight style={{ color: getColor('') }}>
-            <TitleHeadRight style={{ color: '#fff' }}>Your Rank</TitleHeadRight>
+            <TitleHeadRightBronze style={{ color: '#fff' }}>Your Rank</TitleHeadRightBronze>
           </HeadRight>
         </CardHead>
         <CardBody>
           <ItemInfoCard>
             <Label>Locked:</Label>
-            <Value>
-              {userRank.locked} {unit}
-            </Value>
+            <ValueLocked>
+              {userRank.locked}
+              <div
+                style={{
+                  background: 'var(--white-white-6, rgba(255, 255, 255, 0.06))',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  backdropFilter: 'blur(6px)',
+                  borderRadius: '4px',
+                  width: '24px',
+                  height: '24px',
+                }}
+              >
+                <img width="18px" height="16px" src="./images/V3/Vector.png" />
+              </div>
+            </ValueLocked>
           </ItemInfoCard>
           <ItemInfoCard>
             <Label>Volumn on tree:</Label>
@@ -323,37 +375,40 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
             <Value>{userRank.downline}</Value>
           </ItemInfoCard>
         </CardBody>
-        <div style={{ textAlign: 'center', marginTop: 8 }}></div>
       </CardNextRanks>
       <CardYourRanks>
         <CardHead>
           <HeadLeft>
             <ImageRank src={data[userRank.rank].image} alt="" />
+            <TitleHeadRight style={{ color: '#fff' }}>Silver</TitleHeadRight>
           </HeadLeft>
-          <HeadRight style={{ color: getColor(''), marginBottom: '30px' }}>
-            <TitleHeadRight style={{ color: '#fff' }}>Next Rank</TitleHeadRight>
-          </HeadRight>
+          <HeadRight style={{ color: getColor('') }}></HeadRight>
         </CardHead>
         <CardBody>
           <ItemInfoCard style={{ color: canUpRank1 ? '#fff' : 'gray' }}>
             <Label>Locked:</Label>
-            <Value>
-              <CountUp
-                separator=","
-                start={0}
-                preserveValue
-                delay={0}
-                end={nextRankRequire[userRank.rank].locked}
-                decimals={0}
-                duration={0.5}
-                style={{ color: 'inherit !important' }}
-              />
-              {unit}
-            </Value>
+            <ValueLocked>
+              {userRank.locked}
+              <div
+                style={{
+                  background: 'var(--white-white-6, rgba(255, 255, 255, 0.06))',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  backdropFilter: 'blur(6px)',
+                  borderRadius: '4px',
+                  width: '24px',
+                  height: '24px',
+                }}
+              >
+                <img width="18px" height="16px" src="./images/V3/Vector.png" />
+              </div>
+            </ValueLocked>
           </ItemInfoCard>
           <ItemInfoCard style={{ color: canUpRank2 ? '#fff' : 'gray' }}>
             <Label>Volumn on tree:</Label>
             <Value>
+              ${''}
               <CountUp
                 separator=","
                 start={0}
@@ -364,19 +419,72 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
                 duration={0.5}
                 style={{ color: 'inherit !important' }}
               />{' '}
-              $
             </Value>
           </ItemInfoCard>
           <ItemInfoCard style={{ color: canUpRank3 ? '#fff' : 'gray' }}>
             <Label>Member direct:</Label>
-            <Value>{nextRankRequire[userRank.rank].direct}</Value>
+            <Value>${nextRankRequire[userRank.rank].direct}</Value>
           </ItemInfoCard>
           <ItemInfoCard style={{ color: canUpRank4 ? '#fff' : 'gray' }}>
             <Label>Member downline:</Label>
-            <Value>{nextRankRequire[userRank.rank].downline}</Value>
+            <Value>${nextRankRequire[userRank.rank].downline}</Value>
           </ItemInfoCard>
         </CardBody>
-        <div style={{ textAlign: 'center', marginTop: 8 }}>
+      </CardYourRanks>
+      <CardRanksGold>
+        <CardHead>
+          <HeadLeft>
+            <ImageRank src="./images/V3/gold.png" alt="" />
+            <TitleHeadRight style={{ color: '#fff' }}>Gold</TitleHeadRight>
+          </HeadLeft>
+        </CardHead>
+        <CardBody>
+          <ItemInfoCard style={{ color: canUpRank1 ? '#fff' : 'gray' }}>
+            <Label>Locked:</Label>
+            <ValueLocked style={{ color: 'rgba(226, 225, 229, 1)' }}>
+              {userRank.locked}
+              <div
+                style={{
+                  background: 'var(--black-black-60, rgba(0, 0, 0, 0.60))',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  backdropFilter: 'blur(6px)',
+                  borderRadius: '4px',
+                  width: '24px',
+                  height: '24px',
+                }}
+              >
+                <img width="18px" height="16px" src="./images/V3/Vector.png" />
+              </div>
+            </ValueLocked>
+          </ItemInfoCard>
+          <ItemInfoCard style={{ color: canUpRank2 ? '#fff' : 'gray' }}>
+            <Label>Volumn on tree:</Label>
+            <Value>
+              $
+              <CountUp
+                separator=","
+                start={0}
+                preserveValue
+                delay={0}
+                end={nextRankRequire[userRank.rank].volumnOnTree}
+                decimals={0}
+                duration={0.5}
+                style={{ color: 'inherit !important' }}
+              />
+            </Value>
+          </ItemInfoCard>
+          <ItemInfoCard style={{ color: canUpRank3 ? '#fff' : 'gray' }}>
+            <Label>Member direct:</Label>
+            <Value>${nextRankRequire[userRank.rank].direct}</Value>
+          </ItemInfoCard>
+          <ItemInfoCard style={{ color: canUpRank4 ? '#fff' : 'gray' }}>
+            <Label>Member downline:</Label>
+            <Value>${nextRankRequire[userRank.rank].downline}</Value>
+          </ItemInfoCard>
+        </CardBody>
+        {/* <div style={{ textAlign: 'center', marginTop: 8 }}>
           <StyledButtonRank disabled={!canUpRank} onClick={handleConfirmUpRank}>
             {isConfirmingUpRank ? (
               <ThreeDots className="loading">
@@ -388,8 +496,8 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
               'Up Rank'
             )}
           </StyledButtonRank>
-        </div>
-      </CardYourRanks>
+        </div> */}
+      </CardRanksGold>
       {/* {data.map((item, index) => (
         <CardPoolRanks key={index}>
           <CardHead>

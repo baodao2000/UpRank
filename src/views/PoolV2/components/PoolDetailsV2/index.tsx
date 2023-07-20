@@ -105,6 +105,7 @@ const Pool = ({ poolId }) => {
   const getPoolV2Contract = getPoolsV3Contract(CHAIN_ID)
 
   const unit = NATIVE[chainId].symbol
+
   const [poolInfo, setPoolInfo] = useState({
     currentInterest: 0,
     enable: true,

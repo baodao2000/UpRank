@@ -12,11 +12,16 @@ import { formatEther } from '@ethersproject/units'
 import { getPoolsContract, getPoolsV2Contract, getPoolsV3Contract } from 'utils/contractHelpers'
 import PoolsV2 from 'views/PoolV2'
 import Pools from 'views/Pools2'
+import images from 'configs/images'
+import { getBlockExploreLink } from 'utils'
+import { shortenURL } from 'views/PoolV2/util'
 
 const Wraper = styled.div`
   * {
     font-family: Inter, sans-serif;
   }
+  background: url(${images.bgV3}) no-repeat;
+  background-size: contain;
   width: 100%;
   max-width: 1320px;
   height: auto;
@@ -52,20 +57,22 @@ const StyledSubtitle = styled(Text)`
 const Head = styled.div`
   display: flex;
   gap: 40px;
+  margin-bottom: 90px;
 `
 const Left = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
   width: 80%;
+  border-bottom: 1px solid var(--white-white-12, rgba(255, 255, 255, 0.12));
 `
 const Right = styled.div`
   display: flex;
   width: 347px;
-  padding: 40px;
+  padding: 20px;
   flex-direction: column;
   align-items: flex-end;
-  gap: 24px;
+  gap: 12px;
   border-radius: 16px;
   border: 1px solid var(--white-white-12, rgba(255, 255, 255, 0.12));
   background: var(--greyscale-grayscale-3, #141217);
@@ -107,6 +114,52 @@ const Version = styled.div`
   display: flex;
   gap: 20px;
   curosr: pointer;
+`
+const HeadContent = styled.div`
+  border-radius: 16px;
+  background: var(--greyscale-grayscale-3, #141217);
+  box-shadow: 0px 64px 64px -48px rgba(15, 15, 15, 0.1);
+  display: flex;
+  padding: 40px;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 48px;
+  align-self: stretch;
+  justify-content: space-between;
+  position: relative;
+  .pool {
+    position: absolute;
+    top: -50%;
+    right: 0;
+    z-index: 10;
+  }
+  .circle {
+    position: absolute;
+    bottom: 20%;
+    right: 5%;
+  }
+`
+const TitleContent = styled(Text)`
+  color: var(--white-white, #fff);
+  font-family: Inter;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 38px;
+`
+const LabelContent = styled(Text)`
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px;
+  color: rgba(255, 255, 255, 1);
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 12px;
+  .link {
+    color: rgba(133, 68, 245, 1);
+  }
 `
 const PoolV3 = () => {
   const { account, chainId } = useActiveWeb3React()
@@ -229,6 +282,68 @@ const PoolV3 = () => {
             </TotalUsd>
           </Right>
         </Head>
+        <HeadContent>
+          <div>
+            <TitleContent>Pools Rewards</TitleContent>
+            <LabelContent>
+              These Pool Rewards are only for Referral. Let invite your friends and get our rewards{' '}
+              <span className="link">Invite Now</span>
+            </LabelContent>
+            {pool === 'poolV2' && (
+              <LabelContent>
+                <span style={{ color: 'rgba(173, 171, 178, 1)' }}>Root Contract:</span>
+                <LinkExternal
+                  fontSize="14px"
+                  href={getBlockExploreLink(contracts.poolsV3[CHAIN_ID], 'address', CHAIN_ID)}
+                  ellipsis={true}
+                  style={{ color: 'rgba(249, 249, 249, 1)' }}
+                  color="#00F0E1"
+                >
+                  {shortenURL(`${contracts.poolsV3[CHAIN_ID]}`, 18)}
+                </LinkExternal>
+                <a href={getBlockExploreLink(contracts.poolsV3[CHAIN_ID], 'address', CHAIN_ID)} className="link">
+                  Check Details
+                </a>{' '}
+              </LabelContent>
+            )}
+            {pool === 'poolV1' && (
+              <>
+                <LabelContent>
+                  <span style={{ color: 'rgba(173, 171, 178, 1)' }}>Root Contract:</span>
+                  <LinkExternal
+                    fontSize="14px"
+                    href={getBlockExploreLink(contracts.pools[CHAIN_ID], 'address', CHAIN_ID)}
+                    ellipsis={true}
+                    style={{ color: 'rgba(249, 249, 249, 1)' }}
+                    color="#00F0E1"
+                  >
+                    {shortenURL(`${contracts.pools[CHAIN_ID]}`, 18)}
+                  </LinkExternal>
+                  <a href={getBlockExploreLink(contracts.pools[CHAIN_ID], 'address', CHAIN_ID)} className="link">
+                    Check Details
+                  </a>{' '}
+                </LabelContent>
+                <LabelContent>
+                  <span style={{ color: 'rgba(173, 171, 178, 1)' }}>Root Contract:</span>
+                  <LinkExternal
+                    fontSize="14px"
+                    href={getBlockExploreLink(contracts.poolsV2[CHAIN_ID], 'address', CHAIN_ID)}
+                    ellipsis={true}
+                    style={{ color: 'rgba(249, 249, 249, 1)' }}
+                    color="#00F0E1"
+                  >
+                    {shortenURL(`${contracts.poolsV2[CHAIN_ID]}`, 18)}
+                  </LinkExternal>
+                  <a href={getBlockExploreLink(contracts.poolsV2[CHAIN_ID], 'address', CHAIN_ID)} className="link">
+                    Check Details
+                  </a>{' '}
+                </LabelContent>
+              </>
+            )}
+          </div>
+          <img className="pool" src="./images/V3/pools.svg" />
+          {/* <div className='circle' style={{width: '84px', height: '84px', background: 'linear-gradient(180deg, #7b3fe4 0%, #a726c1 100%)', borderRadius: '50px'}}></div> */}
+        </HeadContent>
         {pool === 'poolV2' && <PoolsV2 />}
         {pool === 'poolV1' && <Pools />}
       </Wraper>
