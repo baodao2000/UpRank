@@ -14,7 +14,7 @@ import useConfirmTransaction from 'hooks/useConfirmTransaction'
 import { useCallWithMarketGasPrice } from 'hooks/useCallWithMarketGasPrice'
 import { usePoolsContract, usePoolsV2Contract, usePoolsV3Contract } from 'hooks/useContract'
 import { PageMeta } from 'components/Layout/Page'
-import { isMobile } from 'react-device-detect'
+// import { isMobile } from 'react-device-detect'
 import { useState, useEffect } from 'react'
 import { formatBigNumber } from 'utils/formatBalance'
 import { poolBaseUrlV2 } from 'views/PoolV2/components/PoolDetailsV2/constants'
@@ -858,7 +858,7 @@ const PoolsV2 = () => {
 
     return () => clearInterval(timerId)
   }, [countDown])
-  const { isMobile, isTablet } = useMatchBreakpoints()
+  // const { isMobile, isTablet } = useMatchBreakpoints()
 
   return (
     <Wraper>
