@@ -417,7 +417,8 @@ const Line = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: stretch;
+  // align-items: flex-start;
   justify-content: space-between;
   .value {
     font-size: 20px;
@@ -478,12 +479,6 @@ const Lineleft = styled.div``
 const Lineright = styled.div``
 const LineText = styled.div`
   text-align: center;
-  border: 1px solid transparent;
-  border-image-slice: 1;
-
-  background-image: linear-gradient(#18171b, #18171b), radial-gradient(circle at top left, #7b3fe4 0%, #a726c1 100%);
-  background-origin: border-box;
-  background-clip: padding-box, border-box;
   backdrop-filter: blur(5.5px);
   flex-direction: column;
   align-items: center;
@@ -1196,7 +1191,7 @@ const Pools = () => {
                                       display: 'flex',
                                       flexWrap: 'wrap',
                                       gap: 10,
-                                      marginTop: 10,
+                                      // marginTop: 10,
                                       fontSize: isMobile ? '16px' : '20px',
                                     }}
                                   >
@@ -1265,7 +1260,7 @@ const Pools = () => {
                                       display: 'flex',
                                       flexWrap: 'wrap',
                                       gap: 10,
-                                      marginTop: 10,
+                                      // marginTop: 10,
 
                                       fontSize: isMobile ? '16px' : '20px',
                                     }}
