@@ -87,7 +87,7 @@ const BoxTextContent = styled(Text)`
 const dataPool = [
   {
     title: 'Starter',
-    label: '0',
+    label: '1',
     background: 'var(--black-black-20, rgba(0, 0, 0, 0.20))',
     text: '#8544F5',
     border: '1px solid var(--white-white-12, rgba(255, 255, 255, 0.12))',
