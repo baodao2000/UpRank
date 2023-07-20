@@ -35,7 +35,7 @@ export default {
     56: '',
   },
   poolsV3: {
-    137: '0x19385A6571bBe5ef1230Cb3Fd32D6C4630258cF9',
+    137: '0x61130b37b6aeFe59aC4303C4d26c8F1E4Ae4002B',
     56: '',
   },
   trend: {
