@@ -168,13 +168,13 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
           </Text>
           <Flex style={{ gap: "32px" }}>
             <Link href="https://github.com/trendydefi">
-              <img src="./images/githubV3.png" style={{ height: 35, width: 35 }} />
+              <Image src="/images/githubV3.png" width={35} height={35} alt="" />
             </Link>
-            <Link href="https://medium.com/@trendydefi">
-              <img src="./images/Community.png" style={{ height: 35, width: 35 }} />
+            <Link href="https://trendydefi.medium.com/">
+              <Image src="/images/Community.png" width={35} height={35} alt="" />
             </Link>
             <Link href="https://www.youtube.com/@trendydefi">
-              <img src="./images/youtube.png" style={{ height: 35, width: 35 }} />
+              <Image src="/images/youtube.png" width={35} height={35} alt="" />
             </Link>
           </Flex>
         </Flex>

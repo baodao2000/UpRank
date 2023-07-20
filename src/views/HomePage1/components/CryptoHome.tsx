@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { Text, Heading } from '@pancakeswap/uikit'
 import 'aos/dist/aos.css'
+import Link from 'next/link'
 
 const Crypto = styled.div`
   * {
@@ -139,7 +140,9 @@ const CryptoHome = () => {
         <Card>
           <Img src="./images/V3/autited.png" />
           <CardTitle>Audited by Certik</CardTitle>
-          <CardLabel style={{ color: '#8544F5' }}>Learn more</CardLabel>
+          <Link href="https://trendydefi.com/REP-final.pdf">
+            <CardLabel style={{ color: '#8544F5', cursor: 'pointer' }}>Learn more</CardLabel>
+          </Link>
         </Card>
       </Content>
     </Crypto>

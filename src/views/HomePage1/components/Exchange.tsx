@@ -66,6 +66,11 @@ const Wrapper = styled.div`
   @media (max-width: 575px) {
     margin-top: 40px;
   }
+  
+
+  
+    
+  }
 `
 const Table = styled.div`
   display: flex;
@@ -395,6 +400,7 @@ const Exchange = (props) => {
             <div>
               <CryptoSelect>
                 <SelectCustom
+                  bordered={false}
                   value={{
                     value: percen,
                     label: (
@@ -442,6 +448,8 @@ const Exchange = (props) => {
               <InputContainer>
                 <img width="32px" height="32px" src="./images/V3/coin.png" alt="" />
                 <InputNumber
+                  bordered={false}
+                  controls={false}
                   formatter={(value) => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                   min={0}
                   defaultValue={deposit}
