@@ -23,16 +23,16 @@ const Wrapper = styled.div`
 
 const StyledNav = styled.nav`
   display: flex;
-  margin: 0 auto;
+  margin: 0px auto;
   align-items: center;
-  max-width: 1389px;
-  justify-content: space-between;
   width: 100%;
+  max-width: 1320px;
+  justify-content: space-between;
   height: ${MENU_HEIGHT}px;
   /* border-bottom: 1px solid ${({ theme }) => theme.colors.cardBorder}; */
   transform: translate3d(0, 0, 0);
-  padding-left: 24px;
-  padding-right: 24px;
+  padding-left: 10px;
+  padding-right: 10px;
   background-color: var(--black-black-60, rgba(0, 0, 0, 0.6));
 `;
 
