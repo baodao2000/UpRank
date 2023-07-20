@@ -96,6 +96,7 @@ const images = {
   iconback: '/images/V3/iconback.svg',
   bscoin: '/images/V3/bscoin.svg',
   vector: '/images/V3/Vector.svg',
+  bronze: 'images/V3/bronzebg.png',
 }
 
 export default images
