@@ -29,23 +29,19 @@ import { arrayify } from '@ethersproject/bytes'
 
 // ============= STYLED
 const Container = styled.div`
-background:var(--bg-1, linear-gradient(90deg, #9E86FF 0%, #2B0864 100%));
   min-height: 600px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: var(--bg-1, linear-gradient(90deg, #9E86FF 0%, #2B0864 100%));
   * {
-    font-family: "Helvetica Compressed";
+   font-family: Inter, sans-serif;
   }
   @media screen and (max-width: 1024px) {
     background: none;
-    background: linear-gradient(90deg, #9E86FF 0%, #2B0864 100%);
   }
   @media screen and (max-width: 600px) {
     background: none;
-    background: linear-gradient(90deg, #9E86FF 0%, #2B0864 100%);
     padding: 20px 0
   }
   .header {
@@ -209,7 +205,6 @@ const LogoAndName = styled.div`
     font-style: normal;
     color: #ffffff;
     font-weight: 700;
-    font-family: 'Helvetica Compressed';
   }
   @media screen and (max-width: 1024px) {
     display: flex;
@@ -445,8 +440,17 @@ const ImageMine = styled.img`
   top: 0;
   right: 0;
 `
+const LogoContain = styled.div`
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  background: var(--white-white-8, rgba(255, 255, 255, 0.08));
+  align-items: center;
+  display: flex;
+  justify-content: center;
+`
 const Background = styled.div`
-  background: url(${images.mask}) no-repeat;
+  background: url(${images.bg}) no-repeat;
   background-size: contain;
   background-position: top;
   width: 100%;
@@ -491,7 +495,6 @@ const Pools = () => {
     },
   })
   const indexRank = [1, 2, 3, 4, 5]
-  const { isMobile } = useMatchBreakpoints()
 
   const getCommission = async () => {
     if (account) {
@@ -648,6 +651,7 @@ const Pools = () => {
 
     return () => clearInterval(timerId)
   }, [countDown])
+  const { isMobile, isTablet } = useMatchBreakpoints()
 
   return (
     <Container style={{ backgroundColor: 'var(--bg-1, linear-gradient(90deg, #9E86FF 0%, #2B0864 100%))' }}>
@@ -664,13 +668,42 @@ const Pools = () => {
                 style={{
                   borderRadius: '15px',
                   border: '1px solid rgba(245, 251, 242, 0.20)',
-                  background:
-                    'radial-gradient(131.77% 143.25% at -0.00% -2.74%, rgba(125, 128, 195, 0.60) 0%, rgba(136, 139, 224, 0.26) 100%)',
+                  background: 'var(--white-white-6, rgba(255, 255, 255, 0.06))',
                   backdropFilter: 'blur(50px)',
                 }}
               >
-                <Flex width="100%" flex="1" flexDirection="column" mr={['8px', 0]} alignItems="center">
-                  <div style={{ width: '250px', display: 'flex', justifyContent: 'flex-start', marginBottom: '30px' }}>
+                <Flex flex="1" flexDirection="column" mr={['8px', 0]} alignItems="center">
+                  <Text
+                    style={{
+                      background: 'linear-gradient(180deg, #7b3fe4 0%, #a726c1 100%)',
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                      fontSize: '60px',
+                      fontStyle: 'normal',
+                      fontWeight: '700',
+                      lineHeight: '72px',
+                      letterSpacing: '-1.2px',
+                    }}
+                  >
+                    Pools
+                  </Text>
+                  <Text
+                    style={{
+                      color: 'var(--greyscale-grey-scale-text-seconday, #ADABB2)',
+                      textAlign: 'center',
+                      width: isMobile ? '350px' : '650px',
+                      fontSize: isMobile ? '16px' : ' 18px',
+                      fontStyle: 'normal',
+                      fontWeight: '400',
+                      lineHeight: '28px',
+                    }}
+                  >
+                    Welcome to our member count section! Here, you can track the growth of our community and get a sense
+                    of the scale of our website&apos;s audience.
+                  </Text>
+                </Flex>
+                <Flex flex="1" flexDirection="row" mr={['8px', 0]} alignItems="center" style={{}}>
+                  <div style={{ display: 'flex', justifyContent: 'center', width: '350px' }}>
                     <Text
                       fontSize={['22px', '22px', '24px', '24px', '24px', '24px']}
                       fontWeight="600"
@@ -679,14 +712,7 @@ const Pools = () => {
                       Total Lock:{' '}
                     </Text>
                   </div>
-                  <Flex
-                    width="100%"
-                    flex="1"
-                    flexDirection="row"
-                    justifyContent="center"
-                    alignItems="center"
-                    style={{ gap: '24px' }}
-                  >
+                  <Flex flex="1" flexDirection="row" alignItems="center" style={{ gap: '24px' }}>
                     <div style={{ display: 'flex', alignItems: 'flex-end', gap: '10px' }}>
                       {
                         <CountUp
@@ -742,11 +768,40 @@ const Pools = () => {
                   borderRadius: '15px',
                   width: '90%',
                   border: '1px solid rgba(245, 251, 242, 0.20)',
-                  background:
-                    'radial-gradient(131.77% 143.25% at -0.00% -2.74%, rgba(125, 128, 195, 0.60) 0%, rgba(136, 139, 224, 0.26) 100%)',
+                  background: 'var(--white-white-6, rgba(255, 255, 255, 0.06))',
                   backdropFilter: 'blur(50px)',
                 }}
               >
+                <Flex flex="1" flexDirection="column" mr={['8px', 0]} alignItems="center">
+                  <Text
+                    style={{
+                      background: 'linear-gradient(180deg, #7b3fe4 0%, #a726c1 100%)',
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                      fontSize: '60px',
+                      fontStyle: 'normal',
+                      fontWeight: '700',
+                      lineHeight: '72px',
+                      letterSpacing: '-1.2px',
+                    }}
+                  >
+                    Pools
+                  </Text>
+                  <Text
+                    style={{
+                      color: 'var(--greyscale-grey-scale-text-seconday, #ADABB2)',
+                      textAlign: 'center',
+                      width: isMobile ? '320px' : '650px',
+                      fontSize: isMobile ? '14px' : ' 18px',
+                      fontStyle: 'normal',
+                      fontWeight: '400',
+                      lineHeight: '28px',
+                    }}
+                  >
+                    Welcome to our member count section! Here, you can track the growth of our community and get a sense
+                    of the scale of our website&apos;s audience.
+                  </Text>
+                </Flex>
                 <Flex style={{ gap: '10px' }} flex="1" flexDirection="column" mr={['8px', 0]} alignItems="center">
                   <Text
                     fontSize={['22px', '22px', '36px', '40px', '50px', '60px']}
@@ -791,14 +846,13 @@ const Pools = () => {
                     <Card
                       key={r}
                       style={{
-                        background:
-                          'radial-gradient(131.77% 143.25% at -0.00% -2.74%, rgba(125, 128, 195, 0.60) 0%, rgba(136, 139, 224, 0.26) 100%)',
+                        background: 'var(--white-white-6, rgba(255, 255, 255, 0.06))',
                         backdropFilter: 'blur(50px)',
                       }}
                     >
-                      {r === 0 ? null : <ImageMine src="./images/Mine.png" />}
+                      {/* {r === 0 ? null : <ImageMine src="./images/Mine.png" />} */}
                       <LogoAndName>
-                        <Logo src={images.iconpoolsV2} alt="logo" />
+                        <Logo src={images.bsc} alt="logo" />
                         <MinMax>
                           <span>{unit}</span>
                           <LineStake>
@@ -817,7 +871,7 @@ const Pools = () => {
                               {
                                 <CountUp
                                   separator=","
-                                  style={{ color: '#E4E6E7' }}
+                                  style={{ color: 'var(--primary-primary-1, #8544F5)' }}
                                   start={0}
                                   preserveValue
                                   delay={0}
@@ -826,12 +880,18 @@ const Pools = () => {
                                   duration={1}
                                 />
                               }
-                              $ {` ~`}&ensp;
+                              <span
+                                style={{
+                                  color: 'var(--primary-primary-1, #8544F5)',
+                                }}
+                              >
+                                $ {` ~ `}&ensp;
+                              </span>
                               {
                                 <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                                   <CountUp
                                     separator=","
-                                    style={{ color: 'rgba(228, 230, 231, 1)' }}
+                                    style={{ color: 'var(--primary-primary-1, #8544F5)' }}
                                     start={0}
                                     preserveValue
                                     delay={0}
@@ -839,7 +899,9 @@ const Pools = () => {
                                     decimals={4}
                                     duration={1}
                                   />
-                                  <Icon src={images.iconpoolsV2} alt="" />
+                                  <LogoContain>
+                                    <img src={images.iconV3} alt="" width="16px" />
+                                  </LogoContain>
                                 </div>
                               }{' '}
                             </span>
@@ -860,7 +922,7 @@ const Pools = () => {
                               {
                                 <CountUp
                                   separator=","
-                                  style={{ color: 'rgba(228, 230, 231, 1)' }}
+                                  style={{ color: 'var(--primary-primary-1, #8544F5)' }}
                                   start={0}
                                   preserveValue
                                   delay={0}
@@ -869,12 +931,18 @@ const Pools = () => {
                                   duration={1}
                                 />
                               }
-                              $ {` ~ `}&ensp;
+                              <span
+                                style={{
+                                  color: 'var(--primary-primary-1, #8544F5)',
+                                }}
+                              >
+                                $ {` ~ `}&ensp;
+                              </span>
                               {
                                 <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                                   <CountUp
                                     separator=","
-                                    style={{ color: 'rgba(228, 230, 231, 1)' }}
+                                    style={{ color: 'var(--primary-primary-1, #8544F5)' }}
                                     start={0}
                                     preserveValue
                                     delay={0}
@@ -882,7 +950,9 @@ const Pools = () => {
                                     decimals={4}
                                     duration={1}
                                   />
-                                  <Icon src={images.iconpoolsV2} alt="" width="16px" />
+                                  <LogoContain>
+                                    <img src={images.iconV3} alt="" width="16px" />
+                                  </LogoContain>
                                 </div>
                               }{' '}
                             </span>
@@ -913,11 +983,17 @@ const Pools = () => {
                                     className="value"
                                     style={{
                                       borderRadius: '4px',
-                                      color: 'rgba(228, 230, 231, 1)',
+                                      color: 'var(--primary-primary-1, #8544F5)',
                                     }}
                                   />
                                 }{' '}
-                                %
+                                <span
+                                  style={{
+                                    color: 'var(--primary-primary-1, #8544F5)',
+                                  }}
+                                >
+                                  %
+                                </span>
                               </Text>
                             </Line>
                             <Line style={{ height: '70px' }}>
@@ -941,11 +1017,17 @@ const Pools = () => {
                                     className="value"
                                     style={{
                                       borderRadius: '4px',
-                                      color: 'rgba(228, 230, 231, 1)',
+                                      color: 'var(--primary-primary-1, #8544F5)',
                                     }}
                                   />
                                 }{' '}
-                                %
+                                <span
+                                  style={{
+                                    color: 'var(--primary-primary-1, #8544F5)',
+                                  }}
+                                >
+                                  %
+                                </span>
                               </Text>
                             </Line>
                             <Line>
@@ -973,11 +1055,18 @@ const Pools = () => {
                                       duration={1}
                                       className="value"
                                       style={{
-                                        color: 'rgba(228, 230, 231, 1)',
+                                        color: 'var(--primary-primary-1, #8544F5)',
                                       }}
                                     />
                                   }
-                                  $ {` ~ `}&ensp;
+                                  <span
+                                    style={{
+                                      color: 'var(--primary-primary-1, #8544F5)',
+                                    }}
+                                  >
+                                    $ {` ~ `}&ensp;
+                                  </span>
+
                                   {
                                     <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                                       <CountUp
@@ -990,10 +1079,12 @@ const Pools = () => {
                                         duration={1}
                                         className="value"
                                         style={{
-                                          color: 'rgba(228, 230, 231, 1)',
+                                          color: 'var(--primary-primary-1, #8544F5)',
                                         }}
                                       />
-                                      <img src={images.iconpoolsV2} alt="" width="16px" />
+                                      <LogoContain>
+                                        <img src={images.iconV3} alt="" width="16px" />
+                                      </LogoContain>
                                     </div>
                                   }
                                   {` `}
@@ -1006,7 +1097,8 @@ const Pools = () => {
                               <span style={{ fontWeight: 400, fontSize: 14 }}>Time Lock</span>
                               <span
                                 style={{
-                                  color: 'rgba(228, 230, 231, 1)',
+                                  color: 'var(--primary-primary-1, #8544F5)',
+
                                   marginBottom: 10,
                                 }}
                                 className="value"
@@ -1022,7 +1114,8 @@ const Pools = () => {
                               <TitelandIcon>
                                 <span
                                   style={{
-                                    color: 'rgba(228, 230, 231, 1)',
+                                    color: 'var(--primary-primary-1, #8544F5)',
+
                                     display: 'flex',
                                     flexWrap: 'wrap',
                                     gap: 10,
@@ -1039,7 +1132,7 @@ const Pools = () => {
                                       duration={1}
                                       className="value"
                                       style={{
-                                        color: 'rgba(228, 230, 231, 1)',
+                                        color: 'var(--primary-primary-1, #8544F5)',
                                       }}
                                     />
                                   }
@@ -1056,10 +1149,12 @@ const Pools = () => {
                                         duration={1}
                                         className="value"
                                         style={{
-                                          color: 'rgba(228, 230, 231, 1)',
+                                          color: 'var(--primary-primary-1, #8544F5)',
                                         }}
                                       />
-                                      <img src={images.iconpoolsV2} alt="" width="16px" />
+                                      <LogoContain>
+                                        <img src={images.iconV3} alt="" width="16px" />
+                                      </LogoContain>
                                     </div>
                                   }
                                   {` `}
@@ -1074,37 +1169,52 @@ const Pools = () => {
                         {isMobile ? (
                           <Button
                             style={{
-                              color: 'rgba(243, 243, 243, 1)',
-                              borderRadius: '15px',
-                              border: '1px solid rgba(245, 251, 242, 0.20)',
-                              background:
-                                'radial-gradient(157.74% 210.61% at 0.00% 0.00%, rgba(192, 240, 255, 0.80) 0%, rgba(159, 169, 213, 0.29) 87.18%, rgba(2, 0, 98, 0.00) 100%)',
-                              backdropFilter: 'blur(50px)',
+                              borderRadius: ' var(--border-radius-lg, 8px)',
+                              background: 'var(--primary-primary-1, #8544F5)',
+                              boxShadow: '2px 2px 8px 16px rgba(0, 0, 0, 0.10)',
                             }}
                             variant="primary"
-                            width={'180px'}
+                            width="76px"
                             padding="1em"
                             scale="sm"
                             marginBottom="20px"
                           >
-                            Detail
+                            <h1
+                              style={{
+                                color: 'white',
+                                fontSize: '16px',
+                                fontStyle: 'normal',
+                                fontWeight: 500,
+                                lineHeight: '24px',
+                              }}
+                            >
+                              Detail
+                            </h1>
                           </Button>
                         ) : (
                           <Button
                             style={{
-                              color: 'rgba(243, 243, 243, 1)',
-                              borderRadius: '15px',
-                              border: '1px solid rgba(245, 251, 242, 0.20)',
-                              background:
-                                'radial-gradient(157.74% 210.61% at 0.00% 0.00%, rgba(192, 240, 255, 0.80) 0%, rgba(159, 169, 213, 0.29) 87.18%, rgba(2, 0, 98, 0.00) 100%)',
-                              backdropFilter: 'blur(50px)',
+                              borderRadius: ' var(--border-radius-lg, 8px)',
+                              background: 'var(--primary-primary-1, #8544F5)',
+                              boxShadow: '2px 2px 8px 16px rgba(0, 0, 0, 0.10)',
+                              height: '48px',
                             }}
                             variant="primary"
-                            width={'180px'}
+                            width="76px"
                             padding="1em"
                             scale="md"
                           >
-                            Detail
+                            <h1
+                              style={{
+                                color: 'white',
+                                fontSize: '16px',
+                                fontStyle: 'normal',
+                                fontWeight: 500,
+                                lineHeight: '24px',
+                              }}
+                            >
+                              Detail
+                            </h1>
                           </Button>
                         )}
                       </Link>
