@@ -1,5 +1,5 @@
 import { useTranslation } from '@pancakeswap/localization'
-import { Box, Modal, useToast, Button, Input, Text } from '@pancakeswap/uikit'
+import { Box, Modal, useToast, Button, Input, Text, Checkbox } from '@pancakeswap/uikit'
 import { useWeb3LibraryContext, useWeb3React } from '@pancakeswap/wagmi'
 import useTheme from 'hooks/useTheme'
 import images from 'configs/images'
@@ -24,7 +24,7 @@ import TrendyPageLoader from 'components/Loader/TrendyPageLoader'
 const InputArea = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.5em;
+  gap: 8px;
   margin-bottom: 1em;
   color: white;
   font-weight: 600;
@@ -35,18 +35,47 @@ const InputArea = styled.div`
   span {
     color: white;
   }
+  .amount {
+    margin-top: 8px;
+    display: flex;
+    flex-direction: row;
+    gap: 3px;
+    font-size: 18px;
+    line-height: 24px;
+    @media (max-width: 494px) {
+      flex-direction: column;
+    }
+  }
+  .imagesvector {
+    margin-top: 4px;
+    margin-left: 4px;
+    padding: 3px;
+    display: flex;
+    width: 16px;
+    height: 16px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 4px;
+    background: var(--white-white-8, rgba(255, 255, 255, 0.08));
+  }
 `
 const depositModal = {}
 const depositInput = {
   borderRadius: '10px',
 }
 const CheckMine = styled.div`
+  padding: 8px;
+  height: 38px;
+  border-radius: 8px;
+  background: var(--primary-primary-gradient-2, linear-gradient(180deg, #7b3fe4 0%, #a726c1 100%));
   display: flex;
   width: 100%;
   align-items: center;
   justify-content: flex-start;
-  margin-bottom: 10px;
-  gap: 20px;
+  margin-bottom: 32px;
+  gap: 8px;
 `
 const Switch = styled.div`
   .switch {
@@ -138,10 +167,10 @@ const Error = styled.span`
 `
 const UserBalance = styled.div`
   span {
-    font-size: 14px;
-    font-weight: 600;
-    opacity: 0.6;
-    color: #ffffff;
+    font-size: 18px;
+    font-weight: 500;
+    // opacity: 0.6;
+    color: #e2e1e5;
   }
   width: 100%;
   display: flex;
@@ -154,30 +183,48 @@ const MinMaxButtons = styled.div`
 `
 const MinMax = styled.button`
   background: none;
-  border-radius: 8px;
-  border: 1px solid #00f0e1;
-  color: #00f0e1;
+  border-radius: 4px;
+  border: 1px solid var(--primary-primary-1, #8544f5);
+  color: #fff;
   font-weight: 600;
   text-align: center;
-  font-size: 12px;
-  line-height: 16px;
+  font-size: 14px;
+  line-height: 20px;
   padding: 2px 12px;
   cursor: pointer;
   &.active {
-    background: #00f0e1;
-    color: black;
+    border-radius: 4px;
+    border: 1px solid var(--primary-primary-1, #8544f5);
+    background: var(--primary-primary-2, rgba(117, 60, 216, 0.8));
   }
 `
 
 const StyledButton = styled(Button)`
-  max-width: 240px;
-  max-height: 40px;
+  border-radius: var(--border-radius-lg, 8px);
+  background: var(--primary-primary-1, #8544f5);
+  box-shadow: 2px 2px 8px 16px rgba(0, 0, 0, 0.1);
+  max-height: 48px;
   width: 100%;
 `
 
 const StyledInput = styled(Input)`
+  margin-top: 24px;
   outline: none;
-  border: 3px solid #009571;
+  border-radius: 12px;
+  // border: 1px solid var(--primary-primary-1, #8544f5);
+  background: var(--greyscale-grayscale-4, #2d2c33);
+  &:focus:not(:disabled) {
+    border: 3px solid #8544f5;
+  }
+`
+const CheckMineNew = styled.div`
+  display: flex;
+  padding: 8px;
+  align-items: center;
+  gap: 8px;
+  align-self: stretch;
+  border-radius: 8px;
+  background: var(--primary-primary-gradient-2, linear-gradient(180deg, #7b3fe4 0%, #a726c1 100%));
 `
 
 const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>> = ({
@@ -269,7 +316,7 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
   }
   const { isConfirming, handleConfirm } = useConfirmTransaction({
     onConfirm: () => {
-      console.log(mine)
+      // console.log(mine)
 
       return callWithGasPrice(poolContract, 'deposit', [pool.pid], mine, {
         value: ethers.utils.parseUnits(amount.toString(), 'ether').toString(),
@@ -317,125 +364,165 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
       ) : (
         <Modal
           style={depositModal}
-          title={'DEPOSIT'}
+          title={'Deposit'}
           onDismiss={onDismiss}
           hideCloseButton={false}
           borderRadius={25}
-          headerBackground="rgb(105 84 156 / 77%)"
-          background={'linear-gradient(139.08deg, #171718 1.7%, rgba(86, 27, 211, 0.84) 108.66%)'}
+          headerBackground="#24272A"
+          background={'#24272A'}
         >
           <InputArea>
-            <span>
-              Amount: <br></br>
-              <div style={{ marginTop: '10px' }}>
-                <CountUp
-                  start={0}
-                  preserveValue
-                  delay={0}
-                  end={Number(pool.minLock)}
-                  decimals={0}
-                  duration={0.5}
-                  style={{ color: '#2CE0D5', fontWeight: 600 }}
-                />
-                <span style={{ color: '#2CE0D5', fontWeight: 600 }}>$</span>
-                <span style={{ color: '#2CE0D5' }}>{' ~ '}</span>
-                <CountUp
-                  start={0}
-                  preserveValue
-                  delay={0}
-                  end={minLockMatic}
-                  decimals={4}
-                  duration={0.5}
-                  style={{ color: '#2CE0D5', fontWeight: 400 }}
-                />{' '}
-                <img src={`/images/chains/${chainId}.png`} alt="logo" width="12px" /> to{' '}
-                <CountUp
-                  start={0}
-                  preserveValue
-                  delay={0}
-                  end={Number(pool.maxLock)}
-                  decimals={0}
-                  duration={0.5}
-                  style={{ color: '#2CE0D5', fontWeight: 600 }}
-                ></CountUp>
-                <span style={{ color: '#2CE0D5', fontWeight: 600 }}>$</span>
-                <span style={{ color: '#2CE0D5' }}>{' ~ '}</span>
-                <CountUp
-                  start={0}
-                  preserveValue
-                  delay={0}
-                  end={Number(pool.maxLock / pool.rateBNB2USD)}
-                  decimals={4}
-                  duration={0.5}
-                  style={{ color: '#2CE0D5', fontWeight: 400 }}
-                />{' '}
-                <img src={`/images/chains/${chainId}.png`} alt="logo" width="12px" />
+            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+              <div>
+                <span>
+                  <span style={{ fontSize: '18px', lineHeight: '24px', fontWeight: '400', color: '#E2E1E5' }}>
+                    {' '}
+                    Amount:
+                  </span>{' '}
+                  <br></br>
+                  <div className="amount">
+                    <div style={{ display: 'flex', flexDirection: 'row' }}>
+                      <CountUp
+                        start={0}
+                        preserveValue
+                        delay={0}
+                        end={Number(pool.minLock)}
+                        decimals={0}
+                        duration={0.5}
+                        style={{ color: '#8544F5', fontWeight: 600 }}
+                      />
+                      <span style={{ color: '#8544F5', fontWeight: 600 }}>$</span>
+                      <span style={{ color: '#8544F5' }}>{' ~ '}</span>
+                      <CountUp
+                        start={0}
+                        preserveValue
+                        delay={0}
+                        end={minLockMatic}
+                        decimals={4}
+                        duration={0.5}
+                        style={{ color: '#8544F5', fontWeight: 400 }}
+                      />{' '}
+                      <img className="imagesvector" src={images.vector} alt="logo" width="12px" /> &emsp;&emsp;to&emsp;{' '}
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'row' }}>
+                      <CountUp
+                        start={0}
+                        preserveValue
+                        delay={0}
+                        end={Number(pool.maxLock)}
+                        decimals={0}
+                        duration={0.5}
+                        style={{ color: '#8544F5', fontWeight: 600 }}
+                      ></CountUp>
+                      <span style={{ color: '#8544F5', fontWeight: 600 }}>$</span>
+                      <span style={{ color: '#8544F5' }}>{' ~ '}</span>
+                      <CountUp
+                        start={0}
+                        preserveValue
+                        delay={0}
+                        end={Number(pool.maxLock / pool.rateBNB2USD)}
+                        decimals={4}
+                        duration={0.5}
+                        style={{ color: '#8544F5', fontWeight: 400 }}
+                      />{' '}
+                      <img className="imagesvector" src={images.vector} alt="logo" width="12px" />
+                    </div>
+                  </div>
+                </span>
+                {/* <span className="bnb"></span> */}
+                <UserBalance>
+                  <div
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'row',
+                      gap: '4px',
+                      fontWeight: '500',
+                      fontSize: '18px',
+                      lineHeight: '24px',
+                    }}
+                  >
+                    Balance:{' '}
+                    {
+                      <CountUp
+                        start={0}
+                        preserveValue
+                        delay={0}
+                        end={Number(userBalance)}
+                        decimals={4}
+                        duration={0.5}
+                      ></CountUp>
+                    }{' '}
+                    <img className="imagesvector" src={images.vector} alt="logo" width="12px" />
+                    {'  ~'}
+                    {
+                      <CountUp
+                        start={0}
+                        preserveValue
+                        delay={0}
+                        end={Number(userBalance) * pool.rateBNB2USD}
+                        decimals={4}
+                        duration={0.5}
+                      ></CountUp>
+                    }
+                    {'$'}
+                  </div>
+                </UserBalance>
+                {mine === true ? (
+                  <UserBalance>
+                    <div
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        gap: '4px',
+                        fontWeight: '500',
+                        fontSize: '18px',
+                        lineHeight: '24px',
+                      }}
+                    >
+                      Interest With Mine :{' '}
+                      {
+                        <CountUp
+                          start={0}
+                          preserveValue
+                          delay={0}
+                          end={Number(pool.currentInterestWithMine)}
+                          decimals={2}
+                          duration={0.5}
+                        />
+                      }{' '}
+                      %
+                    </div>
+                  </UserBalance>
+                ) : (
+                  <UserBalance>
+                    <div
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        gap: '4px',
+                        fontWeight: '500',
+                        fontSize: '18px',
+                        lineHeight: '24px',
+                      }}
+                    >
+                      Interest :{' '}
+                      {
+                        <CountUp
+                          start={0}
+                          preserveValue
+                          delay={0}
+                          end={Number(pool.currentInterest)}
+                          decimals={2}
+                          duration={0.5}
+                        />
+                      }{' '}
+                      %
+                    </div>
+                  </UserBalance>
+                )}
               </div>
-            </span>
-            <span className="bnb"></span>
-            <UserBalance>
-              <span>
-                Balance:{' '}
-                {
-                  <CountUp
-                    start={0}
-                    preserveValue
-                    delay={0}
-                    end={Number(userBalance)}
-                    decimals={4}
-                    duration={0.5}
-                  ></CountUp>
-                }{' '}
-                <img src={`/images/chains/${chainId}.png`} alt="logo" width="12px" />
-                {'  ~'}
-                {
-                  <CountUp
-                    start={0}
-                    preserveValue
-                    delay={0}
-                    end={Number(userBalance) * pool.rateBNB2USD}
-                    decimals={4}
-                    duration={0.5}
-                  ></CountUp>
-                }
-                {'$'}
-              </span>
-            </UserBalance>
-            {mine === true ? (
-              <UserBalance>
-                <span>
-                  Interest With Mine :{' '}
-                  {
-                    <CountUp
-                      start={0}
-                      preserveValue
-                      delay={0}
-                      end={Number(pool.currentInterestWithMine)}
-                      decimals={2}
-                      duration={0.5}
-                    />
-                  }{' '}
-                  %
-                </span>
-              </UserBalance>
-            ) : (
-              <UserBalance>
-                <span>
-                  Interest :{' '}
-                  {
-                    <CountUp
-                      start={0}
-                      preserveValue
-                      delay={0}
-                      end={Number(pool.currentInterest)}
-                      decimals={2}
-                      duration={0.5}
-                    />
-                  }{' '}
-                  %
-                </span>
-              </UserBalance>
-            )}
+              <div>{mine ? <img src="/images/V3/cup.svg" alt="cup" /> : null}</div>
+            </div>
 
             <StyledInput
               value={amount}
@@ -467,6 +554,31 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
             <>
               {pool.pid.toString() === '0' ? null : (
                 <CheckMine>
+                  <input
+                    id="switchMine"
+                    onChange={onChange}
+                    disabled={userTotal}
+                    className="checkBox"
+                    type="checkBox"
+                  />
+                  <Text>Mine TREND</Text>
+                  {/* <img src={images.checkcircle} alt="check" /> */}
+                  {mine ? <img src="/images/V3/check.svg" alt="check" /> : null}
+                  {/* <img src="/images/V3/check.svg" alt="check" /> */}
+                  {/* <Switch>
+                    <label htmlFor="switchMine" className="switch">
+                      <input id="switchMine" onChange={onChange} disabled={userTotal} type="checkbox" />
+                      <span className="slider round"></span>
+                    </label>
+                  </Switch> */}
+                </CheckMine>
+                //   <CheckMineNew>
+                //   <input className="checkBox" type="checkbox" />
+                //   <p>Mining TREND Token</p>
+                // </CheckMineNew>
+              )}
+              {/* {pool.pid.toString() === '0' ? null : (
+                <CheckMine>
                   <Text>Mine TREND</Text>
                   <Switch>
                     <label htmlFor="switchMine" className="switch">
@@ -475,27 +587,69 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
                     </label>
                   </Switch>
                 </CheckMine>
-              )}
+              )} */}
             </>
           ) : (
             <>
               {pool.pid.toString() === '0' ? null : (
-                <CheckMine>
-                  <Text>Mine TREND</Text>
-                  <Switch>
+                <>
+                  <CheckMine>
+                    <input
+                      id="switchMine"
+                      defaultChecked={checked}
+                      onChange={onChange}
+                      disabled={userTotal}
+                      className="checkBox"
+                      type="checkBox"
+                    />
+                    <Text>Mine TREND</Text>
+                    {/* <img src={images.checkcircle} alt="check" /> */}
+                    {mine ? <img src="/images/V3/check.svg" alt="check" /> : null}
+                    {/* <img src="/images/V3/check.svg" alt="check" /> */}
+                    {/* <Switch>
                     <label htmlFor="switchMine" className="switch">
-                      <input
-                        id="switchMine"
-                        defaultChecked={checked}
-                        onChange={onChange}
-                        disabled={userTotal}
-                        type="checkbox"
-                      />
-                      <span style={{ background: '#ccc' }} className="slider round"></span>
+                      <input id="switchMine" onChange={onChange} disabled={userTotal} type="checkbox" />
+                      <span className="slider round"></span>
                     </label>
-                  </Switch>
-                </CheckMine>
+                  </Switch> */}
+                  </CheckMine>
+                  {/* <CheckMine>
+                    <Text>Mine TREND</Text>
+                    <Switch>
+                      <label htmlFor="switchMine" className="switch">
+                        <input
+                          id="switchMine"
+                          defaultChecked={checked}
+                          onChange={onChange}
+                          disabled={userTotal}
+                          type="checkbox"
+                        />
+                        <span style={{ background: '#ccc' }} className="slider round"></span>
+                      </label>
+                    </Switch>
+                  </CheckMine> */}
+                </>
               )}
+
+              {/* {pool.pid.toString() === '0' ? null : (
+                <>
+                  <CheckMine>
+                    <Text>Mine TREND</Text>
+                    <Switch>
+                      <label htmlFor="switchMine" className="switch">
+                        <input
+                          id="switchMine"
+                          defaultChecked={checked}
+                          onChange={onChange}
+                          disabled={userTotal}
+                          type="checkbox"
+                        />
+                        <span style={{ background: '#ccc' }} className="slider round"></span>
+                      </label>
+                    </Switch>
+                  </CheckMine>
+                </>
+              )} */}
             </>
           )}
 

@@ -30,9 +30,33 @@ const TableScroll = styled.div`
     overflow-x: auto;
     width: 100%;
   }
+  Th {
+    padding: 20px 60px;
+    @media screen and (max-width: 896px) {
+      padding: 20px 25px;
+    }
+    @media screen and (max-width: 530px) {
+      padding: 20px 16px;
+    }
+  }
   Td {
     border-bottom: 0;
-    padding: 10px 20px;
+    padding: 10px 40px;
+    @media screen and (max-width: 730px) {
+      padding: 10px 20px;
+    }
+  }
+  .imagesvector {
+    padding: 4px;
+    display: flex;
+    width: 24px;
+    height: 24px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 4px;
+    background: var(--white-white-8, rgba(255, 255, 255, 0.08));
   }
 `
 
@@ -130,7 +154,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
       <>
         {pool.userTotalLock > 0 && (
           <tr>
-            <Td textAlign={'left'}>
+            <Td textAlign={'center'}>
               <Text fontSize={responsiveTextSize}>Total</Text>
             </Td>
             <Td textAlign={'center'}>
@@ -175,7 +199,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
                       duration={0.5}
                     />
                     &ensp;
-                    <img src={images.vector} alt="pool name" width={18} />
+                    <img className="imagesvector" src={images.vector} alt="pool name" width={18} />
                   </Text>
                 </AmountData>
               )}
@@ -211,7 +235,13 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
                       decimals={pool.currentReward > 0 ? 4 : 0}
                       duration={0.5}
                     />
-                    <img src={images.vector} alt="pool name" width={18} style={{ marginLeft: 6 }} />
+                    <img
+                      className="imagesvector"
+                      src={images.vector}
+                      alt="pool name"
+                      width={18}
+                      style={{ marginLeft: 6 }}
+                    />
                   </Text>
                 </AmountData>
               )}
@@ -325,6 +355,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
             <tr>
               <Th textAlign="left">
                 <Text
+                  className="th"
                   style={{ color: '#777E90', fontWeight: '600' }}
                   color={trendyColors.COLORTABLE}
                   fontSize={responsiveTextTH}
