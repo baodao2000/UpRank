@@ -349,7 +349,7 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
       console.log(Number(7 * Number(period)))
 
       setChecked(users.isMine)
-      if (timeStamp - Number(users.startTime) >= 7 * Number(period)) {
+      if (timeStamp - Number(users.startTime) >= 7 * Number(period) && Number(users.startTime) > 0) {
         setDisabledDeposit(true)
       }
       setMine(users.isMine)
