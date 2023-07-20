@@ -50,7 +50,7 @@ const Menu = styled.div<{ isOpen: boolean }>`
   visibility: visible;
   z-index: 1001;
   * {
-    font-family: "Helvetica Rounded";
+    font-family: Inter, sans-serif;
   }
 
   ${({ isOpen }) =>
