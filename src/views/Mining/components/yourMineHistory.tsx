@@ -348,8 +348,8 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                           start={0}
                           preserveValue
                           delay={0}
-                          end={mine.totalMined}
-                          decimals={mine.totalMined > 0 ? 4 : 0}
+                          end={claimHistory.totalLock}
+                          decimals={claimHistory.totalLock > 0 ? 4 : 0}
                           duration={0.5}
                         />
                       </Text>
@@ -370,8 +370,8 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                           start={0}
                           preserveValue
                           delay={0}
-                          end={mine.totalMined * claimHistory.rateUSD}
-                          decimals={mine.totalMined > 0 ? 4 : 0}
+                          end={claimHistory.totalLock * claimHistory.rateUSD}
+                          decimals={claimHistory.totalLock > 0 ? 4 : 0}
                           duration={0.5}
                         />
                       </Text>

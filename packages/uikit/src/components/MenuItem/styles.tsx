@@ -4,7 +4,7 @@ import { StyledMenuItemProps } from "./types";
 export const StyledMenuItemContainer = styled.div<StyledMenuItemProps>`
   position: relative;
   @media screen and (min-width: 1440px) {
-    margin: 10px 30px;
+    margin: 10px 20px;
   }
 `;
 
