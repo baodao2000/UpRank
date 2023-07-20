@@ -754,7 +754,6 @@ const Pools = () => {
         setArr(newPoolInfo)
         setIsLoading(false)
       } else {
-        await getInfoRank(Number(formatEther(bnbPrice)))
         const newPoolInfo = await Promise.all(
           pools.map(async (item, id) => {
             const userLockAndPool = await Promise.all([getPoolV3Contract.users(account, id), item])
@@ -775,6 +774,8 @@ const Pools = () => {
             }
           }),
         )
+        await getInfoRank(Number(formatEther(bnbPrice)))
+
         setArr(newPoolInfo)
         setIsLoading(false)
       }
@@ -977,7 +978,7 @@ const Pools = () => {
             <TrendyPageLoader />
           ) : (
             <>
-              {!account ? null : (
+              {!account || arr.length === 0 ? null : (
                 <Rank
                   unit={unit}
                   ranks={ranks}

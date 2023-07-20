@@ -49,6 +49,7 @@ export default {
   pancakeProfile: {
     56: '0xDf4dBf6536201370F95e06A0F8a7a70fE40E388a',
     97: '0x4B683C7E13B6d5D7fd1FeA9530F451954c1A7c8A',
+    137: '0x12016b4E07866c962e29b7597eCd66B3B89a3a58',
   },
   pancakeBunnies: {
     56: '0xDf7952B35f24aCF7fC0487D01c8d5690a60DBa07',
