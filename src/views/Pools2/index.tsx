@@ -1,4 +1,4 @@
-import { Button, Flex, LinkExternal, Text, useToast, useMatchBreakpoints } from '@pancakeswap/uikit'
+import { Button, Flex, LinkExternal, Text, useToast } from '@pancakeswap/uikit'
 import PageHeader from 'components/PageHeader'
 import styled from 'styled-components'
 import images from 'configs/images'
@@ -28,20 +28,22 @@ import moment from 'moment'
 
 // ============= STYLED
 const Container = styled.div`
-  background: url(${images.bg}) no-repeat;
+  background: url(${images.backgroundpool}) #1e1e1e no-repeat;
   background-size: contain;
   min-height: 600px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   * {
-    font-family: Inter, sans-serif;
+    font-family: Helvetica, sans-serif;
   }
   @media screen and (max-width: 1024px) {
     background: none;
+    background-color: #1e1e1e;
   }
   @media screen and (max-width: 600px) {
     background: none;
+    background-color: #1e1e1e;
   }
   width: 100%;
 `
@@ -98,49 +100,44 @@ const pools = [
   {
     key: 0,
     name: 'MATIC',
-    tagColor: trendyColors.PURPLE_NEW,
+    tagColor: trendyColors.MAIN_GREEN,
     totalLock: '',
-    logo: images.iconV3,
+    logo: images.logoMatic,
   },
   {
     key: 1,
     name: 'MATIC',
-    tagColor: trendyColors.PURPLE_NEW,
-
+    tagColor: trendyColors.MAIN_GREEN,
     totalLock: '',
-    logo: images.iconV3,
+    logo: images.logoMatic,
   },
   {
     key: 2,
     name: 'MATIC',
-    tagColor: trendyColors.PURPLE_NEW,
-
+    tagColor: trendyColors.MAIN_GREEN,
     totalLock: '',
     logo: images.logoMatic,
   },
   {
     key: 3,
     name: 'MATIC',
-    tagColor: trendyColors.PURPLE_NEW,
-
+    tagColor: trendyColors.MAIN_GREEN,
     totalLock: '',
-    logo: images.iconV3,
+    logo: images.logoMatic,
   },
   {
     key: 4,
     name: 'MATIC',
-    tagColor: trendyColors.PURPLE_NEW,
-
+    tagColor: trendyColors.MAIN_GREEN,
     totalLock: '',
-    logo: images.iconV3,
+    logo: images.logoMatic,
   },
   {
     key: 5,
     name: 'MATIC',
-    tagColor: trendyColors.PURPLE_NEW,
-
+    tagColor: trendyColors.MAIN_GREEN,
     totalLock: '',
-    logo: images.iconV3,
+    logo: images.logoMatic,
   },
 ]
 
@@ -173,33 +170,32 @@ const Card = styled.div`
 const LogoAndName = styled.div`
   display: flex;
   justify-content: flex-start;
-  gap: 10px;
+  gap: 150px;
   width: 100%;
   height: 100%;
   align-items: center;
   span {
-    font-size: 24px;
+    font-size: 40px;
     line-height: 48px;
     font-style: normal;
     color: #ffffff;
     font-weight: 700;
+    font-family: Helvetica, sans-serif;
   }
   img {
-    width: 64px;
+    width: 80px;
   }
   @media screen and (max-width: 1024px) {
     display: flex;
     gap: 0px;
     justify-content: space-between;
     img {
-      width: 64px;
+      width: 70px;
     }
   }
   @media screen and (max-width: 800px) {
-    width: 100%;
-
     img {
-      width: 64px;
+      width: 50px;
     }
     span {
       font-size: 24px;
@@ -281,15 +277,6 @@ const LinkReffer = styled.a`
   margin-left: 6px;
   text-decoration: underline;
   color: #00f0e1;
-`
-const LogoContain = styled.div`
-  width: 24px;
-  height: 24px;
-  border-radius: 4px;
-  background: var(--white-white-8, rgba(255, 255, 255, 0.08));
-  align-items: center;
-  display: flex;
-  justify-content: center;
 `
 const Lineleft = styled.div``
 const Lineright = styled.div``
@@ -501,7 +488,6 @@ const Pools = () => {
 
     return () => clearInterval(timerId)
   }, [countDown])
-  const { isMobile, isTablet } = useMatchBreakpoints()
 
   return (
     <Container>
@@ -511,36 +497,6 @@ const Pools = () => {
       ) : (
         <>
           <PageHeader background="none">
-            <Flex flex="1" flexDirection="column" mr={['8px', 0]} alignItems="center">
-              <Text
-                style={{
-                  background: 'linear-gradient(180deg, #7b3fe4 0%, #a726c1 100%)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  fontSize: '60px',
-                  fontStyle: 'normal',
-                  fontWeight: '700',
-                  lineHeight: '72px',
-                  letterSpacing: '-1.2px',
-                }}
-              >
-                Pools
-              </Text>
-              <Text
-                style={{
-                  color: 'var(--greyscale-grey-scale-text-seconday, #ADABB2)',
-                  textAlign: 'center',
-                  width: isMobile ? '350px' : '650px',
-                  fontSize: isMobile ? '16px' : ' 18px',
-                  fontStyle: 'normal',
-                  fontWeight: '400',
-                  lineHeight: '28px',
-                }}
-              >
-                Welcome to our member count section! Here, you can track the growth of our community and get a sense of
-                the scale of our website&apos;s audience.
-              </Text>
-            </Flex>
             <Flex flex="1" flexDirection="column" mr={['8px', 0]} alignItems="center">
               <Text
                 fontSize={['22px', '22px', '36px', '40px', '50px', '60px']}
@@ -584,11 +540,11 @@ const Pools = () => {
                   <Card
                     key={r}
                     style={{
-                      background: 'var(--white-white-6, rgba(255, 255, 255, 0.06))',
+                      background: `linear-gradient(153.15deg, #7C07D8 8.57%, rgba(129, 69, 255, 0.02) 100%)`,
                     }}
                   >
                     <LogoAndName>
-                      <img src={images.bsc} alt="logo" />
+                      <img src={`/images/chains/${chainId}.png`} alt="logo" />
                       <span>{unit}</span>
                     </LogoAndName>
                     <Info>
@@ -632,9 +588,7 @@ const Pools = () => {
                                     decimals={4}
                                     duration={1}
                                   />
-                                  <LogoContain>
-                                    <img src={images.iconV3} alt="" width="16px" />
-                                  </LogoContain>
+                                  <img src={`/images/chains/${chainId}.png`} alt="" width="16px" />
                                 </div>
                               }{' '}
                             </span>
@@ -709,9 +663,7 @@ const Pools = () => {
                                         color: `${pools[r]?.tagColor}`,
                                       }}
                                     />
-                                    <LogoContain>
-                                      <img src={images.iconV3} alt="" width="16px" />
-                                    </LogoContain>
+                                    <img src={`/images/chains/${chainId}.png`} alt="" width="16px" />
                                   </div>
                                 }
                                 {` `}
@@ -758,9 +710,7 @@ const Pools = () => {
                                     decimals={4}
                                     duration={1}
                                   />
-                                  <LogoContain>
-                                    <img src={images.iconV3} alt="" width="16px" />
-                                  </LogoContain>
+                                  <img src={`/images/chains/${chainId}.png`} alt="" width="16px" />
                                 </div>
                               }{' '}
                             </span>
@@ -820,9 +770,7 @@ const Pools = () => {
                                         color: `${pools[r]?.tagColor}`,
                                       }}
                                     />
-                                    <LogoContain>
-                                      <img src={images.iconV3} alt="" width="16px" />
-                                    </LogoContain>
+                                    <img src={`/images/chains/${chainId}.png`} alt="" width="16px" />
                                   </div>
                                 }
                                 {` `}
@@ -836,53 +784,23 @@ const Pools = () => {
                     <Link href={`${poolBaseUrl}/${r}?chainId=${CHAIN_ID}`}>
                       {isMobile ? (
                         <Button
-                          style={{
-                            borderRadius: ' var(--border-radius-lg, 8px)',
-                            background: 'var(--primary-primary-1, #8544F5)',
-                            boxShadow: '2px 2px 8px 16px rgba(0, 0, 0, 0.10)',
-                          }}
+                          style={{ color: '#6216B0', backgroundColor: '#D9D9D9' }}
                           variant="primary"
-                          width="76px"
+                          width={'180px'}
                           padding="1em"
-                          scale="md"
-                          marginBottom="20px"
+                          scale="sm"
                         >
-                          <h1
-                            style={{
-                              color: 'white',
-                              fontSize: '16px',
-                              fontStyle: 'normal',
-                              fontWeight: 500,
-                              lineHeight: '24px',
-                            }}
-                          >
-                            Detail
-                          </h1>
+                          Detail
                         </Button>
                       ) : (
                         <Button
-                          style={{
-                            borderRadius: ' var(--border-radius-lg, 8px)',
-                            background: 'var(--primary-primary-1, #8544F5)',
-                            boxShadow: '2px 2px 8px 16px rgba(0, 0, 0, 0.10)',
-                          }}
+                          style={{ color: '#6216B0', backgroundColor: '#D9D9D9' }}
                           variant="primary"
-                          width="76px"
+                          width={'180px'}
                           padding="1em"
                           scale="md"
-                          marginBottom="20px"
                         >
-                          <h1
-                            style={{
-                              color: 'white',
-                              fontSize: '16px',
-                              fontStyle: 'normal',
-                              fontWeight: 500,
-                              lineHeight: '24px',
-                            }}
-                          >
-                            Detail
-                          </h1>
+                          Detail
                         </Button>
                       )}
                     </Link>

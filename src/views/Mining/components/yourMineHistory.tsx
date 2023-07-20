@@ -49,21 +49,27 @@ const TableScroll = styled.div`
     border-bottom: 0;
     padding: 10px;
   }
+  Th {
+    border-bottom: 0;
+    color: #777d90 !important;
+  }
 `
+
 const TablePool = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5em;
   align-items: center;
-  padding: 20px 0;
-  tbody {
+  padding: 0px;
+
+  /* tbody {
     background: radial-gradient(
       131.77% 143.25% at -0% -2.74%,
       rgba(125, 128, 195, 0.4) 0%,
       rgba(136, 139, 224, 0.18) 100%
     );
     backdrop-filter: blur(50px);
-  }
+  } */
   table {
     width: 100%;
     border-collapse: collapse;
@@ -76,7 +82,7 @@ const TablePool = styled.div`
   width: auto;
   border-radius: 16px;
   thead {
-    background: rgba(255, 255, 255, 0.37);
+    /* background: rgba(255, 255, 255, 0.37); */
   }
   tr {
     border-bottom: 0.5px solid #b9b9b963;
@@ -91,6 +97,12 @@ const AmountData = styled.div`
 const TableHeader = styled.span`
   font-size: 26px;
 `
+const headerStyle = {
+  color: '#777D90',
+  fontWeight: '600',
+  lineHeight: '24px',
+  fontFamily: 'Inter, sans-serif',
+}
 const responsiveTextSize = ['14px', '14px', '16px', '18px', '20px']
 const responsiveTextSizeBNB = ['14px', '14px', '16px', '18px', '20px']
 const responsiveTextSizeHeader = ['20px', '24px', '28px', '32px', '32px']
@@ -302,10 +314,13 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
             return (
               <tr key={index}>
                 <Td textAlign={'center'}>
-                  <Text fontSize={responsiveTextSize}> {moment.unix(claimHistory.date * 30).format('L')}</Text>
+                  <Text style={{ ...headerStyle, color: '#ffffff', fontWeight: '400' }} fontSize={responsiveTextSize}>
+                    {' '}
+                    {moment.unix(claimHistory.date * 30).format('L')}
+                  </Text>
                 </Td>
                 <Td textAlign={'center'}>
-                  <Text fontSize={responsiveTextSize}>
+                  <Text style={{ ...headerStyle, color: '#ffffff', fontWeight: '400' }} fontSize={responsiveTextSize}>
                     <CountUp
                       start={0}
                       preserveValue
@@ -319,34 +334,44 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                 </Td>
                 <Td textAlign={'center'}>
                   {claimHistory.totalMined === 0 ? (
-                    <Text fontSize={responsiveTextSize}>0</Text>
+                    <Text style={{ ...headerStyle, color: '#ffffff', fontWeight: '400' }} fontSize={responsiveTextSize}>
+                      0
+                    </Text>
                   ) : (
                     <AmountData>
-                      <Text fontSize={responsiveTextSizeBNB}>
+                      <Text
+                        style={{ ...headerStyle, color: '#ffffff', fontWeight: '400' }}
+                        fontSize={responsiveTextSizeBNB}
+                      >
+                        <Image src="/images/trendyloop.png" width={16} height={16} alt="" />{' '}
                         <CountUp
                           start={0}
                           preserveValue
                           delay={0}
-                          end={mine.totalMined}
-                          decimals={mine.totalMined > 0 ? 4 : 0}
+                          end={claimHistory.totalLock}
+                          decimals={claimHistory.totalLock > 0 ? 4 : 0}
                           duration={0.5}
-                        />{' '}
-                        <Image src="/images/trendyloop.png" width={16} height={16} alt="" />
+                        />
                       </Text>
                     </AmountData>
                   )}
                   {claimHistory.totalMined === 0 ? (
-                    <Text fontSize={responsiveTextSize}>0</Text>
+                    <Text style={{ ...headerStyle, color: '#ffffff', fontWeight: '400' }} fontSize={responsiveTextSize}>
+                      0
+                    </Text>
                   ) : (
                     <AmountData>
-                      <Text fontSize={responsiveTextSizeBNB}>
+                      <Text
+                        style={{ ...headerStyle, color: '#ffffff', fontWeight: '400' }}
+                        fontSize={responsiveTextSizeBNB}
+                      >
                         ~ ${' '}
                         <CountUp
                           start={0}
                           preserveValue
                           delay={0}
-                          end={mine.totalMined * claimHistory.rateUSD}
-                          decimals={mine.totalMined > 0 ? 4 : 0}
+                          end={claimHistory.totalLock * claimHistory.rateUSD}
+                          decimals={claimHistory.totalLock > 0 ? 4 : 0}
                           duration={0.5}
                         />
                       </Text>
@@ -355,10 +380,16 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                 </Td>
                 <Td textAlign={'center'}>
                   {claimHistory.amount === 0 ? (
-                    <Text fontSize={responsiveTextSize}>0</Text>
+                    <Text style={{ ...headerStyle, color: '#ffffff', fontWeight: '400' }} fontSize={responsiveTextSize}>
+                      0
+                    </Text>
                   ) : (
                     <AmountData>
-                      <Text fontSize={responsiveTextSize}>
+                      <Text
+                        style={{ ...headerStyle, color: '#ffffff', fontWeight: '400' }}
+                        fontSize={responsiveTextSize}
+                      >
+                        <Image src="/images/trendyloop.png" width={16} height={16} alt="" />{' '}
                         <CountUp
                           start={0}
                           preserveValue
@@ -366,16 +397,20 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                           end={claimHistory.amount}
                           decimals={claimHistory.amount > 0 ? 6 : 0}
                           duration={0.5}
-                        />{' '}
-                        <Image src="/images/trendyloop.png" width={16} height={16} alt="" />
+                        />
                       </Text>
                     </AmountData>
                   )}
                   {claimHistory.amount === 0 ? (
-                    <Text fontSize={responsiveTextSize}>0</Text>
+                    <Text style={{ ...headerStyle, color: '#ffffff', fontWeight: '400' }} fontSize={responsiveTextSize}>
+                      0
+                    </Text>
                   ) : (
                     <AmountData>
-                      <Text fontSize={responsiveTextSize}>
+                      <Text
+                        style={{ ...headerStyle, color: '#ffffff', fontWeight: '400' }}
+                        fontSize={responsiveTextSize}
+                      >
                         ~ ${' '}
                         <CountUp
                           start={0}
@@ -391,7 +426,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                 </Td>
                 <Td textAlign={'center'}>
                   {/* {claimHistory.totalMined === 0 ? (
-                    <Text fontSize={responsiveTextSize}>0</Text>
+                    <Text style={{...headerStyle, color: '#ffffff', fontWeight: '400'}} fontSize={responsiveTextSize}>0</Text>
                   ) : (
                     <AmountData>
                       <Text fontSize={responsiveTextSizeBNB}>
@@ -407,11 +442,13 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                       </Text>
                     </AmountData>
                   )} */}
-                  <Text fontSize={responsiveTextSize}>$ 0</Text>
+                  <Text style={{ ...headerStyle, color: '#ffffff', fontWeight: '400' }} fontSize={responsiveTextSize}>
+                    $ 0
+                  </Text>
                 </Td>
                 <Td textAlign={'center'}>
                   {/* {claimHistory.totalMined > 0 ? (
-                    <Text fontSize={responsiveTextSize}>0</Text>
+                    <Text style={{...headerStyle, color: '#ffffff', fontWeight: '400'}} fontSize={responsiveTextSize}>0</Text>
                   ) : (
                     <AmountData>
                       <Text fontSize={responsiveTextSizeBNB}>
@@ -427,10 +464,14 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                       </Text>
                     </AmountData>
                   )} */}
-                  <Text fontSize={responsiveTextSize}>$ 0</Text>
+                  <Text style={{ ...headerStyle, color: '#ffffff', fontWeight: '400' }} fontSize={responsiveTextSize}>
+                    $ 0
+                  </Text>
                 </Td>
                 <Td textAlign={'center'}>
-                  <Text fontSize={responsiveTextSize}>Claimed</Text>
+                  <Text style={{ ...headerStyle, color: '#ffffff', fontWeight: '400' }} fontSize={responsiveTextSize}>
+                    Claimed
+                  </Text>
                 </Td>
               </tr>
             )
@@ -443,57 +484,44 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
       {isLoading === true ? null : (
         <>
           <Warpper>
-            <TableHeader>
-              <Text
-                style={{ color: '#F5F5F6', fontWeight: 700 }}
-                textAlign="center"
-                fontSize={responsiveTextSizeHeader}
-              >
-                Your Mined History
-              </Text>
-            </TableHeader>
+            <TableHeader></TableHeader>
             <TablePool>
               <TableScroll className="scroll">
                 <table>
                   <thead>
                     <tr>
                       <Th textAlign="center">
-                        <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
+                        <Text style={headerStyle} fontSize={responsiveTextSize} textTransform="capitalize">
                           Date Time
                         </Text>
                       </Th>
                       <Th textAlign="center">
-                        <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
+                        <Text style={headerStyle} fontSize={responsiveTextSize} textTransform="capitalize">
                           Power
                         </Text>
                       </Th>
                       <Th textAlign="center">
-                        <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
+                        <Text style={headerStyle} fontSize={responsiveTextSize} textTransform="capitalize">
                           Total Mine
                         </Text>
                       </Th>
                       <Th textAlign="center">
-                        <Text
-                          style={{ width: isMobile && '62px' }}
-                          color={trendyColors.DARK_PURPLE}
-                          fontSize={responsiveTextSize}
-                          textTransform="capitalize"
-                        >
+                        <Text style={{ ...headerStyle }} fontSize={responsiveTextSize} textTransform="capitalize">
                           Claimed
                         </Text>
                       </Th>
                       <Th textAlign="center">
-                        <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
+                        <Text style={headerStyle} fontSize={responsiveTextSize} textTransform="capitalize">
                           Remain
                         </Text>
                       </Th>
                       <Th textAlign="center">
-                        <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
+                        <Text style={headerStyle} fontSize={responsiveTextSize} textTransform="capitalize">
                           Available
                         </Text>
                       </Th>
                       <Th textAlign="center">
-                        <Text color={trendyColors.DARK_PURPLE} fontSize={responsiveTextSize} textTransform="capitalize">
+                        <Text style={headerStyle} fontSize={responsiveTextSize} textTransform="capitalize">
                           Action
                         </Text>
                       </Th>
