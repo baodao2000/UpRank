@@ -2,46 +2,46 @@ import { Button, Flex, useModal } from '@pancakeswap/uikit'
 import styled from 'styled-components'
 import images from 'configs/images'
 import 'aos/dist/aos.css'
-// import {VoteModal }from '../../../components/VoteModal'
-// import { ModalVotes } from 'components/VoteModal/Votemodal'
-import { ModalRegister } from 'components/ModalRegister'
 
 const Head = styled(Flex)`
+  * {
+    font-family: Inter, sans-serif;
+  }
   padding-top: 24px;
   position: relative;
   z-index: 1;
   width: 100%;
+  padding: 90px 0;
   display: flex;
-  * {
-    font-family: Inter, sans-serif;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  @media (max-width: 1324px) {
+    gap: 0;
   }
-  ${({ theme }) => theme.mediaQueries.md} {
-    padding: 100px 0;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  img {
-    width: 100%;
-    height: auto;
+  @media (max-width: 575px) {
+    flex-direction: column-reverse;
+    padding: 24px 0;
   }
 `
 
 const ContentHead = styled.div`
-  width: 100%;
-  max-width: 696px;
+  margin-top: 50px;
+  width: 53%;
   z-index: 1;
-  padding-top: 50px;
-
-  ${({ theme }) => theme.mediaQueries.md} {
-    max-width: 696px;
+  @media (max-width: 575px) {
+    width: 100%;
   }
 
 p {
-  width: 696px;
+  max-width: 690px;
+  margin-bottom: 20px;
+  @media (max-width: 575px) {
+    max-width: 300px;
+    margin-bottom: 16px;
+  }
   
-    margin-bottom: 20px;
       .p1 {
         font-size: 60px;
         font-style: normal;
@@ -50,23 +50,39 @@ p {
         letter-spacing: -1.2px;
         letter-spacing: 0.001em;
         color: rgba(133, 68, 245, 1);
+        @media (max-width: 1024px) {
+          font-size: 42px;
+          line-height: 42px;
+        }
+        @media (max-width: 575px) {
+          font-size: 24px;
+          line-height: 32px;
+        }
       }
       .p2 {
         font-size: 60px;
-    font-weight: 700;
-    line-height: 72px;
-    letter-spacing: -1.2px;
-    letter-spacing: 0.001em;
-    background: var(--primary-primary-gradient-2, linear-gradient(180deg, #7B3FE4 0%, #A726C1 100%));
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
+        font-weight: 700;
+        line-height: 72px;
+        letter-spacing: -1.2px;
+        letter-spacing: 0.001em;
+        background: var(--primary-primary-gradient-2, linear-gradient(180deg, #7B3FE4 0%, #A726C1 100%));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        @media (max-width: 1024px) {
+          font-size: 42px;
+          line-height: 42px;
+        }
+        @media (max-width: 575px) {
+          font-size: 24px;
+          line-height: 32px;
+        }
       }
     }
 }
 
 `
 const ContentHeadRight = styled.div`
-  width: 100%;
+  width: 47%;
   z-index: 1;
   h5 {
     font-weight: 700;
@@ -79,46 +95,17 @@ const ContentHeadRight = styled.div`
     text-align: center;
     margin: 20px;
     word-wrap: break-word;
-    display: block;
-    ${({ theme }) => theme.mediaQueries.xs} {
-      display: none;
-    }
-    ${({ theme }) => theme.mediaQueries.sm} {
-      display: none;
-    }
-    ${({ theme }) => theme.mediaQueries.md} {
-      font-size: 30px;
-      line-height: 36px;
-      text-align: start;
-      margin-bottom: 0;
-      display: block;
-    }
-    ${({ theme }) => theme.mediaQueries.xl} {
-      font-size: 20px;
-      line-height: 25px;
-      text-align: center;
-      display: block;
-    }
+  }
+  @media (max-width: 575px) {
+    width: 100%;
   }
 `
 
 const ImageHead = styled.img`
-  width: 883px !important;
-  height: 669px !important;
-  ${({ theme }) => theme.mediaQueries.md} {
-    display: block;
-  }
-`
-
-const ImageShowMb = styled.img`
-  width: 80% !important;
-  display: block;
-  max-width: 715px;
-  margin: 0 auto;
-
-  ${({ theme }) => theme.mediaQueries.md} {
-    display: none;
-  }
+  max-width: 850px;
+  max-height: 650px;
+  width: 100%;
+  height: 100%;
 `
 const H5ShowMb = styled.h5`
   font-size: 18px;
@@ -134,59 +121,10 @@ const H5ShowMb = styled.h5`
   span {
     color: rgba(173, 171, 178, 1);
   }
-`
-
-const LinkToDownload = styled.div`
-  margin-top: 40px;
-  text-align: center;
-
-  span {
-    color: #393939;
-    font-weight: 500;
+  @media (max-width: 575px) {
     font-size: 16px;
-    line-height: 40px;
-  }
-
-  ${({ theme }) => theme.mediaQueries.md} {
-    margin-top: 50px;
-    padding: 0;
-  }
-`
-
-const ListImgButton = styled.div`
-  gap: 2%;
-  row-gap: 30px;
-  display: none;
-  flex-direction: row;
-
-  a {
-    border: 1px solid #a6a6a6;
-    border-radius: 7px;
-  }
-
-  img {
-    border-radius: 7px;
-  }
-
-  ${({ theme }) => theme.mediaQueries.md} {
-    display: flex;
-  }
-`
-
-const ListImgButtonMb = styled.div`
-  display: flex;
-  flex-direction: column;
-  row-gap: 20px;
-  margin-bottom: 25px;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 0 14%;
-  width: 100%;
-  ${({ theme }) => theme.mediaQueries.sm} {
-    padding: 0 20%;
-  }
-  ${({ theme }) => theme.mediaQueries.md} {
-    display: none;
+    line-height: 24px;
+    margin: 16px 0 24px;
   }
 `
 const Staking = styled.div`
@@ -215,20 +153,25 @@ const ButtonStaking = styled(Button)`
   font-weight: 500;
   line-height: 24px;
   width: 130px;
+  height: 48px;
   padding: 16px;
+  @media (max-width: 575px) {
+    width: 100%;
+    height: 40px;
+    font-size: 14px;
+    line-height: 20px;
+  }
 `
 
-const HeadHome = (isModalOpen) => {
+const HeadHome = () => {
   return (
     <Head>
-      {/* <VoteModal /> */}
-      <ContentHead>
+      <ContentHead data-aos="fade-up-right">
         <p>
           <span className="p1">TrendyDefi is an open network for</span>
           <span className="p2"> storing </span>
           <span className="p1">and </span> <span className="p2">moving money</span>
         </p>
-
         <H5ShowMb>
           <span>Own your own data. Earn passive income with crypto.</span>
         </H5ShowMb>
@@ -241,33 +184,9 @@ const HeadHome = (isModalOpen) => {
             </p>
           </div>
         </Staking>
-        {/* <LinkToDownload>
-          <ListImgButton>
-            <a href="">
-              <img src={images.downloadIOS} alt="" />
-            </a>
-            <a href="">
-              <img src={images.downloadPlay} alt="" />
-            </a>
-            <a href="">
-              <img src={images.downloadAPK} alt="" />
-            </a>
-          </ListImgButton>
-          <ListImgButtonMb data-aos="fade-up-left">
-            <a href="">
-              <img src={images.apple} alt="" />
-            </a>
-            <a href="">
-              <img src={images.chPlay} alt="" />
-            </a>
-            <a href="">
-              <img src={images.android} alt="" />
-            </a>
-          </ListImgButtonMb>
-        </LinkToDownload> */}
       </ContentHead>
-      <ContentHeadRight>
-        <ImageHead src={images.Illustrations} alt="" />
+      <ContentHeadRight data-aos="fade-left">
+        <ImageHead src={images.headhome} alt="" />
       </ContentHeadRight>
     </Head>
   )

@@ -35,7 +35,6 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: var(--bg-1, linear-gradient(90deg, #9E86FF 0%, #2B0864 100%));
   * {
     font-family: Inter, sans-serif;
   }
@@ -633,6 +632,15 @@ const ImageMine = styled.img`
     height: 80px;
   }
 `
+const LogoContain = styled.div`
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  background: var(--white-white-8, rgba(255, 255, 255, 0.08));
+  align-items: center;
+  display: flex;
+  justify-content: center;
+`
 const Background = styled.div`
   // background: url(${images.mask}) no-repeat;
   // background-size: contain;
@@ -850,6 +858,7 @@ const PoolsV2 = () => {
 
     return () => clearInterval(timerId)
   }, [countDown])
+  const { isMobile, isTablet } = useMatchBreakpoints()
 
   return (
     <Wraper>

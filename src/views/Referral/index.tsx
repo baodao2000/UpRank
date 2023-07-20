@@ -20,6 +20,8 @@ import CountUp from 'react-countup'
 import Child from './child'
 import { shortenURL } from 'views/Pools2/util'
 import { getBlockExploreLink } from 'utils'
+import Image from 'next/image'
+import { isTablet } from 'react-device-detect'
 
 const Wrapper = styled.div`
   * {
@@ -35,14 +37,17 @@ const Wrapper = styled.div`
   display: flex;
   gap: 32px;
   th {
-    border-top: 1px solid #e7e3eb;
-    border-bottom: 1px solid #e7e3eb;
     border-collapse: collapse;
   }
   th,
   td {
     padding: 10px;
     text-align: center;
+  }
+  @media screen and (max-width: 900px) {
+    flex-direction: column;
+    padding: 40px 0;
+    width: 100%;
   }
   @media screen and (max-width: 575px) {
     flex-direction: column;
@@ -58,8 +63,20 @@ const ReferralPage = styled.div`
   justify-content: flex-start;
   gap: 48px;
   width: 78%;
+  @media screen and (max-width: 1440px) {
+    padding 0px 16px;
+  width: 100%;
+
+  }
+  @media screen and (max-width: 900px) {
+    padding 0px 16px;
+  width: 100%;
+
+  }
   @media screen and (max-width: 575px) {
     padding 0px 16px;
+  width: 100%;
+
   }
 `
 
@@ -100,9 +117,19 @@ const CardReferral = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  padding: 0 16px;
+
   color: #e6e6e6;
+  @media screen and (max-width: 1440px) {
+    width: 75%;
+  }
+  @media screen and (max-width: 900px) {
+    padding: 0 16px;
+    width: 100%;
+  }
   @media screen and (max-width: 575px) {
     padding: 0 16px;
+    width: 100%;
   }
 `
 const FriendsList = styled.div`
@@ -115,8 +142,10 @@ const FriendsList = styled.div`
   align-items: flex-start;
   gap: 48px;
   align-self: stretch;
+  margin-top: 48px;
   @media screen and (max-width: 575px) {
     padding: 40px 16px;
+    margin-top: 28px;
   }
 `
 const CardFriends = styled.div`
@@ -137,6 +166,7 @@ const CardFriends = styled.div`
 const CardInfoUser = styled.div`
   width: 100%;
   height: auto;
+  padding: 0 16px;
   @media screen and (max-width: 575px) {
     padding: 0 16px;
   }
@@ -146,7 +176,7 @@ const StyledHead = styled(Heading)`
   font-size: 48px;
   font-style: normal;
   font-weight: 600;
-  line-height: 60px; /* 125% */
+  line-height: 56px; /* 125% */
   letter-spacing: -0.96px;
   background: var(--primary-primary-gradient-2, linear-gradient(180deg, #7b3fe4 0%, #a726c1 100%));
   background-clip: text;
@@ -154,6 +184,7 @@ const StyledHead = styled(Heading)`
   -webkit-text-fill-color: transparent;
   @media screen and (max-width: 575px) {
     font-size: 24px;
+    line-height: 32px;
   }
 `
 
@@ -162,9 +193,12 @@ const StyledSubtitle = styled(Text)`
   font-style: normal;
   font-weight: 400;
   line-height: 28px;
+  margin-top: 24px;
   color: rgba(173, 171, 178, 1);
   @media screen and (max-width: 575px) {
     font-size: 16px;
+    margin-top: 16px;
+    line-height: 24px;
   }
 `
 
@@ -223,6 +257,7 @@ const StyledLink = styled.div`
   outline: none;
   color: black;
   font-size: 18px;
+  flex-direction: row-reverse;
   min-height: 34px;
   display: flex;
   justify-content: space-between;
@@ -321,6 +356,8 @@ background: var(--greyscale-grayscale-3, #141217);
 box-shadow: 0px 64px 64px -48px rgba(15, 15, 15, 0.10);
 @media screen and (max-width: 575px ) {
   padding 40px 16px;
+  margin-top: 28px;
+
 }
 `
 
@@ -331,7 +368,7 @@ const InfoItem = styled.div`
   width: 100%;
   color: #e6e6e6;
   border-radius: 10px;
-  max-width: 186px;
+  max-width: 286px;
   gap: 12px;
   border: 1px solid var(--white-white-12, rgba(255, 255, 255, 0.12));
   background: var(--white-white-6, rgba(255, 255, 255, 0.06));
@@ -363,6 +400,9 @@ const Table = styled.table`
     font-weight: 600;
     line-height: 24px;
     color: rgba(119, 126, 144, 1);
+    @media screen and (max-width: 575px) {
+      text-align: center;
+    }
   }
   @media screen and (max-width: 575px) {
     padding: 0px;
@@ -453,6 +493,9 @@ const StyledInput = styled(Input)`
   background: var(--greyscale-grayscale-4, #2d2c33);
   padding: 12px 16px;
   height: 44px;
+  &:focus:not(:disabled) {
+    border: none;
+  }
 `
 
 const StyledInputSearch = styled(Input)`
@@ -461,6 +504,13 @@ const StyledInputSearch = styled(Input)`
   border-radius: 12px;
   background: var(--greyscale-grayscale-4, #2d2c33);
   padding: 12px 16px;
+
+  &:focus:not(:disabled) {
+    border: none;
+  }
+  ::placeholder {
+    color: #67666e;
+  }
 `
 
 const LinkItem = styled.div`
@@ -487,8 +537,18 @@ export const copyText = (text) => {
   document.body.removeChild(el)
 }
 const Menu = styled.div`
-  max-width: 292px;
+  max-width: 300px;
   width: 20%;
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+  @media screen and (max-width: 900px) {
+    display: flex;
+    flex-direction: row;
+    max-width: 100%;
+    width: 100%;
+    justify-content: space-between;
+  }
   @media screen and (max-width: 575px) {
     display: flex;
     flex-direction: row;
@@ -509,11 +569,15 @@ img{
   height: 24px;
 }
 .title {
-  font-size: 18px;
+  font-size: 14px;
 font-style: normal;
 font-weight: 500;
 line-height: 20px; 
 color: rgba(252, 252, 253, 1);
+}
+@media screen and (max-width: 900px) {
+  width: 20%;
+  
 }
 @media screen and (max-width: 575px) {
   padding: 0 8px;
@@ -574,7 +638,7 @@ const ButtonLink = styled.button`
 const Step = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 12px;
   width: 100%;
 `
 const TitleStep = styled(Text)`
@@ -593,14 +657,17 @@ const LabelStep = styled(Text)`
 `
 const CardStep = styled.div`
   display: flex;
+  margin-top: 24px;
   gap: 24px;
+  justify-content: space-between;
+
   @media screen and (max-width: 575px) {
     flex-direction: column;
     align-items: center;
   }
 `
 const Card = styled.div`
-  max-width: 283px;
+  width: 340px;
   border-radius: 8px;
   background: var(--white-white-6, rgba(255, 255, 255, 0.06));
   padding: 29px 25px;
@@ -611,6 +678,9 @@ const Card = styled.div`
   .imgStep {
     width: 48px;
     height: 48px;
+  }
+  @media screen and (max-width: 1440px) {
+    width: 100%;
   }
 `
 const CardTitle = styled(Text)`
@@ -626,7 +696,7 @@ const Item = styled.div`
   gap: 24px;
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   @media screen and (max-width: 575px) {
     flex-direction: row;
     flex-wrap: wrap;
@@ -642,7 +712,7 @@ const ReferralInfo = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  gap: 32px;
+  gap: 16px;
   align-self: stretch;
 `
 const InfoTitle = styled(Text)`
@@ -655,12 +725,24 @@ const Group = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 24px;
+  @media screen and (max-width: 1440px) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    display: flex;
+    justify-content: flex-start;
+  }
+  @media screen and (max-width: 900px) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    display: flex;
+    justify-content: flex-start;
+  }
   @media screen and (max-width: 575px) {
     flex-direction: row;
     flex-wrap: wrap;
     width: 100%;
     display: flex;
-    gap: 10px;
+    gap: 16px;
   }
 `
 const Referral = () => {
@@ -1071,12 +1153,13 @@ const Referral = () => {
               <div>
                 <StyledHead>Referral</StyledHead>
                 <StyledSubtitle>
-                  Welcome to our member count section! Here, you can track the growth of our community and get a sense
-                  of the scale of our website&#39;s audience.{' '}
+                  Incentivize and reward users for promoting a product or service by referring others to join or
+                  participate, fostering organic growth and user acquisition.
                 </StyledSubtitle>
+                <img style={{ display: isMobile ? 'flex' : 'none' }} className="upto" src="./images/V3/Referral.svg" />
               </div>
               <CardRegister>
-                <img className="upto" src="./images/V3/Referral.svg" />
+                <img style={{ display: isMobile ? 'none' : 'flex' }} className="upto" src="./images/V3/Referral.svg" />
                 <GroupLinkRef>
                   <div style={{ display: 'flex', flexDirection: 'column' }}>
                     <StyledText>Refer a friend and get reward together</StyledText>
@@ -1159,7 +1242,9 @@ const Referral = () => {
                           onChange={(e) => setUserSearch(e.target.value)}
                           placeholder={`Enter code`}
                         />
-                        {/* <img onClick={handleSearchUserCode} className='search' src='./images/V3/search.png' /> */}
+                        <div onClick={handleSearchUserCode}>
+                          <img className="search" src="./images/V3/search.png" />
+                        </div>
                       </div>
                       {showResultSearch()}
                     </GroupSearchByCode>
@@ -1200,8 +1285,8 @@ const Referral = () => {
               <CardInfoUser>
                 <StyledHead>Profile</StyledHead>
                 <StyledSubtitle>
-                  Welcome to our member count section! Here, you can track the growth of our community and get a sense
-                  of the scale of our website&#39;s audience.{' '}
+                  Create personalized user accounts that showcase individual information, preferences, and activities
+                  within a platform or network.
                 </StyledSubtitle>
                 <BlockInfo>
                   <Item>
@@ -1305,7 +1390,7 @@ const Referral = () => {
                 ) : (
                   <>
                     <Group>
-                      <CardFriends style={{ width: isMobile ? '100%' : '257px' }}>
+                      <CardFriends style={{ width: isMobile ? '100%' : isTablet ? '100%' : '300px' }}>
                         <StyledItemChild>F{acountChild.length - 1}:</StyledItemChild>
                         <StyledLinkAccount
                           rel="noreferrer"
@@ -1315,11 +1400,11 @@ const Referral = () => {
                           {truncateHash(acountChild[acountChild.length - 1], 6, 2)}
                         </StyledLinkAccount>
                       </CardFriends>
-                      <CardFriends style={{ width: isMobile ? '147px' : '257px' }}>
+                      <CardFriends style={{ width: isMobile ? '147px' : isTablet ? '100%' : '300px' }}>
                         <StyledItemChild>Total of F{acountChild.length}</StyledItemChild>
                         <StyledTotal>{totalItemChild}</StyledTotal>
                       </CardFriends>
-                      <CardFriends style={{ width: isMobile ? '147px' : '257px' }}>
+                      <CardFriends style={{ width: isMobile ? '147px' : isTablet ? '100%' : '300px' }}>
                         <StyledItemChild>Total refer downline</StyledItemChild>
                         <StyledTotal>{total7Level}</StyledTotal>
                       </CardFriends>

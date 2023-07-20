@@ -6,7 +6,8 @@ const Wrapper = styled.div`
   max-width: 100%;
   width: 100%;
   margin: 0 auto;
-  padding-bottom: 50px;
+  padding-top: 30px;
+  padding-bottom: 96px;
   * {
     font-family: Inter, sans-serif;
   }
@@ -18,11 +19,23 @@ const Title = styled(Heading)`
   font-weight: 500;
   line-height: 60px;
   letter-spacing: -0.96px;
-  margin-bottom: 40px;
+  margin-bottom: 16px;
   text-align: center;
+  color: #adabb2;
+  @media (max-width: 1024px) {
+    font-size: 42px;
+    line-height: 42px;
+  }
+  @media (max-width: 575px) {
+    margin-bottom: 16px;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 32px;
+  }
 `
 
 const StyledColorTitle = styled.span`
+  font-weight: 700;
   background: var(--primary-primary-gradient-2, linear-gradient(180deg, #7b3fe4 0%, #a726c1 100%));
   background-clip: text;
   -webkit-background-clip: text;
@@ -32,7 +45,7 @@ const StyledColorTitle = styled.span`
 const BlockTranditional = styled.div`
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   flex-wrap: wrap;
   height: auto;
   position: relative;
@@ -62,15 +75,6 @@ const StyledCardHeading = styled(Heading)`
   ${({ theme }) => theme.mediaQueries.md} {
     font-size: 24px;
     line-height: 120%;
-  }
-`
-
-const ImageCenter = styled.img`
-  @media (min-width: 900px) and (max-width: 1366px) {
-    width: 130px;
-  }
-  @media only screen and (max-width: 1020px) {
-    display: none;
   }
 `
 
@@ -135,54 +139,45 @@ const Tranditional = () => {
         Stay current on the latest Onix project developments, news, and content, updated daily.
       </Text>
       <BlockTranditional>
-        <CardLeft>
+        <CardLeft data-aos="fade-up-right">
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <img width="18px" height="18px" src="./images/V3/circle.svg" />
             <StyledCardHeading>{dataLeft.title}</StyledCardHeading>
           </div>
           <ListTextsCard>
             {dataLeft.texts.map((item, index) => (
-              <ItemTextCard key={index}>
-                {/* <img src={images.circle} style={{ marginRight: 20 }} /> */}
-                {item}
-              </ItemTextCard>
+              <ItemTextCard key={index}>{item}</ItemTextCard>
             ))}
           </ListTextsCard>
         </CardLeft>
-        {/* <ImageCenter src={images.vs} /> */}
-        <CardRight>
+        <CardRight data-aos="fade-up-left">
           <img src="./images/V3/Logo.png" />
           <ListTextsCard>
             <ItemTextCard>
-              {/* <img src={images.circle} style={{ marginRight: 20 }} /> */}
               <p>
                 <span className="icon">✦</span> No need to disclose personal details,
                 <span className="text"> just connect a digital wallet.</span>{' '}
               </p>
             </ItemTextCard>
             <ItemTextCard>
-              {/* <img src={images.circle} style={{ marginRight: 20 }} /> */}
               <p>
                 <span className="icon">✦</span> Users custody their own funds,
                 <span className="text"> easier to avoid loss of funds.</span>{' '}
               </p>
             </ItemTextCard>
             <ItemTextCard>
-              {/* <img src={images.circle} style={{ marginRight: 20 }} /> */}
               <p>
                 <span className="icon">✦</span> Effortless - No need to worry if a protocol will do what it says it will
                 do.
               </p>
             </ItemTextCard>
             <ItemTextCard>
-              {/* <img src={images.circle} style={{ marginRight: 20 }} /> */}
               <p>
                 <span className="icon">✦</span> Speedy - Transactions are completed in near
                 <span className="text"> real-time.</span>{' '}
               </p>
             </ItemTextCard>
             <ItemTextCard>
-              {/* <img src={images.circle} style={{ marginRight: 20 }} /> */}
               <p>
                 <span className="icon">✦</span> Operate around the clock,<span className="text"> 24/7/365.</span>{' '}
               </p>

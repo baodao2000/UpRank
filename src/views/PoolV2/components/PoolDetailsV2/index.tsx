@@ -4,41 +4,52 @@ import styled from 'styled-components'
 import images from 'configs/images'
 import { FC, useEffect, useState } from 'react'
 import contracts from 'config/constants/contracts'
-import BigNumber from 'bignumber.js'
 import { isMobile } from 'react-device-detect'
 import { formatEther } from '@ethersproject/units'
-import { getBlockExploreLink, getBlockExploreName } from 'utils'
+import { getBlockExploreLink } from 'utils'
 import { shortenURL, timeDisplayLong } from 'views/Pools2/util'
 import moment from 'moment'
-import { ModalCheckRegister } from 'components/ModalRegister/ModalCheckRegister'
-import { ModalRegister } from 'components/ModalRegister'
-import refferalAbi from 'config/abi/refferal.json'
-import { getContract, getPoolsContract, getPoolsV2Contract, getPoolsV3Contract } from 'utils/contractHelpers'
-import { trendyColors } from 'style/trendyTheme'
+import { getPoolsV3Contract } from 'utils/contractHelpers'
 import TrendyPageLoader from 'components/Loader/TrendyPageLoader'
 import ClaimPoolModal from './ClaimModal'
-import WithDrawModal from './WithDrawModal'
 import TableDataPool from './TableData'
 import DetailInfoPool from './DetailInfo'
 import DepositPoolModal from './DepositModal'
 import { ChainId, NATIVE } from '../../../../../packages/swap-sdk/src/constants'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 
-// ============= STYLED
 const PoolDetail = styled.div`
-  background: url(${images.backgroundpool}) #1e1e1e no-repeat bottom;
-  background-size: contain;
   * {
-    font-family: Helvetica, sans-serif;
+    font-family: Inter, sans-serif;
   }
-  @media screen and (max-width: 768px) {
-    background: url(${images.backgroundpool}) #1e1e1e no-repeat bottom;
-    background-size: fixed;
+  background: var(--greyscale-background-dark, #0a090d);
+  width: 100%;
+  .flexx {
+    margin-top: 80px;
+    @media (max-width: 768px) {
+      margin-top: 50px;
+    }
+    @media (max-width: 575px) {
+      margin-top: 20px;
+    }
+  }
+  .headingg {
+    margin-left: 105px;
+    @media (max-width: 557px) {
+      margin-left: 0;
+      margin-top: 10px;
+    }
+  }
+  .bg {
+    background: url(${images.bgV3}) no-repeat;
+    background-size: 100% 100%;
   }
 `
 const Body = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
   background: none;
-  padding: 70px;
+  padding: 50px;
   display: flex;
   flex-direction: column;
   gap: 30px;
@@ -51,6 +62,12 @@ const PoolName = styled.div`
   display: flex;
   align-items: center;
   gap: 20px;
+  .title {
+    background: var(--primary-primary-gradient-2, linear-gradient(180deg, #7b3fe4 0%, #a726c1 100%));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 `
 const PoolLogo = styled.img`
   width: 80px;
@@ -69,25 +86,27 @@ const PoolLogo = styled.img`
   }
 `
 const ButtonArea = styled.div`
-  width: 1000px;
-  @media screen and (max-width: 967px) {
-    width: 700px;
-  }
-  @media screen and (max-width: 851px) {
-    width: 570px;
-  }
-  @media screen and (max-width: 575px) {
-    width: 100%;
-  }
   display: flex;
-  justify-content: space-evenly;
-  @media screen and (max-width: 851px) {
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-  }
+  flex-direction: row;
+  gap: 16px;
+  // width: 1000px;
+  // @media screen and (max-width: 967px) {
+  //   width: 700px;
+  // }
+  // @media screen and (max-width: 851px) {
+  //   width: 570px;
+  // }
+  // @media screen and (max-width: 575px) {
+  //   width: 100%;
+  // }
+  // display: flex;
+  // justify-content: space-evenly;
+  // @media screen and (max-width: 851px) {
+  //   flex-direction: column;
+  //   align-items: center;
+  //   gap: 20px;
+  // }
 `
-
 const NoteDeposit = styled.span`
   color: #fff;
   //background: #ffffcc;
@@ -95,14 +114,28 @@ const NoteDeposit = styled.span`
   padding: 16px;
   border-radius: 10px;
 `
+const BtnBack = styled.a`
+  margin-top: 60px;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  color: #fff;
+  @media (max-width: 768px) {
+    margin-top: 0;
+  }
+`
 
 const Pool = ({ poolId }) => {
   const { account, chainId } = useActiveWeb3React()
+  // account = '0xe024af9AD5518468abFb617eEAbE10219498ee50'
   const [isLoading, setIsLoading] = useState(true)
   const [now, setNow] = useState(0)
   const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId
   const getPoolContract = getPoolsV3Contract(CHAIN_ID)
-  const getPoolV2Contract = getPoolsV3Contract(CHAIN_ID)
 
   const unit = NATIVE[chainId].symbol
 
@@ -191,7 +224,6 @@ const Pool = ({ poolId }) => {
         const rateBnbUsd = await getPoolContract.MATIC2USDT()
         const users = await getPoolContract.users(account, poolId)
         // const users2 = await getPoolV2Contract.users(account, poolId)
-        // console.log(Number(users2.startTime))
         const minMaxUSD2BNB = await getPoolContract.minMaxUSD2BNB(poolId)
         const getUsersClaimedLength = await getPoolContract.getUsersClaimedLength(poolId, account)
         // const getUsersClaimedLength2 = await getPoolV2Contract.getUsersClaimedLength(poolId, account)
@@ -239,8 +271,6 @@ const Pool = ({ poolId }) => {
         })
         // setIsLoading(false)
       }
-
-      // console.log(Number(formatEther(currentReward)), Number(formatEther(currentReward2)))
     } catch (e) {
       console.log(e)
     }
@@ -253,7 +283,6 @@ const Pool = ({ poolId }) => {
     true,
   )
 
-  // ===> check to open registration modal
   const handleOpenDepositModal = () => {
     // if (isRef === true) {
     //   openModalCheckRegisterModal()
@@ -281,25 +310,46 @@ const Pool = ({ poolId }) => {
       {isLoading === true ? (
         <TrendyPageLoader />
       ) : (
-        <>
+        <div className="bg">
+          <img
+            style={{ position: 'absolute', top: '200px', width: '100%', zIndex: '-1' }}
+            src={images.bgV3}
+            alt="iconback"
+          />
           <PageHeader background="none">
-            <Flex flex="1" flexDirection="column" mr={['8px', 0]} alignItems="center">
+            <BtnBack href="/poolv2">
+              <img src={images.iconback} alt="iconback" />
+              Back
+            </BtnBack>
+            <Flex className="flexx" flex="1" flexDirection="column" mr={['80px', 0, 0]} alignItems="start">
               <PoolName>
-                <PoolLogo src={`/images/chains/${chainId}.png`} alt="pool name" />
-                <Text fontSize={['28px', '40px', '42px', '50px', '70px']} fontWeight="600">
+                <PoolLogo src={images.bscoin} alt="pool name" />
+                <Text className="title" fontSize={['28px', '40px', '42px', '50px', '60px']} fontWeight="700">
                   {unit}
                 </Text>
               </PoolName>
-              <Heading scale="md" color="text">
+              <Heading className="headingg" scale="md" color="text">
                 <LinkExternal
-                  fontSize={['14px', '16px', '18px', '20px', '22px']}
+                  fontSize={['14px', '16px', '18px', '20px', '20px']}
                   href={getBlockExploreLink(contracts.poolsV3[CHAIN_ID], 'address', CHAIN_ID)}
                   ellipsis={true}
-                  color="#00F0E1"
-                  style={{ color: '#00F0E1' }}
+                  color="#ffffff"
+                  style={{ color: '#ffffff' }}
                 >
-                  {shortenURL(`Root Contract: ${contracts.poolsV3[CHAIN_ID]}`, 35)}
+                  <span>Root Contract:</span>
+                  {shortenURL(`${contracts.poolsV3[CHAIN_ID]}`, 20)}
                 </LinkExternal>
+                <span
+                  style={{
+                    paddingLeft: '12px',
+                    fontSize: '14px',
+                    lineHeight: '20xp',
+                    fontWeight: '400',
+                    color: '#8544F5',
+                  }}
+                >
+                  Check Details
+                </span>
                 {/* <LinkExternal
                   fontSize={['14px', '16px', '18px', '20px', '22px']}
                   href={getBlockExploreLink(contracts.poolsV2[CHAIN_ID], 'address', CHAIN_ID)}
@@ -312,14 +362,32 @@ const Pool = ({ poolId }) => {
               </Heading>
             </Flex>
           </PageHeader>
-          <Body>
+          <PageHeader background="none">
             <DetailInfoPool poolInfo={poolInfo} />
-            {getNoteDeposit()}
+          </PageHeader>
+          <PageHeader background="none">
             <TableDataPool pool={pool} userClaimedLength={poolInfo.userClaimedLength} />
+          </PageHeader>
+
+          <Body>
+            {getNoteDeposit()}
             <ButtonArea>
               <Button
-                variant="primary"
+                style={{ color: '#000', backgroundColor: '#D9D9D9' }}
+                variant={poolInfo.currentReward > 0 ? 'danger' : 'light'}
+                disabled={poolInfo.currentReward === 0}
                 width={['120px', '150px', '180px', '200px']}
+                height={48}
+                onClick={openClaimModal}
+                scale={isMobile ? 'sm' : 'md'}
+              >
+                Claim
+              </Button>
+              <Button
+                style={{ background: 'var(--primary-primary-1, #8544F5)', color: '#ffffff' }}
+                // variant="primary"
+                width={['120px', '150px', '180px', '200px']}
+                height={48}
                 onClick={() => handleOpenDepositModal()}
                 scale={isMobile ? 'sm' : 'md'}
                 disabled={
@@ -330,19 +398,9 @@ const Pool = ({ poolId }) => {
               >
                 Deposit
               </Button>
-              <Button
-                style={{ color: '#6216B0', backgroundColor: '#D9D9D9' }}
-                variant={poolInfo.currentReward > 0 ? 'danger' : 'light'}
-                disabled={poolInfo.currentReward === 0}
-                width={['120px', '150px', '180px', '200px']}
-                onClick={openClaimModal}
-                scale={isMobile ? 'sm' : 'md'}
-              >
-                Claim
-              </Button>
             </ButtonArea>
           </Body>
-        </>
+        </div>
       )}
     </PoolDetail>
   )

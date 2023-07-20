@@ -7,30 +7,44 @@ import moment from 'moment'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import Balance from 'components/Balance'
 import CountUp from 'react-countup'
+import images from 'configs/images'
 
 const InfoDetail = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.5em;
-  width: 800px;
-  padding: 20px;
-  border-radius: 20px;
-  background: linear-gradient(153.15deg, #7c07d8 8.57%, rgba(129, 69, 255, 0.02) 100%);
+  width: 100%;
+  padding: 24px;
+  border-radius: 24px;
+  border: 1px solid var(--white-white-12, rgba(255, 255, 255, 0.12));
+  background: var(--black-black-20, rgba(0, 0, 0, 0.2));
+  backdrop-filter: blur(5.5px);
 
-  @media screen and (max-width: 967px) {
-    width: 700px;
-  }
-  @media screen and (max-width: 851px) {
-    width: 570px;
-  }
-  @media screen and (max-width: 575px) {
-    width: 100%;
-  }
+  .note {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;
+      color: #adabb2;
+      span {
+        font-size: 16px;
+      font-weight: 600;
+      line-height: 24px;
+      color: #fff;
+      }
+    @media (max-width: 575px) {
+      font-size: 12px;
+      line-height: 20px;
+      span {
+        color: #fff;
+        font-size: 12px;
+        line-height: 20px;
+      }
+    }
 `
 
 const Amount = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: flex-end;
 `
 const Line = styled.div`
@@ -43,7 +57,7 @@ const Line = styled.div`
     font-weight: 300;
     line-height: 24px;
     &.value {
-      font-weight: 300;
+      font-weight: 700;
     }
   }
   &.time {
@@ -53,35 +67,12 @@ const Line = styled.div`
   }
   &.total-lock,
   &.commission {
-    color: white;
+    color: #adabb2;
     align-items: flex-end;
     justify-content: flex-end;
-    > div {
-      background: ${trendyColors.MAIN_GREEN};
-      border-radius: 8px;
-      padding: 12px 30px;
-      font-weight: 600;
-    }
-    @media screen and (max-width: 967px) {
-      > div {
-        padding: 12px 28px;
-      }
-    }
-    @media screen and (max-width: 851px) {
-      > div {
-        padding: 10px 24px;
-      }
-    }
-    @media screen and (max-width: 575px) {
-      > div {
-        padding: 8px 20px;
-      }
-    }
-    @media screen and (max-width: 450px) {
-      > div {
-        padding: 6px 15px;
-      }
-    }
+    border-radius: 12px;
+    padding: 10px 24px;
+    background: var(--white-white-8, rgba(255, 255, 255, 0.08));
   }
 `
 const maincolor = `${trendyColors.MAIN_GREEN}`
@@ -103,7 +94,6 @@ const DetailInfoPool: React.FC<
   const startTime = poolInfo.startTime
   const rateBNB2USD = poolInfo.rateBNB2USD
   const [now, setNow] = useState(moment().unix())
-  // console.log(poolInfo)
   useEffect(() => {
     setInterval(() => {
       setNow(moment().unix())
@@ -112,41 +102,41 @@ const DetailInfoPool: React.FC<
   return (
     <InfoDetail>
       <Line>
-        <Text fontSize={responsiveTextSize} style={{ fontWeight: 600 }}>
+        <Text style={{ color: '#ADABB2', fontWeight: 400 }} fontSize={responsiveTextSize}>
           Current Interest
         </Text>
-        <Text style={{ color: `${maincolor}` }} fontSize={responsiveTextSize} className="value">
+        <Text style={{ color: '#E2E1E5', fontWeight: '700' }} fontSize={responsiveTextSize} className="value">
           {<CountUp start={0} preserveValue delay={0} end={Number(currentInterest)} decimals={2} duration={0.5} />} %
         </Text>
       </Line>
       <Line>
-        <Text fontSize={responsiveTextSize} style={{ fontWeight: 600 }}>
+        <Text style={{ color: '#ADABB2', fontWeight: 400 }} fontSize={responsiveTextSize}>
           Lock Time
         </Text>
-        <Text style={{ color: '#48E3E3' }} fontSize={responsiveTextSize} className="value">
+        <Text style={{ color: '#E2E1E5', fontWeight: '700' }} fontSize={responsiveTextSize} className="value">
           {timeLock === 0 ? 0 : timeDisplay(timeLock * 57600)}
         </Text>
       </Line>
       <Line>
-        <Text fontSize={responsiveTextSize} style={{ fontWeight: 600 }}>
+        <Text style={{ color: '#ADABB2', fontWeight: 400 }} fontSize={responsiveTextSize}>
           Spend Time
         </Text>
-        <Text style={{ color: '#48E3E3' }} fontSize={responsiveTextSize} className="value">
+        <Text style={{ color: '#E2E1E5', fontWeight: '700' }} fontSize={responsiveTextSize} className="value">
           {startTime === 0 ? 0 : timeDisplay(Number(now - startTime))}
         </Text>
       </Line>
       <Line>
-        <Text fontSize={responsiveTextSize} style={{ fontWeight: 600 }}>
+        <Text style={{ color: '#ADABB2', fontWeight: 400 }} fontSize={responsiveTextSize}>
           Current Reward
         </Text>
         {currentReward === 0 ? (
-          <Text style={{ color: '#48E3E3' }} fontSize={responsiveTextSize} className="value">
+          <Text style={{ color: '#E2E1E5', fontWeight: '700' }} fontSize={responsiveTextSize} className="value">
             0
           </Text>
         ) : (
           <Amount>
-            <Text fontSize={responsiveTextSize} className="value">
-              ~{' '}
+            <Text style={{ color: '#E2E1E5' }} fontSize={responsiveTextSize} className="value">
+              {'$'}
               <CountUp
                 start={0}
                 preserveValue
@@ -155,12 +145,12 @@ const DetailInfoPool: React.FC<
                 decimals={currentReward > 0 ? 2 : 0}
                 duration={0.5}
               />
-              $
+              &nbsp;
             </Text>
             <Text
               fontSize={responsiveTextSizeBNB}
               className="value"
-              style={{ display: 'flex', alignItems: 'center', gap: 6 }}
+              style={{ display: 'flex', alignItems: 'center', gap: 6, color: '#ADABB2', fontWeight: '400' }}
             >
               ~{' '}
               <CountUp
@@ -171,23 +161,23 @@ const DetailInfoPool: React.FC<
                 decimals={totalReward > 0 ? 4 : 2}
                 duration={0.5}
               />{' '}
-              <img src={`/images/chains/${chainId}.png`} alt="pool name" width={18} />
+              <img src={images.vector} alt="pool name" width={18} />
             </Text>
           </Amount>
         )}
       </Line>
       <Line>
-        <Text fontSize={responsiveTextSize} style={{ fontWeight: 600 }}>
+        <Text fontSize={responsiveTextSize} style={{ fontWeight: 400, color: '#ADABB2' }}>
           Total Reward
         </Text>
         {totalReward === 0 ? (
-          <Text style={{ color: '#48E3E3' }} fontSize={responsiveTextSize} className="value">
+          <Text style={{ color: '#E2E1E5', fontWeight: '700' }} fontSize={responsiveTextSize} className="value">
             0
           </Text>
         ) : (
           <Amount>
             <Text fontSize={responsiveTextSize} className="value">
-              ~{' '}
+              {'$'}
               <CountUp
                 start={0}
                 preserveValue
@@ -196,12 +186,12 @@ const DetailInfoPool: React.FC<
                 decimals={totalReward > 0 ? 2 : 0}
                 duration={0.5}
               />
-              $
+              &nbsp;
             </Text>
             <Text
               fontSize={responsiveTextSizeBNB}
               className="value"
-              style={{ display: 'flex', alignItems: 'center', gap: 6 }}
+              style={{ display: 'flex', alignItems: 'center', gap: 6, color: '#ADABB2', fontWeight: '400' }}
             >
               ~{' '}
               <CountUp
@@ -212,18 +202,30 @@ const DetailInfoPool: React.FC<
                 decimals={totalReward > 0 ? 4 : 0}
                 duration={0.5}
               />{' '}
-              <img src={`/images/chains/${chainId}.png`} alt="pool name" width={18} />
+              <img src={images.vector} alt="pool name" width={18} />
             </Text>
           </Amount>
         )}
       </Line>
-      <Line className="total-lock">
+      <Line style={{ display: 'flex', flexDirection: 'column' }} className="total-lock">
         <Text
           fontSize={responsiveTextSize}
           className="value"
-          style={{ color: 'black', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+          style={{ color: '#ADABB2', fontWeight: '400', fontSize: '16px', lineHeight: '24px' }}
         >
-          Total Lock: &ensp;
+          Total Lock
+        </Text>
+        <Text
+          style={{
+            fontSize: '20px',
+            fontWeight: '700',
+            lineHeight: '30px',
+            color: '#E2E1E5',
+            display: 'flex',
+            flexDirection: 'row',
+          }}
+        >
+          {`$`}
           <CountUp
             start={0}
             preserveValue
@@ -232,8 +234,18 @@ const DetailInfoPool: React.FC<
             decimals={totalLock > 0 ? 2 : 0}
             duration={0.5}
           />
-          {`$ ~`}&ensp;
-          <div style={{ gap: 6, display: 'flex', alignItems: 'center' }}>
+          <div
+            style={{
+              gap: 6,
+              display: 'flex',
+              alignItems: 'center',
+              color: '#ADABB2',
+              fontSize: '16px',
+              lineHeight: '24px',
+              fontWeight: '400',
+            }}
+          >
+            &nbsp;{`~`}
             <CountUp
               start={0}
               preserveValue
@@ -241,16 +253,22 @@ const DetailInfoPool: React.FC<
               end={Number(totalLock)}
               decimals={totalLock > 0 ? 4 : 0}
               duration={0.5}
-              style={{ fontWeight: 600 }}
+              style={{ fontWeight: 400 }}
             />
             <img
-              src={`/images/chains/${chainId}.png`}
+              src={images.vector}
               alt="pool name"
               width={18}
               height={18}
               style={{ transform: 'translate(0, -1px)' }}
             />
           </div>
+        </Text>
+      </Line>
+      <Line>
+        <Text className="note">
+          <span>Please note:</span> after 7 days of deposit, you can&lsquo;t add more to this pool. If you would like to
+          stake more, you can stake a different wallet or a different pool.
         </Text>
       </Line>
     </InfoDetail>
