@@ -270,6 +270,12 @@ const TitleContent = styled(Text)`
   font-style: normal;
   font-weight: 700;
   line-height: 38px;
+  @media screen and (max-width: 575px) {
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 30px;
+  }
 `
 const LabelContent = styled(Text)`
   font-size: 14px;
@@ -825,6 +831,7 @@ const Pools = () => {
       setUserClaimed(infoRank[1])
     }
   }
+
   // BALANCE
   const { data, isFetched } = useBalance({
     addressOrName: contracts.pools[CHAIN_ID],

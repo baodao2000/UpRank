@@ -406,11 +406,11 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
           </ItemInfoCard>
           <ItemInfoCard>
             <Label>Member direct</Label>
-            <Value>${userRank.direct}</Value>
+            <Value>{userRank.direct}</Value>
           </ItemInfoCard>
           <ItemInfoCard>
             <Label>Member downline:</Label>
-            <Value>${userRank.downline}</Value>
+            <Value>{userRank.downline}</Value>
           </ItemInfoCard>
         </CardBody>
       </CardNextRanks>
@@ -452,7 +452,7 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
                 start={0}
                 preserveValue
                 delay={0}
-                end={nextRankRequire[userRank.rank].volumnOnTree}
+                end={userRank.volumnOnTree}
                 decimals={0}
                 duration={0.5}
                 style={{ color: 'inherit !important' }}
@@ -461,11 +461,11 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
           </ItemInfoCard>
           <ItemInfoCard style={{ color: canUpRank3 ? '#fff' : 'gray' }}>
             <Label>Member direct</Label>
-            <Value>${nextRankRequire[userRank.rank].direct}</Value>
+            <Value>{userRank.direct}</Value>
           </ItemInfoCard>
           <ItemInfoCard style={{ color: canUpRank4 ? '#fff' : 'gray' }}>
             <Label>Member downline</Label>
-            <Value>${nextRankRequire[userRank.rank].downline}</Value>
+            <Value>{userRank.downline}</Value>
           </ItemInfoCard>
         </CardBody>
       </CardYourRanks>
@@ -477,50 +477,52 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
           </HeadLeft>
         </CardHead>
         <CardBody>
-          <ItemInfoCard style={{ color: canUpRank1 ? '#fff' : 'gray' }}>
-            <Label>Locked</Label>
-            <ValueLocked style={{ color: 'rgba(226, 225, 229, 1)' }}>
-              {userRank.locked}
-              <div
-                style={{
-                  background: 'var(--black-black-60, rgba(0, 0, 0, 0.60))',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  backdropFilter: 'blur(6px)',
-                  borderRadius: '4px',
-                  width: '24px',
-                  height: '24px',
-                }}
-              >
-                <img width="18px" height="16px" src="./images/V3/Vector.png" />
-              </div>
-            </ValueLocked>
-          </ItemInfoCard>
-          <ItemInfoCard style={{ color: canUpRank2 ? '#fff' : 'gray' }}>
-            <Label>Volumn on tree</Label>
-            <Value>
-              $
-              <CountUp
-                separator=","
-                start={0}
-                preserveValue
-                delay={0}
-                end={nextRankRequire[userRank.rank].volumnOnTree}
-                decimals={0}
-                duration={0.5}
-                style={{ color: 'inherit !important' }}
-              />
-            </Value>
-          </ItemInfoCard>
-          <ItemInfoCard style={{ color: canUpRank3 ? '#fff' : 'gray' }}>
-            <Label>Member direct</Label>
-            <Value>${nextRankRequire[userRank.rank].direct}</Value>
-          </ItemInfoCard>
-          <ItemInfoCard style={{ color: canUpRank4 ? '#fff' : 'gray' }}>
-            <Label>Member downline</Label>
-            <Value>${nextRankRequire[userRank.rank].downline}</Value>
-          </ItemInfoCard>
+          <>
+            <ItemInfoCard style={{ color: canUpRank1 ? '#fff' : 'gray' }}>
+              <Label>Locked</Label>
+              <ValueLocked style={{ color: 'rgba(226, 225, 229, 1)' }}>
+                {userRank.locked}
+                <div
+                  style={{
+                    background: 'var(--black-black-60, rgba(0, 0, 0, 0.60))',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    backdropFilter: 'blur(6px)',
+                    borderRadius: '4px',
+                    width: '24px',
+                    height: '24px',
+                  }}
+                >
+                  <img width="18px" height="16px" src="./images/V3/Vector.png" />
+                </div>
+              </ValueLocked>
+            </ItemInfoCard>
+            <ItemInfoCard style={{ color: canUpRank2 ? '#fff' : 'gray' }}>
+              <Label>Volumn on tree</Label>
+              <Value>
+                $
+                <CountUp
+                  separator=","
+                  start={0}
+                  preserveValue
+                  delay={0}
+                  end={userRank.volumnOnTree}
+                  decimals={0}
+                  duration={0.5}
+                  style={{ color: 'inherit !important' }}
+                />
+              </Value>
+            </ItemInfoCard>
+            <ItemInfoCard style={{ color: canUpRank3 ? '#fff' : 'gray' }}>
+              <Label>Member direct</Label>
+              <Value>{userRank.direct}</Value>
+            </ItemInfoCard>
+            <ItemInfoCard style={{ color: canUpRank4 ? '#fff' : 'gray' }}>
+              <Label>Member downline</Label>
+              <Value>{userRank.downline}</Value>
+            </ItemInfoCard>
+          </>
         </CardBody>
         {/* <div style={{ textAlign: 'center', marginTop: 8 }}>
           <StyledButtonRank disabled={!canUpRank} onClick={handleConfirmUpRank}>
