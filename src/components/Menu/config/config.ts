@@ -112,7 +112,7 @@ const config: (
           label: t('V2'),
           labelItem: t('Ver2.0'),
           href: '/pools',
-          icon: NewIcon,
+          icon: '/images/V3/iconNew.svg',
           showItemsOnMobile: true,
           items: [].map((item) => addMenuItemSupported(item, chainId)),
         },

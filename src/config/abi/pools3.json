@@ -417,13 +417,6 @@
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "contract IERC20", "name": "token", "type": "address" }],
-    "name": "inCaseTokensGetStuck",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
     "inputs": [],
     "name": "interestDecimal",
     "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
