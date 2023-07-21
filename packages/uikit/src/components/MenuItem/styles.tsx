@@ -15,8 +15,9 @@ const StyledMenuItem = styled.a<StyledMenuItemProps>`
   color: #d2d6ef;
   font-size: 25px;
   font-weight: 800;
+  // align-items: flex-start;
+  flex-direction: row-reverse;
   font-family: Inter, sans-serif;
-
   background: ${({ $isActive }) => ($isActive ? "rgba(175, 137, 238, 0.20)" : "blackrgba(39,38,44,0.7)")};
   border-radius: ${({ $isActive }) => ($isActive ? "16px" : "16px")};
   background: ${({ $isActive }) => ($isActive ? "rgba(175, 137, 238, 0.20)" : "black")};
@@ -42,8 +43,8 @@ const StyledMenuItem = styled.a<StyledMenuItemProps>`
     height: 48px;
   `
       : `
-    padding: 20px;
-    height: 42px;
+    padding:  20px 20px;
+    height: 50px;
   `}
 
   &:hover {

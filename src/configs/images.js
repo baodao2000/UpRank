@@ -99,6 +99,7 @@ const images = {
   bronze: 'images/V3/bronzebg.png',
   homeMobile: '/images/Frame1.svg',
   checkk: 'images/V3/check.svg',
+  iconNew: '/images/V3/newV3.jpg',
 }
 
 export default images
