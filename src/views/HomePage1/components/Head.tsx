@@ -40,7 +40,6 @@ const ContentHead = styled.div`
 
 p {
   max-width: 690px;
-  margin-bottom: 20px;
   @media (max-width: 575px) {
     max-width: 300px;
     margin-bottom: 16px;
@@ -107,9 +106,11 @@ const ContentHeadRight = styled.div`
 
 const ImageHead = styled.img`
   max-width: 850px;
-  max-height: 650px;
-  width: 100%;
-  height: 100%;
+  max-height: 590px;
+  @media screen and (max-width: 1400px) {
+    width: 100%;
+    height: 100%;
+  }
 `
 const H5ShowMb = styled.h5`
   font-size: 18px;

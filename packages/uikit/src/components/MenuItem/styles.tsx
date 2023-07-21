@@ -13,8 +13,10 @@ const StyledMenuItem = styled.a<StyledMenuItemProps>`
   display: flex;
   align-items: center;
   color: #d2d6ef;
-  font-size: 25px;
-  font-weight: 800;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px;
   // align-items: flex-start;
   flex-direction: row-reverse;
   font-family: Inter, sans-serif;
