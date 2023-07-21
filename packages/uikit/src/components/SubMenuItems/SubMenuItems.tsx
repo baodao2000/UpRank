@@ -12,7 +12,10 @@ import StyledSubMenuItems, {
   SubMenuItemWrapper,
 } from "./styles";
 import { SubMenuItemsProps } from "./types";
-
+import styled from "styled-components";
+const Text = styled.div`
+  font-size: 18px;
+`;
 const SUBMENU_CHEVRON_CLICK_MOVE_PX = 100;
 const SUBMENU_SCROLL_DEVIATION = 3;
 
@@ -92,13 +95,15 @@ const SubMenuItems: React.FC<React.PropsWithChildren<SubMenuItemsProps>> = ({
                   {...itemProps}
                   {...linkProps}
                 >
-                  {Icon && <img style={{ width: "24px", height: "24px" }} src={icon} />}
-                  {labelItem ? labelItem : label}
-                  {isExternalLink && (
-                    <Box display={["none", null, "flex"]} style={{ alignItems: "center" }} ml="4px">
-                      <OpenNewIcon color="textSubtle" />
-                    </Box>
-                  )}
+                  <div style={{ display: "flex", flexDirection: "row-reverse", alignItems: "flex-start", gap: "10px" }}>
+                    {Icon && <img style={{ width: "20px", height: "20px" }} src={icon} />}
+                    <Text>{labelItem ? labelItem : label}</Text>
+                    {isExternalLink && (
+                      <Box display={["none", null, "flex"]} style={{ alignItems: "center" }} ml="4px">
+                        <OpenNewIcon color="textSubtle" />
+                      </Box>
+                    )}
+                  </div>
                 </MenuItem>
               </StyledSubMenuItemWrapper>
             )

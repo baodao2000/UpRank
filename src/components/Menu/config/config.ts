@@ -109,7 +109,7 @@ const config: (
       fillIcon: PoolIcon,
       items: [
         {
-          label: t('V2'),
+          label: t('Ver 2'),
           labelItem: t('Ver2.0'),
           href: '/pools',
           icon: '/images/V3/iconNew.svg',
@@ -117,7 +117,7 @@ const config: (
           items: [].map((item) => addMenuItemSupported(item, chainId)),
         },
         {
-          label: t('V1'),
+          label: t('Ver 1'),
           labelItem: t('Ver1.0'),
           href: '/pools_V1',
           showItemsOnMobile: false,
