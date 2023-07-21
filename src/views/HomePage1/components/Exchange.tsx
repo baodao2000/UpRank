@@ -466,7 +466,7 @@ const Exchange = (props) => {
       <ContentRight>
         <ChartPart>
           <ChartInfo>
-            <ImgCoin src="./images/V3/iconV3.gif" alt="" />
+            <ImgCoin src="./images/V3/LogoCoin.gif" alt="" />
             <WrapperInfoText>
               <StyledTextProject style={{ display: 'inline', marginLeft: 10, color: 'rgba(173, 171, 178, 1)' }}>
                 Projected {period.current} years interest
