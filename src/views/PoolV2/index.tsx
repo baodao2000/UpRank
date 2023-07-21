@@ -736,7 +736,7 @@ const Pools = () => {
         const newPoolInfo = await Promise.all(
           pools.map((items) => {
             return {
-              title: ['Small Fish', 'Fomo', 'Miner', 'Medium Fish', 'Shark', 'Whale'],
+              title: ['Experience', 'Starter', 'Standard', 'Pro', 'Advance', 'Premium'],
               currentInterest: ((Number(items.currentInterest.toString()) / 10000) * 365).toFixed(2),
               enable: items.enable,
               maxLock: formatEther(items.maxLock),
@@ -758,7 +758,7 @@ const Pools = () => {
             const userLockAndPool = await getPoolV3Contract.users(account, id)
             // console.log(Number(formatEther(userLockAndPool.totalLock)), id)
             return {
-              title: ['Small Fish', 'Fomo', 'Miner', 'Medium Fish', 'Shark', 'Whale'],
+              title: ['Experience', 'Starter', 'Standard', 'Pro', 'Advance', 'Premium'],
               currentInterest: ((Number(item.currentInterest.toString()) / 10000) * 365).toFixed(2),
               enable: item.enable,
               maxLock: formatEther(item.maxLock),

@@ -11,7 +11,10 @@ interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   prefetch?: boolean
 }
 
-const A = styled.a``
+const A = styled.a`
+  display: flex;
+  gap: 10px;
+`
 
 /**
  * temporary solution for migrating React Router to Next.js Link

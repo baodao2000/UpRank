@@ -18,6 +18,7 @@ const StyledSubMenuItems = styled(Flex)`
   white-space: nowrap;
   scroll-behavior: smooth;
   flex-grow: 1;
+  justify-content: space-between:
   background-color: black;
   box-shadow: inset 0px -2px 0px -8px rgba(133, 133, 133, 0.1);
   overflow-x: scroll;
