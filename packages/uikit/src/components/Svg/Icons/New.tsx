@@ -4,7 +4,7 @@ import { SvgProps } from "../types";
 
 const Icon: React.FC<React.PropsWithChildren<SvgProps>> = (props) => {
   return (
-    <Svg width="30px" viewBox="0 0 512 512" {...props}>
+    <Svg width="20px" viewBox="0 0 512 512" {...props}>
       <path
         fill="#000000"
         opacity="1.000000"
