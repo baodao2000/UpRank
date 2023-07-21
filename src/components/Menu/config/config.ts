@@ -12,6 +12,11 @@ import {
   NftFillIcon,
   MoreIcon,
   VoteIcon,
+  NewIcon,
+  PoolV2Icon,
+  MinningIcon,
+  TokenomicIcon,
+  ReferralIcon,
   TokenPocketIcon,
 } from '@pancakeswap/uikit'
 import { ContextApi } from '@pancakeswap/localization'
@@ -20,6 +25,7 @@ import { perpLangMap } from 'utils/getPerpetualLanguageCode'
 import { perpTheme } from 'utils/getPerpetualTheme'
 import { DropdownMenuItems } from '@pancakeswap/uikit/src/components/DropdownMenu/types'
 import { SUPPORT_ONLY_BSC } from 'config/constants/supportChains'
+import images from 'configs/images'
 
 export type ConfigMenuDropDownItemsType = DropdownMenuItems & { hideSubNav?: boolean }
 export type ConfigMenuItemsType = Omit<MenuItemsType, 'items'> & { hideSubNav?: boolean; image?: string } & {
@@ -106,6 +112,7 @@ const config: (
           label: t('V2'),
           labelItem: t('Ver2.0'),
           href: '/pools',
+          icon: NewIcon,
           showItemsOnMobile: true,
           items: [].map((item) => addMenuItemSupported(item, chainId)),
         },

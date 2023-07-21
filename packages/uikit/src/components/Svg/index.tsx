@@ -158,4 +158,10 @@ export { default as RocketIcon } from "./Icons/RocketIcon";
 export { default as Svg } from "./Svg";
 export { default as BraveIcon } from "./Icons/Brave";
 export { default as BloctoIcon } from "./Icons/Blocto";
+export { default as NewIcon } from "./Icons/New";
+export { default as PoolV2Icon } from "./Icons/PoolsV2";
+export { default as MinningIcon } from "./Icons/MInning";
+export { default as TokenomicIcon } from "./Icons/Tokenomic";
+export { default as ReferralIcon } from "./Icons/Referral";
+
 export type { SvgProps } from "./types";

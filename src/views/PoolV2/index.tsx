@@ -827,6 +827,12 @@ const Pools = () => {
   }
   // BALANCE
   const { data, isFetched } = useBalance({
+    addressOrName: contracts.pools[CHAIN_ID],
+  })
+  const { data: data2, isFetched: isFetched2 } = useBalance({
+    addressOrName: contracts.poolsV2[CHAIN_ID],
+  })
+  const { data: data3, isFetched: isFetched3 } = useBalance({
     addressOrName: contracts.poolsV3[CHAIN_ID],
   })
   // console.log(contracts.poolsV3[CHAIN_ID])
@@ -836,7 +842,13 @@ const Pools = () => {
   //   addressOrName: contracts.poolsV2[CHAIN_ID],
   // })
 
-  const balance = isFetched && data && data.value ? formatBigNumber(data.value, 6) : 0
+  const balance =
+    isFetched && data && data.value && isFetched2 && data2 && data2.value && data3 && isFetched3
+      ? formatBigNumber(data.value.add(data2.value).add(data3.value), 6)
+      : 0
+  // const balance = isFetched && data && data.value && isFetched2 && data2 && data2.value && data3 && isFetched3 && data3.value
+  //     ? formatBigNumber(data3.value, 6)
+  //     : 0
   const unit = NATIVE[chainId].symbol
 
   const onSuccess = () => {
