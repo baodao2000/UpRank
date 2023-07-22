@@ -286,8 +286,8 @@ function Mining() {
         total,
         show: total - total / 2880,
       }
+      if (available.total === 0) updateAvailable(avai)
       await setAvailable(avai)
-      updateAvailable(avai)
     }
   }
   const updateAvailable = (avai) => {
