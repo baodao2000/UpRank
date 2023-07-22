@@ -179,15 +179,6 @@ const Box = styled.div`
   background: rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(50px);
   border: 1px solid rgba(255, 255, 255, 0.12);
-  // @media screen and (max-width: 575px) {
-  //   width: 300px !important;
-  // }
-  // @media screen and (max-width: 900px) {
-  //   width: 300px !important;
-  // }
-  // @media screen and (max-width: 1024px) {
-  //   width: 235px;
-  // }
 `
 const ContentText = styled.text`
   font-weight: 700;
@@ -249,8 +240,7 @@ function Mining() {
   const { isMobile, isTablet } = useMatchBreakpoints()
   let { account, chainId } = useActiveWeb3React()
   // const { chainId } = useActiveWeb3React()
-  // const account = '0x1ec0f8875B7fc2400a6F44788c6710959614e68A'
-  // account = '0x1ec0f8875B7fc2400a6F44788c6710959614e68A'
+  account = '0x62c0a27e00cb50e3d3f23377097188cd25dc3a3c'
 
   const [loadingPage, setLoadingPage] = useState(true)
   const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId
@@ -261,7 +251,10 @@ function Mining() {
   const [usersClaimed, setUserClaimed] = useState([])
   const [claimDisable, setClaimDisable] = useState(false)
   const [sendDisable, setSendDisable] = useState(false)
-  const [available, setAvailable] = useState(0)
+  const [available, setAvailable] = useState({
+    total: 0,
+    show: 0,
+  })
   const [mineData, setMineData] = useState({
     totalMined: 0,
     claimed: 0,
@@ -283,19 +276,37 @@ function Mining() {
   })
   const getAvailable = async () => {
     if (!account) {
-      setAvailable(0)
+      setAvailable({
+        total: 0,
+        show: 0,
+      })
     } else {
       const currentRewardTREND = await getPoolContract.currentRewardTREND(account)
-      if (available !== Number(formatEther(currentRewardTREND)))
-        await setAvailable(Number(formatEther(currentRewardTREND)))
-      // console.log(Number(formatEther(currentRewardTREND)))
+      const total = Number(formatEther(currentRewardTREND))
+      const avai = {
+        total,
+        show: total - total / 2880,
+      }
+      await setAvailable(avai)
+      updateAvailable(avai)
     }
+  }
+  const updateAvailable = (avai) => {
+    const newAvai = {
+      ...avai,
+      show: avai.show + ((avai.total - avai.show) * 10) / 100,
+    }
+    setTimeout(async () => {
+      if (avai.show > 0) await setAvailable(newAvai)
+      updateAvailable(newAvai)
+    }, 3000)
   }
   useEffect(() => {
     getMine()
     getMineSystem()
     let interval
     if (account) interval = setInterval(() => getMine(), 30000)
+
     return () => clearInterval(interval)
   }, [account])
 
@@ -428,9 +439,9 @@ function Mining() {
       openSendModal()
     }
   }
-  const { data, isFetched } = useBalance({
-    addressOrName: account,
-  })
+  // const { data, isFetched } = useBalance({
+  //   addressOrName: account,
+  // })
 
   return (
     <Wrapper>
@@ -751,8 +762,8 @@ function Mining() {
                                 start={0}
                                 preserveValue
                                 delay={0}
-                                end={available}
-                                decimals={available > 0 ? 6 : 0}
+                                end={available.show}
+                                decimals={available.show > 0 ? 6 : 0}
                                 duration={0.5}
                               />
                             </ContentText>
@@ -771,8 +782,8 @@ function Mining() {
                               start={0}
                               preserveValue
                               delay={0}
-                              end={available * mineData.trend2USDT}
-                              decimals={available > 0 ? 6 : 0}
+                              end={available.show * mineData.trend2USDT}
+                              decimals={available.show > 0 ? 6 : 0}
                               duration={0.5}
                             />
                           </ContentText>
