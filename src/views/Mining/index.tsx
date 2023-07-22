@@ -273,21 +273,27 @@ function Mining() {
     totalMined: 0,
     totalClaimed: 0,
   })
-  const getAvailable = async () => {
+  const initAvailable = async () => {
+    const currentRewardTREND = await getPoolContract.currentRewardTREND(account)
+    const total = Number(formatEther(currentRewardTREND))
+    const avai = {
+      total,
+      show: total - total / 2880,
+    }
+    if (available.total === 0) updateAvailable(avai)
+    await setAvailable(avai)
+  }
+  const getAvailable = () => {
     if (!account) {
       setAvailable({
         total: 0,
         show: 0,
       })
     } else {
-      const currentRewardTREND = await getPoolContract.currentRewardTREND(account)
-      const total = Number(formatEther(currentRewardTREND))
-      const avai = {
-        total,
-        show: total - total / 2880,
-      }
-      if (available.total === 0) updateAvailable(avai)
-      await setAvailable(avai)
+      initAvailable()
+      setTimeout(async () => {
+        initAvailable()
+      }, 30000)
     }
   }
   const updateAvailable = (avai) => {
@@ -303,10 +309,6 @@ function Mining() {
   useEffect(() => {
     getMine()
     getMineSystem()
-    let interval
-    if (account) interval = setInterval(() => getMine(), 30000)
-
-    return () => clearInterval(interval)
   }, [account])
 
   const [openClaimModal, onDismissModal] = useModal(
