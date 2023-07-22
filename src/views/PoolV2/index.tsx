@@ -1004,15 +1004,6 @@ const Pools = () => {
             <TrendyPageLoader />
           ) : (
             <>
-              {!account ? null : (
-                <Rank
-                  unit={unit}
-                  ranks={ranks}
-                  userRank={userRank}
-                  onSuccess={onSuccessRank}
-                  userIsClaim={userClaimed}
-                />
-              )}
               <Body>
                 <PoolsList>
                   {arr.map((i, r) => {
@@ -1466,6 +1457,15 @@ const Pools = () => {
                   </PoolsReward>
                 </Flex>
               </PageHeader>
+              {!account ? null : (
+                <Rank
+                  unit={unit}
+                  ranks={ranks}
+                  userRank={userRank}
+                  onSuccess={onSuccessRank}
+                  userIsClaim={userClaimed}
+                />
+              )}
             </>
           )}
         </Background>
