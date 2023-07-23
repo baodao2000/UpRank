@@ -81,7 +81,7 @@ const images = {
   chart2down: '/images/homepage/chart2down.gif',
   chart3down: '/images/homepage/chart3down.gif',
   chart4down: '/images/homepage/chart4down.gif',
-  headhome: '/images/homepage/headhome1.svg',
+  headhome: '/images/V3/headhome.gif?t=1',
   step1: '/images/homepage/step1.png',
   step2: '/images/homepage/step2.png',
   step3: '/images/homepage/step3.png',

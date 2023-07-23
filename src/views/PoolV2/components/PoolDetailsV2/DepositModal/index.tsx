@@ -9,7 +9,7 @@ import { trendyColors } from 'style/trendyTheme'
 import useConfirmTransaction from 'hooks/useConfirmTransaction'
 import { useCallWithMarketGasPrice } from 'hooks/useCallWithMarketGasPrice'
 import { useCallWithGasPrice } from 'hooks/useCallWithGasPriceV2'
-import { usePoolsContract, usePoolsV2Contract, usePoolsV3Contract } from 'hooks/useContract'
+import { usePoolsV4Contract } from 'hooks/useContract'
 import { ToastDescriptionWithTx } from 'components/Toast'
 import CountUp from 'react-countup'
 import { ethers } from 'ethers'
@@ -219,15 +219,6 @@ const StyledInput = styled(Input)`
     border: 3px solid #8544f5;
   }
 `
-const CheckMineNew = styled.div`
-  display: flex;
-  padding: 8px;
-  align-items: center;
-  gap: 8px;
-  align-self: stretch;
-  border-radius: 8px;
-  background: var(--primary-primary-gradient-2, linear-gradient(180deg, #7b3fe4 0%, #a726c1 100%));
-`
 
 const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>> = ({
   pool,
@@ -236,12 +227,10 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
   onDismiss,
   onSuccess,
 }) => {
-  const { callWithMarketGasPrice } = useCallWithMarketGasPrice()
   const { callWithGasPrice } = useCallWithGasPrice()
   const [confirmedTxHash, setConfirmedTxHash] = useState('')
   const { t } = useTranslation()
   const { toastSuccess, toastError } = useToast()
-  const { theme } = useTheme()
   const minLockMatic =
     chainId === 137
       ? Number(Number(pool.minLock / pool.rateBNB2USD) + 0.01)
@@ -250,7 +239,7 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
   const maxLockMatic = Number(pool.maxLock / pool.rateBNB2USD).toFixed(4)
   const [amount, setAmount] = useState(minLockMatic.toFixed(4))
   const [isValidAmount, setIsValidAmount] = useState(true)
-  const poolContract = usePoolsV3Contract()
+  const poolContract = usePoolsV4Contract()
   const handleAmountChange = (e: any) => {
     setAmount(e.target.value)
     checkAmount(e.target.value)
@@ -263,13 +252,9 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
   const [checked, setChecked] = useState(false)
   const [pid, setPid] = useState(pool.pid)
   const [isLoading, setIsLoading] = useState(true)
-  const [userTime, setUserTime] = useState(0)
   const [disabledDiposit, setDisabledDeposit] = useState(false)
   const checkAmount = (value: any) => {
-    if (
-      // value > Number((pool.maxLock / pool.rateBNB2USD).toFixed(4)) ||
-      value < Number((pool.minLock / pool.rateBNB2USD).toFixed(4))
-    ) {
+    if (value < Number((pool.minLock / pool.rateBNB2USD).toFixed(4))) {
       setIsValidAmount(false)
     } else setIsValidAmount(true)
   }
@@ -576,32 +561,9 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
                     type="checkBox"
                   />
                   <Text>Mine TREND</Text>
-                  {/* <img src={images.checkcircle} alt="check" /> */}
                   {mine ? <img src="/images/V3/check.svg" alt="check" /> : null}
-                  {/* <img src="/images/V3/check.svg" alt="check" /> */}
-                  {/* <Switch>
-                    <label htmlFor="switchMine" className="switch">
-                      <input id="switchMine" onChange={onChange} disabled={userTotal} type="checkbox" />
-                      <span className="slider round"></span>
-                    </label>
-                  </Switch> */}
                 </CheckMine>
-                //   <CheckMineNew>
-                //   <input className="checkBox" type="checkbox" />
-                //   <p>Mining TREND Token</p>
-                // </CheckMineNew>
               )}
-              {/* {pool.pid.toString() === '0' ? null : (
-                <CheckMine>
-                  <Text>Mine TREND</Text>
-                  <Switch>
-                    <label htmlFor="switchMine" className="switch">
-                      <input id="switchMine" onChange={onChange} disabled={userTotal} type="checkbox" />
-                      <span className="slider round"></span>
-                    </label>
-                  </Switch>
-                </CheckMine>
-              )} */}
             </>
           ) : (
             <>
@@ -617,53 +579,10 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
                       type="checkBox"
                     />
                     <Text>Mine TREND</Text>
-                    {/* <img src={images.checkcircle} alt="check" /> */}
                     {mine ? <img src="/images/V3/check.svg" alt="check" /> : null}
-                    {/* <img src="/images/V3/check.svg" alt="check" /> */}
-                    {/* <Switch>
-                    <label htmlFor="switchMine" className="switch">
-                      <input id="switchMine" onChange={onChange} disabled={userTotal} type="checkbox" />
-                      <span className="slider round"></span>
-                    </label>
-                  </Switch> */}
                   </CheckMine>
-                  {/* <CheckMine>
-                    <Text>Mine TREND</Text>
-                    <Switch>
-                      <label htmlFor="switchMine" className="switch">
-                        <input
-                          id="switchMine"
-                          defaultChecked={checked}
-                          onChange={onChange}
-                          disabled={userTotal}
-                          type="checkbox"
-                        />
-                        <span style={{ background: '#ccc' }} className="slider round"></span>
-                      </label>
-                    </Switch>
-                  </CheckMine> */}
                 </>
               )}
-
-              {/* {pool.pid.toString() === '0' ? null : (
-                <>
-                  <CheckMine>
-                    <Text>Mine TREND</Text>
-                    <Switch>
-                      <label htmlFor="switchMine" className="switch">
-                        <input
-                          id="switchMine"
-                          defaultChecked={checked}
-                          onChange={onChange}
-                          disabled={userTotal}
-                          type="checkbox"
-                        />
-                        <span style={{ background: '#ccc' }} className="slider round"></span>
-                      </label>
-                    </Switch>
-                  </CheckMine>
-                </>
-              )} */}
             </>
           )}
 

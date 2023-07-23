@@ -1,14 +1,12 @@
 import { useTranslation } from '@pancakeswap/localization'
 import { Box, Modal, useToast, Button, Input, Text } from '@pancakeswap/uikit'
-import { useWeb3LibraryContext, useWeb3React } from '@pancakeswap/wagmi'
 import CountUp from 'react-countup'
-import useTheme from 'hooks/useTheme'
 import { useState } from 'react'
 import styled from 'styled-components'
 import { trendyColors } from 'style/trendyTheme'
 import useConfirmTransaction from 'hooks/useConfirmTransaction'
 import { useCallWithMarketGasPrice } from 'hooks/useCallWithMarketGasPrice'
-import { usePoolsContract, usePoolsV2Contract, usePoolsV3Contract } from 'hooks/useContract'
+import { usePoolsContract, usePoolsV2Contract, usePoolsV4Contract } from 'hooks/useContract'
 import { ToastDescriptionWithTx } from 'components/Toast'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { ChainId } from '../../../../../../packages/swap-sdk/src/constants'
@@ -92,11 +90,8 @@ const ClaimPoolModal: React.FC<React.PropsWithChildren<ClaimPoolModalProps>> = (
   const { t } = useTranslation()
   const { toastSuccess, toastError } = useToast()
   const [isValidAmount, setIsValidAmount] = useState(true)
-  const poolContract = usePoolsV3Contract()
-  // const poolV2Contract = usePoolsV2Contract()
-  const { chainId } = useActiveWeb3React()
+  const poolContract = usePoolsV4Contract()
 
-  // console.log(pool)
   const { isConfirming, handleConfirm } = useConfirmTransaction({
     onConfirm: () => {
       return callWithMarketGasPrice(poolContract, 'claimReward', [pool.pid])

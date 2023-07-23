@@ -131,6 +131,9 @@ export const getPoolsV2Address = (chainId?: number) => {
 export const getPoolsV3Address = (chainId?: number) => {
   return getAddress(addresses.poolsV3, chainId)
 }
+export const getPoolsV4Address = (chainId?: number) => {
+  return getAddress(addresses.poolsV4, chainId)
+}
 export const getTrendAddress = (chainId?: number) => {
   return getAddress(addresses.trend, chainId)
 }
