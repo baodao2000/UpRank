@@ -840,9 +840,9 @@ const Pools = () => {
     addressOrName: contracts.poolsV2[CHAIN_ID],
   })
   const { data: data3, isFetched: isFetched3 } = useBalance({
-    addressOrName: contracts.poolsV3[CHAIN_ID],
+    addressOrName: contracts.poolsV4[CHAIN_ID],
   })
-  // console.log(contracts.poolsV3[CHAIN_ID])
+  // console.log(contracts.poolsV4[CHAIN_ID])
   // console.log(data , isFetched);
 
   // const { data: data2, isFetched: isFetched2 } = useBalance({
@@ -978,14 +978,14 @@ const Pools = () => {
             <span style={{ color: 'rgba(173, 171, 178, 1)' }}>Root Contract:</span>
             <LinkExternal
               fontSize="14px"
-              href={getBlockExploreLink(contracts.poolsV3[CHAIN_ID], 'address', CHAIN_ID)}
+              href={getBlockExploreLink(contracts.poolsV4[CHAIN_ID], 'address', CHAIN_ID)}
               ellipsis={true}
               style={{ color: 'rgba(249, 249, 249, 1)' }}
               color="#00F0E1"
             >
-              {shortenURL(`${contracts.poolsV3[CHAIN_ID]}`, 18)}
+              {shortenURL(`${contracts.poolsV4[CHAIN_ID]}`, 18)}
             </LinkExternal>
-            <a href={getBlockExploreLink(contracts.poolsV3[CHAIN_ID], 'address', CHAIN_ID)} className="link">
+            <a href={getBlockExploreLink(contracts.poolsV4[CHAIN_ID], 'address', CHAIN_ID)} className="link">
               Check Details
             </a>{' '}
           </LabelContent>
@@ -1401,12 +1401,12 @@ const Pools = () => {
                       <Text style={{ color: '#C5C5C5' }} ellipsis={true}>
                         <LinkExternal
                           fontSize={['14px', '16px', '18px', '20px', '22px']}
-                          href={getBlockExploreLink(contracts.poolsV3[CHAIN_ID], 'address', CHAIN_ID)}
+                          href={getBlockExploreLink(contracts.poolsV4[CHAIN_ID], 'address', CHAIN_ID)}
                           ellipsis={true}
                           style={{ color: 'rgba(249, 249, 249, 1)' }}
                           color="#00F0E1"
                         >
-                          {shortenURL(`Root Contract: ${contracts.poolsV3[CHAIN_ID]}`, 35)}
+                          {shortenURL(`Root Contract: ${contracts.poolsV4[CHAIN_ID]}`, 35)}
                         </LinkExternal>
                       </Text>
                     </LineText>
