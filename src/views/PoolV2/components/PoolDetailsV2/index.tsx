@@ -412,7 +412,8 @@ const Pool = ({ poolId }) => {
               <Button
                 style={{ color: '#000', backgroundColor: '#D9D9D9' }}
                 variant={poolInfo.currentReward > 0 ? 'danger' : 'light'}
-                disabled={poolInfo.currentReward === 0}
+                disabled
+                // disabled={poolInfo.currentReward === 0}
                 width={['120px', '150px', '180px', '200px']}
                 height={48}
                 onClick={openClaimModal}
@@ -427,11 +428,12 @@ const Pool = ({ poolId }) => {
                 height={48}
                 onClick={() => handleOpenDepositModal()}
                 scale={isMobile ? 'sm' : 'md'}
-                disabled={
-                  chainId === 97
-                    ? poolInfo.startTime > 0 && now - poolInfo.startTime > 3600
-                    : poolInfo.startTime > 0 && now - poolInfo.startTime > 604800
-                }
+                disabled
+                // disabled={
+                //   chainId === 97
+                //     ? poolInfo.startTime > 0 && now - poolInfo.startTime > 3600
+                //     : poolInfo.startTime > 0 && now - poolInfo.startTime > 604800
+                // }
               >
                 Deposit
               </Button>
