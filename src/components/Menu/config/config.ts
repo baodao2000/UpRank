@@ -105,8 +105,8 @@ const config: (
       label: t('Pools'),
       showItemsOnMobile: false,
       href: '/pools',
-      icon: PoolIcon,
-      fillIcon: PoolIcon,
+      icon: PoolV2Icon,
+      fillIcon: PoolV2Icon,
       items: [
         {
           label: t('Ver 2'),
@@ -130,7 +130,9 @@ const config: (
       label: t('Referral'),
       href: '/referral',
       showItemsOnMobile: false,
-      icon: NftIcon,
+      icon: ReferralIcon,
+      fillIcon: ReferralIcon,
+
       items: [].map((item) => addMenuItemSupported(item, chainId)),
     },
     // {
@@ -144,14 +146,14 @@ const config: (
       label: t('Tokenomic '),
       href: '/tokenomic',
       showItemsOnMobile: false,
-      icon: EarnIcon,
+      icon: TokenomicIcon,
       items: [].map((item) => addMenuItemSupported(item, chainId)),
     },
     {
       label: t('Mining'),
       href: '/mining',
       showItemsOnMobile: false,
-      icon: VoteIcon,
+      icon: MinningIcon,
       items: [].map((item) => addMenuItemSupported(item, chainId)),
     },
     // {

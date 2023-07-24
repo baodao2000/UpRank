@@ -2,12 +2,13 @@ import styled from "styled-components";
 import { Text } from "../Text";
 
 export const StyledBottomNavItem = styled.button`
-  display: block;
+  display: flex;
   border: 0;
+  justify-content: center;
   background: transparent;
   cursor: pointer;
   height: 44px;
-  padding: 4px 12px;
+  gap: 10px
   &:hover {
     border-radius: 16px;
   }

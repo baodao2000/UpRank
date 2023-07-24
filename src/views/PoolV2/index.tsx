@@ -354,7 +354,7 @@ const Card = styled.div`
   border-radius: 24px;
   border: 1px solid transparent;
   border-image-slice: 1;
-
+  position: relative
   background-image: linear-gradient(#18171b, #18171b), radial-gradient(circle at top left, #7b3fe4 0%, #a726c1 100%);
   background-origin: border-box;
   background-clip: padding-box, border-box;
