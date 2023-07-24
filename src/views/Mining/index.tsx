@@ -8,7 +8,7 @@ import numeral from 'numeral'
 import { useEffect, useState } from 'react'
 import CountUp from 'react-countup'
 import styled from 'styled-components'
-import { getPoolsV3Contract, getTrendContract } from 'utils/contractHelpers'
+import { getPoolsV4Contract, getTrendContract } from 'utils/contractHelpers'
 import { useBalance } from 'wagmi'
 import { ChainId } from '../../../packages/swap-sdk/src/constants'
 import ClaimPoolModal from './components/ClaimModal'
@@ -244,7 +244,7 @@ function Mining() {
   const [loadingPage, setLoadingPage] = useState(true)
   const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId
   const [isLoading, setIsLoading] = useState(false)
-  const getPoolContract = getPoolsV3Contract(CHAIN_ID)
+  const getPoolContract = getPoolsV4Contract(CHAIN_ID)
   const getTokenTrendContract = getTrendContract(CHAIN_ID)
   const { onPresentConnectModal } = useWallet()
   const [usersClaimed, setUserClaimed] = useState([])

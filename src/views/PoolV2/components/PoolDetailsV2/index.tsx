@@ -9,7 +9,7 @@ import { formatEther } from '@ethersproject/units'
 import { getBlockExploreLink } from 'utils'
 import { shortenURL, timeDisplayLong } from 'views/Pools2/util'
 import moment from 'moment'
-import { getPoolsV3Contract } from 'utils/contractHelpers'
+import { getPoolsV4Contract } from 'utils/contractHelpers'
 import TrendyPageLoader from 'components/Loader/TrendyPageLoader'
 import ClaimPoolModal from './ClaimModal'
 import TableDataPool from './TableData'
@@ -99,31 +99,8 @@ const ButtonArea = styled.div`
   display: flex;
   flex-direction: row;
   gap: 16px;
-  // width: 1000px;
-  // @media screen and (max-width: 967px) {
-  //   width: 700px;
-  // }
-  // @media screen and (max-width: 851px) {
-  //   width: 570px;
-  // }
-  // @media screen and (max-width: 575px) {
-  //   width: 100%;
-  // }
-  // display: flex;
-  // justify-content: space-evenly;
-  // @media screen and (max-width: 851px) {
-  //   flex-direction: column;
-  //   align-items: center;
-  //   gap: 20px;
-  // }
 `
-// const NoteDeposit = styled.span`
-//   color: #fff;
-//   //background: #ffffcc;
-//   max-width: 600px;
-//   padding: 16px;
-//   border-radius: 10px;
-// `
+
 const BtnBack = styled.a`
   margin-top: 60px;
   display: flex;
@@ -144,7 +121,8 @@ const Pool = ({ poolId }) => {
   const [isLoading, setIsLoading] = useState(true)
   const [now, setNow] = useState(0)
   const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId
-  const getPoolContract = getPoolsV3Contract(CHAIN_ID)
+  const getPoolContract = getPoolsV4Contract(CHAIN_ID)
+  const [usersClaimed, setUserClaimed] = useState([])
 
   const unit = NATIVE[chainId].symbol
 
@@ -177,11 +155,14 @@ const Pool = ({ poolId }) => {
     minLock: 0,
     timeLock: 0,
     totalLock: 0,
+    totalLockUSD: 0,
     pid: -1,
     currentRewardV1: 0,
     currentRewardV2: 0,
     currentReward: 0,
     totalReward: 0,
+    totalRewardUSD: 0,
+    remainRewardUSD: 0,
     startTime: 0,
     userClaimedLength: 0,
     userTotalLock: 0,
@@ -191,33 +172,6 @@ const Pool = ({ poolId }) => {
     maxUSD2BNB: 0,
     currentInterestWithMine: 0,
   })
-  // const getNoteDeposit = () => {
-  //   let note
-  //   if (chainId === 97 && now - poolInfo.startTime > 3600) {
-  //     note = (
-  //       <NoteDeposit>
-  //         <i>
-  //           <b>Please note:</b> after <b style={{ textDecoration: 'underline' }}>{timeDisplayLong(3600)}</b> of deposit,
-  //           you can&apos;t add more to this pool. If you would like to stake more, you can stake a different wallet or a
-  //           different pool.
-  //         </i>
-  //       </NoteDeposit>
-  //     )
-  //   } else if (chainId === 137 && now - poolInfo.startTime > 604800) {
-  //     note = (
-  //       <NoteDeposit>
-  //         <i>
-  //           <b>Please note:</b> after <b style={{ textDecoration: 'underline' }}>{timeDisplayLong(604800)}</b> of
-  //           deposit, you can&apos;t add more to this pool. If you would like to stake more, you can stake a different
-  //           wallet or a different pool.
-  //         </i>
-  //       </NoteDeposit>
-  //     )
-  //   } else {
-  //     note = null
-  //   }
-  //   return note
-  // }
 
   const getPool = async () => {
     try {
@@ -225,17 +179,12 @@ const Pool = ({ poolId }) => {
         setIsLoading(true)
       } else {
         setIsLoading(false)
-        // const account = '0x5B0B6Bc92Ac002AB85512619b884738d22CcB3B6'
         const pool = await getPoolContract.pools(poolId)
-        // const pool2 = await getPoolV2Contract.pools(poolId)
         const currentReward = await getPoolContract.currentReward(poolId, account)
-        // const currentReward2 = await getPoolV2Contract.currentReward(poolId, account)
         const rateBnbUsd = await getPoolContract.MATIC2USDT()
         const users = await getPoolContract.users(account, poolId)
-        // const users2 = await getPoolV2Contract.users(account, poolId)
         const minMaxUSD2BNB = await getPoolContract.minMaxUSD2BNB(poolId)
         const getUsersClaimedLength = await getPoolContract.getUsersClaimedLength(poolId, account)
-        // const getUsersClaimedLength2 = await getPoolV2Contract.getUsersClaimedLength(poolId, account)
         setPool({
           currentInterest: (Number(pool.currentInterest.toString()) / 10000) * 365,
           enable: pool.enable,
@@ -243,11 +192,14 @@ const Pool = ({ poolId }) => {
           minLock: Number(formatEther(pool.minLock)),
           timeLock: 1095,
           totalLock: Number(formatEther(pool.totalLock)),
+          totalLockUSD: Number(formatEther(users.totalLockUSD)),
           pid: poolId,
           currentRewardV1: Number(formatEther(currentReward)),
           currentRewardV2: 0,
           currentReward: Number(formatEther(currentReward)),
           totalReward: Number(formatEther(users.totalReward)),
+          totalRewardUSD: Number(formatEther(users.totalRewardUSD)),
+          remainRewardUSD: Number(formatEther(users.remainRewardUSD)),
           startTime: Number(users.startTime),
           userTotalLock: Number(formatEther(users.totalLock)),
           userClaimedLength: Number(getUsersClaimedLength),
@@ -257,6 +209,22 @@ const Pool = ({ poolId }) => {
           maxUSD2BNB: Number(formatEther(minMaxUSD2BNB._max)),
           currentInterestWithMine: (Number(pool.currentInterestWithMine.toString()) / 10000) * 365,
         })
+        if (Number(getUsersClaimedLength) > 0)
+          getPoolContract.getUsersClaimed(poolId, account, 10, 0).then((res) => {
+            console.log(res)
+            setUserClaimed(
+              res.list.map((claimed: any, i: number) => {
+                return {
+                  amount: Number(formatEther(claimed.amount)),
+                  date: Number(claimed.date.toString()),
+                  interest: (Number(claimed.interrest.toString()) / 10000) * 365,
+                  currentInterestWithMine: Number(pool.currentInterestWithMine),
+                  totalLock: Number(formatEther(claimed.totalLock)),
+                  totalLockUSD: Number(formatEther(claimed.totalLockUSD)),
+                }
+              }),
+            )
+          })
         setPoolInfo({
           currentInterest: (Number(pool.currentInterest.toString()) / 10000) * 365,
           enable: pool.enable,
@@ -343,50 +311,6 @@ const Pool = ({ poolId }) => {
                 color="text"
                 style={{ display: 'flex', flexDirection: 'row', gap: '12px', alignItems: 'center' }}
               >
-                {/* <div className="root">
-                  <div>
-                    <span
-                      style={{
-                        fontSize: '14px',
-                        lineHeight: '20px',
-                        fontWeight: '500',
-                        color: '#ADABB2',
-                      }}
-                    >
-                      Root Contract:
-                    </span>
-                  </div>
-                  <div style={{display: 'flex', flexDirection: "row", gap: "12px"}}>
-                    <LinkExternalDepo
-                      fontSize={'14px'}
-                      // href={getBlockExploreLink(contracts.poolsV3[CHAIN_ID], 'address', CHAIN_ID)}
-                      ellipsis={true}
-                      color="#ffffff"
-                      style={{ color: '#ffffff', fontWeight: '700', textDecoration: 'none' }}
-                    >
-                      {shortenURL(`${contracts.poolsV3[CHAIN_ID]}`, 20)}
-                    </LinkExternalDepo>
-                    <LinkExternalDepo
-                      fontSize={'14px'}
-                      href={getBlockExploreLink(contracts.poolsV3[CHAIN_ID], 'address', CHAIN_ID)}
-                      ellipsis={true}
-                      color="#ffffff"
-                      style={{ color: '#ffffff', fontWeight: '700' }}
-                    >
-                      {/* {shortenURL(`${contracts.poolsV3[CHAIN_ID]}`, 20)} */}
-                {/* <span
-                        style={{
-                          fontSize: '14px',
-                          lineHeight: '20px',
-                          fontWeight: '400',
-                          color: '#8544F5',
-                        }}
-                      >
-                        Check Details
-                      </span>
-                    </LinkExternalDepo>
-                  </div>
-                </div> */}
                 <LinkExternal
                   fontSize={['14px', '16px', '18px', '20px', '22px']}
                   href={getBlockExploreLink(contracts.poolsV3[CHAIN_ID], 'address', CHAIN_ID)}
@@ -403,17 +327,15 @@ const Pool = ({ poolId }) => {
             <DetailInfoPool poolInfo={poolInfo} />
           </PageHeader>
           <PageHeader background="none">
-            <TableDataPool pool={pool} userClaimedLength={poolInfo.userClaimedLength} />
+            <TableDataPool pool={pool} usersClaimed={usersClaimed} userClaimedLength={poolInfo.userClaimedLength} />
           </PageHeader>
 
           <Body>
-            {/* {getNoteDeposit()} */}
             <ButtonArea>
               <Button
                 style={{ color: '#000', backgroundColor: '#D9D9D9' }}
                 variant={poolInfo.currentReward > 0 ? 'danger' : 'light'}
-                disabled
-                // disabled={poolInfo.currentReward === 0}
+                disabled={poolInfo.currentReward === 0}
                 width={['120px', '150px', '180px', '200px']}
                 height={48}
                 onClick={openClaimModal}
@@ -423,17 +345,15 @@ const Pool = ({ poolId }) => {
               </Button>
               <Button
                 style={{ background: 'var(--primary-primary-1, #8544F5)', color: '#ffffff' }}
-                // variant="primary"
                 width={['120px', '150px', '180px', '200px']}
                 height={48}
                 onClick={() => handleOpenDepositModal()}
                 scale={isMobile ? 'sm' : 'md'}
-                disabled
-                // disabled={
-                //   chainId === 97
-                //     ? poolInfo.startTime > 0 && now - poolInfo.startTime > 3600
-                //     : poolInfo.startTime > 0 && now - poolInfo.startTime > 604800
-                // }
+                disabled={
+                  chainId === 97
+                    ? poolInfo.startTime > 0 && now - poolInfo.startTime > 3600
+                    : poolInfo.startTime > 0 && now - poolInfo.startTime > 604800
+                }
               >
                 Deposit
               </Button>

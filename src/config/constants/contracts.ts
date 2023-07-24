@@ -38,13 +38,13 @@ export default {
     137: '0x7B23032D1E89d4429fBEA7607272722cff106999',
     56: '',
   },
+  poolsV4: {
+    137: '0xf8ac0bfD69A8F34217E76c359019a292e96c1F88',
+    56: '',
+  },
   trend: {
     137: '0x12016b4E07866c962e29b7597eCd66B3B89a3a58',
     56: '',
-  },
-  sow: {
-    56: '0x3eED8Eb7d0374B8B4Dea0a677c29AFb5d2B0387b',
-    97: '0xEdd1037048F0ded3e39f7c69C9d00E324b85Bc7b',
   },
   pancakeProfile: {
     56: '0xDf4dBf6536201370F95e06A0F8a7a70fE40E388a',

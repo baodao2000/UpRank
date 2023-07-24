@@ -1,1 +1,1 @@
-export const poolBaseUrlV2 = '/pooldetailsV2'
+export const poolBaseUrlV2 = '/pool-details-v2'

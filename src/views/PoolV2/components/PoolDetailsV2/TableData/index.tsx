@@ -5,7 +5,7 @@ import { Table, Th, Td, Text } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
 import { getPoolsV3Contract } from 'utils/contractHelpers'
 import CountUp from 'react-countup'
-import { Pool, timeDisplay } from 'views/PoolV2/util'
+import { Pool, PoolV4, timeDisplay } from 'views/PoolV2/util'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import moment from 'moment'
 import { formatEther } from '@ethersproject/units'
@@ -31,7 +31,7 @@ const TableScroll = styled.div`
     width: 100%;
   }
   Th {
-    padding: 20px 60px;
+    padding: 20px 10px;
     @media screen and (max-width: 896px) {
       padding: 20px 25px;
     }
@@ -85,22 +85,7 @@ const TablePool = styled.div`
       border-bottom: 1px solid ${trendyColors.BLACK};
     }
   }
-  // width: auto;
-  // @media screen and (max-width: 967px) {
-  //   width: 700px;
-  // }
-  // @media screen and (max-width: 851px) {
-  //   width: 570px;
-  // }
-  // @media screen and (max-width: 575px) {
-  //   width: 100%;
-  // }
-  // @media screen and (max-width: 480px) {
-  //   width: 100%;
-  //   .hiden {
-  //     display: none;
-  //   }
-  // }
+
   @media screen and (max-width: 360px) {
     width: 100%;
   }
@@ -114,41 +99,14 @@ const responsiveTextTH = ['11px', '12px', '16px', '16px', '16px']
 const responsiveTextSize = ['11px', '12px', '16px', '18px', '20px']
 const responsiveTextSizeBNB = ['9px', '10px', '12px', '14px', '16px']
 const responsiveTextSizeHeader = ['16px', '18px', '22px', '26px', '30px']
-const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength: number }>> = ({
+const TableDataPool: React.FC<PropsWithChildren<{ pool: PoolV4; userClaimedLength: number; usersClaimed: any }>> = ({
   pool,
-  // pool2,
+  usersClaimed,
   userClaimedLength,
   ...props
 }) => {
+  // console.log(pool)
   const { account, chainId } = useActiveWeb3React()
-  const poolsContract = getPoolsV3Contract(chainId)
-  const { t } = useTranslation()
-  const [usersClaimed, setUserClaimed] = useState([])
-
-  useEffect(() => {
-    getPool()
-  }, [userClaimedLength, account])
-  const getPool = () => {
-    try {
-      if (userClaimedLength > 0) {
-        poolsContract.getUsersClaimed(pool.pid, account, 10, 0).then((res) => {
-          setUserClaimed(
-            res.list.map((claimed: any, i: number) => {
-              return {
-                amount: Number(formatEther(claimed.amount)),
-                date: Number(claimed.date.toString()),
-                interest: (Number(claimed.interrest.toString()) / 10000) * 365,
-                currentInterestWithMine: Number(pool.currentInterestWithMine),
-                totalLock: Number(formatEther(claimed.totalLock)),
-              }
-            }),
-          )
-        })
-      }
-    } catch (e) {
-      console.log(e)
-    }
-  }
   const renderClaimHistory = () => {
     return (
       <>
@@ -189,17 +147,59 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
                     fontSize={responsiveTextSizeBNB}
                     style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}
                   >
-                    ~
+                    $
                     <CountUp
                       start={0}
                       preserveValue
                       delay={0}
-                      end={pool.userTotalLock}
+                      end={pool.totalLockUSD}
                       decimals={pool.userTotalLock > 0 ? 4 : 0}
                       duration={0.5}
                     />
-                    &ensp;
-                    <img className="imagesvector" src={images.vector} alt="pool name" width={18} />
+                  </Text>
+                </AmountData>
+              )}
+            </Td>
+            <Td textAlign={'right'}>
+              {pool.totalRewardUSD + pool.remainRewardUSD === 0 ? (
+                <Text fontSize={responsiveTextSize}>0</Text>
+              ) : (
+                <AmountData>
+                  <Text
+                    fontSize={responsiveTextSizeBNB}
+                    style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}
+                  >
+                    $
+                    <CountUp
+                      start={0}
+                      preserveValue
+                      delay={0}
+                      end={pool.totalRewardUSD + pool.remainRewardUSD}
+                      decimals={pool.totalRewardUSD + pool.remainRewardUSD > 0 ? 4 : 0}
+                      duration={0.5}
+                    />
+                  </Text>
+                </AmountData>
+              )}
+            </Td>
+            <Td textAlign={'right'}>
+              {pool.remainRewardUSD === 0 ? (
+                <Text fontSize={responsiveTextSize}>0</Text>
+              ) : (
+                <AmountData>
+                  <Text
+                    fontSize={responsiveTextSizeBNB}
+                    style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}
+                  >
+                    $
+                    <CountUp
+                      start={0}
+                      preserveValue
+                      delay={0}
+                      end={pool.remainRewardUSD}
+                      decimals={pool.remainRewardUSD > 0 ? 4 : 0}
+                      duration={0.5}
+                    />
                   </Text>
                 </AmountData>
               )}
@@ -216,7 +216,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
                       preserveValue
                       delay={0}
                       end={pool.currentReward * pool.rateBNB2USD}
-                      decimals={pool.currentReward > 0 ? 2 : 0}
+                      decimals={pool.currentReward > 0 ? 3 : 0}
                       duration={0.5}
                       style={{ marginRight: 6 }}
                     />
@@ -258,6 +258,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
     )
   }
   const renderHistory = () => {
+    // console.log(userClaimedLength, usersClaimed)
     return (
       <>
         {userClaimedLength > 0 &&
@@ -276,7 +277,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
                   ) : (
                     <AmountData>
                       <Text fontSize={responsiveTextSize}>
-                        ~
+                        $
                         <CountUp
                           start={0}
                           preserveValue
@@ -285,30 +286,40 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
                           decimals={claimHistory.totalLock > 0 ? 2 : 0}
                           duration={0.5}
                         />
-                        $
-                      </Text>
-                      <Text fontSize={responsiveTextSizeBNB}>
-                        ~
-                        <CountUp
-                          start={0}
-                          preserveValue
-                          delay={0}
-                          end={claimHistory.totalLock}
-                          decimals={claimHistory.totalLock > 0 ? 4 : 0}
-                          duration={0.5}
-                        />
-                        {pool.unit}
                       </Text>
                     </AmountData>
                   )}
                 </Td>
+                <Td textAlign={'right'}>
+                  {pool.totalRewardUSD + pool.remainRewardUSD === 0 ? (
+                    <Text fontSize={responsiveTextSize}>0</Text>
+                  ) : (
+                    <AmountData>
+                      <Text
+                        fontSize={responsiveTextSizeBNB}
+                        style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}
+                      >
+                        $
+                        <CountUp
+                          start={0}
+                          preserveValue
+                          delay={0}
+                          end={pool.totalRewardUSD + pool.remainRewardUSD}
+                          decimals={pool.totalRewardUSD + pool.remainRewardUSD > 0 ? 4 : 0}
+                          duration={0.5}
+                        />
+                      </Text>
+                    </AmountData>
+                  )}
+                </Td>
+                <Td textAlign={'right'}> -- / --</Td>
                 <Td textAlign={'right'}>
                   {claimHistory.amount === 0 ? (
                     <Text fontSize={responsiveTextSize}>0</Text>
                   ) : (
                     <AmountData>
                       <Text fontSize={responsiveTextSize}>
-                        ~
+                        $
                         <CountUp
                           start={0}
                           preserveValue
@@ -317,7 +328,6 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
                           decimals={claimHistory.amount > 0 ? 4 : 0}
                           duration={0.5}
                         />
-                        $
                       </Text>
                       <Text fontSize={responsiveTextSizeBNB}>
                         ~
@@ -382,6 +392,26 @@ const TableDataPool: React.FC<PropsWithChildren<{ pool: Pool; userClaimedLength:
                   textTransform="capitalize"
                 >
                   Your Lock
+                </Text>
+              </Th>
+              <Th textAlign="right">
+                <Text
+                  style={{ color: '#777E90', fontWeight: '600' }}
+                  color={trendyColors.COLORTABLE}
+                  fontSize={responsiveTextTH}
+                  textTransform="capitalize"
+                >
+                  Total Reward
+                </Text>
+              </Th>
+              <Th>
+                <Text
+                  style={{ color: '#777E90', fontWeight: '600' }}
+                  color={trendyColors.COLORTABLE}
+                  fontSize={responsiveTextTH}
+                  textTransform="capitalize"
+                >
+                  Remain
                 </Text>
               </Th>
               <Th textAlign="right">

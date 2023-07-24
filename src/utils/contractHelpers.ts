@@ -44,6 +44,7 @@ import {
   getPoolsAddress,
   getPoolsV2Address,
   getPoolsV3Address,
+  getPoolsV4Address,
   getTrendAddress,
 } from 'utils/addressHelpers'
 
@@ -99,6 +100,7 @@ import bCakeProxyAbi from 'config/abi/bCakeProxy.json'
 import poolsAbi from 'config/abi/pools.json'
 import oldPoolsAbi from 'config/abi/pools2.json'
 import pools3ABI from 'config/abi/pools3.json'
+import pools4ABI from 'config/abi/pools4.json'
 import trenABI from 'config/abi/trend.json'
 // Types
 import type {
@@ -391,6 +393,14 @@ export const getPoolsV3Contract = (chainId: number, signer?: Signer | Provider) 
   return getContract({
     abi: pools3ABI,
     address: getPoolsV3Address(chainId),
+    chainId,
+    signer,
+  })
+}
+export const getPoolsV4Contract = (chainId: number, signer?: Signer | Provider) => {
+  return getContract({
+    abi: pools4ABI,
+    address: getPoolsV4Address(chainId),
     chainId,
     signer,
   })

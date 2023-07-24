@@ -7,9 +7,8 @@ import { useBalance, useSigner } from 'wagmi'
 import { ChainId, NATIVE } from '../../../packages/swap-sdk/src/constants'
 import { formatBigNumber } from 'utils/formatBalance'
 import { useEffect, useState } from 'react'
-import { usePoolsContract, usePoolsV2Contract, usePoolsV3Contract } from 'hooks/useContract'
 import { formatEther } from '@ethersproject/units'
-import { getPoolsContract, getPoolsV2Contract, getPoolsV3Contract } from 'utils/contractHelpers'
+import { getPoolsContract, getPoolsV2Contract, getPoolsV4Contract } from 'utils/contractHelpers'
 import PoolsV2 from 'views/PoolV2'
 import Pools from 'views/Pools2'
 import images from 'configs/images'
@@ -201,11 +200,11 @@ const PoolV3 = () => {
   const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId
   const getPoolContract = getPoolsContract(CHAIN_ID)
   const getPoolV2Contract = getPoolsV2Contract(CHAIN_ID)
-  const getPoolV3Contract = getPoolsV3Contract(CHAIN_ID)
+  const getPoolV3Contract = getPoolsV4Contract(CHAIN_ID)
   const { isMobile } = useMatchBreakpoints()
 
   const { data, isFetched } = useBalance({
-    addressOrName: pool === 'poolV1' ? contracts.pools[CHAIN_ID] : contracts.poolsV3[CHAIN_ID],
+    addressOrName: pool === 'poolV1' ? contracts.pools[CHAIN_ID] : contracts.poolsV4[CHAIN_ID],
   })
   useEffect(() => {
     CheckBalance()
@@ -327,14 +326,14 @@ const PoolV3 = () => {
                 <span style={{ color: 'rgba(173, 171, 178, 1)' }}>Root Contract:</span>
                 <LinkExternal
                   fontSize="14px"
-                  href={getBlockExploreLink(contracts.poolsV3[CHAIN_ID], 'address', CHAIN_ID)}
+                  href={getBlockExploreLink(contracts.poolsV4[CHAIN_ID], 'address', CHAIN_ID)}
                   ellipsis={true}
                   style={{ color: 'rgba(249, 249, 249, 1)' }}
                   color="#00F0E1"
                 >
-                  {shortenURL(`${contracts.poolsV3[CHAIN_ID]}`, 18)}
+                  {shortenURL(`${contracts.poolsV4[CHAIN_ID]}`, 18)}
                 </LinkExternal>
-                <a href={getBlockExploreLink(contracts.poolsV3[CHAIN_ID], 'address', CHAIN_ID)} className="link">
+                <a href={getBlockExploreLink(contracts.poolsV4[CHAIN_ID], 'address', CHAIN_ID)} className="link">
                   Check Details
                 </a>{' '}
               </LabelContent>

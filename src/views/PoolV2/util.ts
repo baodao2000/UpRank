@@ -21,6 +21,27 @@ export interface Pool {
   currentInterestWithMine: number
   unit?: string
 }
+export interface PoolV4 {
+  currentInterest: number
+  enable: boolean
+  maxLock: number
+  minLock: number
+  timeLock: number
+  totalLock: number
+  totalLockUSD: number
+  pid: number
+  currentRewardV1: number
+  currentRewardV2: number
+  totalReward: number
+  totalRewardUSD: number
+  remainRewardUSD: number
+  currentReward: number
+  startTime: number
+  userTotalLock: number
+  rateBNB2USD: number
+  currentInterestWithMine: number
+  unit?: string
+}
 export interface Mine {
   totalMined: number
   claimed: number

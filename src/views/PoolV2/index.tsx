@@ -3,7 +3,6 @@ import PageHeader from 'components/PageHeader'
 import styled from 'styled-components'
 import images from 'configs/images'
 import contracts from 'config/constants/contracts'
-import { getPoolsContract, getPoolsV2Contract, getPoolsV3Contract } from 'utils/contractHelpers'
 import { getBlockExploreLink } from 'utils'
 import { trendyColors } from 'style/trendyTheme'
 import { useBalance, useSigner } from 'wagmi'
@@ -12,7 +11,8 @@ import TrendyPageLoader from 'components/Loader/TrendyPageLoader'
 import { ToastDescriptionWithTx } from 'components/Toast'
 import useConfirmTransaction from 'hooks/useConfirmTransaction'
 import { useCallWithMarketGasPrice } from 'hooks/useCallWithMarketGasPrice'
-import { usePoolsContract, usePoolsV2Contract, usePoolsV3Contract } from 'hooks/useContract'
+import { getPoolsV4Contract } from 'utils/contractHelpers'
+import { usePoolsContract, usePoolsV4Contract } from 'hooks/useContract'
 import { PageMeta } from 'components/Layout/Page'
 // import { isMobile } from 'react-device-detect'
 import { useState, useEffect } from 'react'
@@ -354,7 +354,7 @@ const Card = styled.div`
   border-radius: 24px;
   border: 1px solid transparent;
   border-image-slice: 1;
-  position: relative
+  position: relative;
   background-image: linear-gradient(#18171b, #18171b), radial-gradient(circle at top left, #7b3fe4 0%, #a726c1 100%);
   background-origin: border-box;
   background-clip: padding-box, border-box;
@@ -368,10 +368,12 @@ const Card = styled.div`
     width: 70%;
     height: auto;
     padding: 10px;
+    position: relative;
   }
   @media only screen and (min-width: 375px) and (max-width: 575px) {
     width: 100%;
     padding: 15px;
+    position: relative;
   }
 `
 const LogoAndName = styled.div`
@@ -675,7 +677,7 @@ const Pools = () => {
   const { account, chainId } = useActiveWeb3React()
   // account = '0x1ec0f8875B7fc2400a6F44788c6710959614e68A'
   const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId
-  const getPoolV3Contract = getPoolsV3Contract(CHAIN_ID)
+  const getPoolV4Contract = getPoolsV4Contract(CHAIN_ID)
   const [arr, setArr] = useState([])
   const [remainCommission, setRemainCommission] = useState(0)
   const [commission, setCommission] = useState(0)
@@ -683,7 +685,7 @@ const Pools = () => {
   const [isClaimableCommission, setIsClaimableCommission] = useState(false)
   const { toastSuccess, toastError } = useToast()
   const { callWithMarketGasPrice } = useCallWithMarketGasPrice()
-  const poolContract = usePoolsV3Contract()
+  const poolContract = usePoolsV4Contract()
   const [ranks, setRanks] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [rateBnbUsd, setRateBnbUsd] = useState(1)
@@ -703,7 +705,7 @@ const Pools = () => {
 
   const getCommission = async () => {
     if (account) {
-      const comm = await getPoolV3Contract.remainComm(account)
+      const comm = await getPoolV4Contract.remainComm(account)
       // const comm2 = await getPoolV2Contract.remainComm(account)
       setCommission(Number(formatEther(comm)))
       // setCommission2(Number(formatEther(comm2)))
@@ -734,8 +736,8 @@ const Pools = () => {
   }
   const getPools = async (ids: number[]) => {
     try {
-      const bnbPrice = await getPoolV3Contract.MATIC2USDT()
-      const pools = await getPoolV3Contract.getPools(ids)
+      const bnbPrice = await getPoolV4Contract.MATIC2USDT()
+      const pools = await getPoolV4Contract.getPools(ids)
       // await getInfoRank()
       setRateBnbUsd(Number(formatEther(bnbPrice)))
       if (!account) {
@@ -761,7 +763,7 @@ const Pools = () => {
       } else {
         const newPoolInfo = await Promise.all(
           pools.map(async (item, id) => {
-            const userLockAndPool = await getPoolV3Contract.users(account, id)
+            const userLockAndPool = await getPoolV4Contract.users(account, id)
             // console.log(Number(formatEther(userLockAndPool.totalLock)), id)
             return {
               title: ['Experience', 'Starter', 'Standard', 'Pro', 'Advance', 'Premium'],
@@ -790,18 +792,18 @@ const Pools = () => {
     if (!rateBnbUsd) {
       setIsLoading(true)
     } else {
-      const months = await getPoolV3Contract.getMonths()
+      const months = await getPoolV4Contract.getMonths()
       const infoRank = await Promise.all([
-        getPoolV3Contract.userRank(account),
-        getPoolV3Contract.userRankRewardClaimed(account, Number(months.toString())),
-        getPoolV3Contract.getUserTotalLock(account),
-        getPoolV3Contract.getVolumeOnTre(account),
-        getPoolV3Contract.getChildren(account),
+        getPoolV4Contract.userRank(account),
+        getPoolV4Contract.userRankRewardClaimed(account, Number(months.toString())),
+        getPoolV4Contract.getUserTotalLock(account),
+        getPoolV4Contract.getVolumeOnTre(account),
+        getPoolV4Contract.getChildren(account),
       ])
 
       const arr = await Promise.all(
         indexRank.map(async (item) => {
-          const rank = await getPoolV3Contract.rankRewards(item)
+          const rank = await getPoolV4Contract.rankRewards(item)
 
           return {
             image: getRankImage(item).img,
@@ -840,9 +842,9 @@ const Pools = () => {
     addressOrName: contracts.poolsV2[CHAIN_ID],
   })
   const { data: data3, isFetched: isFetched3 } = useBalance({
-    addressOrName: contracts.poolsV3[CHAIN_ID],
+    addressOrName: contracts.poolsV4[CHAIN_ID],
   })
-  // console.log(contracts.poolsV3[CHAIN_ID])
+  // console.log(contracts.poolsV4[CHAIN_ID])
   // console.log(data , isFetched);
 
   // const { data: data2, isFetched: isFetched2 } = useBalance({
@@ -978,14 +980,14 @@ const Pools = () => {
             <span style={{ color: 'rgba(173, 171, 178, 1)' }}>Root Contract:</span>
             <LinkExternal
               fontSize="14px"
-              href={getBlockExploreLink(contracts.poolsV3[CHAIN_ID], 'address', CHAIN_ID)}
+              href={getBlockExploreLink(contracts.poolsV4[CHAIN_ID], 'address', CHAIN_ID)}
               ellipsis={true}
               style={{ color: 'rgba(249, 249, 249, 1)' }}
               color="#00F0E1"
             >
-              {shortenURL(`${contracts.poolsV3[CHAIN_ID]}`, 18)}
+              {shortenURL(`${contracts.poolsV4[CHAIN_ID]}`, 18)}
             </LinkExternal>
-            <a href={getBlockExploreLink(contracts.poolsV3[CHAIN_ID], 'address', CHAIN_ID)} className="link">
+            <a href={getBlockExploreLink(contracts.poolsV4[CHAIN_ID], 'address', CHAIN_ID)} className="link">
               Check Details
             </a>{' '}
           </LabelContent>
@@ -1009,7 +1011,7 @@ const Pools = () => {
                   {arr.map((i, r) => {
                     return (
                       <Card key={r}>
-                        {r === 0 ? null : <ImageMine src="./images/V3/mine.png" />}
+                        {r === 0 ? null : <ImageMine src="/images/V3/mine.png" />}
                         <LogoAndName>
                           <Logo src="./images/V3/bsc.svg" alt="logo" />
                           <span>{i.title[r]}</span>
@@ -1401,12 +1403,12 @@ const Pools = () => {
                       <Text style={{ color: '#C5C5C5' }} ellipsis={true}>
                         <LinkExternal
                           fontSize={['14px', '16px', '18px', '20px', '22px']}
-                          href={getBlockExploreLink(contracts.poolsV3[CHAIN_ID], 'address', CHAIN_ID)}
+                          href={getBlockExploreLink(contracts.poolsV4[CHAIN_ID], 'address', CHAIN_ID)}
                           ellipsis={true}
                           style={{ color: 'rgba(249, 249, 249, 1)' }}
                           color="#00F0E1"
                         >
-                          {shortenURL(`Root Contract: ${contracts.poolsV3[CHAIN_ID]}`, 35)}
+                          {shortenURL(`Root Contract: ${contracts.poolsV4[CHAIN_ID]}`, 35)}
                         </LinkExternal>
                       </Text>
                     </LineText>
