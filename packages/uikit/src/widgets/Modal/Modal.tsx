@@ -47,9 +47,7 @@ const Modal: React.FC<React.PropsWithChildren<ModalProps>> = ({
         </ModalTitle>
         {!hideCloseButton && <ModalCloseButton onDismiss={onDismiss} />}
       </ModalHeader>
-      <ModalBody p={bodyPadding} background={background}>
-        {children}
-      </ModalBody>
+      <ModalBody background={background}>{children}</ModalBody>
     </ModalContainer>
   );
 };

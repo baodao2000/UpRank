@@ -43,6 +43,8 @@ const StyledMenuItem = styled.a<StyledMenuItemProps>`
       ? `
     padding: 0 16px;
     height: 48px;
+    gap: 10px;
+
   `
       : `
     padding:  20px 20px;

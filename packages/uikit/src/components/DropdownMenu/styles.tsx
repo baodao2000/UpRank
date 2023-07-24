@@ -29,7 +29,6 @@ export const DropdownMenuItem = styled.button<StyledDropdownMenuItemProps & { $i
   padding-left: 16px;
   padding-right: 16px;
   width: 100%;
-
   &:is(button) {
     cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
   }
@@ -45,6 +44,7 @@ export const DropdownMenuItem = styled.button<StyledDropdownMenuItemProps & { $i
 `;
 
 export const StyledDropdownMenuItemContainer = styled.div`
+  width: 100%;
   &:first-child > ${DropdownMenuItem} {
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
@@ -71,7 +71,7 @@ export const StyledDropdownMenu = styled.div<{ $isOpen: boolean; $isBottomNav: b
   padding-top: 4px;
   pointer-events: auto;
   margin-bottom: 0;
-  width: ${({ $isBottomNav }) => ($isBottomNav ? "calc(100% - 32px)" : "280px")};
+  width: ${({ $isBottomNav }) => ($isBottomNav ? "calc(100% - 32px)" : "180px")};
   visibility: visible;
   z-index: 1001;
 

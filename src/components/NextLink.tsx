@@ -14,6 +14,7 @@ interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
 const A = styled.a`
   display: flex;
   gap: 10px;
+  flex-direction: row-reverse;
 `
 
 /**
@@ -21,10 +22,12 @@ const A = styled.a`
  */
 export const NextLinkFromReactRouter = forwardRef<any, LinkProps>(
   ({ to, replace, children, prefetch, ...props }, ref) => (
-    <NextLink href={to as string} replace={replace} passHref prefetch={prefetch}>
-      <A ref={ref} {...props}>
-        {children}
-      </A>
-    </NextLink>
+    <>
+      <NextLink href={to as string} replace={replace} passHref prefetch={prefetch}>
+        <A ref={ref} {...props}>
+          {children}
+        </A>
+      </NextLink>
+    </>
   ),
 )

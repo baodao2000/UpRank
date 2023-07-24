@@ -18,8 +18,32 @@ interface RegistersModalProps extends InjectedProps {}
 
 const StyledInput = styled(Input)`
   outline: none;
-  border: 3px solid #009571;
-  border-radius: 10px;
+  border-radius: 12px;
+  background: var(--greyscale-grayscale-4, #2d2c33);
+  &:focus:not(:disabled) {
+    border: none;
+  }
+  padding: 12px 16px;
+`
+const Title = styled(Text)`
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 32px;
+  text-align: center;
+`
+const TextLabel = styled(Text)`
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  color: rgba(226, 225, 229, 1);
+  text-align: center;
+`
+const ModalContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
 `
 export const ModalCheckRegister = ({ onCheck, onDismiss }: { onCheck: () => void; onDismiss: () => void }) => {
   const { account, chainId } = useWeb3React()
@@ -202,21 +226,28 @@ export const ModalCheckRegister = ({ onCheck, onDismiss }: { onCheck: () => void
       {loading === true ? (
         <TrendyPageLoader />
       ) : (
-        <Modal title="Register" onDismiss={onDismiss}>
-          <Grid>
-            <Text bold>
-              You don&apos;t have an account yet!
-              <br />
-              create a new one to play the game
-            </Text>
-          </Grid>
-          <br />
-          <StyledInput value={referCode} autoFocus={true} onChange={validateReferByWallet} placeholder={`refer code`} />
-          {showError && referCode && <span style={{ color: 'red' }}>Invalid code</span>}
-          <br />
-          <Button disabled={loading || referCode === '' || showError} onClick={handleRegister}>
-            Register Now
-          </Button>
+        <Modal style={{ width: '434px', padding: '32px' }} title="" onDismiss={onDismiss}>
+          <ModalContainer>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <Title>Register</Title>
+              <TextLabel>You don&apos;t have an account yet! create a new one to play the game</TextLabel>
+            </div>
+            <div>
+              <Text fontSize="12px" fontWeight="500" lineHeight="18px">
+                Refer code
+              </Text>
+              <StyledInput
+                value={referCode}
+                autoFocus={true}
+                onChange={validateReferByWallet}
+                placeholder={`refer code`}
+              />
+            </div>
+            {showError && referCode && <span style={{ color: 'red' }}>Invalid code</span>}
+            <Button disabled={loading || referCode === '' || showError} onClick={handleRegister}>
+              Register Now
+            </Button>
+          </ModalContainer>
         </Modal>
       )}
     </>
