@@ -97,7 +97,7 @@ const images = {
   bscoin: '/images/V3/bscoin.svg',
   vector: '/images/V3/Vector.svg',
   bronze: 'images/V3/bronzebg.png',
-  homeMobile: '/images/headhome.gif?t=1',
+  homeMobile: '/images/V3/headhome.gif?t=1',
   checkk: 'images/V3/check.svg',
   iconNew: '/images/V3/newV3.jpg',
 }
