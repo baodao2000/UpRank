@@ -354,7 +354,7 @@ const Card = styled.div`
   border-radius: 24px;
   border: 1px solid transparent;
   border-image-slice: 1;
-
+  position: relative;
   background-image: linear-gradient(#18171b, #18171b), radial-gradient(circle at top left, #7b3fe4 0%, #a726c1 100%);
   background-origin: border-box;
   background-clip: padding-box, border-box;
@@ -368,10 +368,12 @@ const Card = styled.div`
     width: 70%;
     height: auto;
     padding: 10px;
+    position: relative;
   }
   @media only screen and (min-width: 375px) and (max-width: 575px) {
     width: 100%;
     padding: 15px;
+    position: relative;
   }
 `
 const LogoAndName = styled.div`
@@ -1009,7 +1011,7 @@ const Pools = () => {
                   {arr.map((i, r) => {
                     return (
                       <Card key={r}>
-                        {r === 0 ? null : <ImageMine src="./images/V3/mine.png" />}
+                        {r === 0 ? null : <ImageMine src="/images/V3/mine.png" />}
                         <LogoAndName>
                           <Logo src="./images/V3/bsc.svg" alt="logo" />
                           <span>{i.title[r]}</span>
