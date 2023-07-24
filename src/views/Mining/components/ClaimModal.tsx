@@ -108,7 +108,7 @@ const ClaimPoolModal = ({
   return (
     <Modal
       style={depositModal}
-      title={'CLAIM TREND'}
+      title={''}
       onDismiss={onDismiss}
       hideCloseButton={false}
       borderRadius={25}
@@ -118,6 +118,7 @@ const ClaimPoolModal = ({
     >
       <Wrapper>
         <ClaimAmount>
+          <Text fontSize="24px">CLAIM TREND</Text>
           <Text fontSize="18px">Current reward TREND:</Text>
           <Text fontSize="16px" style={{ display: 'flex' }}>
             {/* $&ensp;~&ensp; */}

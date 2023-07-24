@@ -18,6 +18,8 @@ const Title = styled(Heading)`
   font-weight: 500;
   line-height: 60px;
   margin-bottom: 20px;
+  position: relative;
+
   @media (max-width: 1024px) {
     font-size: 42px;
     line-height: 42px;
@@ -32,6 +34,30 @@ const StyledText = styled.p`
   font-weight: 700;
   color: #8145ff;
   display: inline;
+  .hovreTooltip {
+  }
+  .hovreTooltip:hover {
+    .tooltip {
+      position: absolute;
+      right: -10%;
+      top: 50%;
+      display: block;
+      width: 372px;
+      z-index: 10001;
+      height: 160px;
+      border-radius: 6px;
+      background: black;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 20px;
+      padding: 10px;
+      color: #fff;
+    }
+  }
+  .tooltip {
+    display: none;
+  }
 `
 
 const TitleM = styled(Text)`
@@ -388,8 +414,14 @@ const Exchange = (props) => {
             Calculate your crypto{' '}
             <StyledText>
               earnings
-              <span style={{ position: 'absolute', top: 50 }}>
+              <span className="hovreTooltip">
                 <Image src="/images/info.svg" width={20} height={20} alt="" />
+                <div className="tooltip">
+                  Annual Percentage Yield (APY) as of the July 16th 2023. The APY may vary before or after the account
+                  is created. This calculator is solely for illustration purposes and may not apply to our specific
+                  situation. Calculated figures are rounded to the closest dollar and assume that principle and interest
+                  stay on deposit. All interest rates are subject to change.
+                </div>
               </span>{' '}
             </StyledText>
           </Title>

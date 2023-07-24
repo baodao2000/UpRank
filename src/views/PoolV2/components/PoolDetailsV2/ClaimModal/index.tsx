@@ -44,7 +44,9 @@ const ClaimAmount = styled.div`
 const StyledButton = styled(Button)`
   background: #8544f5;
 `
-const depositModal = {}
+const depositModal = {
+  padding: '32px',
+}
 const depositInput = {
   borderRadius: '10px',
 }
@@ -107,7 +109,7 @@ const ClaimPoolModal: React.FC<React.PropsWithChildren<ClaimPoolModalProps>> = (
   return (
     <Modal
       style={depositModal}
-      title={'Claim'}
+      title={''}
       onDismiss={onDismiss}
       hideCloseButton={false}
       borderRadius={25}
@@ -116,6 +118,7 @@ const ClaimPoolModal: React.FC<React.PropsWithChildren<ClaimPoolModalProps>> = (
     >
       <Wrapper>
         <ClaimAmount>
+          <Text fontSize="24px">CLaim</Text>
           <Text fontSize="18px">Current reward:</Text>
           <Text fontSize="16px" style={{ display: 'flex', color: '#8544F5' }}>
             {

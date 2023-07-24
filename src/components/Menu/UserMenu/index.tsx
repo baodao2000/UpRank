@@ -11,7 +11,10 @@ import {
   UserMenuDivider,
   UserMenuItem,
   UserMenuVariant,
+  useMatchBreakpoints,
 } from '@pancakeswap/uikit'
+import { CloseIcon } from '../../../../packages/uikit/src/components/Svg'
+
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import Trans from 'components/Trans'
 import { useActiveChainId } from 'hooks/useActiveChainId'
@@ -25,6 +28,39 @@ import { useAccount } from 'wagmi'
 import ProfileUserMenuItem from './ProfileUserMenuItem'
 import WalletModal, { WalletView } from './WalletModal'
 import WalletUserMenuItem from './WalletUserMenuItem'
+import styled from 'styled-components'
+
+const NavMobile = styled.div``
+const data = [
+  {
+    title: 'Pool',
+    link: '/pools',
+  },
+  {
+    title: 'Referral',
+    link: '/referral',
+  },
+  {
+    title: 'Tokenomic',
+    link: '/tokenomic',
+  },
+  {
+    title: 'Mining',
+    link: '/mining',
+  },
+]
+const TextLink = styled(Text)`
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px;
+`
+const UserMenuNewDrider = styled.hr`
+  border-color: rgba(255, 255, 255, 0.06);
+  border-style: solid;
+  border-width: 1px 0 0;
+  margin: 4px 0;
+`
 
 const UserMenu = () => {
   const { t } = useTranslation()
@@ -58,10 +94,30 @@ const UserMenu = () => {
       onPresentWalletModal()
     }
   }
+  const { isMobile, isTablet } = useMatchBreakpoints()
 
   const UserMenuItems = () => {
     return (
-      <>
+      <div style={{ padding: isMobile ? '32px 24px' : '16px', width: '375px' }}>
+        <div style={{ width: '100%', display: 'flex', justifyContent: 'flex-end' }}>
+          <CloseIcon cursor="pointer" width="24px" color="white" />
+        </div>
+        {isMobile || isTablet ? (
+          <>
+            <NavMobile>
+              {data.map((items) => (
+                <>
+                  <UserMenuItem>
+                    <NextLink href={items.link} passHref>
+                      <TextLink>{items.title}</TextLink>
+                    </NextLink>
+                  </UserMenuItem>
+                </>
+              ))}
+            </NavMobile>
+            <UserMenuNewDrider />
+          </>
+        ) : null}
         <WalletUserMenuItem isWrongNetwork={isWrongNetwork} onPresentWalletModal={onClickWalletMenu} />
         <UserMenuItem as="button" disabled={isWrongNetwork} onClick={onPresentTransactionModal}>
           <Flex alignItems="center" justifyContent="center" style={{ gap: '8px' }}>
@@ -78,7 +134,7 @@ const UserMenu = () => {
             </Flex>
           </NextLink>
         </UserMenuItem>
-        <UserMenuDivider />
+        <UserMenuNewDrider />
         {/* <NextLink href={`/profile/${account?.toLowerCase()}`} passHref> */}
         {/*   <UserMenuItem as="a" disabled={isWrongNetwork || chainId !== ChainId.BSC}> */}
         {/*     {t('Your NFTs')} */}
@@ -95,7 +151,7 @@ const UserMenu = () => {
             <Text> {t('Disconnect')}</Text>
           </Flex>
         </UserMenuItem>
-      </>
+      </div>
     )
   }
 

@@ -1,4 +1,4 @@
-import { Flex, UserMenuItem, WarningIcon } from '@pancakeswap/uikit'
+import { Flex, Text, UserMenuItem, WarningIcon } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
 import { useGetBnbBalance } from 'hooks/useTokenBalance'
 import { FetchStatus } from 'config/constants/types'
@@ -19,10 +19,11 @@ const WalletUserMenuItem: React.FC<React.PropsWithChildren<WalletUserMenuItemPro
 
   return (
     <UserMenuItem as="button" onClick={onPresentWalletModal}>
-      <Flex alignItems="center" justifyContent="space-between" width="100%">
-        {t('Wallet')}
-        {hasLowBnbBalance && !isWrongNetwork && <WarningIcon color="warning" width="24px" />}
-        {isWrongNetwork && <WarningIcon color="failure" width="24px" />}
+      <Flex alignItems="center" justifyContent="flex-start" width="100%" flexDirection="row" style={{ gap: '5px' }}>
+        <img width="16px" height="16px" src="/images/V3/iconWallet.png" />
+        <Text fontSize="14px" fontWeight="400" lineHeight="22px" fontFamily="Inter, sans-serif">
+          {t('Wallet')}
+        </Text>
       </Flex>
     </UserMenuItem>
   )

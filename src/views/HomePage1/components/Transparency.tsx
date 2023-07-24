@@ -87,7 +87,7 @@ const ListTransparency = styled.div`
 
 const CardTransparency = styled.div`
   width: 340px;
-  height: 500px;
+  height: 534px;
   border-radius: 24px;
   border: 1px solid var(--white-white-12, rgba(255, 255, 255, 0.12));
   background: var(--white-white-6, rgba(255, 255, 255, 0.06));

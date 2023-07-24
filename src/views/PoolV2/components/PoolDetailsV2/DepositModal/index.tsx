@@ -61,7 +61,6 @@ const InputArea = styled.div`
     background: var(--white-white-8, rgba(255, 255, 255, 0.08));
   }
 `
-const depositModal = {}
 const depositInput = {
   borderRadius: '10px',
 }
@@ -207,6 +206,7 @@ const StyledButton = styled(Button)`
   box-shadow: 2px 2px 8px 16px rgba(0, 0, 0, 0.1);
   max-height: 48px;
   width: 100%;
+  color: rgba(255, 255, 255, 1);
 `
 
 const StyledInput = styled(Input)`
@@ -218,6 +218,13 @@ const StyledInput = styled(Input)`
   &:focus:not(:disabled) {
     border: 3px solid #8544f5;
   }
+`
+const Title = styled(Text)`
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 32px;
+  text-align: center;
 `
 
 const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>> = ({
@@ -358,8 +365,8 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
         <TrendyPageLoader />
       ) : (
         <Modal
-          style={depositModal}
-          title={'Deposit'}
+          style={{ padding: '32px', maxWidth: '498px' }}
+          title={''}
           onDismiss={onDismiss}
           hideCloseButton={false}
           borderRadius={25}
@@ -369,6 +376,7 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
           <InputArea>
             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
               <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+                <Title>Deposit</Title>
                 <span>
                   <span style={{ fontSize: '18px', lineHeight: '24px', fontWeight: '400', color: '#E2E1E5' }}>
                     {' '}
