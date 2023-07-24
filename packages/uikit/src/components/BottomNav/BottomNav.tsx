@@ -26,32 +26,32 @@ const BottomNav: React.FC<React.PropsWithChildren<BottomNavProps>> = ({
           ) => {
             const statusColor = menuItems?.find((menuItem) => menuItem.status !== undefined)?.status?.color;
             return (
-              showOnMobile && (
-                <DropdownMenu
-                  key={`${label}#${href}`}
-                  items={menuItems}
-                  isBottomNav
-                  activeItem={activeSubItem}
-                  showItemsOnMobile={showItemsOnMobile}
-                  setMenuOpenByIndex={setMenuOpenByIndex}
-                  index={index}
-                  isDisabled={disabled}
-                >
-                  <Box>
-                    <NotificationDot show={!!statusColor} color={statusColor}>
-                      <BottomNavItem
-                        href={href}
-                        disabled={disabled}
-                        isActive={href === activeItem}
-                        label={label}
-                        icon={icon}
-                        fillIcon={fillIcon}
-                        showItemsOnMobile={showItemsOnMobile}
-                      />
-                    </NotificationDot>
-                  </Box>
-                </DropdownMenu>
-              )
+              showOnMobile &&
+              // <DropdownMenu
+              //   key={`${label}#${href}`}
+              //   items={menuItems}
+              //   isBottomNav
+              //   activeItem={activeSubItem}
+              //   showItemsOnMobile={showItemsOnMobile}
+              //   setMenuOpenByIndex={setMenuOpenByIndex}
+              //   index={index}
+              //   isDisabled={disabled}
+              // >
+              //   <Box>
+              //     <NotificationDot show={!!statusColor} color={statusColor}>
+              //       <BottomNavItem
+              //         href={href}
+              //         disabled={disabled}
+              //         isActive={href === activeItem}
+              //         label={label}
+              //         icon={icon}
+              //         fillIcon={fillIcon}
+              //         showItemsOnMobile={showItemsOnMobile}
+              //       />
+              //     </NotificationDot>
+              //   </Box>
+              // </DropdownMenu>
+              null
             );
           }
         )}

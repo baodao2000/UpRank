@@ -69,7 +69,7 @@ export const footerLinks: (t: ContextApi['t']) => FooterLinkType[] = (t) => [
       {
         label: 'Twitter',
         href: 'https://twitter.com/TrendyDefi',
-        image: '/images/TwitterV2.svg',
+        image: '/images/V3/TwitterIcon.svg',
       },
       // {
       //   label: t('Facebook'),
@@ -79,12 +79,12 @@ export const footerLinks: (t: ContextApi['t']) => FooterLinkType[] = (t) => [
       {
         label: t('Telegram'),
         href: 'https://t.me/trendydefi',
-        image: '/images/TelegramV2.svg',
+        image: '/images/V3/Telegramicon.svg',
       },
       {
         label: t('Global Community'),
         href: 'https://t.me/trendydefiglobal',
-        image: '/images/TelegramV2.svg',
+        image: '/images/V3/Telegramicon.svg',
       },
       // {
       //   label: 'Github',

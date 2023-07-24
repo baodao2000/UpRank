@@ -226,14 +226,14 @@ export const ModalCheckRegister = ({ onCheck, onDismiss }: { onCheck: () => void
       {loading === true ? (
         <TrendyPageLoader />
       ) : (
-        <Modal style={{ width: '434px', padding: '32px' }} title="" onDismiss={onDismiss}>
+        <Modal style={{ width: '90%', maxWidth: '434px', padding: '32px' }} title="" onDismiss={onDismiss}>
           <ModalContainer>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <Title>Register</Title>
               <TextLabel>You don&apos;t have an account yet! create a new one to play the game</TextLabel>
             </div>
             <div>
-              <Text fontSize="12px" fontWeight="500" lineHeight="18px">
+              <Text fontSize="12px" fontWeight="500" lineHeight="18px" marginBottom="12px">
                 Refer code
               </Text>
               <StyledInput
@@ -244,7 +244,16 @@ export const ModalCheckRegister = ({ onCheck, onDismiss }: { onCheck: () => void
               />
             </div>
             {showError && referCode && <span style={{ color: 'red' }}>Invalid code</span>}
-            <Button disabled={loading || referCode === '' || showError} onClick={handleRegister}>
+            <Button
+              style={{
+                borderRadius: '8px',
+                background: '#8544F5',
+                boxShadow: '2px 2px 8px 16px rgba(0, 0, 0, 0.10)',
+                color: 'rgba(255, 255, 255, 1)',
+              }}
+              disabled={loading || referCode === '' || showError}
+              onClick={handleRegister}
+            >
               Register Now
             </Button>
           </ModalContainer>

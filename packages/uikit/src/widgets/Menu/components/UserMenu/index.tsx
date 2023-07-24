@@ -6,6 +6,7 @@ import { ChevronDownIcon } from "../../../../components/Svg";
 import { UserMenuProps, variants } from "./types";
 import MenuIcon from "./MenuIcon";
 import { UserMenuItem } from "./styles";
+import { useMatchBreakpoints } from "../../../../contexts";
 
 export const StyledUserMenu = styled(Flex)`
   align-items: center;
@@ -24,6 +25,9 @@ export const StyledUserMenu = styled(Flex)`
 
   &:hover {
     opacity: 0.65;
+  }
+  @media screen and (max-width: 575px) {
+    background: none;
   }
 `;
 
@@ -48,7 +52,7 @@ const Menu = styled.div<{ isOpen: boolean }>`
   padding-bottom: 4px;
   padding-top: 4px;
   pointer-events: auto;
-  width: 280px;
+  width: 375px;
   visibility: visible;
   z-index: 1001;
   * {
@@ -98,6 +102,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
     placement: "bottom-end",
     modifiers: [{ name: "offset", options: { offset: [0, 0] } }],
   });
+  const { isMobile } = useMatchBreakpoints();
 
   useEffect(() => {
     const showDropdownMenu = () => {
@@ -128,8 +133,16 @@ const UserMenu: React.FC<UserMenuProps> = ({
           setIsOpen((s) => !s);
         }}
       >
-        <MenuIcon avatarSrc={avatarSrc} variant={variant} />
-        <LabelText title={typeof text === "string" ? text || account : account}>{text || accountEllipsis}</LabelText>
+        {isMobile ? (
+          <img width="24px" height="24px" src="/images/V3/menu.png" />
+        ) : (
+          <>
+            <MenuIcon avatarSrc={avatarSrc} variant={variant} />
+            <LabelText title={typeof text === "string" ? text || account : account}>
+              {text || accountEllipsis}
+            </LabelText>
+          </>
+        )}
         {!disabled && <ChevronDownIcon color="text" width="24px" />}
       </StyledUserMenu>
       {!disabled && (
