@@ -313,12 +313,12 @@ const Pool = ({ poolId }) => {
               >
                 <LinkExternal
                   fontSize={['14px', '16px', '18px', '20px', '22px']}
-                  href={getBlockExploreLink(contracts.poolsV3[CHAIN_ID], 'address', CHAIN_ID)}
+                  href={getBlockExploreLink(contracts.poolsV4[CHAIN_ID], 'address', CHAIN_ID)}
                   ellipsis={true}
                   color="#fff"
                   style={{ color: '#fff' }}
                 >
-                  {shortenURL(`Contract: ${contracts.poolsV3[CHAIN_ID]}`, 35)}
+                  {shortenURL(`Contract: ${contracts.poolsV4[CHAIN_ID]}`, 35)}
                 </LinkExternal>
               </Heading>
             </Flex>
