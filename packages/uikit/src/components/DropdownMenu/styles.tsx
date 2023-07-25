@@ -24,7 +24,7 @@ export const DropdownMenuItem = styled.button<StyledDropdownMenuItemProps & { $i
   display: flex;
   font-size: 16px;
   height: 48px;
-  justify-content: space-between;
+  justify-content: flex-end;
   outline: 0;
   padding-left: 16px;
   padding-right: 16px;
