@@ -1,13 +1,10 @@
 import { useTranslation } from '@pancakeswap/localization'
 import { Box, Modal, useToast, Button, Input, Text, Checkbox } from '@pancakeswap/uikit'
-import { useWeb3LibraryContext, useWeb3React } from '@pancakeswap/wagmi'
-import useTheme from 'hooks/useTheme'
 import images from 'configs/images'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { trendyColors } from 'style/trendyTheme'
 import useConfirmTransaction from 'hooks/useConfirmTransaction'
-import { useCallWithMarketGasPrice } from 'hooks/useCallWithMarketGasPrice'
 import { useCallWithGasPrice } from 'hooks/useCallWithGasPriceV2'
 import { usePoolsV4Contract } from 'hooks/useContract'
 import { ToastDescriptionWithTx } from 'components/Toast'
@@ -16,8 +13,6 @@ import { ethers } from 'ethers'
 import { useBalance } from 'wagmi'
 import { formatBigNumber } from 'utils/formatBalance'
 import { DepositPoolModalProps } from './type'
-import numeral from 'numeral'
-import { vaultPoolConfig } from '../../../../../config/constants/pools'
 import TrendyPageLoader from 'components/Loader/TrendyPageLoader'
 
 // STYLE
@@ -265,6 +260,7 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
       setIsValidAmount(false)
     } else setIsValidAmount(true)
   }
+
   const timeStamp = Math.floor(Date.now() / 1000)
   const minMaxBalanceHandle = (per: number) => {
     switch (per) {
@@ -294,10 +290,6 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
       }
       case 100: {
         setPerActive(100)
-        // if (Number(userBalance) > Number(maxLockMatic)) {
-        //   setAmount(maxLockMatic)
-        //   checkAmount(Number(maxLockMatic))
-        // } else {
         if (Number(userBalance) > 0) {
           setAmount((Number(userBalance) - 0.009).toFixed(4))
         } else {
@@ -313,16 +305,10 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
   }
   const { isConfirming, handleConfirm } = useConfirmTransaction({
     onConfirm: () => {
-      // console.log(mine)
-
       return callWithGasPrice(poolContract, 'deposit', [pool.pid], mine, {
         value: ethers.utils.parseUnits(amount.toString(), 'ether').toString(),
-        gasLimit: '1000000',
+        gasLimit: Number(pool.pid) < 2 ? '1000000' : '2000000',
       })
-
-      // return callWithMarketGasPrice(poolContract, 'deposit', [pool.pid], {
-      //   value: ethers.utils.parseUnits(amount.toString(), 'ether').toString(),
-      // })
     },
     onSuccess: async ({ receipt }) => {
       setConfirmedTxHash(receipt.transactionHash)
