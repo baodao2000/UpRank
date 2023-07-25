@@ -91,11 +91,12 @@ const DropdownMenu: React.FC<React.PropsWithChildren<DropdownMenuProps>> = ({
             .filter((item) => !item.isMobileOnly)
             .map(
               (
-                { type = DropdownMenuItemType.INTERNAL_LINK, label, href = "/", status, disabled, ...itemProps },
+                { type = DropdownMenuItemType.INTERNAL_LINK, image, label, href = "/", status, disabled, ...itemProps },
                 itemItem
               ) => {
                 const MenuItemContent = (
                   <>
+                    {image ? <img width="18px" height="18px" src={image} /> : null}
                     {label}
                     {status && (
                       <LinkStatus color={status.color} fontSize="14px">
