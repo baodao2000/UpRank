@@ -350,7 +350,7 @@ const Card = styled.div`
   gap: 15px;
   width: 630px;
   height: auto;
-  padding: 40px;
+  padding: 40px 20px;
   border-radius: 24px;
   border: 1px solid transparent;
   border-image-slice: 1;
@@ -362,12 +362,12 @@ const Card = styled.div`
   @media screen and (max-width: 1300px) {
     width: 90%;
     height: auto;
-    padding: 10px;
+    padding: 20px;
   }
   @media screen and (max-width: 800px) {
     width: 70%;
     height: auto;
-    padding: 10px;
+    padding: 20px;
     position: relative;
   }
   @media only screen and (min-width: 375px) and (max-width: 575px) {

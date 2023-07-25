@@ -4,6 +4,7 @@ import { Flex } from "../Box";
 import AnimatedIconComponent from "../Svg/AnimatedIconComponent";
 import { StyledBottomNavItem, StyledBottomNavText } from "./styles";
 import { BottomNavItemProps } from "./types";
+import { useMatchBreakpoints } from "../../contexts";
 
 const BottomNavItem: React.FC<React.PropsWithChildren<BottomNavItemProps>> = ({
   label,
@@ -16,14 +17,15 @@ const BottomNavItem: React.FC<React.PropsWithChildren<BottomNavItemProps>> = ({
   ...props
 }) => {
   const { linkComponent } = useContext(MenuContext);
+  const { isMobile } = useMatchBreakpoints();
+
   const bottomNavItemContent = (
-    <Flex flexDirection="column" justifyContent="center" alignItems="center" height="100%">
+    <Flex flexDirection={isMobile ? "column" : "row"} justifyContent="center" alignItems="center" height="100%">
       {icon && (
         <AnimatedIconComponent
           icon={icon}
-          fillIcon={fillIcon}
-          height="22px"
-          width="21px"
+          width={isMobile ? "16px" : "30px"}
+          // fillIcon={fillIcon}
           color={isActive ? "secondary" : "textSubtle"}
           isActive={isActive}
           activeBackgroundColor="backgroundAlt"
@@ -32,7 +34,7 @@ const BottomNavItem: React.FC<React.PropsWithChildren<BottomNavItemProps>> = ({
       <StyledBottomNavText
         color={isActive ? "text" : "textSubtle"}
         fontWeight={isActive ? "600" : "400"}
-        fontSize="10px"
+        fontSize="16px"
       >
         {label}
       </StyledBottomNavText>

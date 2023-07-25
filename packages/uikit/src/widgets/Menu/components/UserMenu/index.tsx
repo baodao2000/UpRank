@@ -141,9 +141,9 @@ const UserMenu: React.FC<UserMenuProps> = ({
             <LabelText title={typeof text === "string" ? text || account : account}>
               {text || accountEllipsis}
             </LabelText>
+            {!disabled && <ChevronDownIcon color="text" width="24px" />}
           </>
         )}
-        {!disabled && <ChevronDownIcon color="text" width="24px" />}
       </StyledUserMenu>
       {!disabled && (
         <Menu ref={setTooltipRef} {...attributes.popper} isOpen={isOpen}>
