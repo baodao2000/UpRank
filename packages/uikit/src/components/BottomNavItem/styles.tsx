@@ -8,13 +8,15 @@ export const StyledBottomNavItem = styled.button`
   background: transparent;
   cursor: pointer;
   height: 44px;
-  gap: 10px
+  gap: 10px;
+  padding: 0 10px;
   &:hover {
     border-radius: 16px;
   }
   &:hover,
   &:hover div {
     background: #353547;
+    border-radius: 12px;
   }
 `;
 
