@@ -156,6 +156,7 @@ const config: (
       icon: MinningIcon,
       items: [].map((item) => addMenuItemSupported(item, chainId)),
     },
+
     // {
     //   label: t('Voting'),
     //   href: '/vote',
