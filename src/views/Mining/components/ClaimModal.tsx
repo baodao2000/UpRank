@@ -8,7 +8,7 @@ import styled from 'styled-components'
 import { trendyColors } from 'style/trendyTheme'
 import useConfirmTransaction from 'hooks/useConfirmTransaction'
 import { useCallWithMarketGasPrice } from 'hooks/useCallWithMarketGasPrice'
-import { usePoolsContract, usePoolsV2Contract, usePoolsV3Contract } from 'hooks/useContract'
+import { usePoolsContract, usePoolsV2Contract, usePoolsV4Contract } from 'hooks/useContract'
 import { ToastDescriptionWithTx } from 'components/Toast'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 // import { ChainId } from '../../../../../../../packages/swap-sdk/src/constants'
@@ -87,7 +87,7 @@ const ClaimPoolModal = ({
   const { t } = useTranslation()
   const { toastSuccess, toastError } = useToast()
   const [isValidAmount, setIsValidAmount] = useState(true)
-  const mineContract = usePoolsV3Contract()
+  const mineContract = usePoolsV4Contract()
   const power = Number(mine.mineSpeed + mine.mineSpeedLevel) / 100
   const [data, setData] = useState([])
   const { chainId } = useActiveWeb3React()
