@@ -67,6 +67,11 @@ export const ModalContainer = styled(MotionBox)<{ $minWidth: string }>`
   min-width: ${({ $minWidth }) => $minWidth};
   min-height: 300px;
   border-radius: 25px;
+  padding 32px;
+  @media screen and (max-width: 575px) {
+  padding 20px;
+
+  }
 
   ${({ theme }) => theme.mediaQueries.md} {
     width: auto;

@@ -11,6 +11,7 @@ import { ModalBody, ModalCloseButton, ModalContainer, ModalHeader, ModalTitle } 
 import { walletLocalStorageKey } from "./config";
 import { Login, WalletConfig } from "./types";
 import WalletCard, { MoreWalletCard } from "./WalletCard";
+import { useMatchBreakpoints } from "../../contexts";
 
 interface Props<T> {
   login: Login<T>;
@@ -59,6 +60,7 @@ function ConnectModal<T>({ login, onDismiss = () => null, displayCount = 3, t, w
   const [showMore, setShowMore] = useState(false);
   const theme = useTheme();
   const sortedConfig = getPreferredConfig(connectors);
+  const { isMobile } = useMatchBreakpoints();
   // Filter out WalletConnect if user is inside TrustWallet built-in browser
   const walletsToShow =
     window.ethereum?.isTrust &&
@@ -69,14 +71,14 @@ function ConnectModal<T>({ login, onDismiss = () => null, displayCount = 3, t, w
   const displayListConfig = showMore ? walletsToShow : walletsToShow.slice(0, displayCount);
 
   return (
-    <ModalContainer $minWidth="320px">
-      <ModalHeader headerBackground="linear-gradient(139.73deg, #313D5C 0%, #3D2A54 100%)">
-        <ModalTitle>
-          <Heading>{t("Connect Wallet")}</Heading>
-        </ModalTitle>
+    <ModalContainer style={{ width: isMobile ? "100%" : "400px" }} $minWidth="320px">
+      <ModalHeader>
         <ModalCloseButton onDismiss={onDismiss} />
       </ModalHeader>
       <ModalBody minWidth={["320px", null, "340px"]}>
+        <Text textAlign="center" fontSize="24px" fontWeight="700">
+          Connet Wallet
+        </Text>
         <WalletWrapper py="24px" maxHeight="453px" overflowY="auto">
           <Grid gridTemplateColumns="1fr 1fr">
             {displayListConfig.map((wallet) => (

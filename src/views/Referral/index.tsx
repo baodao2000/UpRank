@@ -216,6 +216,7 @@ const GroupSearchByCode = styled.div`
     width: 24px;
     height: 24px;
     right: 2%;
+    cursor: pointer;
   }
 `
 
