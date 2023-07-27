@@ -1,6 +1,15 @@
 import { useTranslation } from '@pancakeswap/localization'
 import { ChainId } from '@pancakeswap/sdk'
-import { ArrowForwardIcon, Button, Grid, Message, MessageText, Modal, Text } from '@pancakeswap/uikit'
+import {
+  ArrowForwardIcon,
+  Button,
+  Grid,
+  Message,
+  MessageText,
+  Modal,
+  Text,
+  useMatchBreakpoints,
+} from '@pancakeswap/uikit'
 import { FlexGap } from 'components/Layout/Flex'
 import { ChainLogo } from 'components/Logo/ChainLogo'
 import useAuth from 'hooks/useAuth'
@@ -20,18 +29,25 @@ export function WrongNetworkModal({ currentChain, onDismiss }: { currentChain: C
   const [, setSessionChainId] = useSessionChainId()
   const chainId = currentChain.id || ChainId.MATIC
   const { t } = useTranslation()
-
+  const { isMobile } = useMatchBreakpoints()
   const switchText = t('Switch to %network%', { network: currentChain.name })
 
   return (
-    <Modal title={t('You are in wrong network')} headerBackground="rgb(105 84 156 / 77%)" onDismiss={onDismiss}>
+    <Modal
+      style={{ width: isMobile ? '100%' : '400px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+      title=""
+      onDismiss={onDismiss}
+    >
+      <Text textAlign="center" fontSize="24px" fontWeight="700" margin="20px 0">
+        You are in wrong network
+      </Text>
       <Grid style={{ gap: '16px' }} maxWidth="336px">
         <Text>{t('This page is located for %network%.', { network: currentChain.name })}</Text>
         <Text>
           {t('You are under %network% now, please switch the network to continue.', { network: chain?.name ?? '' })}
         </Text>
         <div style={{ textAlign: 'center' }}>
-          <img src="/images/logo-mobile.png" alt="" className="mobile-icon" />
+          <img width="50px" height="50px" src="/images/logo-mobile.png" alt="" className="mobile-icon" />
         </div>
         <Message variant="warning" icon={false} p="8px 12px">
           <MessageText>
