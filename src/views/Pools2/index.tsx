@@ -461,9 +461,12 @@ const Pools = () => {
   const { data: data2, isFetched: isFetched2 } = useBalance({
     addressOrName: contracts.poolsV2[CHAIN_ID],
   })
+  const { data: data3, isFetched: isFetched3 } = useBalance({
+    addressOrName: contracts.poolsV4[CHAIN_ID],
+  })
   const balance =
-    isFetched && data && data.value && isFetched2 && data2 && data2.value
-      ? formatBigNumber(data.value.add(data2.value), 6)
+    isFetched && data && data.value && isFetched2 && data2 && data2.value && isFetched3 && data3 && data3.value
+      ? formatBigNumber(data.value.add(data2.value).add(data3.value), 6)
       : 0
   const unit = NATIVE[chainId].symbol
 
