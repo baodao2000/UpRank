@@ -123,7 +123,7 @@ export const CurrencyExchange = () => {
             height: '24px',
           }}
         >
-          <img width="18px" height="16px" src="/images/trendCoin.png" />
+          <img width="18px" height="16px" src="/images/trendyloopcoin1.png" />
         </div>
         <span style={{ color: 'rgba(173, 171, 178, 1)', fontSize: '16px' }}>=</span>
         <Title>$1 </Title>

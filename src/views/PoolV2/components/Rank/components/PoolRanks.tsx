@@ -365,23 +365,23 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
   const dataRank = [
     {
       title: 'Bronze',
-      mine: '0.5',
+      mine: '0',
     },
     {
       title: 'Silver',
-      mine: '0.75',
+      mine: '0.5',
     },
     {
       title: 'Gold',
-      mine: '1.0',
+      mine: '0.75',
     },
     {
       title: 'Titanium',
-      mine: '1.25',
+      mine: '1',
     },
     {
       title: 'Platinum',
-      mine: '1.5',
+      mine: '1.25',
     },
   ]
   return (
