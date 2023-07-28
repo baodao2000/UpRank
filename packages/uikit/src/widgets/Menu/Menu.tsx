@@ -14,6 +14,7 @@ import { MENU_HEIGHT, MOBILE_MENU_HEIGHT, TOP_BANNER_HEIGHT, TOP_BANNER_HEIGHT_M
 import { NavProps } from "./types";
 import LangSelector from "../../components/LangSelector/LangSelector";
 import { MenuContext } from "./context";
+import { CurrencyExchange } from "../../../../../src/components/Currency";
 
 const Wrapper = styled.div`
   position: relative;
@@ -139,27 +140,11 @@ const Menu: React.FC<React.PropsWithChildren<NavProps>> = ({
     <MenuContext.Provider value={{ linkComponent }}>
       <Wrapper>
         <FixedContainer showMenu={showMenu} height={totalTopMenuHeight}>
-          {/* {banner && <TopBannerContainer height={topBannerHeight}>{banner}</TopBannerContainer>} */}
           <StyledNav>
             <Logo isDark={isDark} href={homeLink?.href ?? "/"} />
             {!isMobile && !isTablet && (
               <MenuItems items={links} activeItem={activeItem} activeSubItem={activeSubItem} ml="24px" />
             )}
-            {/* {!isMobile && !isMd && (
-                <Box mr="12px">
-                  <CakePrice showSkeleton={false} cakePriceUsd={cakePriceUsd} />
-                </Box>
-              )}
-              <Box mt="4px">
-                <LangSelector
-                  currentLang={currentLang}
-                  langs={langs}
-                  setLang={setLang}
-                  buttonScale="xs"
-                  color="textSubtle"
-                  hideLanguage
-                />
-              </Box> */}
             {rightSide}
           </StyledNav>
         </FixedContainer>
@@ -178,6 +163,7 @@ const Menu: React.FC<React.PropsWithChildren<NavProps>> = ({
           </Flex>
         )}
         <BodyWrapper mt={!subLinks ? `${totalTopMenuHeight}px` : "0"}>
+          <CurrencyExchange />
           <Inner isPushed={false} showMenu={showMenu}>
             {children}
             <Footer
