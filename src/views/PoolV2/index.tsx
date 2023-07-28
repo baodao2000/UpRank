@@ -127,6 +127,7 @@ const Wraper = styled.div`
   margin-left: auto;
   margin-right: auto;
   padding: 96px 0;
+  position: relative;
   @media screen and (max-width: 575px) {
     padding: 40px 16px;
   }
@@ -506,33 +507,25 @@ export const getRankImage = (index) => {
   }
   switch (index) {
     case 0:
-      obj.img = '/images/V3/bronze.png'
-      obj.title = 'Bronze'
-      break
-    case 1:
-      obj.img = '/images/V3/silver.png'
+      obj.img = '/images/V3/Bronze.svg'
       obj.title = 'Silver'
       break
-    case 2:
-      obj.img = '/images/V3/gold.png'
+    case 1:
+      obj.img = '/images/V3/Silver.svg'
       obj.title = 'Gold'
       break
-    // case 2:
-    //   obj.img = '/images/poolsV2/gold.svg?t=1'
-    //   obj.title = 'Gold'
-    //   break
-    // case 3:
-    //   obj.img = '/images/poolsV2/titanium.svg?t=1'
-    //   obj.title = 'Titanium'
-    //   break
-    // case 4:
-    //   obj.img = '/images/poolsV2/platinum.svg?t=1'
-    //   obj.title = 'Platinum'
-    //   break
-    // case 5:
-    //   obj.img = '/images/poolsV2/diamond.svg?t=1'
-    //   obj.title = 'Diamond'
-    //   break
+    case 2:
+      obj.img = '/images/V3/Gold.svg'
+      obj.title = 'Titanium'
+      break
+    case 3:
+      obj.img = '/images/V3/Titanium.svg'
+      obj.title = 'Platinum'
+      break
+    case 4:
+      obj.img = '/images/V3/Platinum.svg'
+      obj.title = 'Diamond'
+      break
     default:
       break
   }

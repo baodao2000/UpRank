@@ -11,14 +11,15 @@ import { timeDisplayLong } from 'views/Pools2/util'
 import { formatEther } from '@ethersproject/units'
 import CountUp from 'react-countup'
 import images from 'configs/images'
+import { getRankImage } from 'views/PoolV2'
 
 const ListPoolRanks = styled.div`
   display: flex;
   align-items: stretch;
-  justify-content: space-between;
+  justify-content: center;
   flex-wrap: wrap;
   grid-column-gap: 32px;
-  grid-row-gap: 30px;
+  grid-row-gap: 40px;
   flex-direction: row;
   @media screen and (max-width: 575px) {
     padding: 16px;
@@ -38,7 +39,7 @@ export const ImageRank = styled.img`
     width: 60px;
   }
 `
-const CardNextRanks = styled.div`
+const CardRankBronze = styled.div`
   max-width: 386px;
   height: auto;
   color: #fff;
@@ -60,14 +61,13 @@ const CardNextRanks = styled.div`
     width: 336px;
   }
 `
-const CardYourRanks = styled.div`
+const CardRankSilver = styled.div`
   max-width: 386px;
   height: auto;
   color: #fff;
   border-radius: 24px;
   border: 1px solid transparent;
   border-image-slice: 1;
-
   background-image: linear-gradient(#18171b, #18171b), radial-gradient(circle at top left, #7b3fe4 0%, #a726c1 100%);
   background-origin: border-box;
   background-clip: padding-box, border-box;
@@ -231,9 +231,7 @@ const Value = styled.span`
   line-height: 100%;
   display: flex;
   align-items: center;
-  text-transform: capitalize;
-  color: #fff;
-
+  gap: 5px;
   @media (max-width: 739px) {
     font-size: 12px;
   }
@@ -248,25 +246,20 @@ const StyledButtonRank = styled.button`
   width: 160px;
   height: 36px;
   color: #f3f3f3;
-  background: radial-gradient(
-    157.74% 210.61% at 0% 0%,
-    rgba(192, 240, 255, 0.8) 0%,
-    rgba(159, 169, 213, 0.29) 87.18%,
-    rgba(2, 0, 98, 0) 100%
-  );
-  backdrop-filter: blur(50px);
-  border-radius: 22.5px;
+  border-radius: var(--border-radius-lg, 12px);
+  background: var(--primary-primary-1, #8544f5);
+  /* light effect/boxShadow */
+  box-shadow: 2px 2px 8px 16px rgba(0, 0, 0, 0.1);
+
   font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 20px;
   &:disabled {
     border-radius: 15px;
     border: 1px solid rgba(245, 251, 242, 0.2);
     opacity: 0.30000001192092896;
-    background: radial-gradient(
-      157.74% 210.61% at 0% 0%,
-      rgba(192, 240, 255, 0.8) 0%,
-      rgba(159, 169, 213, 0.29) 87.18%,
-      rgba(2, 0, 98, 0) 100%
-    );
+    background: rgba(131, 131, 145, 1);
     backdrop-filter: blur(50px);
     color: #f3f3f3;
     font-weight: 700;
@@ -283,6 +276,17 @@ const ValueLocked = styled(Text)`
   display: flex;
   align-items: center;
   gap: 15px;
+`
+const UpRanks = styled(Button)`
+  border-radius: var(--border-radius-lg, 8px);
+  background: var(--primary-primary-1, #8544f5);
+  /* light effect/boxShadow */
+  box-shadow: 2px 2px 8px 16px rgba(0, 0, 0, 0.1);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  color: rgba(255, 255, 255, 1);
 `
 const nextRankRequire = [
   {
@@ -303,24 +307,13 @@ const nextRankRequire = [
     direct: 10,
     downline: 100,
   },
-  {
-    locked: 4000,
-    volumnOnTree: 1000000,
-    direct: 11,
-    downline: 200,
-  },
-  {
-    locked: 8000,
-    volumnOnTree: 3000000,
-    direct: 12,
-    downline: 500,
-  },
 ]
 const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
   const { toastSuccess, toastError } = useToast()
   const { account, chainId } = useActiveWeb3React()
   const poolContract = usePoolsV3Contract()
   const { callWithMarketGasPrice } = useCallWithMarketGasPrice()
+
   const { isConfirming, handleConfirm } = useConfirmTransaction({
     onConfirm: () => {
       return callWithMarketGasPrice(poolContract, 'claimRankRewardMonthly', [account])
@@ -338,6 +331,7 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
     onConfirm: () => {
       return callWithMarketGasPrice(poolContract, 'upRank', [])
     },
+
     onSuccess: async ({ receipt }) => {
       toastSuccess('Up Rank successfully !', <ToastDescriptionWithTx txHash={receipt.transactionHash} />)
       onSuccess()
@@ -350,6 +344,7 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
   const canUpRank3 = userRank.direct >= nextRankRequire[userRank.rank].direct
   const canUpRank4 = userRank.downline >= nextRankRequire[userRank.rank].downline
   const canUpRank = canUpRank1 && canUpRank2 && canUpRank3 && canUpRank4
+
   const getColor = (title) => {
     switch (title) {
       case 'Silver':
@@ -367,9 +362,31 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
     }
   }
   // console.log(data[userRank.rank].image)
+  const dataRank = [
+    {
+      title: 'Bronze',
+      mine: '0.5',
+    },
+    {
+      title: 'Silver',
+      mine: '0.75',
+    },
+    {
+      title: 'Gold',
+      mine: '1.0',
+    },
+    {
+      title: 'Titanium',
+      mine: '1.25',
+    },
+    {
+      title: 'Platinum',
+      mine: '1.5',
+    },
+  ]
   return (
     <ListPoolRanks>
-      <CardNextRanks>
+      {/* <CardRankBronze>
         <CardHead>
           <HeadLeft>
             <ImageRank src="./images/V3/bronze.png" alt="" />
@@ -380,6 +397,13 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
           </HeadRight>
         </CardHead>
         <CardBody>
+        <ItemInfoCard>
+            <Label>TREND Token Mining Speed </Label>
+            <Value>
+x0.5
+                <img width="24px" height="24px" src="/images/V3/IconMine.png" />
+            </Value>
+          </ItemInfoCard>
           <ItemInfoCard>
             <Label>Locked</Label>
             <ValueLocked>
@@ -402,7 +426,7 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
           </ItemInfoCard>
           <ItemInfoCard>
             <Label>Volumn on tree</Label>
-            <Value>${userRank.volumnOnTree}</Value>
+            <Value style={{color: !canUpRank2 ? 'rgba(226, 225, 229, 1)' : 'rgba(173, 171, 178, 1)' }}>${userRank.volumnOnTree}</Value>
           </ItemInfoCard>
           <ItemInfoCard>
             <Label>Member direct</Label>
@@ -413,68 +437,100 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
             <Value>{userRank.downline}</Value>
           </ItemInfoCard>
         </CardBody>
-      </CardNextRanks>
-      <CardYourRanks>
-        <CardHead>
-          <HeadLeft>
-            <ImageRank src="./images/V3/silver.png" alt="" />
-            <TitleHeadRight style={{ color: '#fff' }}>Silver</TitleHeadRight>
-          </HeadLeft>
-          <HeadRight style={{ color: getColor('') }}></HeadRight>
-        </CardHead>
-        <CardBody>
-          <ItemInfoCard style={{ color: canUpRank1 ? '#fff' : 'gray' }}>
-            <Label>Locked</Label>
-            <ValueLocked>
-              {userRank.locked}
-              <div
-                style={{
-                  background: 'var(--white-white-6, rgba(255, 255, 255, 0.06))',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  backdropFilter: 'blur(6px)',
-                  borderRadius: '4px',
-                  width: '24px',
-                  height: '24px',
-                }}
-              >
-                <img width="18px" height="16px" src="./images/V3/Vector.png" />
-              </div>
-            </ValueLocked>
-          </ItemInfoCard>
-          <ItemInfoCard style={{ color: canUpRank2 ? '#fff' : 'gray' }}>
-            <Label>Volumn on tree</Label>
-            <Value>
-              $
-              <CountUp
-                separator=","
-                start={0}
-                preserveValue
-                delay={0}
-                end={userRank.volumnOnTree}
-                decimals={0}
-                duration={0.5}
-                style={{ color: 'inherit !important' }}
-              />{' '}
-            </Value>
-          </ItemInfoCard>
-          <ItemInfoCard style={{ color: canUpRank3 ? '#fff' : 'gray' }}>
-            <Label>Member direct</Label>
-            <Value>{userRank.direct}</Value>
-          </ItemInfoCard>
-          <ItemInfoCard style={{ color: canUpRank4 ? '#fff' : 'gray' }}>
-            <Label>Member downline</Label>
-            <Value>{userRank.downline}</Value>
-          </ItemInfoCard>
-        </CardBody>
-      </CardYourRanks>
+      </CardRankBronze> */}
+      {dataRank.map((items, r) => (
+        <CardRankSilver style={{ background: r === 4 ? 'rgba(117, 60, 216, 0.80)' : '' }} key={r}>
+          <CardHead>
+            <HeadLeft>
+              <ImageRank src={getRankImage(r).img} alt="" />
+              <TitleHeadRight style={{ color: '#fff' }}>{items.title}</TitleHeadRight>
+            </HeadLeft>
+            {userRank.rank === r && (
+              <HeadRight>
+                <TitleHeadRightBronze style={{ color: '#fff' }}>Your Rank</TitleHeadRightBronze>
+              </HeadRight>
+            )}
+          </CardHead>
+          <CardBody>
+            <ItemInfoCard>
+              <Label>TREND Token Mining Speed </Label>
+              <Value>
+                x{items.mine}
+                <img width="24px" height="24px" src="/images/V3/IconMine.png" />
+              </Value>
+            </ItemInfoCard>
+            <ItemInfoCard>
+              <Label>Locked</Label>
+              <ValueLocked style={{ color: r === 4 ? '#fff' : '#8544f5' }}>
+                {userRank.locked}
+                <div
+                  style={{
+                    background: r === 4 ? 'black' : 'var(--white-white-6, rgba(255, 255, 255, 0.06))',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    backdropFilter: 'blur(6px)',
+                    borderRadius: '4px',
+                    width: '24px',
+                    height: '24px',
+                  }}
+                >
+                  <img width="18px" height="16px" src="./images/V3/Vector.png" />
+                </div>
+              </ValueLocked>
+            </ItemInfoCard>
+            <ItemInfoCard style={{ color: canUpRank2 ? '#fff' : 'gray' }}>
+              <Label>Volumn on tree</Label>
+              <Value>
+                $
+                <CountUp
+                  separator=","
+                  start={0}
+                  preserveValue
+                  delay={0}
+                  end={userRank.volumnOnTree}
+                  decimals={0}
+                  duration={0.5}
+                  style={{ color: 'inherit !important' }}
+                />{' '}
+              </Value>
+            </ItemInfoCard>
+            <ItemInfoCard style={{ color: canUpRank3 ? '#fff' : 'gray' }}>
+              <Label>Member direct</Label>
+              <Value>{userRank.direct}</Value>
+            </ItemInfoCard>
+            <ItemInfoCard style={{ color: canUpRank4 ? '#fff' : 'gray' }}>
+              <Label>Member downline</Label>
+              <Value>{userRank.downline}</Value>
+            </ItemInfoCard>
+          </CardBody>
+          {/* <div style={{ textAlign: 'center', marginTop: 8 }}>
+          <StyledButtonRank style={{display: canUpRank ? 'block' : 'none'}} disabled={!canUpRank} onClick={handleConfirmUpRank}>
+            {isConfirmingUpRank ? (
+              <ThreeDots className="loading">
+                Updating<span>.</span>
+                <span>.</span>
+                <span>.</span>
+              </ThreeDots>
+            ) : (
+              'Up Rank'
+            )}
+          </StyledButtonRank>
+        </div> */}
+        </CardRankSilver>
+      ))}
+      {/* 
       <CardRanksGold>
         <CardHead>
           <HeadLeft>
             <ImageRank src="./images/V3/gold.png" alt="" />
             <TitleHeadRight style={{ color: '#fff' }}>Gold</TitleHeadRight>
           </HeadLeft>
+          {userRank.rank === 2 && 
+                    <HeadRight style={{ color: getColor(''), display: isMobile ? 'none' : 'block' }}>
+                    <TitleHeadRightBronze style={{ color: '#fff' }}>Your Rank</TitleHeadRightBronze>
+                  </HeadRight>}
+
         </CardHead>
         <CardBody>
           <>
@@ -524,74 +580,7 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
             </ItemInfoCard>
           </>
         </CardBody>
-        {/* <div style={{ textAlign: 'center', marginTop: 8 }}>
-          <StyledButtonRank disabled={!canUpRank} onClick={handleConfirmUpRank}>
-            {isConfirmingUpRank ? (
-              <ThreeDots className="loading">
-                Claiming<span>.</span>
-                <span>.</span>
-                <span>.</span>
-              </ThreeDots>
-            ) : (
-              'Up Rank'
-            )}
-          </StyledButtonRank>
-        </div> */}
-      </CardRanksGold>
-      {/* {data.map((item, index) => (
-        <CardPoolRanks key={index}>
-          <CardHead>
-            <HeadRight style={{ color: getColor(item.title) }}>
-              <TitleHeadRight>{item.title}</TitleHeadRight>
-              <progress
-                className="file"
-                value={item.total}
-                max={item.max}
-                style={{ margin: '4px 0', accentColor: getColor(item.title), width: 160 }}
-              />
-              <MinMaxPrice>
-                <MinMaxItem style={{ color: getColor(item.title) }}>{item.min}$</MinMaxItem>
-                <MinMaxItem style={{ color: getColor(item.title) }}>{item.max}$</MinMaxItem>
-              </MinMaxPrice>
-            </HeadRight>
-            <HeadLeft>
-              <ImageRank src={item.image} alt="" />
-            </HeadLeft>
-          </CardHead>
-          <CardBody>
-            <ItemInfoCard>
-              <Label>Total:</Label>
-              <Value>{item.total}$</Value>
-            </ItemInfoCard>
-            <ItemInfoCard>
-              <Label>Current Reward:</Label>
-              <Value>{item.currentReward}$</Value>
-            </ItemInfoCard>
-            <ItemInfoCard>
-              <Label>Member:</Label>
-              <Value>{item.member}</Value>
-            </ItemInfoCard>
-            <BorderCard />
-            <ItemInfoCard>
-              <Label style={{ fontSize: '24px' }}>Your reward:</Label>
-              <Value>{`${item.yourReward}`}$</Value>
-            </ItemInfoCard>
-          </CardBody>
-          <div style={{ textAlign: 'center', marginTop: 8 }}>
-            <StyledButtonRank disabled={userRank === index + 1 && !userIsClaim ? false : true} onClick={handleConfirm}>
-              {isConfirming ? (
-                <ThreeDots className="loading">
-                  Claiming<span>.</span>
-                  <span>.</span>
-                  <span>.</span>
-                </ThreeDots>
-              ) : (
-                'Claim'
-              )}
-            </StyledButtonRank>
-          </div>
-        </CardPoolRanks>
-      ))} */}
+      </CardRanksGold> */}
     </ListPoolRanks>
   )
 }

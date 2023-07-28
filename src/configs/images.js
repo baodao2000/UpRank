@@ -91,7 +91,7 @@ const images = {
   iconpoolsV2: '/images/IconPoolsV2.svg',
   bg: '/images/BG.png',
   Illustrations: '/images/Illustrations.png',
-  roadmapV3: '/images/Roadmap.svg',
+  roadmapV3: '/images/V3/Roadmap.svg',
   bgV3: '/images/V3/BG.png',
   iconback: '/images/V3/iconback.svg',
   bscoin: '/images/V3/bscoin.svg',
