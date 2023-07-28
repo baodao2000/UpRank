@@ -12,7 +12,6 @@ import Transparency from './components/Transparency'
 import Tranditional from './components/Tranditional'
 import RoadMap from './components/RoadMap'
 import Download from './components/Download'
-import { CurrencyExchange } from 'components/Currency'
 
 const Wrapper = styled.div`
   width: 100%;

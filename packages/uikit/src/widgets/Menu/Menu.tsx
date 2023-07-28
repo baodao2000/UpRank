@@ -14,7 +14,6 @@ import { MENU_HEIGHT, MOBILE_MENU_HEIGHT, TOP_BANNER_HEIGHT, TOP_BANNER_HEIGHT_M
 import { NavProps } from "./types";
 import LangSelector from "../../components/LangSelector/LangSelector";
 import { MenuContext } from "./context";
-import { CurrencyExchange } from "../../../../../src/components/Currency";
 
 const Wrapper = styled.div`
   position: relative;
@@ -163,7 +162,6 @@ const Menu: React.FC<React.PropsWithChildren<NavProps>> = ({
           </Flex>
         )}
         <BodyWrapper mt={!subLinks ? `${totalTopMenuHeight}px` : "0"}>
-          <CurrencyExchange />
           <Inner isPushed={false} showMenu={showMenu}>
             {children}
             <Footer
