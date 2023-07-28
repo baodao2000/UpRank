@@ -456,13 +456,21 @@ x0.5
               <Label>TREND Token Mining Speed </Label>
               <Value>
                 x{items.mine}
-                <img width="24px" height="24px" src="/images/V3/IconMine.png" />
+                <img width="24px" height="18px" src="/images/V3/IconMine.png" />
               </Value>
             </ItemInfoCard>
             <ItemInfoCard>
               <Label>Locked</Label>
               <ValueLocked style={{ color: r === 4 ? '#fff' : '#8544f5' }}>
-                {userRank.locked}
+                <CountUp
+                  separator=","
+                  start={0}
+                  preserveValue
+                  delay={0}
+                  end={userRank.locked}
+                  decimals={0}
+                  duration={0.5}
+                />{' '}
                 <div
                   style={{
                     background: r === 4 ? 'black' : 'var(--white-white-6, rgba(255, 255, 255, 0.06))',
