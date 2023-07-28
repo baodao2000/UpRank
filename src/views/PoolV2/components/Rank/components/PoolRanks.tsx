@@ -365,23 +365,23 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
   const dataRank = [
     {
       title: 'Bronze',
-      mine: '0.5',
+      mine: '0',
     },
     {
       title: 'Silver',
-      mine: '0.75',
+      mine: '0.5',
     },
     {
       title: 'Gold',
-      mine: '1.0',
+      mine: '0.75',
     },
     {
       title: 'Titanium',
-      mine: '1.25',
+      mine: '1',
     },
     {
       title: 'Platinum',
-      mine: '1.5',
+      mine: '1.25',
     },
   ]
   return (
@@ -456,13 +456,21 @@ x0.5
               <Label>TREND Token Mining Speed </Label>
               <Value>
                 x{items.mine}
-                <img width="24px" height="24px" src="/images/V3/IconMine.png" />
+                <img width="24px" height="18px" src="/images/V3/IconMine.png" />
               </Value>
             </ItemInfoCard>
             <ItemInfoCard>
               <Label>Locked</Label>
               <ValueLocked style={{ color: r === 4 ? '#fff' : '#8544f5' }}>
-                {userRank.locked}
+                <CountUp
+                  separator=","
+                  start={0}
+                  preserveValue
+                  delay={0}
+                  end={userRank.locked}
+                  decimals={0}
+                  duration={0.5}
+                />{' '}
                 <div
                   style={{
                     background: r === 4 ? 'black' : 'var(--white-white-6, rgba(255, 255, 255, 0.06))',
