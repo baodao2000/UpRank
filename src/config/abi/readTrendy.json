@@ -1,0 +1,88 @@
+[
+  {
+    "inputs": [
+      { "internalType": "contract IPoolsMatic", "name": "_pool", "type": "address" },
+      { "internalType": "contract IPoolsMatic", "name": "_poolv4", "type": "address" },
+      { "internalType": "contract IRefferal", "name": "_refer", "type": "address" }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "address", "name": "previousOwner", "type": "address" },
+      { "indexed": true, "internalType": "address", "name": "newOwner", "type": "address" }
+    ],
+    "name": "OwnershipTransferred",
+    "type": "event"
+  },
+  { "inputs": [], "name": "getStuck", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
+  {
+    "inputs": [{ "internalType": "contract IERC20", "name": "_token", "type": "address" }],
+    "name": "inCaseTokensGetStuck",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "name": "isWL",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "owner",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "pool",
+    "outputs": [{ "internalType": "contract IPoolsMatic", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "poolv4",
+    "outputs": [{ "internalType": "contract IPoolsMatic", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "refer",
+    "outputs": [{ "internalType": "contract IRefferal", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  { "inputs": [], "name": "renounceOwnership", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
+  {
+    "inputs": [{ "internalType": "address", "name": "newOwner", "type": "address" }],
+    "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address[]", "name": "users", "type": "address[]" }],
+    "name": "volumeOntree",
+    "outputs": [
+      { "internalType": "uint256[]", "name": "volumes", "type": "uint256[]" },
+      { "internalType": "uint256[]", "name": "userTotalLocks", "type": "uint256[]" },
+      { "internalType": "address[]", "name": "_users", "type": "address[]" },
+      { "internalType": "address[]", "name": "refferBys", "type": "address[]" },
+      { "internalType": "uint256[]", "name": "dateTimes", "type": "uint256[]" },
+      { "internalType": "uint256[]", "name": "totalRefers", "type": "uint256[]" },
+      { "internalType": "uint256[]", "name": "totalRefer7s", "type": "uint256[]" },
+      { "internalType": "bool[]", "name": "top10Refers", "type": "bool[]" },
+      { "internalType": "string[]", "name": "codes", "type": "string[]" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]

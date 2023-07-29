@@ -6,6 +6,7 @@ import 'react-tooltip/dist/react-tooltip.css'
 import { getContract, getPoolsContract, getPoolsV2Contract } from 'utils/contractHelpers'
 import addresses from 'config/constants/contracts'
 import refferalAbi from 'config/abi/refferal.json'
+import readTrendyAbi from 'config/abi/readTrendy.json'
 import { useDispatch } from 'react-redux'
 import { setRefLink } from 'state/referral'
 import { useSigner } from 'wagmi'
@@ -765,12 +766,16 @@ const Referral = () => {
   const referBy = query.get('ref')
   const baseRefUrl = `${window.location.origin}homepage?ref=`
   const { data: signer } = useSigner()
-  const [modalIsOpen, setModalIsOpen] = React.useState(true)
-  // const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId;
   const CHAIN_ID = Number(process.env.NEXT_PUBLIC_DEFAULT_CHAIN)
   const getPoolContract = getPoolsContract(CHAIN_ID)
   const getPoolV2Contract = getPoolsV2Contract(CHAIN_ID)
   const refferCT = getContract({ address: addresses.refferal[CHAIN_ID], abi: refferalAbi, chainId: CHAIN_ID, signer })
+  const readTrendyCT = getContract({
+    address: addresses.readTrendy[CHAIN_ID],
+    abi: readTrendyAbi,
+    chainId: CHAIN_ID,
+    signer,
+  })
   const [userIsRegister, setUserIsRegister] = React.useState(false)
   const [interest, setInterest] = React.useState(0)
   const [listChild, setListChild] = React.useState([])
@@ -816,30 +821,42 @@ const Referral = () => {
 
     const countPage = Math.ceil(Number(data[0].totalItem.toString()) / limit)
     const arr = data[0].list.map((item) => item.user)
-    const list = await Promise.all(
-      arr.map(async (item) => {
-        const dataItem = await Promise.all([
-          getPoolContract.volumeOntree(item),
-          getPoolContract.userTotalLock(item),
-          refferCT.userInfos(item),
-        ])
-        const dataItem2 = await Promise.all([
-          getPoolV2Contract.volumeOntree(item),
-          getPoolV2Contract.userTotalLock(item),
-          refferCT.userInfos(item),
-        ])
+    // console.log(arr)
+    const dataTrendy = await readTrendyCT.volumeOntree(arr)
+    setListChild(
+      arr.map((item, i) => {
         return {
           account: item,
-          volume: Number(formatEther(dataItem[0].add(dataItem2[0]))).toFixed(3),
-          locked: Number(formatEther(dataItem[1].add(dataItem2[1]))).toFixed(3),
-          child: Number(dataItem[2].totalRefer7.toString()),
+          volume: Number(formatEther(dataTrendy.volumes[i])).toFixed(3),
+          locked: Number(formatEther(dataTrendy.userTotalLocks[i])).toFixed(3),
+          child: Number(dataTrendy.totalRefers[i].toString()),
+          showChild: false,
         }
       }),
     )
+    // const list = await Promise.all(
+    //   arr.map(async (item) => {
+    //     const dataItem = await Promise.all([
+    //       getPoolContract.volumeOntree(item),
+    //       getPoolContract.userTotalLock(item),
+    //       refferCT.userInfos(item),
+    //     ])
+    //     const dataItem2 = await Promise.all([
+    //       getPoolV2Contract.volumeOntree(item),
+    //       getPoolV2Contract.userTotalLock(item),
+    //       refferCT.userInfos(item),
+    //     ])
+    //     return {
+    //       account: item,
+    //       volume: Number(formatEther(dataItem[0].add(dataItem2[0]))).toFixed(3),
+    //       locked: Number(formatEther(dataItem[1].add(dataItem2[1]))).toFixed(3),
+    //       child: Number(dataItem[2].totalRefer7.toString()),
+    //     }
+    //   }),
+    // )
     setTotalItemChild(Number(data[0].totalItem.toString()))
     setCountPage(countPage)
     setTotal7Level(data[1].totalRefer7.toString())
-    setListChild(list.map((l) => ({ ...l, showChild: false })))
     setLoadingTable(false)
   }
 
@@ -918,7 +935,7 @@ const Referral = () => {
       for (let i = 0; i < limitButton; i++) {
         arr.push(
           <ButtonChangePage key={i} onClick={() => handleClickPage(i)} style={activePage === i ? style : {}}>
-            {i}
+            {i + 1}
           </ButtonChangePage>,
         )
       }
@@ -938,7 +955,7 @@ const Referral = () => {
       for (let i = 0; i < countPage; i++) {
         arr.push(
           <ButtonChangePage key={i} style={activePage === i ? style : {}} onClick={() => handleClickPage(i)}>
-            {i}
+            {i + 1}
           </ButtonChangePage>,
         )
       }
@@ -996,7 +1013,7 @@ const Referral = () => {
   const getLinkRef = () => {
     const param = window.location.origin
     const text = `${param}?ref=${account.slice(account.length - 6, account.length).toLocaleLowerCase()}`
-    console.log(text)
+    // console.log(text)
     return text
   }
 
@@ -1399,9 +1416,9 @@ const Referral = () => {
                         <StyledLinkAccount
                           rel="noreferrer"
                           target="_blank"
-                          href={`https://testnet.bscscan.com/address/${acountChild[acountChild.length - 1]}`}
+                          href={process.env.NEXT_PUBLIC_SCAN + `/address/${acountChild[acountChild.length - 1]}`}
                         >
-                          {truncateHash(acountChild[acountChild.length - 1], 6, 2)}
+                          {truncateHash(acountChild[acountChild.length - 1], 16, 3)}
                         </StyledLinkAccount>
                       </CardFriends>
                       <CardFriends style={{ width: isMobile ? '147px' : isTablet ? '100%' : '300px' }}>
@@ -1420,7 +1437,7 @@ const Referral = () => {
                         <th>Locked</th>
                       </tr>
                       {listChild.map((item, index) => (
-                        <>
+                        <div key={index}>
                           <ChildItem key={index}>
                             <td>
                               <div
@@ -1471,7 +1488,7 @@ const Referral = () => {
                               </td>
                             </ChildItem>
                           )}
-                        </>
+                        </div>
                       ))}
                     </Table>
                   </>

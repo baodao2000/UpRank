@@ -11,6 +11,7 @@ import TrendyPageLoader from 'components/Loader/TrendyPageLoader'
 import { formatEther } from '@ethersproject/units'
 import { ThreeDots } from 'views/Pool/components/DepositModal'
 import CountUp from 'react-countup'
+import readTrendyAbi from '../../config/abi/readTrendy.json'
 
 const CardReferral = styled.div`
   max-width: 1000px;
@@ -68,6 +69,12 @@ const Child = ({ referBy }) => {
   const getPoolContract = getPoolsContract(CHAIN_ID)
   const getPoolV2Contract = getPoolsV2Contract(CHAIN_ID)
   const refferCT = getContract({ address: addresses.refferal[CHAIN_ID], abi: refferalAbi, chainId: CHAIN_ID, signer })
+  const readTrendyCT = getContract({
+    address: addresses.readTrendy[CHAIN_ID],
+    abi: readTrendyAbi,
+    chainId: CHAIN_ID,
+    signer,
+  })
   const [userIsRegister, setUserIsRegister] = React.useState(false)
   const [interest, setInterest] = React.useState(0)
   const [listChild, setListChild] = React.useState([])
@@ -99,32 +106,45 @@ const Child = ({ referBy }) => {
     setLoadingTable(true)
     const limit = 5
     const data = await Promise.all([refferCT.getTotalUserByUp(referBy, limit, page), refferCT.userInfos(referBy)])
+    // console.log(data[0])
     const countPage = Math.ceil(Number(data[0].totalItem.toString()) / limit)
     const arr = data[0].list.map((item) => item.user)
-    const list = await Promise.all(
-      arr.map(async (item) => {
-        const dataItem = await Promise.all([
-          getPoolContract.volumeOntree(item),
-          getPoolContract.userTotalLock(item),
-          refferCT.userInfos(item),
-        ])
-        const dataItem2 = await Promise.all([
-          getPoolV2Contract.volumeOntree(item),
-          getPoolV2Contract.userTotalLock(item),
-          refferCT.userInfos(item),
-        ])
+    const dataTrendy = await readTrendyCT.volumeOntree(arr)
+    setListChild(
+      arr.map((item, i) => {
         return {
           account: item,
-          volume: Number(formatEther(dataItem[0].add(dataItem2[0]))).toFixed(3),
-          locked: Number(formatEther(dataItem[1].add(dataItem2[1]))).toFixed(3),
-          child: Number(dataItem[2].totalRefer7.toString()),
+          volume: Number(formatEther(dataTrendy.volumes[i])).toFixed(3),
+          locked: Number(formatEther(dataTrendy.userTotalLocks[i])).toFixed(3),
+          child: Number(dataTrendy.totalRefers[i].toString()),
+          showChild: false,
         }
       }),
     )
+    // const list = await Promise.all(
+    //   arr.map(async (item) => {
+    //     const dataItem = await Promise.all([
+    //       getPoolContract.volumeOntree(item),
+    //       getPoolContract.userTotalLock(item),
+    //       refferCT.userInfos(item),
+    //     ])
+    //     const dataItem2 = await Promise.all([
+    //       getPoolV2Contract.volumeOntree(item),
+    //       getPoolV2Contract.userTotalLock(item),
+    //       refferCT.userInfos(item),
+    //     ])
+    //     return {
+    //       account: item,
+    //       volume: Number(formatEther(dataItem[0].add(dataItem2[0]))).toFixed(3),
+    //       locked: Number(formatEther(dataItem[1].add(dataItem2[1]))).toFixed(3),
+    //       child: Number(dataItem[2].totalRefer7.toString()),
+    //     }
+    //   }),
+    // )
     setTotalItemChild(Number(data[0].totalItem.toString()))
     setCountPage(countPage)
     setTotal7Level(data[1].totalRefer7.toString())
-    setListChild(list.map((l) => ({ ...l, showChild: false })))
+    // setListChild(list.map((l) => ({ ...l, showChild: false })))
     setLoadingTable(false)
   }
 
