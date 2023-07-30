@@ -121,26 +121,7 @@ const Child = ({ referBy }) => {
         }
       }),
     )
-    // const list = await Promise.all(
-    //   arr.map(async (item) => {
-    //     const dataItem = await Promise.all([
-    //       getPoolContract.volumeOntree(item),
-    //       getPoolContract.userTotalLock(item),
-    //       refferCT.userInfos(item),
-    //     ])
-    //     const dataItem2 = await Promise.all([
-    //       getPoolV2Contract.volumeOntree(item),
-    //       getPoolV2Contract.userTotalLock(item),
-    //       refferCT.userInfos(item),
-    //     ])
-    //     return {
-    //       account: item,
-    //       volume: Number(formatEther(dataItem[0].add(dataItem2[0]))).toFixed(3),
-    //       locked: Number(formatEther(dataItem[1].add(dataItem2[1]))).toFixed(3),
-    //       child: Number(dataItem[2].totalRefer7.toString()),
-    //     }
-    //   }),
-    // )
+
     setTotalItemChild(Number(data[0].totalItem.toString()))
     setCountPage(countPage)
     setTotal7Level(data[1].totalRefer7.toString())
@@ -162,9 +143,6 @@ const Child = ({ referBy }) => {
         return l
       }),
     )
-    // getTotalRefferChild(0, accountB)
-    // setAccountChild([...acountChild, accountB])
-    // setActivePage(0)
   }
 
   const handleChangePage = (index) => {
@@ -310,6 +288,7 @@ const Child = ({ referBy }) => {
                       </div>
                     </td>
                     <td>
+                      $
                       <CountUp
                         separator=","
                         start={0}
@@ -319,7 +298,6 @@ const Child = ({ referBy }) => {
                         decimals={1}
                         duration={1}
                       />
-                      $
                     </td>
                     <td>
                       <CountUp
