@@ -351,14 +351,14 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
   })
   const { isMobile } = useMatchBreakpoints()
 
-  // const canUpRank1 = userRank.locked >= nextRankRequire[userRank.rank].locked
-  // const canUpRank2 = userRank.volumnOnTree >= nextRankRequire[userRank.rank].volumnOnTree
-  // const canUpRank3 = userRank.direct >= nextRankRequire[userRank.rank].direct
-  // const canUpRank4 = userRank.downline >= nextRankRequire[userRank.rank].downline
-  const canUpRank1 = userRank.locked >= 0
-  const canUpRank2 = userRank.volumnOnTree >= 0
-  const canUpRank3 = userRank.direct >= 0
-  const canUpRank4 = userRank.downline >= 0
+  const canUpRank1 = userRank.locked >= nextRankRequire[userRank.rank].locked
+  const canUpRank2 = userRank.volumnOnTree >= nextRankRequire[userRank.rank].volumnOnTree
+  const canUpRank3 = userRank.direct >= nextRankRequire[userRank.rank].direct
+  const canUpRank4 = userRank.downline >= nextRankRequire[userRank.rank].downline
+  // const canUpRank1 = userRank.locked >= 0
+  // const canUpRank2 = userRank.volumnOnTree >= 0
+  // const canUpRank3 = userRank.direct >= 0
+  // const canUpRank4 = userRank.downline >= 0
   const canUpRank = canUpRank1 && canUpRank2 && canUpRank3 && canUpRank4
 
   const getColor = (title) => {
@@ -503,68 +503,6 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
           </div>
         </CardRankSilver>
       ))}
-      {/* 
-      <CardRanksGold>
-        <CardHead>
-          <HeadLeft>
-            <ImageRank src="./images/V3/gold.png" alt="" />
-            <TitleHeadRight style={{ color: '#fff' }}>Gold</TitleHeadRight>
-          </HeadLeft>
-          {userRank.rank === 2 && 
-                    <HeadRight style={{ color: getColor(''), display: isMobile ? 'none' : 'block' }}>
-                    <TitleHeadRightBronze style={{ color: '#fff' }}>Your Rank</TitleHeadRightBronze>
-                  </HeadRight>}
-
-        </CardHead>
-        <CardBody>
-          <>
-            <ItemInfoCard style={{ color: canUpRank1 ? '#fff' : 'gray' }}>
-              <Label>Locked</Label>
-              <ValueLocked style={{ color: 'rgba(226, 225, 229, 1)' }}>
-                {userRank.locked}
-                <div
-                  style={{
-                    background: 'var(--black-black-60, rgba(0, 0, 0, 0.60))',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    backdropFilter: 'blur(6px)',
-                    borderRadius: '4px',
-                    width: '24px',
-                    height: '24px',
-                  }}
-                >
-                  <img width="18px" height="16px" src="./images/V3/Vector.png" />
-                </div>
-              </ValueLocked>
-            </ItemInfoCard>
-            <ItemInfoCard style={{ color: canUpRank2 ? '#fff' : 'gray' }}>
-              <Label>Volumn on tree</Label>
-              <Value>
-                $
-                <CountUp
-                  separator=","
-                  start={0}
-                  preserveValue
-                  delay={0}
-                  end={userRank.volumnOnTree}
-                  decimals={0}
-                  duration={0.5}
-                  style={{ color: 'inherit !important' }}
-                />
-              </Value>
-            </ItemInfoCard>
-            <ItemInfoCard style={{ color: canUpRank3 ? '#fff' : 'gray' }}>
-              <Label>Member direct</Label>
-              <Value>{userRank.direct}</Value>
-            </ItemInfoCard>
-            <ItemInfoCard style={{ color: canUpRank4 ? '#fff' : 'gray' }}>
-              <Label>Member downline</Label>
-              <Value>{userRank.downline}</Value>
-            </ItemInfoCard>
-          </>
-        </CardBody>
-      </CardRanksGold> */}
     </ListPoolRanks>
   )
 }
