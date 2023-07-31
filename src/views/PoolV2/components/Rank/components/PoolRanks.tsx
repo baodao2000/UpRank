@@ -307,6 +307,18 @@ const nextRankRequire = [
     direct: 10,
     downline: 100,
   },
+  {
+    locked: 4000,
+    volumnOnTree: 1000000,
+    direct: 11,
+    downline: 200,
+  },
+  {
+    locked: 2000,
+    volumnOnTree: 300000,
+    direct: 12,
+    downline: 500,
+  },
 ]
 const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
   const { toastSuccess, toastError } = useToast()
@@ -339,10 +351,14 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
   })
   const { isMobile } = useMatchBreakpoints()
 
-  const canUpRank1 = userRank.locked >= nextRankRequire[userRank.rank].locked
-  const canUpRank2 = userRank.volumnOnTree >= nextRankRequire[userRank.rank].volumnOnTree
-  const canUpRank3 = userRank.direct >= nextRankRequire[userRank.rank].direct
-  const canUpRank4 = userRank.downline >= nextRankRequire[userRank.rank].downline
+  // const canUpRank1 = userRank.locked >= nextRankRequire[userRank.rank].locked
+  // const canUpRank2 = userRank.volumnOnTree >= nextRankRequire[userRank.rank].volumnOnTree
+  // const canUpRank3 = userRank.direct >= nextRankRequire[userRank.rank].direct
+  // const canUpRank4 = userRank.downline >= nextRankRequire[userRank.rank].downline
+  const canUpRank1 = userRank.locked >= 0
+  const canUpRank2 = userRank.volumnOnTree >= 0
+  const canUpRank3 = userRank.direct >= 0
+  const canUpRank4 = userRank.downline >= 0
   const canUpRank = canUpRank1 && canUpRank2 && canUpRank3 && canUpRank4
 
   const getColor = (title) => {
@@ -386,58 +402,6 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
   ]
   return (
     <ListPoolRanks>
-      {/* <CardRankBronze>
-        <CardHead>
-          <HeadLeft>
-            <ImageRank src="./images/V3/bronze.png" alt="" />
-            <TitleHeadRight style={{ color: '#fff' }}>Bronze</TitleHeadRight>
-          </HeadLeft>
-          <HeadRight style={{ color: getColor(''), display: isMobile ? 'none' : 'block' }}>
-            <TitleHeadRightBronze style={{ color: '#fff' }}>Your Rank</TitleHeadRightBronze>
-          </HeadRight>
-        </CardHead>
-        <CardBody>
-        <ItemInfoCard>
-            <Label>TREND Token Mining Speed </Label>
-            <Value>
-x0.5
-                <img width="24px" height="24px" src="/images/V3/IconMine.png" />
-            </Value>
-          </ItemInfoCard>
-          <ItemInfoCard>
-            <Label>Locked</Label>
-            <ValueLocked>
-              {userRank.locked}
-              <div
-                style={{
-                  background: 'var(--white-white-6, rgba(255, 255, 255, 0.06))',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  backdropFilter: 'blur(6px)',
-                  borderRadius: '4px',
-                  width: '24px',
-                  height: '24px',
-                }}
-              >
-                <img width="18px" height="16px" src="./images/V3/Vector.png" />
-              </div>
-            </ValueLocked>
-          </ItemInfoCard>
-          <ItemInfoCard>
-            <Label>Volumn on tree</Label>
-            <Value style={{color: !canUpRank2 ? 'rgba(226, 225, 229, 1)' : 'rgba(173, 171, 178, 1)' }}>${userRank.volumnOnTree}</Value>
-          </ItemInfoCard>
-          <ItemInfoCard>
-            <Label>Member direct</Label>
-            <Value>{userRank.direct}</Value>
-          </ItemInfoCard>
-          <ItemInfoCard>
-            <Label>Member downline:</Label>
-            <Value>{userRank.downline}</Value>
-          </ItemInfoCard>
-        </CardBody>
-      </CardRankBronze> */}
       {dataRank.map((items, r) => (
         <CardRankSilver style={{ background: r === 4 ? 'rgba(117, 60, 216, 0.80)' : '' }} key={r}>
           <CardHead>
@@ -512,19 +476,31 @@ x0.5
               <Value>{userRank.downline}</Value>
             </ItemInfoCard>
           </CardBody>
-          {/* <div style={{ textAlign: 'center', marginTop: 8 }}>
-          <StyledButtonRank style={{display: canUpRank ? 'block' : 'none'}} disabled={!canUpRank} onClick={handleConfirmUpRank}>
-            {isConfirmingUpRank ? (
-              <ThreeDots className="loading">
-                Updating<span>.</span>
-                <span>.</span>
-                <span>.</span>
-              </ThreeDots>
-            ) : (
-              'Up Rank'
-            )}
-          </StyledButtonRank>
-        </div> */}
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              textAlign: 'center',
+              marginTop: 8,
+            }}
+          >
+            <StyledButtonRank
+              style={{ display: canUpRank && r === userRank.rank ? 'block' : 'none' }}
+              disabled={!canUpRank}
+              onClick={handleConfirmUpRank}
+            >
+              {isConfirmingUpRank ? (
+                <ThreeDots className="loading">
+                  Updating<span>.</span>
+                  <span>.</span>
+                  <span>.</span>
+                </ThreeDots>
+              ) : (
+                'Up Rank'
+              )}
+            </StyledButtonRank>
+          </div>
         </CardRankSilver>
       ))}
       {/* 

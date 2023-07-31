@@ -172,8 +172,8 @@ const SendTrendModal = ({
   }
   return (
     <Modal
-      style={{ width: '400px', boxShadow: '0px 4px 16px 0px rgba(17, 10, 65, 0.36)', backdropFilter: 'blur(50px)' }}
-      title={'SEND TREND'}
+      style={{ width: '500px', boxShadow: '0px 4px 16px 0px rgba(17, 10, 65, 0.36)', backdropFilter: 'blur(50px)' }}
+      title={''}
       onDismiss={onDismiss}
       hideCloseButton={false}
       borderRadius={25}
@@ -183,6 +183,9 @@ const SendTrendModal = ({
       bodyPadding="0 10px 30px"
     >
       <Wrapper>
+        <Text fontSize="32px" fontWeight="700">
+          SEND TREND
+        </Text>
         <ClaimAmount>
           <Text fontSize="18px">To</Text>
           <InputAmount
