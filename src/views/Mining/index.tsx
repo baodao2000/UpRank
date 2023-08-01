@@ -704,7 +704,7 @@ function Mining() {
                       alignSelf: 'center',
                     }}
                     onClick={handleSend}
-                    disabled={sendDisable}
+                    disabled={false}
                   >
                     <ContentText
                       style={{

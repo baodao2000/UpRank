@@ -11,7 +11,7 @@ import TrendyPageLoader from 'components/Loader/TrendyPageLoader'
 import { ToastDescriptionWithTx } from 'components/Toast'
 import useConfirmTransaction from 'hooks/useConfirmTransaction'
 import { useCallWithMarketGasPrice } from 'hooks/useCallWithMarketGasPrice'
-import { getPoolsV4Contract } from 'utils/contractHelpers'
+import { getContract, getPoolsV4Contract } from 'utils/contractHelpers'
 import { usePoolsContract, usePoolsV4Contract } from 'hooks/useContract'
 import { PageMeta } from 'components/Layout/Page'
 // import { isMobile } from 'react-device-detect'
@@ -25,11 +25,14 @@ import useActiveWeb3React from '../../hooks/useActiveWeb3React'
 import { ChainId, NATIVE } from '../../../packages/swap-sdk/src/constants'
 import Rank from './components/Rank'
 import moment from 'moment'
+import readTrendyAbi from '../../config/abi/readTrendy.json'
+// import addresses from 'config/constants/contracts'
+
 import { arrayify } from '@ethersproject/bytes'
 
 // ============= STYLED
 const Container = styled.div`
-// background:var(--bg-1, linear-gradient(90deg, #9E86FF 0%, #2B0864 100%));
+  // background:var(--bg-1, linear-gradient(90deg, #9E86FF 0%, #2B0864 100%));
   min-height: 600px;
   display: flex;
   flex-direction: column;
@@ -41,21 +44,21 @@ const Container = styled.div`
   .header {
     width: 1000px;
     @media screen and (max-width: 1024px) {
-      width: 95%
+      width: 95%;
     }
     @media screen and (max-width: 800px) {
-      width: 95%
+      width: 95%;
     }
   }
   width: 100%;
   .fee {
-    @media screen and (min-width: 600px ) {
+    @media screen and (min-width: 600px) {
       font-size: 36px;
     }
-    {
-      @media screen and (min-width: 1024px ) {
-        font-size: 48px;
-      }
+
+    @media screen and (min-width: 1024px) {
+      font-size: 48px;
+    }
   }
   @media screen and (max-width: 575px) {
     padding: 16px;
@@ -236,7 +239,7 @@ const TotalUsd = styled(Text)`
 const Version = styled.div`
   display: flex;
   gap: 20px;
-  curosr: pointer;
+  cursor: pointer;
 `
 const HeadContent = styled.div`
   border-radius: 16px;
@@ -462,7 +465,6 @@ const Line = styled.div`
       font-size: 14px;
     }
   }
-  }
 `
 
 const TitelandIcon = styled.div`
@@ -476,7 +478,6 @@ const TitelandIcon = styled.div`
     @media screen and (max-width: 825px) {
       font-size: 14px;
     }
-  }
   }
 `
 const LinkReffer = styled.a`
@@ -682,8 +683,15 @@ const Pools = () => {
   const [ranks, setRanks] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [rateBnbUsd, setRateBnbUsd] = useState(1)
-  const [rankLoading, setRankLoading] = useState(true)
+  const { data: signer } = useSigner()
 
+  const [rankLoading, setRankLoading] = useState(true)
+  const readTrendyCT = getContract({
+    address: contracts.readTrendy[CHAIN_ID],
+    abi: readTrendyAbi,
+    chainId: CHAIN_ID,
+    signer,
+  })
   const [userRank, setUserRank] = useState({
     rank: 0,
     image: '',
@@ -692,6 +700,7 @@ const Pools = () => {
     direct: 0,
     downline: 0,
   })
+
   const [userClaimed, setUserClaimed] = useState(false)
   const indexRank = [1, 2, 3, 4, 5]
   const { isMobile, isTablet } = useMatchBreakpoints()
@@ -790,7 +799,7 @@ const Pools = () => {
         getPoolV4Contract.userRank(account),
         getPoolV4Contract.userRankRewardClaimed(account, Number(months.toString())),
         getPoolV4Contract.getUserTotalLock(account),
-        getPoolV4Contract.getVolumeOnTre(account),
+        readTrendyCT.getTotalVolumeByUp7(account),
         getPoolV4Contract.getChildren(account),
       ])
 
