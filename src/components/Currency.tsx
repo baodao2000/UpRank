@@ -4,6 +4,7 @@ import { usePoolsV4Contract } from 'hooks/useContract'
 import CountUp from 'react-countup'
 import { useEffect, useState } from 'react'
 import { formatEther } from '@ethersproject/units'
+import axios from 'axios'
 
 const Wrapper = styled.div`
   border-radius: 16px;
@@ -49,18 +50,44 @@ const Label = styled(Text)`
   font-weight: 400;
   line-height: 24px; /* 150% */
 `
+
 export const CurrencyExchange = () => {
   const poolsV4Contract = usePoolsV4Contract()
   const [matic, setMatic] = useState(0)
   const [trend, setTrend] = useState(0)
+  const [maticPrice, setMaticPrice] = useState(0)
+  const [manticPriceChange, setMaticPriceChange] = useState(0)
+  const [trendPrice, setTrendPrice] = useState(0)
+  const [trendPriceChange, setTrendPriceChange] = useState(0)
+
+  const baseURL = 'https://services.intotheblock.com/api/MATIC/overview'
   useEffect(() => {
     getCurrencyExchange()
+    axios.get(baseURL).then((data) => {
+      setMaticPrice(data.data.price)
+      setMaticPriceChange(data.data.priceChange)
+    })
+    getPriceTrend()
   }, [])
+  const getPriceTrend = async () => {
+    await axios
+      .get('https://api.dextools.io/v1/pair?chain=polygon&address=0x6e430d59ba145c59b73a6db674fe3d53c1f31cae', {
+        headers: {
+          accept: 'application/json',
+          Authorization: '01e54e9712d16936f7a4a333fc6c789f',
+        },
+      })
+      .then((data) => {
+        // setMaticPrice(data.data.price)
+        // setMaticPriceChange(data.data.priceChange)
+        console.log(data)
+      })
+  }
   const getCurrencyExchange = async () => {
     const trend2USDT = await poolsV4Contract.TREND2USDT()
-    const matic2USDT = await poolsV4Contract.MATIC2USDT()
-    setMatic(1 / Number(formatEther(matic2USDT)))
-    setTrend(1 / Number(formatEther(trend2USDT)))
+    // const matic2USDT = await poolsV4Contract.MATIC2USDT()
+    // setMatic(1 / Number(formatEther(matic2USDT)))
+    // setTrend(1 / Number(formatEther(trend2USDT)))
   }
   return (
     <Wrapper>
@@ -74,7 +101,7 @@ export const CurrencyExchange = () => {
             // end={Number(Number(balance) * rateBnbUsd)}
             decimals={3}
             duration={1}
-            end={Number(matic)}
+            end={Number(maticPrice)}
           />
         </Title>
         <div
@@ -93,10 +120,45 @@ export const CurrencyExchange = () => {
         </div>
         <span style={{ color: 'rgba(173, 171, 178, 1)', fontSize: '16px' }}>=</span>
         <Title>$1 </Title>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <img width="16px" height="16px" src="/images/V3/Arrow.png" />
-          <Label>+0.3%</Label>
-        </div>
+
+        {manticPriceChange > 0 ? (
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <img width="16px" height="16px" src="/images/V3/Arrow.png" />
+
+            <Label>
+              <CountUp
+                separator=","
+                start={0}
+                preserveValue
+                delay={0}
+                // end={Number(Number(balance) * rateBnbUsd)}
+                decimals={3}
+                duration={1}
+                end={Number(manticPriceChange)}
+              />
+              %
+            </Label>
+          </div>
+        ) : (
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <img width="16px" height="16px" src="/images/V3/downArrow.png" />
+
+            <Label style={{ color: '#E30721' }}>
+              {' '}
+              <CountUp
+                separator=","
+                start={0}
+                preserveValue
+                delay={0}
+                // end={Number(Number(balance) * rateBnbUsd)}
+                decimals={3}
+                duration={1}
+                end={Number(manticPriceChange)}
+              />
+              %
+            </Label>
+          </div>
+        )}
       </Card>
       <Card>
         <Title>
@@ -128,8 +190,8 @@ export const CurrencyExchange = () => {
         <span style={{ color: 'rgba(173, 171, 178, 1)', fontSize: '16px' }}>=</span>
         <Title>$1 </Title>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <img width="16px" height="16px" src="/images/V3/Arrow.png" />
-          <Label>+0.3%</Label>
+          <img width="16px" height="16px" src="/images/V3/arrowUp.png" />
+          <Label>+0.030%</Label>
         </div>
       </Card>
     </Wrapper>
