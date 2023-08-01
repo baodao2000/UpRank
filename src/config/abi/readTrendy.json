@@ -19,6 +19,57 @@
   },
   { "inputs": [], "name": "getStuck", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
   {
+    "inputs": [
+      { "internalType": "address", "name": "_refferrer", "type": "address" },
+      { "internalType": "uint256", "name": "_limit", "type": "uint256" },
+      { "internalType": "uint256", "name": "_skip", "type": "uint256" }
+    ],
+    "name": "getTotalUserByUp",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "address", "name": "user", "type": "address" },
+          { "internalType": "address", "name": "refferBy", "type": "address" },
+          { "internalType": "uint256", "name": "dateTime", "type": "uint256" },
+          { "internalType": "uint256", "name": "totalRefer", "type": "uint256" },
+          { "internalType": "uint256", "name": "totalRefer7", "type": "uint256" },
+          { "internalType": "bool", "name": "top10Refer", "type": "bool" },
+          { "internalType": "string", "name": "code", "type": "string" }
+        ],
+        "internalType": "struct Refer[]",
+        "name": "list",
+        "type": "tuple[]"
+      },
+      { "internalType": "uint256", "name": "totalItem", "type": "uint256" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "_refferrer", "type": "address" },
+      { "internalType": "uint256", "name": "n", "type": "uint256" }
+    ],
+    "name": "getTotalVolumeByUp",
+    "outputs": [{ "internalType": "uint256", "name": "volume", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "_refferrer", "type": "address" }],
+    "name": "getTotalVolumeByUp7",
+    "outputs": [{ "internalType": "uint256", "name": "volume", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "_refferrer", "type": "address" }],
+    "name": "getTotalVolumeByUpChild",
+    "outputs": [{ "internalType": "uint256", "name": "volume", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [{ "internalType": "contract IERC20", "name": "_token", "type": "address" }],
     "name": "inCaseTokensGetStuck",
     "outputs": [],

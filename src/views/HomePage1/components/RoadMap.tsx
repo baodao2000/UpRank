@@ -3,21 +3,23 @@ import { Heading, Card, Text } from '@pancakeswap/uikit'
 import images from 'configs/images'
 
 const Wrapper = styled.div`
+  width: 100%;
   margin-top: 96px;
   * {
     font-family: Inter, sans-serif;
   }
+  .scroll {
+    ::-webkit-scrollbar {
+      width: 3px;
+      height: 3px;
+    }
+  }
   @media only screen and (max-width: 600px) {
     margin-top: 0;
   }
-  @media only screen and (max-width: 375px) {
-    margin-top: 10px;
-  }
+`
 
-  & ::-webkit-scrollbar {
-    width: 8px;
-    height: 3px;
-  }
+const StyleRoadMap = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -28,7 +30,7 @@ const StyledHeading = styled(Text)`
   font-size: 48px;
   font-style: normal;
   font-weight: 700;
-  line-height: 60px; /* 125% */
+  line-height: 60px;
   letter-spacing: -0.96px;
   text-align: center;
   margin-bottom: 20px;
@@ -49,41 +51,37 @@ const StyledHeading = styled(Text)`
   }
 `
 
+const Title = styled(Text)`
+  color: var(--primary-primary-1, #8544f5);
+  text-align: center;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 30px;
+  @media screen and (max-width: 575px) {
+    font-size: 18px;
+  }
+`
+
 const Container = styled.div`
   margin-top: 64px;
   display: flex;
-  gap: 16px;
-  max-width: 1320px;
-  justify-content: center;
-  @media screen and (max-width: 575px) {
-    margin-top: 32px;
-    width: 1000px;
-  }
+  gap: 14px;
+  padding-left: 40px;
   img {
     margin-top: 3%;
   }
-`
-const Boder = styled.div`
-  margin: 50px 0 0;
-  width: 100%;
-  overflow: auto;
-`
-const Mobile = styled.div`
-  display: none;
-  @media screen and (max-width: 780px) {
-    width: 700px;
-    display: flex;
-    align-items: center;
+  @media screen and (max-width: 575px) {
+    gap: 22px;
   }
 `
 const CircleOld = styled.div`
   display: flex;
+  align-items: center;
+  justify-content: center;
   width: 80px;
   height: 80px;
   padding: 4px;
-  justify-content: center;
-  align-items: center;
-  gap: 64px;
   border-radius: 50px;
   background: var(--primary-primary-1, #8544f5);
   position: relative;
@@ -92,7 +90,6 @@ const CircleOld = styled.div`
     height: 60px;
   }
 `
-
 const CircleActive = styled.div`
   display: flex;
   width: 80px;
@@ -100,8 +97,6 @@ const CircleActive = styled.div`
   padding: 4px;
   justify-content: center;
   align-items: center;
-  gap: 64px;
-  align-self: stretch;
   border-radius: 50px;
   border: 8px solid var(--primary-primary-3, #362b56);
   background: var(--primary-high-light, #b210ff);
@@ -115,11 +110,8 @@ const CircleNew = styled.div`
   display: flex;
   width: 80px;
   height: 80px;
-  padding: 4px;
   justify-content: center;
   align-items: center;
-  gap: 64px;
-  align-self: stretch;
   border-radius: 50px;
   border: 1px solid var(--primary-primary-3, #362b56);
   background: var(--primary-primary-3, #362b56);
@@ -131,22 +123,20 @@ const CircleNew = styled.div`
 `
 const Number = styled.div`
   color: var(--greyscale-grey-scale-text-seconday, #adabb2);
-  /* Display md/Bold */
-  font-size: 36px;
+  font-size: 34px;
   font-style: normal;
   font-weight: 700;
-  line-height: 44px; /* 122.222% */
-  letter-spacing: -0.72px;
+  line-height: 44px;
   position: absolute;
-  @media screen and (max-width: 575px) {
-    font-size: 24px;
-  }
+  // @media screen and (max-width: 575px) {
+  //   font-size: 24px;
+  // }
 `
 const Details = styled.div`
   display: flex;
-  gap: 22px;
+  gap: 16px;
   margin-top: 64px;
-  width: 1400px;
+  margin-bottom: 10px;
   justify-content: space-between;
   .active {
     background: var(--primary-primary-gradient-2, linear-gradient(180deg, #7b3fe4 0%, #a726c1 100%));
@@ -162,167 +152,149 @@ const Details = styled.div`
   }
   @media screen and (max-width: 575px) {
     margin-top: 32px;
-    width: 1000px;
-  }
-`
-const Title = styled(Text)`
-  color: var(--primary-primary-1, #8544f5);
-  text-align: center;
-  /* Display xs/Bold */
-  font-size: 24px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 32px; /* 133.333% */
-  @media screen and (max-width: 575px) {
-    font-size: 18px;
   }
 `
 const Label = styled(Text)`
+  width: 174px;
   color: var(--greyscale-grey-scale-text-seconday, #adabb2);
   text-align: center;
-  /* Text sm/regular */
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
-  line-height: 20px; /* 142.857% */
+  line-height: 20px;
   @media screen and (max-width: 575px) {
     font-size: 14px;
   }
 `
 const Stage = styled.div`
-  max-width: 1600px;
-  width: 100%;
-  overflow: auto;
+  width: 1320px;
   display: flex;
-  align-items: center;
   flex-direction: column;
-  &.scroll::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
-  }
-  &.scroll::-webkit-scrollbar-track {
-    background-color: white;
-  }
-  &.scroll::-webkit-scrollbar-thumb {
-    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    background: rgb(0, 240, 225);
-  }
-  @media screen and (max-width: 1400px) {
-  }
+  align-items: flex-start;
 `
+const StyledCircle = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 175px;
+  align-items: center;
+  justify-content: center;
+`
+
+const StyledImg = styled.img`
+  width: 79px;
+  height: 12px;
+`
+const details = [
+  {
+    detail: 'Launching Staking venture pool for SMATIC Token',
+    class: '',
+  },
+  {
+    detail: 'Launching TrendyDefi App',
+    class: '',
+  },
+  {
+    detail:
+      'Launching NFT Ecosystem for Trendy Defi (You can use TREND Token to get the right to join TRENDY DEFI NFT Ecosystem)',
+    class: 'activeLabel',
+  },
+  {
+    detail: 'Launching of Token Price Prediction AI TOOL',
+    class: '',
+  },
+  {
+    detail: 'Listing TREND Token on CEX. (Top 10 Major Crypto Exchanges Ranked on Coinmarketcap)',
+    class: '',
+  },
+  {
+    detail:
+      'Community votes through Trendydefi&#39;s DAO system to select and Launch Pool Stake for the next two Tokens (Use Trend Token to buy NFT keys)',
+    class: '',
+  },
+  {
+    detail: 'Update Dapp Trendydefi Ver3.0 and expend TrendyDEFI ecosystem',
+    class: '',
+  },
+]
+
 const RoadMap = () => {
   return (
     <Wrapper>
-      <StyledHeading fontSize={['20px', '36px', '64px']}>Roadmap</StyledHeading>
-      <Text
-        maxWidth={544}
-        fontSize="18px"
-        fontWeight="400"
-        style={{ color: 'rgba(173, 171, 178, 1)' }}
-        lineHeight="28px"
-        textAlign="center"
-        paddingBottom={10}
-      >
-        Stacks is a production-ready library of stackable content blocks built in React Native.
-      </Text>
-      <Stage>
-        <Container>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '177px' }}>
-            <CircleOld>
-              <Number>1</Number>
-            </CircleOld>
-            <Title>Q1 2023</Title>
-            {/* <Label>Launching Staking venture pool for SMATIC Token</Label> */}
-          </div>
-          <img className="image" width="80px" height="12px" src="images/V3/Active.svg" />
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '177px' }}>
-            <CircleOld>
-              <Number>2</Number>
-            </CircleOld>
-            <Title>Q2 2023</Title>
-            {/* <Label>Launching TrendyDefi App</Label> */}
-          </div>
-          <img width="80px" height="12px" src="images/V3/Active.svg" />
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '177px' }}>
-            <CircleActive>
-              <Number>3</Number>
-            </CircleActive>
-            <Title className="active">Q3 2023</Title>
-            {/* <Label className='activeLabel'>Launching NFT Ecosystem for Trendy Defi (You can use TREND Token to get the right to join TRENDY DEFI NFT Ecosystem)</Label> */}
-          </div>
-          <img width="80px" height="12px" src="/images/V3/isActive.svg" />
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '177px' }}>
-            <CircleNew>
-              <Number>4</Number>
-            </CircleNew>
-            <Title className="isActive">Q4 2023</Title>
-            {/* <Label>Launching of Token Price Prediction AI TOOL</Label> */}
-          </div>
-          <img width="80px" height="12px" src="/images/V3/isActive.svg" />
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '177px' }}>
-            <CircleNew>
-              <Number>5</Number>
-            </CircleNew>
-            <Title className="isActive">Q2 2024</Title>
-            {/* <Label>Listing TREND Token on CEX. (Top 10 Major Crypto Exchanges Ranked on Coinmarketcap)</Label> */}
-          </div>
-          <img width="80px" height="12px" src="/images/V3/isActive.svg" />
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '177px' }}>
-            <CircleNew>
-              <Number>6</Number>
-            </CircleNew>
-            <Title className="isActive">Q3 2024</Title>
-            {/* <Label>Community votes through Trendydefi's DAO system to select and Launch Pool Stake for the next two Tokens (Use Trend Token to buy NFT keys)</Label> */}
-          </div>
-          <img width="80px" height="12px" src="/images/V3/isActive.svg" />
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '177px' }}>
-            <CircleNew>
-              <Number>7</Number>
-            </CircleNew>
-            <Title className="isActive">Q4 2024</Title>
-            {/* <Label>Update Dapp Trendydefi Ver3.0 and expend TrendyDEFI ecosystem</Label> */}
-          </div>
-        </Container>
-        <Details>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '177px' }}>
-            {/* <Title>Q1 2023</Title> */}
-            <Label>Launching Staking venture pool for SMATIC Token</Label>
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '177px' }}>
-            {/* <Title>Q2 2023</Title> */}
-            <Label>Launching TrendyDefi App</Label>
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '177px' }}>
-            {/* <Title className='active'>Q3 2023</Title> */}
-            <Label className="activeLabel">
-              Launching NFT Ecosystem for Trendy Defi (You can use TREND Token to get the right to join TRENDY DEFI NFT
-              Ecosystem)
-            </Label>
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '177px' }}>
-            {/* <Title className='isActive'>Q4 2023</Title> */}
-            <Label>Launching of Token Price Prediction AI TOOL</Label>
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '177px' }}>
-            {/* <Title className='isActive'>Q2 2024</Title> */}
-            <Label>Listing TREND Token on CEX. (Top 10 Major Crypto Exchanges Ranked on Coinmarketcap)</Label>
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '177px' }}>
-            {/* <Title className='isActive'>Q3 2024</Title> */}
-            <Label>
-              Community votes through Trendydefi&#39;s DAO system to select and Launch Pool Stake for the next two
-              Tokens (Use Trend Token to buy NFT keys)
-            </Label>
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '177px' }}>
-            {/* <Title className='isActive'>Q4 2024</Title> */}
-            <Label>Update Dapp Trendydefi Ver3.0 and expend TrendyDEFI ecosystem</Label>
-          </div>
-        </Details>
-      </Stage>
-      {/* <Mobile>
-        <img src={images.roadmobile} />
-      </Mobile> */}
+      <StyleRoadMap>
+        <StyledHeading fontSize={['20px', '36px', '64px']}>Roadmap</StyledHeading>
+        <Text
+          maxWidth={544}
+          fontSize="18px"
+          fontWeight="400"
+          style={{ color: 'rgba(173, 171, 178, 1)' }}
+          lineHeight="28px"
+          textAlign="center"
+          paddingBottom={10}
+        >
+          Stacks is a production-ready library of stackable content blocks built in React Native.
+        </Text>
+      </StyleRoadMap>
+      <div className="scroll" style={{ overflow: 'auto' }}>
+        <Stage>
+          <Container>
+            <StyledCircle>
+              <CircleOld>
+                <Number>1</Number>
+              </CircleOld>
+              <Title>Q1 2023</Title>
+            </StyledCircle>
+            <StyledImg className="image" src="images/V3/Active.svg" />
+            <StyledCircle>
+              <CircleOld>
+                <Number>2</Number>
+              </CircleOld>
+              <Title>Q2 2023</Title>
+            </StyledCircle>
+            <StyledImg src="images/V3/Active.svg" />
+            <StyledCircle>
+              <CircleActive>
+                <Number>3</Number>
+              </CircleActive>
+              <Title className="active">Q3 2023</Title>
+            </StyledCircle>
+            <StyledImg src="/images/V3/isActive.svg" />
+            <StyledCircle>
+              <CircleNew>
+                <Number>4</Number>
+              </CircleNew>
+              <Title className="isActive">Q4 2023</Title>
+            </StyledCircle>
+            <StyledImg src="/images/V3/isActive.svg" />
+            <StyledCircle>
+              <CircleNew>
+                <Number>5</Number>
+              </CircleNew>
+              <Title className="isActive">Q2 2024</Title>
+            </StyledCircle>
+            <StyledImg src="/images/V3/isActive.svg" />
+            <StyledCircle>
+              <CircleNew>
+                <Number>6</Number>
+              </CircleNew>
+              <Title className="isActive">Q3 2024</Title>
+            </StyledCircle>
+            <StyledImg src="/images/V3/isActive.svg" />
+            <StyledCircle>
+              <CircleNew>
+                <Number>7</Number>
+              </CircleNew>
+              <Title className="isActive">Q4 2024</Title>
+            </StyledCircle>
+          </Container>
+          <Details>
+            {details.map((i) => (
+              <Label className={i.class}>{i.detail}</Label>
+            ))}
+          </Details>
+        </Stage>
+      </div>
     </Wrapper>
   )
 }
