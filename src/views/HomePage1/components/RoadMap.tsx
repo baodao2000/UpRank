@@ -188,7 +188,7 @@ const StyledImg = styled.img`
 `
 const details = [
   {
-    detail: 'Launching Staking venture pool for SMATIC Token',
+    detail: 'Launching Staking venture pool for MATIC Token',
     class: '',
   },
   {
@@ -210,7 +210,7 @@ const details = [
   },
   {
     detail:
-      'Community votes through Trendydefi&#39;s DAO system to select and Launch Pool Stake for the next two Tokens (Use Trend Token to buy NFT keys)',
+      "Community votes through Trendydefi's DAO system to select and Launch Pool Stake for the next two Tokens (Use Trend Token to buy NFT keys)",
     class: '',
   },
   {
