@@ -67,21 +67,45 @@ export const CurrencyExchange = () => {
       setMaticPrice(data.data.price)
       setMaticPriceChange(data.data.priceChange)
     })
-    // getPriceTrend()
+    getPriceTrend()
   }, [])
   const getPriceTrend = async () => {
-    await axios
-      .get('https://api.dextools.io/v1/pair?chain=polygon&address=0x6e430d59ba145c59b73a6db674fe3d53c1f31cae', {
-        headers: {
-          accept: 'application/json',
-          'X-API-Key': '01e54e9712d16936f7a4a333fc6c789f',
-        },
+    var myHeaders = new Headers()
+    myHeaders.append('accept', 'application/json')
+    myHeaders.append('X-API-Key', '01e54e9712d16936f7a4a333fc6c789f')
+    myHeaders.append(
+      'Cookie',
+      '__cf_bm=lf5QBEfZEKBjXu5ky72.0MldofFFndhty11kedx5PiY-1690950108-0-AaK5GEstLN7S5SFxUQ43cIX6AwZ3LpTs2Be1qmfL9msXWHBT7JDFBmn1LJelV7lkYlFVPOjAvj/FWT3SwZFBcZM=',
+    )
+
+    axios({
+      method: 'get',
+      url: 'https://api.dextools.io/v1/pair?chain=polygon&address=0x6e430d59ba145c59b73a6db674fe3d53c1f31cae',
+      headers: {
+        accept: 'application/json',
+        'X-API-Key': '01e54e9712d16936f7a4a333fc6c789f',
+        Cookie:
+          '__cf_bm=lf5QBEfZEKBjXu5ky72.0MldofFFndhty11kedx5PiY-1690950108-0-AaK5GEstLN7S5SFxUQ43cIX6AwZ3LpTs2Be1qmfL9msXWHBT7JDFBmn1LJelV7lkYlFVPOjAvj/FWT3SwZFBcZM=',
+        Referer: 'https://trendydefi.com/',
+      },
+    })
+      .then(function (response) {
+        console.log(JSON.stringify(response.data))
       })
-      .then((data) => {
-        // setMaticPrice(data.data.price)
-        // setMaticPriceChange(data.data.priceChange)
-        console.log(data)
+      .catch(function (error) {
+        console.log(error)
       })
+    // await fetch('https://api.dextools.io/v1/pair?chain=polygon&address=0x6e430d59ba145c59b73a6db674fe3d53c1f31cae', {
+    //     headers: {
+    //         accept: 'application/json',
+    //       'X-API-Key': '01e54e9712d16936f7a4a333fc6c789f',
+    //         redirect: 'follow'
+    //     },
+    //   }).then((data) => {
+    //     // setMaticPrice(data.data.price)
+    //     // setMaticPriceChange(data.data.priceChange)
+    //     console.log(data)
+    //   })
   }
   const getCurrencyExchange = async () => {
     const trend2USDT = await poolsV4Contract.TREND2USDT()
