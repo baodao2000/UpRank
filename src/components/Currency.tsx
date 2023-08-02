@@ -30,7 +30,7 @@ const Card = styled.div`
   display: flex;
   padding: 8px;
   align-items: center;
-  gap: 24px;
+  gap: 10px;
   border-radius: 12px;
   background: var(--black-black-20, rgba(0, 0, 0, 0.2));
 `
@@ -109,7 +109,7 @@ export const CurrencyExchange = () => {
           />{' '}
         </Title>
 
-        {price.maticChange > 0 ? (
+        {price.maticChange >= 0 ? (
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <img width="16px" height="16px" src="/images/V3/Arrow.png" />
 
@@ -179,7 +179,7 @@ export const CurrencyExchange = () => {
             end={Number(price.trend)}
           />{' '}
         </Title>
-        {price.trendChange > 0 ? (
+        {price.trendChange >= 0 ? (
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <img width="16px" height="16px" src="/images/V3/Arrow.png" />
 
