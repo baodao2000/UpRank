@@ -150,7 +150,7 @@ const ItemInfoCard = styled.div`
 `
 
 const Label = styled.span`
-  color: var(--greyscale-grey-scale-text-seconday, #adabb2);
+  // color: var(--greyscale-grey-scale-text-seconday, #adabb2);
   /* Text md/regular */
   font-family: Inter;
   font-size: 16px;
@@ -258,7 +258,7 @@ const nextRankRequire = [
     downline: 500,
   },
 ]
-const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
+const PoolRanks = ({ onSuccess, userRank, userIsClaim, unit }) => {
   const { toastSuccess, toastError } = useToast()
   const { account, chainId } = useActiveWeb3React()
   const poolContract = usePoolsV3Contract()
@@ -355,15 +355,15 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
           </CardHead>
           <CardBody>
             <ItemInfoCard>
-              <Label>TREND Token Mining Speed </Label>
+              <Label style={{ color: 'gray' }}>TREND Token Mining Speed </Label>
               <Value>
                 x{items.mine}
                 <img width="24px" height="18px" src="/images/V3/IconMine.png" />
               </Value>
             </ItemInfoCard>
             <ItemInfoCard>
-              <Label>Locked</Label>
-              <ValueLocked style={{ color: r === 4 ? '#fff' : '#8544f5' }}>
+              <Label style={{ color: canUpRank1 ? '#fff' : 'gray' }}>Locked</Label>
+              <ValueLocked style={{ color: r === 4 ? 'gray' : '#8544f5' }}>
                 <CountUp
                   separator=","
                   start={0}
