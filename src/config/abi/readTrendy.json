@@ -64,7 +64,24 @@
   },
   {
     "inputs": [{ "internalType": "address", "name": "_refferrer", "type": "address" }],
+    "name": "getTotalVolumeByUp7V1",
+    "outputs": [{ "internalType": "uint256", "name": "volume", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "_refferrer", "type": "address" }],
     "name": "getTotalVolumeByUpChild",
+    "outputs": [{ "internalType": "uint256", "name": "volume", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "_refferrer", "type": "address" },
+      { "internalType": "uint256", "name": "n", "type": "uint256" }
+    ],
+    "name": "getTotalVolumeByUpV1",
     "outputs": [{ "internalType": "uint256", "name": "volume", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
@@ -122,6 +139,23 @@
   {
     "inputs": [{ "internalType": "address[]", "name": "users", "type": "address[]" }],
     "name": "volumeOntree",
+    "outputs": [
+      { "internalType": "uint256[]", "name": "volumes", "type": "uint256[]" },
+      { "internalType": "uint256[]", "name": "userTotalLocks", "type": "uint256[]" },
+      { "internalType": "address[]", "name": "_users", "type": "address[]" },
+      { "internalType": "address[]", "name": "refferBys", "type": "address[]" },
+      { "internalType": "uint256[]", "name": "dateTimes", "type": "uint256[]" },
+      { "internalType": "uint256[]", "name": "totalRefers", "type": "uint256[]" },
+      { "internalType": "uint256[]", "name": "totalRefer7s", "type": "uint256[]" },
+      { "internalType": "bool[]", "name": "top10Refers", "type": "bool[]" },
+      { "internalType": "string[]", "name": "codes", "type": "string[]" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address[]", "name": "users", "type": "address[]" }],
+    "name": "volumeOntreeV1",
     "outputs": [
       { "internalType": "uint256[]", "name": "volumes", "type": "uint256[]" },
       { "internalType": "uint256[]", "name": "userTotalLocks", "type": "uint256[]" },
