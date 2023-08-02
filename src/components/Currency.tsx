@@ -62,19 +62,19 @@ export const CurrencyExchange = () => {
 
   const baseURL = 'https://services.intotheblock.com/api/MATIC/overview'
   useEffect(() => {
-    getCurrencyExchange()
+    // getCurrencyExchange()
     axios.get(baseURL).then((data) => {
       setMaticPrice(data.data.price)
       setMaticPriceChange(data.data.priceChange)
     })
-    getPriceTrend()
+    // getPriceTrend()
   }, [])
   const getPriceTrend = async () => {
     await axios
       .get('https://api.dextools.io/v1/pair?chain=polygon&address=0x6e430d59ba145c59b73a6db674fe3d53c1f31cae', {
         headers: {
           accept: 'application/json',
-          Authorization: '01e54e9712d16936f7a4a333fc6c789f',
+          'X-API-Key': '01e54e9712d16936f7a4a333fc6c789f',
         },
       })
       .then((data) => {
