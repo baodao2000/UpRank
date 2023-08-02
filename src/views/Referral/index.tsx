@@ -418,7 +418,7 @@ const ChildItem = styled.tr`
   word-break: break-all;
   width: 100%;
   td {
-    width: 1000px;
+    width: 251px;
     text-align: left;
     font-size: 24px;
     font-style: normal;
@@ -559,9 +559,10 @@ const Menu = styled.div`
   @media screen and (max-width: 575px) {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     max-width: 100%;
     width: 100%;
-    justify-content: space-between;
+    justify-content: space-around;
   }
 `
 const MenuItemActive = styled.div`
@@ -588,7 +589,7 @@ color: rgba(252, 252, 253, 1);
 }
 @media screen and (max-width: 575px) {
   padding: 0 8px;
-  width: 30%;
+  width: 35%;
 }
 `
 const MenuItemDisabled = styled.div`
@@ -611,7 +612,7 @@ color: rgba(103, 102, 110, 1);
 cursor: pointer;
 @media screen and (max-width: 575px) {
   padding: 0 8px;
-  width: 30%;
+  width: 35%;
 }
 `
 const StyledText = styled(Text)`
@@ -756,6 +757,7 @@ const Referral = () => {
   const [linkRef, setLinkRef] = React.useState('')
   const [showCopied, setShowCopied] = React.useState(false)
   const { account, chainId } = useWeb3React()
+
   const dispatch = useDispatch()
   const { toastSuccess, toastError } = useToast()
   const [loading, setLoading] = React.useState(false)
@@ -779,6 +781,8 @@ const Referral = () => {
   const [userIsRegister, setUserIsRegister] = React.useState(false)
   const [interest, setInterest] = React.useState(0)
   const [listChild, setListChild] = React.useState([])
+  const [listChildV1, setListChildV1] = React.useState([])
+
   const [countPage, setCountPage] = React.useState(0)
   const [activePage, setActivePage] = React.useState(0)
   const [myCode, setMyCode] = useState('')
@@ -823,6 +827,8 @@ const Referral = () => {
     const arr = data[0].list.map((item) => item.user)
     // console.log(arr)
     const dataTrendy = await readTrendyCT.volumeOntree(arr)
+    const dataTrendyV1 = await readTrendyCT.volumeOntreeV1(arr)
+
     setListChild(
       arr.map((item, i) => {
         return {
@@ -830,6 +836,17 @@ const Referral = () => {
           volume: Number(formatEther(dataTrendy.volumes[i])).toFixed(3),
           locked: Number(formatEther(dataTrendy.userTotalLocks[i])).toFixed(3),
           child: Number(dataTrendy.totalRefers[i].toString()),
+          showChild: false,
+        }
+      }),
+    )
+    setListChildV1(
+      arr.map((item, i) => {
+        return {
+          account: item,
+          volume: Number(formatEther(dataTrendyV1.volumes[i])).toFixed(3),
+          locked: Number(formatEther(dataTrendyV1.userTotalLocks[i])).toFixed(3),
+          child: Number(dataTrendyV1.totalRefers[i].toString()),
           showChild: false,
         }
       }),
@@ -886,9 +903,14 @@ const Referral = () => {
         return l
       }),
     )
-    // getTotalRefferChild(0, accountB)
-    // setAccountChild([...acountChild, accountB])
-    // setActivePage(0)
+  }
+  const handleChangeChildV1 = (accountB) => {
+    setListChildV1(
+      listChildV1.map((l) => {
+        if (l.account.toLowerCase() === accountB.toLowerCase()) l.showChild = !l.showChild
+        return l
+      }),
+    )
   }
 
   const handleChangePage = (index) => {
@@ -1166,6 +1188,17 @@ const Referral = () => {
                 <Text className="title">Friend list</Text>
               </MenuItemDisabled>
             )}
+            {tab === 4 ? (
+              <MenuItemActive>
+                <img src="./images/V3/group.png" />
+                <Text className="title">Friend list v1</Text>
+              </MenuItemActive>
+            ) : (
+              <MenuItemDisabled onClick={() => setTab(4)}>
+                <img src="./images/V3/groupDisabled.png" />
+                <Text className="title">Friend list v1</Text>
+              </MenuItemDisabled>
+            )}
           </Menu>
           {tab === 2 && (
             <ReferralPage>
@@ -1300,7 +1333,6 @@ const Referral = () => {
               </Step>
             </ReferralPage>
           )}
-
           {tab === 1 && (
             <ProfilePage>
               <CardInfoUser>
@@ -1442,6 +1474,117 @@ const Referral = () => {
                             <td>
                               <div
                                 onClick={() => handleChangeChild(item.account)}
+                                style={{
+                                  cursor: 'pointer',
+                                  color: item.child > 0 ? 'rgba(255, 255, 255, 1)' : 'rgba(255, 255, 255, 1)',
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  gap: 4,
+                                  fontSize: isMobile ? '14px' : '24px',
+                                  fontWeight: '400',
+                                }}
+                              >
+                                {item.account.substring(0, 2)}...{item.account.substring(item.account.length - 4)}
+                                {item.child > 0 && <img src="/images/referral/plus.png" style={{ fill: 'white' }} />}
+                              </div>
+                            </td>
+                            <td>
+                              $
+                              <CountUp
+                                style={{ color: 'rgba(255, 255, 255, 1)', fontSize: isMobile ? '14px' : '24px' }}
+                                separator=","
+                                start={0}
+                                preserveValue
+                                delay={0}
+                                end={item.volume}
+                                decimals={3}
+                                duration={1}
+                              />
+                            </td>
+                            <td>
+                              <CountUp
+                                separator=","
+                                start={0}
+                                preserveValue
+                                delay={0}
+                                end={item.locked}
+                                decimals={3}
+                                duration={1}
+                              />
+                            </td>
+                          </ChildItem>
+                          {item.showChild && (
+                            <ChildItem key={index + '-' + index}>
+                              <td colSpan={3} style={{ padding: 0 }}>
+                                <Child referBy={item.account} />
+                              </td>
+                            </ChildItem>
+                          )}
+                        </div>
+                      ))}
+                    </Table>
+                  </>
+                )}
+                <GroupChangePage>
+                  {acountChild.length > 1 ? (
+                    <button type="button" onClick={handleBack} style={{ color: 'black' }}>
+                      Back
+                    </button>
+                  ) : null}
+                  {getButtonChangePage(2)}
+                </GroupChangePage>
+              </FriendsList>
+            </CardReferral>
+          )}
+          {tab === 4 && (
+            <CardReferral>
+              <StyledHead>Friends list v1</StyledHead>
+              <StyledSubtitle>
+                Welcome to our member count section! Here, you can track the growth of our community and get a sense of
+                the scale of our website&#39;s audience.{' '}
+              </StyledSubtitle>
+              <FriendsList>
+                {loadingTable ? (
+                  <ThreeDots style={{ textAlign: 'center' }} className="loading">
+                    Loading
+                    <span>.</span>
+                    <span>.</span>
+                    <span>.</span>
+                  </ThreeDots>
+                ) : (
+                  <>
+                    <Group>
+                      <CardFriends style={{ width: isMobile ? '100%' : isTablet ? '100%' : '300px' }}>
+                        <StyledItemChild>F{acountChild.length - 1}:</StyledItemChild>
+                        <StyledLinkAccount
+                          rel="noreferrer"
+                          target="_blank"
+                          href={process.env.NEXT_PUBLIC_SCAN + `/address/${acountChild[acountChild.length - 1]}`}
+                        >
+                          {truncateHash(acountChild[acountChild.length - 1], 16, 3)}
+                        </StyledLinkAccount>
+                      </CardFriends>
+                      <CardFriends style={{ width: isMobile ? '147px' : isTablet ? '100%' : '300px' }}>
+                        <StyledItemChild>Total of F{acountChild.length}</StyledItemChild>
+                        <StyledTotal>{totalItemChild}</StyledTotal>
+                      </CardFriends>
+                      <CardFriends style={{ width: isMobile ? '147px' : isTablet ? '100%' : '300px' }}>
+                        <StyledItemChild>Total refer downline</StyledItemChild>
+                        <StyledTotal>{total7Level}</StyledTotal>
+                      </CardFriends>
+                    </Group>
+                    <Table>
+                      <tr>
+                        <th>Friends</th>
+                        <th>Volumn</th>
+                        <th>Locked</th>
+                      </tr>
+                      {listChildV1.map((item, index) => (
+                        <div key={index}>
+                          <ChildItem key={index}>
+                            <td>
+                              <div
+                                onClick={() => handleChangeChildV1(item.account)}
                                 style={{
                                   cursor: 'pointer',
                                   color: item.child > 0 ? 'rgba(255, 255, 255, 1)' : 'rgba(255, 255, 255, 1)',
