@@ -125,8 +125,8 @@ export const matic: Chain = {
     symbol: 'Matic',
   },
   rpcUrls: {
-    public: 'https://matic.getblock.io/7be9e137-8b81-491c-8dfc-fcd7ad1eefeb/mainnet/',
-    default: 'https://matic.getblock.io/7be9e137-8b81-491c-8dfc-fcd7ad1eefeb/mainnet/',
+    public: 'https://polygon-rpc.com',
+    default: 'https://polygon-rpc.com',
   },
   blockExplorers: {
     default: { name: 'PolygonScan', url: 'https://polygonscan.com/' },
