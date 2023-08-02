@@ -1191,12 +1191,12 @@ const Referral = () => {
             {tab === 4 ? (
               <MenuItemActive>
                 <img src="./images/V3/group.png" />
-                <Text className="title">Friend list v1</Text>
+                <Text className="title">Friend list ver1.0</Text>
               </MenuItemActive>
             ) : (
               <MenuItemDisabled onClick={() => setTab(4)}>
                 <img src="./images/V3/groupDisabled.png" />
-                <Text className="title">Friend list v1</Text>
+                <Text className="title">Friend list ver1.0</Text>
               </MenuItemDisabled>
             )}
           </Menu>
@@ -1538,7 +1538,7 @@ const Referral = () => {
           )}
           {tab === 4 && (
             <CardReferral>
-              <StyledHead>Friends list v1</StyledHead>
+              <StyledHead>Friends list ver1.0</StyledHead>
               <StyledSubtitle>
                 Welcome to our member count section! Here, you can track the growth of our community and get a sense of
                 the scale of our website&#39;s audience.{' '}
