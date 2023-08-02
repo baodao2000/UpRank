@@ -39,28 +39,6 @@ export const ImageRank = styled.img`
     width: 60px;
   }
 `
-const CardRankBronze = styled.div`
-  max-width: 386px;
-  height: auto;
-  color: #fff;
-  border-radius: 24px;
-  border: 1px solid var(--white-white-12, rgba(255, 255, 255, 0.12));
-  background: var(--black-black-20, rgba(0, 0, 0, 0.2));
-  backdrop-filter: blur(5.5px);
-  padding: 40px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  position: relative;
-  gap: 24px;
-  width: 100%;
-  @media screen and (max-width: 575px) {
-    padding: 16px;
-  }
-  @media screen and (max-width: 800px) {
-    width: 336px;
-  }
-`
 const CardRankSilver = styled.div`
   max-width: 386px;
   height: auto;
@@ -84,48 +62,8 @@ const CardRankSilver = styled.div`
   @media screen and (max-width: 800px) {
     width: 336px;
   }
-`
-const CardRanksGold = styled.div`
-  max-width: 386px;
-  height: auto;
-  color: #fff;
-  border-radius: 24px;
-  background: var(--primary-primary-2, rgba(117, 60, 216, 0.8));
-  backdrop-filter: blur(5.5px);
-  padding: 40px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 100%;
-  gap: 24px;
-
-  @media screen and (max-width: 575px) {
-    padding: 16px;
-  }
-`
-
-const CardPoolRanks = styled.div`
   position: relative;
-  width: auto;
-  height: auto;
-  color: #fff;
-  background: radial-gradient(
-    101.36% 117.36% at 0% -2.74%,
-    rgba(125, 128, 196, 0.6) 0%,
-    rgba(136, 139, 224, 0.264) 100%
-  );
-  border: 1px solid rgba(245, 251, 242, 0.2);
-  backdrop-filter: blur(50px);
-  border-radius: 15px;
-  // background: linear-gradient(244.16deg, #391e67 -21.5%, #c4cff6 104.65%);
-  // box-shadow: 6px 10px 25px rgba(0, 0, 0, 0.1), inset 0px 4px 16px rgba(255, 233, 190, 0.63);
-  // border-radius: 20px;
-  padding: 20px 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
 `
-
 const CardHead = styled.div`
   display: flex;
   justify-content: flex-start;
