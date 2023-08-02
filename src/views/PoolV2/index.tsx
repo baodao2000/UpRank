@@ -680,7 +680,7 @@ const Pools = () => {
   const { toastSuccess, toastError } = useToast()
   const { callWithMarketGasPrice } = useCallWithMarketGasPrice()
   const poolContract = usePoolsV4Contract()
-  const [ranks, setRanks] = useState([])
+  // const [ranks, setRanks] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [rateBnbUsd, setRateBnbUsd] = useState(1)
   const { data: signer } = useSigner()
@@ -803,25 +803,25 @@ const Pools = () => {
         getPoolV4Contract.getChildren(account),
       ])
 
-      const arr = await Promise.all(
-        indexRank.map(async (item) => {
-          const rank = await getPoolV4Contract.rankRewards(item)
+      // const arr = await Promise.all(
+      //   indexRank.map(async (item) => {
+      //     const rank = await getPoolV4Contract.rankRewards(item)
 
-          return {
-            image: getRankImage(item).img,
-            title: getRankImage(item).title,
-            currentReward: formatEther(rank.remainInMonth.toString()),
-            total: Number(Number(formatEther(rank.total)) * rateBnbUsd).toFixed(3),
-            min: Number(Number(formatEther(rank.total)) * rateBnbUsd).toFixed(3),
-            max: Number(formatEther(rank.minStart)),
-            member: rank.totalMember.toString(),
-            yourReward:
-              Number(formatEther(rank.rewardInMonth.toString())) && Number(rank.totalMember.toString())
-                ? Number(formatEther(rank.rewardInMonth.toString())) / Number(rank.totalMember.toString())
-                : 0,
-          }
-        }),
-      )
+      //     return {
+      //       image: getRankImage(item).img,
+      //       title: getRankImage(item).title,
+      //       currentReward: formatEther(rank.remainInMonth.toString()),
+      //       total: Number(Number(formatEther(rank.total)) * rateBnbUsd).toFixed(3),
+      //       min: Number(Number(formatEther(rank.total)) * rateBnbUsd).toFixed(3),
+      //       max: Number(formatEther(rank.minStart)),
+      //       member: rank.totalMember.toString(),
+      //       yourReward:
+      //         Number(formatEther(rank.rewardInMonth.toString())) && Number(rank.totalMember.toString())
+      //           ? Number(formatEther(rank.rewardInMonth.toString())) / Number(rank.totalMember.toString())
+      //           : 0,
+      //     }
+      //   }),
+      // )
       setUserRank({
         ...userRank,
         rank: Number(infoRank[0]),
@@ -831,7 +831,7 @@ const Pools = () => {
         direct: Number(infoRank[4].direct),
         downline: Number(infoRank[4].downLine),
       })
-      await setRanks(arr)
+      // await setRanks(arr)
       setUserClaimed(infoRank[1])
     }
   }
@@ -1464,7 +1464,7 @@ const Pools = () => {
               {!account ? null : (
                 <Rank
                   unit={unit}
-                  ranks={ranks}
+                  // ranks={ranks}
                   userRank={userRank}
                   onSuccess={onSuccessRank}
                   userIsClaim={userClaimed}
