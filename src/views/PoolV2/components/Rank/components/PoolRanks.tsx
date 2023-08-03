@@ -32,11 +32,12 @@ const ListPoolRanks = styled.div`
 
 export const ImageRank = styled.img`
   @media screen and (min-width: 1024px) {
-    width: 58px;
-    height: 64px;
+    width: 54px;
+    height: 60px;
   }
   @media (max-width: 1023px) {
     width: 60px;
+    height: 60px;
   }
 `
 const CardRankSilver = styled.div`
@@ -368,7 +369,11 @@ const PoolRanks = ({ onSuccess, userRank, userIsClaim, unit }) => {
         <CardRankSilver style={{ background: r === 5 ? 'rgba(117, 60, 216, 0.80)' : '' }} key={r}>
           <CardHead>
             <HeadLeft>
-              <ImageRank src={getRankImage(r).img} alt="" />
+              <ImageRank
+                style={{ width: r === 0 ? '40px' : '54px', height: r === 0 ? '40px' : '60px' }}
+                src={getRankImage(r).img}
+                alt=""
+              />
               <TitleHeadRight style={{ color: '#fff' }}>{items.title}</TitleHeadRight>
             </HeadLeft>
             {userRank.rank === r && (
