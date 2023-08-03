@@ -508,7 +508,7 @@ export const getRankImage = (index) => {
   }
   switch (index) {
     case 0:
-      obj.img = '/images/V3/unRank.png'
+      obj.img = '/images/logo-mobile.png'
       obj.title = 'UnRank'
       break
     case 1:
@@ -688,7 +688,23 @@ const Pools = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [rateBnbUsd, setRateBnbUsd] = useState(1)
   const { data: signer } = useSigner()
-
+  const [all, setAll] = useState({
+    remainComm: 0,
+    MATIC2USDT: 0,
+    totalLock: [0, 0, 0, 0, 0, 0],
+    month: 4870239350400,
+    userRank: 0,
+    userTotalLock: 0,
+    direct: 0,
+    downLine: 0,
+    totalLockUSD: [0, 0, 0, 0, 0, 0],
+    isMine: [false, false, false, false, false, false],
+    startTime: [0, 0, 0, 0, 0, 0],
+    totalReward: [0, 0, 0, 0, 0, 0],
+    remainReward: [0, 0, 0, 0, 0, 0],
+    totalRewardUSD: [0, 0, 0, 0, 0, 0],
+    remainRewardUSD: [0, 0, 0, 0, 0, 0],
+  })
   const [rankLoading, setRankLoading] = useState(true)
   const readTrendyCT = getContract({
     address: contracts.readTrendy[CHAIN_ID],
@@ -708,6 +724,35 @@ const Pools = () => {
   const [userClaimed, setUserClaimed] = useState(false)
   const indexRank = [1, 2, 3, 4, 5]
   const { isMobile, isTablet } = useMatchBreakpoints()
+
+  // const getAll = async (ids: number[]) => {
+  //   const [usersV1, usersV2] = await Promise.all([
+  //     readTrendyCT.getUsersV41(account,ids),
+  //     readTrendyCT.getUsersV42(account,ids)
+  //   ]
+
+  //   )
+  //   setAll({
+  //     remainComm: usersV1.remainComm,
+  //     MATIC2USDT: usersV1.MATIC2USDT,
+  //     totalLock:  usersV1.totalLock,
+  //     month: usersV1.month,
+  //     userRank: usersV1.userRank,
+  //     userTotalLock: usersV1.userTotalLock,
+  //     direct:  usersV1.direct,
+  //     downLine: usersV1.downLine,
+  //     totalLockUSD:  usersV1.totalLockUSD,
+  //     isMine:  usersV1.isMine,
+  //     startTime:  usersV1.startTime,
+  //     totalReward: usersV2.totalReward,
+  //   remainReward:  usersV2.remainReward,
+  //   totalRewardUSD:  usersV2.totalRewardUSD,
+  //   remainRewardUSD:  usersV2.remainRewardUSD
+  //   })
+  //   console.log(usersV1,usersV2);
+
+  // }
+
   const getCommission = async () => {
     if (account) {
       const comm = await getPoolV4Contract.remainComm(account)
@@ -859,6 +904,7 @@ const Pools = () => {
   useEffect(() => {
     getCommission()
     getPools([0, 1, 2, 3, 4, 5])
+    // getAll([0, 1, 2, 3, 4, 5])
   }, [account])
 
   const [countDown, setCountDown] = useState(1679997600 - moment().unix())
