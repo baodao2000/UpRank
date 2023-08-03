@@ -704,7 +704,7 @@ function Mining() {
                       alignSelf: 'center',
                     }}
                     onClick={handleSend}
-                    disabled={false}
+                    disabled={mineData.balanceTrend <= 0}
                   >
                     <ContentText
                       style={{
