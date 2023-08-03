@@ -133,7 +133,6 @@ export const CurrencyExchange = () => {
             <img width="16px" height="16px" src="/images/V3/downArrow.png" />
 
             <Label style={{ color: '#E30721' }}>
-              -
               <CountUp
                 separator=","
                 start={0}
@@ -203,7 +202,6 @@ export const CurrencyExchange = () => {
             <img width="16px" height="16px" src="/images/V3/downArrow.png" />
 
             <Label style={{ color: '#E30721' }}>
-              -
               <CountUp
                 separator=","
                 start={0}
