@@ -509,23 +509,23 @@ export const getRankImage = (index) => {
   switch (index) {
     case 0:
       obj.img = '/images/V3/Bronze.svg'
-      obj.title = 'Silver'
+      obj.title = 'Bronze'
       break
     case 1:
       obj.img = '/images/V3/Silver.svg'
-      obj.title = 'Gold'
+      obj.title = 'Silver'
       break
     case 2:
       obj.img = '/images/V3/Gold.svg'
-      obj.title = 'Titanium'
+      obj.title = 'Gold'
       break
     case 3:
       obj.img = '/images/V3/Titanium.svg'
-      obj.title = 'Platinum'
+      obj.title = 'Titanium'
       break
     case 4:
       obj.img = '/images/V3/Platinum.svg'
-      obj.title = 'Diamond'
+      obj.title = 'Platinum'
       break
     default:
       break
@@ -802,26 +802,6 @@ const Pools = () => {
         readTrendyCT.getTotalVolumeByUp7(account),
         getPoolV4Contract.getChildren(account),
       ])
-
-      // const arr = await Promise.all(
-      //   indexRank.map(async (item) => {
-      //     const rank = await getPoolV4Contract.rankRewards(item)
-
-      //     return {
-      //       image: getRankImage(item).img,
-      //       title: getRankImage(item).title,
-      //       currentReward: formatEther(rank.remainInMonth.toString()),
-      //       total: Number(Number(formatEther(rank.total)) * rateBnbUsd).toFixed(3),
-      //       min: Number(Number(formatEther(rank.total)) * rateBnbUsd).toFixed(3),
-      //       max: Number(formatEther(rank.minStart)),
-      //       member: rank.totalMember.toString(),
-      //       yourReward:
-      //         Number(formatEther(rank.rewardInMonth.toString())) && Number(rank.totalMember.toString())
-      //           ? Number(formatEther(rank.rewardInMonth.toString())) / Number(rank.totalMember.toString())
-      //           : 0,
-      //     }
-      //   }),
-      // )
       setUserRank({
         ...userRank,
         rank: Number(infoRank[0]),
