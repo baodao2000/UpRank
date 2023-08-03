@@ -340,6 +340,105 @@ const PoolRanks = ({ onSuccess, userRank, userIsClaim, unit }) => {
   ]
   return (
     <ListPoolRanks>
+      <CardRankSilver style={{ display: userRank.rank === 4 ? 'none' : 'flex' }}>
+        <CardHead>
+          <HeadLeft>
+            <ImageRank src={userRank.rank === 4 ? getRankImage(4).img : getRankImage(userRank.rank + 1).img} alt="" />
+            <TitleHeadRight style={{ color: '#fff' }}>
+              {userRank.rank === 4 ? getRankImage(4).title : getRankImage(userRank.rank + 1).title}
+            </TitleHeadRight>
+          </HeadLeft>
+          <HeadRight>
+            <TitleHeadRightBronze style={{ color: '#fff' }}>Next Rank</TitleHeadRightBronze>
+          </HeadRight>
+        </CardHead>
+        <CardBody>
+          <ItemInfoCard>
+            <Label style={{ color: 'gray' }}>TREND Token Mining Speed </Label>
+            <Value>
+              x{userRank.rank === 4 ? dataRank[4].mine : dataRank[userRank.rank + 1].mine}
+              <img width="24px" height="18px" src="/images/V3/IconMine.png" />
+            </Value>
+          </ItemInfoCard>
+          <ItemInfoCard>
+            <Label style={{ color: canUpRank1 ? '#fff' : 'gray' }}>Locked</Label>
+            <ValueLocked style={{ color: '#8544f5' }}>
+              <CountUp
+                separator=","
+                start={0}
+                preserveValue
+                delay={0}
+                end={userRank.locked}
+                decimals={0}
+                duration={0.5}
+              />{' '}
+              <div
+                style={{
+                  background: 'var(--white-white-6, rgba(255, 255, 255, 0.06))',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  backdropFilter: 'blur(6px)',
+                  borderRadius: '4px',
+                  width: '24px',
+                  height: '24px',
+                }}
+              >
+                <img width="18px" height="16px" src="./images/V3/Vector.png" />
+              </div>
+            </ValueLocked>
+          </ItemInfoCard>
+          <ItemInfoCard style={{ color: canUpRank2 ? '#fff' : 'gray' }}>
+            <Label>Volumn on tree</Label>
+            <Value>
+              $
+              <CountUp
+                separator=","
+                start={0}
+                preserveValue
+                delay={0}
+                end={userRank.volumnOnTree}
+                decimals={0}
+                duration={0.5}
+                style={{ color: 'inherit !important' }}
+              />{' '}
+            </Value>
+          </ItemInfoCard>
+          <ItemInfoCard style={{ color: canUpRank3 ? '#fff' : 'gray' }}>
+            <Label>Member direct</Label>
+            <Value>{userRank.direct}</Value>
+          </ItemInfoCard>
+          <ItemInfoCard style={{ color: canUpRank4 ? '#fff' : 'gray' }}>
+            <Label>Member downline</Label>
+            <Value>{userRank.downline}</Value>
+          </ItemInfoCard>
+        </CardBody>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            textAlign: 'center',
+            marginTop: 8,
+          }}
+        >
+          <StyledButtonRank
+            style={{ display: canUpRank ? 'block' : 'none' }}
+            disabled={!canUpRank}
+            onClick={handleConfirmUpRank}
+          >
+            {isConfirmingUpRank ? (
+              <ThreeDots className="loading">
+                Updating<span>.</span>
+                <span>.</span>
+                <span>.</span>
+              </ThreeDots>
+            ) : (
+              'Up Rank'
+            )}
+          </StyledButtonRank>
+        </div>
+      </CardRankSilver>
       {dataRank.map((items, r) => (
         <CardRankSilver style={{ background: r === 4 ? 'rgba(117, 60, 216, 0.80)' : '' }} key={r}>
           <CardHead>
