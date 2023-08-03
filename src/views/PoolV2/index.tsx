@@ -508,22 +508,26 @@ export const getRankImage = (index) => {
   }
   switch (index) {
     case 0:
+      obj.img = '/images/V3/unRank.png'
+      obj.title = 'UnRank'
+      break
+    case 1:
       obj.img = '/images/V3/Bronze.svg'
       obj.title = 'Bronze'
       break
-    case 1:
+    case 2:
       obj.img = '/images/V3/Silver.svg'
       obj.title = 'Silver'
       break
-    case 2:
+    case 3:
       obj.img = '/images/V3/Gold.svg'
       obj.title = 'Gold'
       break
-    case 3:
+    case 4:
       obj.img = '/images/V3/Titanium.svg'
       obj.title = 'Titanium'
       break
-    case 4:
+    case 5:
       obj.img = '/images/V3/Platinum.svg'
       obj.title = 'Platinum'
       break
@@ -704,7 +708,6 @@ const Pools = () => {
   const [userClaimed, setUserClaimed] = useState(false)
   const indexRank = [1, 2, 3, 4, 5]
   const { isMobile, isTablet } = useMatchBreakpoints()
-
   const getCommission = async () => {
     if (account) {
       const comm = await getPoolV4Contract.remainComm(account)
@@ -810,6 +813,10 @@ const Pools = () => {
         volumnOnTree: Number(Number(formatEther(infoRank[3])).toFixed(3)),
         direct: Number(infoRank[4].direct),
         downline: Number(infoRank[4].downLine),
+        // locked: 1500,
+        // volumnOnTree: 222000,
+        // direct: 5,
+        // downline: 50,
       })
       // await setRanks(arr)
       setUserClaimed(infoRank[1])

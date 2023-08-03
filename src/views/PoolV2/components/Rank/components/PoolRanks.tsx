@@ -79,8 +79,12 @@ const HeadLeft = styled.div`
 
 const HeadRight = styled.div`
   position: absolute;
-  top: 10%;
+  top: 5%;
   right: -2%;
+  @media (max-width: 575px) {
+    top: 3%;
+    right: -2%;
+  }
 `
 
 const TitleHeadRight = styled.div`
@@ -93,6 +97,9 @@ const TitleHeadRight = styled.div`
   color: inherit;
   @media (max-width: 739px) {
     font-size: 20px;
+  }
+  @media (max-width: 575px) {
+    font-size: 16px;
   }
 `
 
@@ -109,9 +116,15 @@ const TitleHeadRightBronze = styled.div`
   @media (max-width: 739px) {
     font-size: 20px;
   }
+  @media (max-width: 575px) {
+    font-size: 16px;
+  }
   background: url(${images.bronze}) no-repeat;
   width: 128px;
   height: 44px;
+  @media (max-width: 575px) {
+    width: 108px;
+  }
 `
 const MinMaxPrice = styled.div`
   display: flex;
@@ -181,7 +194,7 @@ const BorderCard = styled.div`
 `
 
 const StyledButtonRank = styled.button`
-  width: 160px;
+  width: 200px;
   height: 36px;
   color: #f3f3f3;
   border-radius: var(--border-radius-lg, 12px);
@@ -228,6 +241,12 @@ const UpRanks = styled(Button)`
 `
 const nextRankRequire = [
   {
+    locked: 0,
+    volumnOnTree: 0,
+    direct: 0,
+    downline: 0,
+  },
+  {
     locked: 500,
     volumnOnTree: 50000,
     direct: 2,
@@ -252,8 +271,8 @@ const nextRankRequire = [
     downline: 200,
   },
   {
-    locked: 2000,
-    volumnOnTree: 300000,
+    locked: 4000,
+    volumnOnTree: 3000000,
     direct: 12,
     downline: 500,
   },
@@ -289,10 +308,10 @@ const PoolRanks = ({ onSuccess, userRank, userIsClaim, unit }) => {
   })
   const { isMobile } = useMatchBreakpoints()
 
-  const canUpRank1 = userRank.locked >= nextRankRequire[userRank.rank].locked
-  const canUpRank2 = userRank.volumnOnTree >= nextRankRequire[userRank.rank].volumnOnTree
-  const canUpRank3 = userRank.direct >= nextRankRequire[userRank.rank].direct
-  const canUpRank4 = userRank.downline >= nextRankRequire[userRank.rank].downline
+  const canUpRank1 = userRank.locked >= nextRankRequire[userRank.rank + 1].locked
+  const canUpRank2 = userRank.volumnOnTree >= nextRankRequire[userRank.rank + 1].volumnOnTree
+  const canUpRank3 = userRank.direct >= nextRankRequire[userRank.rank + 1].direct
+  const canUpRank4 = userRank.downline >= nextRankRequire[userRank.rank + 1].downline
   // const canUpRank1 = userRank.locked >= 0
   // const canUpRank2 = userRank.volumnOnTree >= 0
   // const canUpRank3 = userRank.direct >= 0
@@ -318,6 +337,10 @@ const PoolRanks = ({ onSuccess, userRank, userIsClaim, unit }) => {
   // console.log(data[userRank.rank].image)
   const dataRank = [
     {
+      title: 'UnRank',
+      mine: '0',
+    },
+    {
       title: 'Bronze',
       mine: '0',
     },
@@ -338,109 +361,11 @@ const PoolRanks = ({ onSuccess, userRank, userIsClaim, unit }) => {
       mine: '1.25',
     },
   ]
+
   return (
     <ListPoolRanks>
-      <CardRankSilver style={{ display: userRank.rank === 4 ? 'none' : 'flex' }}>
-        <CardHead>
-          <HeadLeft>
-            <ImageRank src={userRank.rank === 4 ? getRankImage(4).img : getRankImage(userRank.rank + 1).img} alt="" />
-            <TitleHeadRight style={{ color: '#fff' }}>
-              {userRank.rank === 4 ? getRankImage(4).title : getRankImage(userRank.rank + 1).title}
-            </TitleHeadRight>
-          </HeadLeft>
-          <HeadRight>
-            <TitleHeadRightBronze style={{ color: '#fff' }}>Next Rank</TitleHeadRightBronze>
-          </HeadRight>
-        </CardHead>
-        <CardBody>
-          <ItemInfoCard>
-            <Label style={{ color: 'gray' }}>TREND Token Mining Speed </Label>
-            <Value>
-              x{userRank.rank === 4 ? dataRank[4].mine : dataRank[userRank.rank + 1].mine}
-              <img width="24px" height="18px" src="/images/V3/IconMine.png" />
-            </Value>
-          </ItemInfoCard>
-          <ItemInfoCard>
-            <Label style={{ color: canUpRank1 ? '#fff' : 'gray' }}>Locked</Label>
-            <ValueLocked style={{ color: '#8544f5' }}>
-              <CountUp
-                separator=","
-                start={0}
-                preserveValue
-                delay={0}
-                end={userRank.locked}
-                decimals={0}
-                duration={0.5}
-              />{' '}
-              <div
-                style={{
-                  background: 'var(--white-white-6, rgba(255, 255, 255, 0.06))',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  backdropFilter: 'blur(6px)',
-                  borderRadius: '4px',
-                  width: '24px',
-                  height: '24px',
-                }}
-              >
-                <img width="18px" height="16px" src="./images/V3/Vector.png" />
-              </div>
-            </ValueLocked>
-          </ItemInfoCard>
-          <ItemInfoCard style={{ color: canUpRank2 ? '#fff' : 'gray' }}>
-            <Label>Volumn on tree</Label>
-            <Value>
-              $
-              <CountUp
-                separator=","
-                start={0}
-                preserveValue
-                delay={0}
-                end={userRank.volumnOnTree}
-                decimals={0}
-                duration={0.5}
-                style={{ color: 'inherit !important' }}
-              />{' '}
-            </Value>
-          </ItemInfoCard>
-          <ItemInfoCard style={{ color: canUpRank3 ? '#fff' : 'gray' }}>
-            <Label>Member direct</Label>
-            <Value>{userRank.direct}</Value>
-          </ItemInfoCard>
-          <ItemInfoCard style={{ color: canUpRank4 ? '#fff' : 'gray' }}>
-            <Label>Member downline</Label>
-            <Value>{userRank.downline}</Value>
-          </ItemInfoCard>
-        </CardBody>
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            textAlign: 'center',
-            marginTop: 8,
-          }}
-        >
-          <StyledButtonRank
-            style={{ display: canUpRank ? 'block' : 'none' }}
-            disabled={!canUpRank}
-            onClick={handleConfirmUpRank}
-          >
-            {isConfirmingUpRank ? (
-              <ThreeDots className="loading">
-                Updating<span>.</span>
-                <span>.</span>
-                <span>.</span>
-              </ThreeDots>
-            ) : (
-              'Up Rank'
-            )}
-          </StyledButtonRank>
-        </div>
-      </CardRankSilver>
       {dataRank.map((items, r) => (
-        <CardRankSilver style={{ background: r === 4 ? 'rgba(117, 60, 216, 0.80)' : '' }} key={r}>
+        <CardRankSilver style={{ background: r === 5 ? 'rgba(117, 60, 216, 0.80)' : '' }} key={r}>
           <CardHead>
             <HeadLeft>
               <ImageRank src={getRankImage(r).img} alt="" />
@@ -449,6 +374,11 @@ const PoolRanks = ({ onSuccess, userRank, userIsClaim, unit }) => {
             {userRank.rank === r && (
               <HeadRight>
                 <TitleHeadRightBronze style={{ color: '#fff' }}>Your Rank</TitleHeadRightBronze>
+              </HeadRight>
+            )}
+            {userRank.rank + 1 === r && (
+              <HeadRight>
+                <TitleHeadRightBronze style={{ color: '#fff' }}>Next Rank</TitleHeadRightBronze>
               </HeadRight>
             )}
           </CardHead>
@@ -461,20 +391,58 @@ const PoolRanks = ({ onSuccess, userRank, userIsClaim, unit }) => {
               </Value>
             </ItemInfoCard>
             <ItemInfoCard>
-              <Label style={{ color: canUpRank1 ? '#fff' : 'gray' }}>Locked</Label>
-              <ValueLocked style={{ color: r === 4 ? 'gray' : '#8544f5' }}>
-                <CountUp
-                  separator=","
-                  start={0}
-                  preserveValue
-                  delay={0}
-                  end={userRank.locked}
-                  decimals={0}
-                  duration={0.5}
-                />{' '}
+              <Label
+                style={{
+                  color:
+                    (canUpRank1 && userRank.rank + 1 === r) ||
+                    (canUpRank1 && r === userRank.rank) ||
+                    (canUpRank1 && r === userRank.rank + 2)
+                      ? '#fff'
+                      : 'gray',
+                }}
+              >
+                Locked
+              </Label>
+              <ValueLocked style={{ color: r === 5 ? 'gray' : '#8544f5' }}>
+                {r === 0 ? (
+                  <CountUp
+                    separator=","
+                    start={0}
+                    preserveValue
+                    delay={0}
+                    end={userRank.locked}
+                    decimals={0}
+                    duration={0.5}
+                  />
+                ) : (
+                  <>
+                    {userRank.locked >= nextRankRequire[r].locked && userRank.rank === r ? (
+                      <CountUp
+                        separator=","
+                        start={0}
+                        preserveValue
+                        delay={0}
+                        end={userRank.locked}
+                        decimals={0}
+                        duration={0.5}
+                      />
+                    ) : (
+                      <CountUp
+                        separator=","
+                        start={0}
+                        preserveValue
+                        delay={0}
+                        end={nextRankRequire[r].locked}
+                        decimals={0}
+                        duration={0.5}
+                      />
+                    )}
+                  </>
+                )}
+
                 <div
                   style={{
-                    background: r === 4 ? 'black' : 'var(--white-white-6, rgba(255, 255, 255, 0.06))',
+                    background: r === 5 ? 'black' : 'var(--white-white-6, rgba(255, 255, 255, 0.06))',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -488,29 +456,149 @@ const PoolRanks = ({ onSuccess, userRank, userIsClaim, unit }) => {
                 </div>
               </ValueLocked>
             </ItemInfoCard>
-            <ItemInfoCard style={{ color: canUpRank2 ? '#fff' : 'gray' }}>
+            <ItemInfoCard
+              style={{
+                color:
+                  (canUpRank2 && r === userRank.rank + 1) ||
+                  (canUpRank2 && r === userRank.rank) ||
+                  (canUpRank2 && r === userRank.rank + 2)
+                    ? '#fff'
+                    : 'gray',
+              }}
+            >
               <Label>Volumn on tree</Label>
               <Value>
                 $
+                {r === 0 ? (
+                  <CountUp
+                    separator=","
+                    start={0}
+                    preserveValue
+                    delay={0}
+                    end={userRank.volumnOnTree}
+                    decimals={0}
+                    duration={0.5}
+                  />
+                ) : (
+                  <>
+                    {userRank.volumnOnTree >= nextRankRequire[r].volumnOnTree && userRank.rank === r ? (
+                      <CountUp
+                        separator=","
+                        start={0}
+                        preserveValue
+                        delay={0}
+                        end={userRank.volumnOnTree}
+                        decimals={0}
+                        duration={0.5}
+                      />
+                    ) : (
+                      <CountUp
+                        separator=","
+                        start={0}
+                        preserveValue
+                        delay={0}
+                        end={nextRankRequire[r].volumnOnTree}
+                        decimals={0}
+                        duration={0.5}
+                      />
+                    )}
+                  </>
+                )}
+              </Value>
+            </ItemInfoCard>
+            <ItemInfoCard
+              style={{
+                color:
+                  (canUpRank3 && r === userRank.rank + 1) ||
+                  (canUpRank3 && r === userRank.rank) ||
+                  (canUpRank3 && r === userRank.rank + 2)
+                    ? '#fff'
+                    : 'gray',
+              }}
+            >
+              <Label>Member direct</Label>
+              {r === 0 ? (
                 <CountUp
                   separator=","
                   start={0}
                   preserveValue
                   delay={0}
-                  end={userRank.volumnOnTree}
+                  end={userRank.direct}
                   decimals={0}
                   duration={0.5}
-                  style={{ color: 'inherit !important' }}
-                />{' '}
-              </Value>
+                />
+              ) : (
+                <>
+                  {userRank.direct >= nextRankRequire[r].direct && userRank.rank === r ? (
+                    <CountUp
+                      separator=","
+                      start={0}
+                      preserveValue
+                      delay={0}
+                      end={userRank.direct}
+                      decimals={0}
+                      duration={0.5}
+                    />
+                  ) : (
+                    <CountUp
+                      separator=","
+                      start={0}
+                      preserveValue
+                      delay={0}
+                      end={nextRankRequire[r].direct}
+                      decimals={0}
+                      duration={0.5}
+                    />
+                  )}
+                </>
+              )}
             </ItemInfoCard>
-            <ItemInfoCard style={{ color: canUpRank3 ? '#fff' : 'gray' }}>
-              <Label>Member direct</Label>
-              <Value>{userRank.direct}</Value>
-            </ItemInfoCard>
-            <ItemInfoCard style={{ color: canUpRank4 ? '#fff' : 'gray' }}>
+            <ItemInfoCard
+              style={{
+                color:
+                  (canUpRank4 && r === userRank.rank + 1) ||
+                  (canUpRank4 && r === userRank.rank) ||
+                  (canUpRank4 && r === userRank.rank + 2)
+                    ? '#fff'
+                    : 'gray',
+              }}
+            >
               <Label>Member downline</Label>
-              <Value>{userRank.downline}</Value>
+              {r === 0 ? (
+                <CountUp
+                  separator=","
+                  start={0}
+                  preserveValue
+                  delay={0}
+                  end={userRank.downline}
+                  decimals={0}
+                  duration={0.5}
+                />
+              ) : (
+                <>
+                  {userRank.direct >= nextRankRequire[r].downline && userRank.rank === r ? (
+                    <CountUp
+                      separator=","
+                      start={0}
+                      preserveValue
+                      delay={0}
+                      end={userRank.downline}
+                      decimals={0}
+                      duration={0.5}
+                    />
+                  ) : (
+                    <CountUp
+                      separator=","
+                      start={0}
+                      preserveValue
+                      delay={0}
+                      end={nextRankRequire[r].downline}
+                      decimals={0}
+                      duration={0.5}
+                    />
+                  )}
+                </>
+              )}
             </ItemInfoCard>
           </CardBody>
           <div
@@ -529,12 +617,12 @@ const PoolRanks = ({ onSuccess, userRank, userIsClaim, unit }) => {
             >
               {isConfirmingUpRank ? (
                 <ThreeDots className="loading">
-                  Updating<span>.</span>
+                  Requesting<span>.</span>
                   <span>.</span>
                   <span>.</span>
                 </ThreeDots>
               ) : (
-                'Up Rank'
+                'Request Level Up'
               )}
             </StyledButtonRank>
           </div>
