@@ -673,7 +673,7 @@ const ButtonDetails = styled.div`
 `
 const Pools = () => {
   const { account, chainId } = useActiveWeb3React()
-  // account = '0x1ec0f8875B7fc2400a6F44788c6710959614e68A'
+  // account = '0x38f910b187a8ecd835883f879d7581bb7431f0f6'
   const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId
   const getPoolV4Contract = getPoolsV4Contract(CHAIN_ID)
   const [arr, setArr] = useState([])
@@ -689,21 +689,11 @@ const Pools = () => {
   const [rateBnbUsd, setRateBnbUsd] = useState(1)
   const { data: signer } = useSigner()
   const [all, setAll] = useState({
-    remainComm: 0,
-    MATIC2USDT: 0,
-    totalLock: [0, 0, 0, 0, 0, 0],
-    month: 4870239350400,
-    userRank: 0,
-    userTotalLock: 0,
     direct: 0,
     downLine: 0,
-    totalLockUSD: [0, 0, 0, 0, 0, 0],
-    isMine: [false, false, false, false, false, false],
-    startTime: [0, 0, 0, 0, 0, 0],
-    totalReward: [0, 0, 0, 0, 0, 0],
-    remainReward: [0, 0, 0, 0, 0, 0],
-    totalRewardUSD: [0, 0, 0, 0, 0, 0],
-    remainRewardUSD: [0, 0, 0, 0, 0, 0],
+    rank: 0,
+    locked: 0,
+    volumnOnTree: 0,
   })
   const [rankLoading, setRankLoading] = useState(true)
   const readTrendyCT = getContract({
@@ -712,54 +702,33 @@ const Pools = () => {
     chainId: CHAIN_ID,
     signer,
   })
-  const [userRank, setUserRank] = useState({
-    rank: 0,
-    image: '',
-    locked: 0,
-    volumnOnTree: 0,
-    direct: 0,
-    downline: 0,
-  })
 
   const [userClaimed, setUserClaimed] = useState(false)
-  const indexRank = [1, 2, 3, 4, 5]
   const { isMobile, isTablet } = useMatchBreakpoints()
 
-  // const getAll = async (ids: number[]) => {
-  //   const [usersV1, usersV2] = await Promise.all([
-  //     readTrendyCT.getUsersV41(account,ids),
-  //     readTrendyCT.getUsersV42(account,ids)
-  //   ]
+  // console.log(all);
 
-  //   )
-  //   setAll({
-  //     remainComm: usersV1.remainComm,
-  //     MATIC2USDT: usersV1.MATIC2USDT,
-  //     totalLock:  usersV1.totalLock,
-  //     month: usersV1.month,
-  //     userRank: usersV1.userRank,
-  //     userTotalLock: usersV1.userTotalLock,
-  //     direct:  usersV1.direct,
-  //     downLine: usersV1.downLine,
-  //     totalLockUSD:  usersV1.totalLockUSD,
-  //     isMine:  usersV1.isMine,
-  //     startTime:  usersV1.startTime,
-  //     totalReward: usersV2.totalReward,
-  //   remainReward:  usersV2.remainReward,
-  //   totalRewardUSD:  usersV2.totalRewardUSD,
-  //   remainRewardUSD:  usersV2.remainRewardUSD
-  //   })
-  //   console.log(usersV1,usersV2);
+  const getAll = async (ids: number[]) => {
+    if (!account) {
+      return
+    }
+    const [usersV1, getVolume] = await Promise.all([
+      readTrendyCT.getUsersV41(account, ids),
+      readTrendyCT.getTotalVolumeByUp7(account),
+    ])
+    await setAll({
+      rank: Number(usersV1.userRank),
+      locked: Number(Number(formatEther(usersV1.userTotalLock)).toFixed(3)),
+      direct: usersV1.direct,
+      downLine: usersV1.downLine,
+      volumnOnTree: Number(Number(formatEther(getVolume)).toFixed(3)),
+    })
+  }
 
-  // }
-
-  const getCommission = async () => {
+  const getCommission = async (ids: number[]) => {
     if (account) {
-      const comm = await getPoolV4Contract.remainComm(account)
-      // const comm2 = await getPoolV2Contract.remainComm(account)
-      setCommission(Number(formatEther(comm)))
-      // setCommission2(Number(formatEther(comm2)))
-      const commRemain = Number(formatEther(comm))
+      const getremainComm = await readTrendyCT.getUsersV41(account, ids)
+      const commRemain = Number(formatEther(getremainComm.remainComm))
       setRemainCommission(commRemain)
       setIsClaimableCommission(commRemain > 0)
     } else {
@@ -769,7 +738,7 @@ const Pools = () => {
   }
   const { isConfirming, handleConfirm } = useConfirmTransaction({
     onConfirm: () => {
-      return callWithMarketGasPrice(commission > 0 && poolContract, 'claimComm', [account])
+      return callWithMarketGasPrice(remainCommission > 0 && poolContract, 'claimComm', [account])
     },
     onSuccess: async ({ receipt }) => {
       toastSuccess('Claim commission successfully !', <ToastDescriptionWithTx txHash={receipt.transactionHash} />)
@@ -811,10 +780,10 @@ const Pools = () => {
         setArr(newPoolInfo)
         setIsLoading(false)
       } else {
+        // await getAll(ids)
         const newPoolInfo = await Promise.all(
           pools.map(async (item, id) => {
-            const userLockAndPool = await getPoolV4Contract.users(account, id)
-            // console.log(Number(formatEther(userLockAndPool.totalLock)), id)
+            const userLockAndPool = await readTrendyCT.getUsersV41(account, ids)
             return {
               title: ['Experience', 'Starter', 'Standard', 'Pro', 'Advance', 'Premium'],
               currentInterest: ((Number(item.currentInterest.toString()) / 10000) * 365).toFixed(2),
@@ -824,47 +793,16 @@ const Pools = () => {
               timeLock: 1095,
               totalLock: formatEther(item.totalLock),
               rateBNB2USD: Number(formatEther(bnbPrice)),
-              yourLock: Number(formatEther(userLockAndPool.totalLock)),
+              yourLock: Number(formatEther(userLockAndPool.totalLock[id])),
               currentInterestWithMine: ((Number(item.currentInterestWithMine.toString()) / 10000) * 365).toFixed(2),
             }
           }),
         )
-        await getInfoRank(Number(formatEther(bnbPrice)))
-
         setArr(newPoolInfo)
         setIsLoading(false)
       }
     } catch (e) {
       console.log('error', e)
-    }
-  }
-  const getInfoRank = async (rateBnbUsd) => {
-    if (!rateBnbUsd) {
-      setIsLoading(true)
-    } else {
-      const months = await getPoolV4Contract.getMonths()
-      const infoRank = await Promise.all([
-        getPoolV4Contract.userRank(account),
-        getPoolV4Contract.userRankRewardClaimed(account, Number(months.toString())),
-        getPoolV4Contract.getUserTotalLock(account),
-        readTrendyCT.getTotalVolumeByUp7(account),
-        getPoolV4Contract.getChildren(account),
-      ])
-      setUserRank({
-        ...userRank,
-        rank: Number(infoRank[0]),
-        image: getRankImage(Number(infoRank[0])).img,
-        locked: Number(Number(formatEther(infoRank[2])).toFixed(3)),
-        volumnOnTree: Number(Number(formatEther(infoRank[3])).toFixed(3)),
-        direct: Number(infoRank[4].direct),
-        downline: Number(infoRank[4].downLine),
-        // locked: 1500,
-        // volumnOnTree: 222000,
-        // direct: 5,
-        // downline: 50,
-      })
-      // await setRanks(arr)
-      setUserClaimed(infoRank[1])
     }
   }
 
@@ -878,35 +816,25 @@ const Pools = () => {
   const { data: data3, isFetched: isFetched3 } = useBalance({
     addressOrName: contracts.poolsV4[CHAIN_ID],
   })
-  // console.log(contracts.poolsV4[CHAIN_ID])
-  // console.log(data , isFetched);
-
-  // const { data: data2, isFetched: isFetched2 } = useBalance({
-  //   addressOrName: contracts.poolsV2[CHAIN_ID],
-  // })
 
   const balance =
     isFetched && data && data.value && isFetched2 && data2 && data2.value && data3 && isFetched3
       ? formatBigNumber(data.value.add(data2.value).add(data3.value), 6)
       : 0
-  // const balance = isFetched && data && data.value && isFetched2 && data2 && data2.value && data3 && isFetched3 && data3.value
-  //     ? formatBigNumber(data3.value, 6)
-  //     : 0
   const unit = NATIVE[chainId].symbol
 
   const onSuccess = () => {
-    getCommission()
+    getCommission([0, 1, 2, 3, 4, 5])
   }
 
   const onSuccessRank = () => {
-    getInfoRank(rateBnbUsd)
+    getAll([0, 1, 2, 3, 4, 5])
   }
   useEffect(() => {
-    getCommission()
+    getAll([0, 1, 2, 3, 4, 5])
+    getCommission([0, 1, 2, 3, 4, 5])
     getPools([0, 1, 2, 3, 4, 5])
-    // getAll([0, 1, 2, 3, 4, 5])
   }, [account])
-
   const [countDown, setCountDown] = useState(1679997600 - moment().unix())
   useEffect(() => {
     const timerId = setInterval(() => {
@@ -915,7 +843,6 @@ const Pools = () => {
 
     return () => clearInterval(timerId)
   }, [countDown])
-  // const { isMobile, isTablet } = useMatchBreakpoints()
 
   return (
     <Wraper>
@@ -926,26 +853,6 @@ const Pools = () => {
             Pooling resources or assets from multiple participants in a collective manner, often seen in decentralized
             finance (DeFi) ecosystems, to enhance liquidity, generate returns, or facilitate shared investments.
           </StyledSubtitle>
-          {/* <Version>
-          <Text
-            style={{ cursor: 'pointer' }}
-            // onClick={() => setPool('poolV1')}
-            fontSize="16px"
-            fontWeight="500"
-            lineHeight="20px"
-          >
-            Pool Version 1
-          </Text>
-          <Text
-            style={{ cursor: 'pointer' }}
-            // onClick={() => setPool('poolV2')}
-            fontSize="16px"
-            fontWeight="500"
-            lineHeight="20px"
-          >
-            Pool Version 2
-          </Text>
-        </Version> */}
         </Left>
         <Right>
           <Label>Total Lock</Label>
@@ -1494,15 +1401,7 @@ const Pools = () => {
                   </PoolsReward>
                 </Flex>
               </PageHeader>
-              {!account ? null : (
-                <Rank
-                  unit={unit}
-                  // ranks={ranks}
-                  userRank={userRank}
-                  onSuccess={onSuccessRank}
-                  userIsClaim={userClaimed}
-                />
-              )}
+              {!account ? null : <Rank unit={unit} userRank={all} onSuccess={onSuccessRank} />}
             </>
           )}
         </Background>
