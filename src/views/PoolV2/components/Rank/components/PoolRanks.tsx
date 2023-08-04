@@ -604,7 +604,7 @@ const PoolRanks = ({ onSuccess, userRank, unit }) => {
             <StyledButtonRank
               style={{ display: canUpRank && r === userRank.rank ? 'block' : 'none' }}
               disabled={!canUpRank}
-              onClick={sendRequest}
+              onClick={handleConfirm}
             >
               {isConfirmingUpRank ? (
                 <ThreeDots className="loading">
