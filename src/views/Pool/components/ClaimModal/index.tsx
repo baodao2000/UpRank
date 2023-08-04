@@ -101,15 +101,18 @@ const ClaimPoolModal: React.FC<React.PropsWithChildren<ClaimPoolModalProps>> = (
   return (
     <Modal
       style={depositModal}
-      title={'CLAIM'}
+      title={''}
       onDismiss={onDismiss}
       hideCloseButton={false}
       borderRadius={25}
-      headerBackground="rgb(105 84 156 / 77%)"
-      background={'linear-gradient(139.08deg, #171718 1.7%, rgba(86, 27, 211, 0.84) 108.66%)'}
+      // headerBackground="rgb(105 84 156 / 77%)"
+      // background={'linear-gradient(139.08deg, #171718 1.7%, rgba(86, 27, 211, 0.84) 108.66%)'}
     >
       <Wrapper>
         <ClaimAmount>
+          <Text fontSize="28px" textAlign="center">
+            CLAIM
+          </Text>
           <Text fontSize="18px">Current reward:</Text>
           <Text fontSize="16px" style={{ display: 'flex' }}>
             {

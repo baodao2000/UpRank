@@ -34,23 +34,20 @@ const Content = styled.div`
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 40px;
   @media (max-width: 575px) {
     margin-top: 24px;
-    gap: 9px;
-  }
-  @media (max-width: 345px) {
-    margin-top: 24px;
-    gap: 6px;
+    gap: 20px;
+    justify-content: center;
   }
 `
 const Card = styled.div`
-  padding: 24px;
+  padding: 12px;
   display: flex;
   flex-direction: column;
   align-items: center;
   border: 2px solid;
   justify-content: center;
+  width: 260px;
   &:hover {
     border-radius: 24px;
     border: 2px solid rgba(255, 255, 255, 0.12);
@@ -58,10 +55,8 @@ const Card = styled.div`
     box-shadow: 0px 8px 32px 0px rgba(0, 0, 0, 0.1);
   }
   @media (max-width: 575px) {
-    padding: 13px;
-  }
-  @media (max-width: 345px) {
-    padding: 9px;
+    padding: 0px;
+    width: 180px;
   }
 `
 const CardTitle = styled(Text)`
@@ -86,6 +81,10 @@ const CardLabel = styled(Text)`
     font-size: 12px;
     line-height: 18px;
   }
+  span {
+    color: #8544f5;
+    cursor: pointer;
+  }
 `
 const Img = styled.img`
   width: 120px;
@@ -104,23 +103,23 @@ const Img = styled.img`
 const data = [
   {
     image: './images/V3/MoneyExchange.png',
-    title: 'Exchange Instantly',
-    label: 'and faster than ever',
+    title: 'Transferability',
+    label: 'Exchange in real-time, instantl',
   },
   {
     image: './images/V3/Highest.png',
-    title: 'Highest Private ',
-    label: 'Most Secure',
+    title: 'Risk-free',
+    label: 'Earn with utmost privacy and security',
   },
   {
     image: './images/V3/Time.png',
-    title: 'Earn Passive Income',
-    label: 'Every month',
+    title: 'Enriching',
+    label: 'Stable & Thriving Passive Income monthly',
   },
   {
     image: './images/V3/MoneyTree.png',
-    title: 'Convenient',
-    label: 'and simple to use',
+    title: 'Non-complex',
+    label: 'Convenient & simple to use',
   },
 ]
 const CryptoHome = () => {
@@ -139,9 +138,11 @@ const CryptoHome = () => {
         ))}
         <Card>
           <Img src="./images/V3/autited.png" />
-          <CardTitle>Audited by Certik</CardTitle>
+          <CardTitle>Defended</CardTitle>
           <Link href="https://trendydefi.com/REP-final.pdf">
-            <CardLabel style={{ color: '#8544F5', cursor: 'pointer' }}>Learn more</CardLabel>
+            <CardLabel>
+              Audited by Certik - <span>Learn more</span>
+            </CardLabel>
           </Link>
         </Card>
       </Content>

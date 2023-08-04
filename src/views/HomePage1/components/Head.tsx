@@ -167,18 +167,19 @@ const ButtonStaking = styled(Button)`
     line-height: 20px;
   }
 `
-
 const HeadHome = () => {
   return (
     <Head>
       <ContentHead data-aos="fade-up-right">
         <p>
-          <span className="p1">TrendyDefi is an open network for</span>
-          <span className="p2"> storing </span>
-          <span className="p1">and </span> <span className="p2">moving money</span>
+          <span className="p2">Start Earning</span>
+          <span className="p1"> Passive Income with </span>
+          <span className="p2">Your Own Data</span>
         </p>
         <H5ShowMb>
-          <span>Own your own data. Earn passive income with crypto.</span>
+          <span>
+            Trendy DeFi is an Open Network for Hassle-Free Cryptocurrency Storage and Earning. Your DeFi, Your Rules.
+          </span>
         </H5ShowMb>
         <Staking>
           <Link href="/pools">
@@ -187,7 +188,7 @@ const HeadHome = () => {
           <div>
             <p>*Start staking now to maximize your earnings!</p>
             <p>
-              Stake Matic, you can earn an APR of<span style={{ fontWeight: 700 }}> 85.1%</span> up to
+              Staking MATIC now to earn an APR of up to<span style={{ fontWeight: 700 }}> 85.1%</span> up to
               <span style={{ fontWeight: 700 }}> 127.75%</span>{' '}
             </p>
           </div>

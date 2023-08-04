@@ -143,15 +143,16 @@ const Download = () => {
   return (
     <Wrapper>
       <img src="./images/V3/Logo.png" />
-      <StyledHeading>Mutuals to replace insurance Everyone Wins</StyledHeading>
+      <StyledHeading>Trust the Best & invest with Insurance</StyledHeading>
       <TextLabel>
-        We build a safe and trusted platform for users. Property insurance products will increase safety for investors.
+        We&#39;ve developed a secure and reliable platform for users. The addition of property insurance products will
+        heighten safety measures for investors.
       </TextLabel>
       <Card>
         <CardLeft>
-          <CardTitle>So what are you waiting for?</CardTitle>
+          <CardTitle>Get started in seconds</CardTitle>
           <CardLabel style={{ margin: '8px 0' }}>Let’s download the app and connect your wallet now!</CardLabel>
-          <CardLabel>Download Metamask and Trust Wallet</CardLabel>
+          <CardLabel>Download the Metamask or Trust Wallet apps, and connect your wallet to begin.</CardLabel>
           <CardContent>
             <div className="imgA">
               <div style={{ cursor: 'pointer' }} onClick={() => window.open('https://metamask.io/', '_blank')}>
