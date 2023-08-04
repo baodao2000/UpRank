@@ -1220,7 +1220,7 @@ const Referral = () => {
                     >
                       Up to
                     </StyledLabelLinkRef>
-                    <StyledLabelLinkRef>20%</StyledLabelLinkRef>
+                    <StyledLabelLinkRef>10%</StyledLabelLinkRef>
                   </div>
                   <WrapperLinkRef>
                     <Text
