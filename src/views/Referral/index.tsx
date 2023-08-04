@@ -1220,7 +1220,7 @@ const Referral = () => {
                     >
                       Up to
                     </StyledLabelLinkRef>
-                    <StyledLabelLinkRef>20%</StyledLabelLinkRef>
+                    <StyledLabelLinkRef>10%</StyledLabelLinkRef>
                   </div>
                   <WrapperLinkRef>
                     <Text
@@ -1230,7 +1230,7 @@ const Referral = () => {
                       style={{ color: 'rgba(255, 255, 255, 1)' }}
                     >
                       {' '}
-                      Invite friends to earn 20%
+                      Invite friends to earn 10%
                     </Text>
                     <GroupLink>
                       <div style={{ width: isMobile ? '100%' : '50%' }}>

@@ -136,9 +136,8 @@ const Value = styled.span`
   line-height: 100%;
   display: flex;
   align-items: center;
-  text-transform: capitalize;
   gap: 6px;
-
+  text-transform: capitalize;
   @media (max-width: 739px) {
     font-size: 12px;
   }
@@ -265,7 +264,22 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
           </ItemInfoCard>
           <ItemInfoCard>
             <Label>Volumn on tree:</Label>
-            <Value>{userRank.volumnOnTree} $</Value>
+            <Value>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  backdropFilter: 'blur(6px)',
+                  borderRadius: '4px',
+                  width: '14px',
+                  height: '14px',
+                }}
+              >
+                <img width="14px" height="14px" src="./images/V3/Vector.png" />
+              </div>
+              {userRank.volumnOnTree}
+            </Value>
           </ItemInfoCard>
           <ItemInfoCard>
             <Label>Member direct:</Label>
@@ -307,6 +321,19 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
           <ItemInfoCard style={{ color: canUpRank2 ? '#fff' : 'gray' }}>
             <Label>Volumn on tree:</Label>
             <Value>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  backdropFilter: 'blur(6px)',
+                  borderRadius: '4px',
+                  width: '14px',
+                  height: '14px',
+                }}
+              >
+                <img width="14px" height="14px" src="./images/V3/Vector.png" />
+              </div>
               <CountUp
                 separator=","
                 start={0}
@@ -317,7 +344,6 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
                 duration={0.5}
                 style={{ color: 'inherit !important' }}
               />{' '}
-              $
             </Value>
           </ItemInfoCard>
           <ItemInfoCard style={{ color: canUpRank3 ? '#fff' : 'gray' }}>
@@ -367,6 +393,25 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
             <ItemInfoCard>
               <Label>Total:</Label>
               <Value>{item.total}$</Value>
+            </ItemInfoCard>
+            <ItemInfoCard>
+              <Label>Volumn on tree:</Label>
+              <Value>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    backdropFilter: 'blur(6px)',
+                    borderRadius: '4px',
+                    width: '14px',
+                    height: '14px',
+                  }}
+                >
+                  <img width="14px" height="14px" src="./images/V3/Vector.png" />
+                </div>
+                {userRank.volumnOnTree}
+              </Value>
             </ItemInfoCard>
             <ItemInfoCard>
               <Label>Current Reward:</Label>

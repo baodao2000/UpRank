@@ -87,6 +87,43 @@
     "type": "function"
   },
   {
+    "inputs": [
+      { "internalType": "address", "name": "user", "type": "address" },
+      { "internalType": "uint256[]", "name": "pid", "type": "uint256[]" }
+    ],
+    "name": "getUsersV41",
+    "outputs": [
+      { "internalType": "uint256", "name": "remainComm", "type": "uint256" },
+      { "internalType": "uint256", "name": "MATIC2USDT", "type": "uint256" },
+      { "internalType": "uint256[]", "name": "totalLock", "type": "uint256[]" },
+      { "internalType": "uint256", "name": "month", "type": "uint256" },
+      { "internalType": "uint256", "name": "userRank", "type": "uint256" },
+      { "internalType": "uint256", "name": "userTotalLock", "type": "uint256" },
+      { "internalType": "uint256", "name": "direct", "type": "uint256" },
+      { "internalType": "uint256", "name": "downLine", "type": "uint256" },
+      { "internalType": "uint256[]", "name": "totalLockUSD", "type": "uint256[]" },
+      { "internalType": "bool[]", "name": "isMine", "type": "bool[]" },
+      { "internalType": "uint256[]", "name": "startTime", "type": "uint256[]" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "user", "type": "address" },
+      { "internalType": "uint256[]", "name": "pid", "type": "uint256[]" }
+    ],
+    "name": "getUsersV42",
+    "outputs": [
+      { "internalType": "uint256[]", "name": "totalReward", "type": "uint256[]" },
+      { "internalType": "uint256[]", "name": "remainReward", "type": "uint256[]" },
+      { "internalType": "uint256[]", "name": "totalRewardUSD", "type": "uint256[]" },
+      { "internalType": "uint256[]", "name": "remainRewardUSD", "type": "uint256[]" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [{ "internalType": "contract IERC20", "name": "_token", "type": "address" }],
     "name": "inCaseTokensGetStuck",
     "outputs": [],

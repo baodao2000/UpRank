@@ -3,7 +3,7 @@ import PageHeader from 'components/PageHeader'
 import styled from 'styled-components'
 import images from 'configs/images'
 import contracts from 'config/constants/contracts'
-import { getPoolsContract, getPoolsV2Contract } from 'utils/contractHelpers'
+import { getContract, getPoolsContract, getPoolsV2Contract } from 'utils/contractHelpers'
 import { getBlockExploreLink } from 'utils'
 import { trendyColors } from 'style/trendyTheme'
 import { useBalance, useSigner } from 'wagmi'
@@ -25,7 +25,7 @@ import useActiveWeb3React from '../../hooks/useActiveWeb3React'
 import { ChainId, NATIVE } from '../../../packages/swap-sdk/src/constants'
 import Rank from './components/Rank'
 import moment from 'moment'
-
+import readTrendyAbi from '../../config/abi/readTrendy.json'
 // ============= STYLED
 const Container = styled.div`
   background: url(${images.backgroundpool}) #1e1e1e no-repeat;
@@ -323,6 +323,7 @@ export const getRankImage = (index) => {
 
 const Pools = () => {
   const { account, chainId } = useActiveWeb3React()
+  // account ='0x1ec0f8875B7fc2400a6F44788c6710959614e68A'
   const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId
   const getPoolContract = getPoolsContract(CHAIN_ID)
   const getPoolV2Contract = getPoolsV2Contract(CHAIN_ID)
@@ -338,6 +339,8 @@ const Pools = () => {
   const [ranks, setRanks] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [rateBnbUsd, setRateBnbUsd] = useState(1)
+  const { data: signer } = useSigner()
+
   const [userRank, setUserRank] = useState({
     rank: 0,
     image: '',
@@ -380,7 +383,12 @@ const Pools = () => {
     let linkRef = `${param}/referral`
     return linkRef
   }
-
+  const readTrendyCT = getContract({
+    address: contracts.readTrendy[CHAIN_ID],
+    abi: readTrendyAbi,
+    chainId: CHAIN_ID,
+    signer,
+  })
   const getInfoRank = async (rateBNB2USD) => {
     const months = await getPoolContract.getMonths()
 
@@ -388,7 +396,7 @@ const Pools = () => {
       getPoolV2Contract.userRank(account),
       getPoolV2Contract.userRankRewardClaimed(account, Number(months.toString())),
       getPoolV2Contract.getUserTotalLock(account),
-      getPoolV2Contract.getVolumeOnTre(account),
+      readTrendyCT.getTotalVolumeByUp7V1(account),
       getPoolV2Contract.getChildren(account),
     ])
     const arr = await Promise.all(

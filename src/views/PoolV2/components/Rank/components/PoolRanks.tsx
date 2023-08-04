@@ -278,7 +278,7 @@ const nextRankRequire = [
     downline: 500,
   },
 ]
-const PoolRanks = ({ onSuccess, userRank, userIsClaim, unit }) => {
+const PoolRanks = ({ onSuccess, userRank, unit }) => {
   const { toastSuccess, toastError } = useToast()
   const { account, chainId } = useActiveWeb3React()
   const poolContract = usePoolsV3Contract()
@@ -307,6 +307,11 @@ const PoolRanks = ({ onSuccess, userRank, userIsClaim, unit }) => {
       onSuccess()
     },
   })
+  const sendRequest = () => {
+    const link = window.location.href
+    const linkRequest = `${link}/?ref=${account}/review-levelup`
+    console.log(linkRequest)
+  }
   const { isMobile } = useMatchBreakpoints()
 
   const canUpRank1 = userRank.locked >= nextRankRequire[userRank.rank + 1].locked
@@ -399,11 +404,7 @@ const PoolRanks = ({ onSuccess, userRank, userIsClaim, unit }) => {
               <Label
                 style={{
                   color:
-                    (canUpRank1 && userRank.rank + 1 === r) ||
-                    (canUpRank1 && r === userRank.rank) ||
-                    (canUpRank1 && r === userRank.rank + 2)
-                      ? '#fff'
-                      : 'gray',
+                    (canUpRank1 && userRank.rank + 1 === r) || (canUpRank1 && r === userRank.rank) ? '#fff' : 'gray',
                 }}
               >
                 Locked
@@ -463,12 +464,7 @@ const PoolRanks = ({ onSuccess, userRank, userIsClaim, unit }) => {
             </ItemInfoCard>
             <ItemInfoCard
               style={{
-                color:
-                  (canUpRank2 && r === userRank.rank + 1) ||
-                  (canUpRank2 && r === userRank.rank) ||
-                  (canUpRank2 && r === userRank.rank + 2)
-                    ? '#fff'
-                    : 'gray',
+                color: (canUpRank2 && r === userRank.rank + 1) || (canUpRank2 && r === userRank.rank) ? '#fff' : 'gray',
               }}
             >
               <Label>Volumn on tree</Label>
@@ -513,12 +509,7 @@ const PoolRanks = ({ onSuccess, userRank, userIsClaim, unit }) => {
             </ItemInfoCard>
             <ItemInfoCard
               style={{
-                color:
-                  (canUpRank3 && r === userRank.rank + 1) ||
-                  (canUpRank3 && r === userRank.rank) ||
-                  (canUpRank3 && r === userRank.rank + 2)
-                    ? '#fff'
-                    : 'gray',
+                color: (canUpRank3 && r === userRank.rank + 1) || (canUpRank3 && r === userRank.rank) ? '#fff' : 'gray',
               }}
             >
               <Label>Member direct</Label>
@@ -560,12 +551,7 @@ const PoolRanks = ({ onSuccess, userRank, userIsClaim, unit }) => {
             </ItemInfoCard>
             <ItemInfoCard
               style={{
-                color:
-                  (canUpRank4 && r === userRank.rank + 1) ||
-                  (canUpRank4 && r === userRank.rank) ||
-                  (canUpRank4 && r === userRank.rank + 2)
-                    ? '#fff'
-                    : 'gray',
+                color: (canUpRank4 && r === userRank.rank + 1) || (canUpRank4 && r === userRank.rank) ? '#fff' : 'gray',
               }}
             >
               <Label>Member downline</Label>
