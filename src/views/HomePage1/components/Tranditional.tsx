@@ -113,14 +113,27 @@ const ItemTextCard = styled(Text)`
     line-height: 26px;
   }
 `
+// "Instant & Always Accessible with Your Own Money
 
+// Non-Custodial:
+// - Users are required to share personal information, leading to potential security breaches.
+// - Traditional financial services may not be accessible to those who are unbanked or underbanked.
+// - Transactions may take several days to clear and settle.
+// - The hours of operation are limited.
+
+// Trendy DeFi:
+// - Privacy-focused: No personal details are required, simply connect a digital wallet.
+// - Self-custody: Users have custody of their own funds, making it easier to avoid loss of funds.
+// - Effortless: No need to worry about whether a protocol will perform as promised.
+// - Speedy: Transactions are completed in near real-time.
+// - Always available: Operations are conducted around the clock, 24/7/365."
 const Tranditional = () => {
   const dataLeft = {
     title: 'Non-Custodial',
     texts: [
-      `✦ Users must share personal data, which is vulnerable to security breaches.`,
-      `✦ The unbanked or underbaked can't access traditional financial service`,
-      `✦ The clearing and settling of transactions can take days.`,
+      `✦ Users are required to share personal information, leading to potential security breaches.`,
+      `✦ Traditional financial services may not be accessible to those who are unbanked or underbanked.`,
+      `✦ Transactions may take several days to clear and settle.`,
       `✦ The hours of operation are limited.`,
     ],
   }
@@ -136,7 +149,7 @@ const Tranditional = () => {
         style={{ color: 'rgba(173, 171, 178, 1)' }}
         textAlign="center"
       >
-        Stay current on the latest Onix project developments, news, and content, updated daily.
+        Instant & Always Accessible with Your Own Money.
       </Text>
       <BlockTranditional>
         <CardLeft data-aos="fade-up-right">
@@ -155,31 +168,41 @@ const Tranditional = () => {
           <ListTextsCard>
             <ItemTextCard>
               <p>
-                <span className="icon">✦</span> No need to disclose personal details,
-                <span className="text"> just connect a digital wallet.</span>{' '}
+                <span className="icon">✦</span>
+                <span className="text">
+                  Privacy-focused: No personal details are required, simply connect a digital wallet.
+                </span>{' '}
               </p>
             </ItemTextCard>
             <ItemTextCard>
               <p>
-                <span className="icon">✦</span> Users custody their own funds,
-                <span className="text"> easier to avoid loss of funds.</span>{' '}
+                <span className="icon">✦</span>
+                <span className="text">
+                  Self-custody: Users have custody of their own funds, making it easier to avoid loss of funds.
+                </span>{' '}
               </p>
             </ItemTextCard>
             <ItemTextCard>
               <p>
-                <span className="icon">✦</span> Effortless - No need to worry if a protocol will do what it says it will
-                do.
+                <span className="icon">✦</span>
+                <span className="text">
+                  Effortless: No need to worry about whether a protocol will perform as promised.
+                </span>
               </p>
             </ItemTextCard>
             <ItemTextCard>
               <p>
-                <span className="icon">✦</span> Speedy - Transactions are completed in near
-                <span className="text"> real-time.</span>{' '}
+                <span className="icon">✦</span>
+                <span className="text"> Speedy: Transactions are completed in near real-time.</span>{' '}
               </p>
             </ItemTextCard>
             <ItemTextCard>
               <p>
-                <span className="icon">✦</span> Operate around the clock,<span className="text"> 24/7/365.</span>{' '}
+                <span className="icon">✦</span>
+                <span className="text">
+                  {' '}
+                  Always available: Operations are conducted around the clock, 24/7/365
+                </span>{' '}
               </p>
             </ItemTextCard>
           </ListTextsCard>

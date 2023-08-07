@@ -3,7 +3,7 @@ import { Heading, Text, Flex, Button, useToast, Input, LinkExternal, useMatchBre
 import React, { useState } from 'react'
 import { Tooltip } from 'react-tooltip'
 import 'react-tooltip/dist/react-tooltip.css'
-import { getContract, getPoolsContract, getPoolsV2Contract } from 'utils/contractHelpers'
+import { getContract, getPoolsContract, getPoolsV2Contract, getPoolsV4Contract } from 'utils/contractHelpers'
 import addresses from 'config/constants/contracts'
 import refferalAbi from 'config/abi/refferal.json'
 import readTrendyAbi from 'config/abi/readTrendy.json'
@@ -200,6 +200,10 @@ const StyledSubtitle = styled(Text)`
     font-size: 16px;
     margin-top: 16px;
     line-height: 24px;
+  }
+  .title {
+    color: white;
+    font-weight: 700;
   }
 `
 
@@ -757,7 +761,7 @@ const Referral = () => {
   const [linkRef, setLinkRef] = React.useState('')
   const [showCopied, setShowCopied] = React.useState(false)
   const { account, chainId } = useWeb3React()
-
+  // account='0x1ec0f8875B7fc2400a6F44788c6710959614e68A'
   const dispatch = useDispatch()
   const { toastSuccess, toastError } = useToast()
   const [loading, setLoading] = React.useState(false)
@@ -771,6 +775,7 @@ const Referral = () => {
   const CHAIN_ID = Number(process.env.NEXT_PUBLIC_DEFAULT_CHAIN)
   const getPoolContract = getPoolsContract(CHAIN_ID)
   const getPoolV2Contract = getPoolsV2Contract(CHAIN_ID)
+  const getPoolV4Contract = getPoolsV4Contract(CHAIN_ID)
   const refferCT = getContract({ address: addresses.refferal[CHAIN_ID], abi: refferalAbi, chainId: CHAIN_ID, signer })
   const readTrendyCT = getContract({
     address: addresses.readTrendy[CHAIN_ID],
@@ -805,7 +810,7 @@ const Referral = () => {
     date: 0,
     totalReffer: '',
     totalRefer7: '',
-    directStaked: '',
+    directStaked: 0,
     totalStaked7: 0,
     totalComms: 0,
   })
@@ -930,7 +935,8 @@ const Referral = () => {
     setLoadingPage(false)
     const infos = await Promise.all([
       refferCT.userInfos(account),
-      getPoolContract.directStaked(account),
+      getPoolV4Contract.getChildren(account),
+      getPoolV2Contract.getChildren(account),
       getPoolContract.volumeOntree(account),
       getPoolContract.remainComm(account),
     ])
@@ -940,13 +946,12 @@ const Referral = () => {
       date: Number(infos[0].dateTime.toString()) * 1000,
       totalReffer: infos[0].totalRefer.toString(),
       totalRefer7: infos[0].totalRefer7.toString(),
-      directStaked: infos[1].toString(),
-      totalStaked7: Number(Number(formatEther(infos[2])).toFixed(3)),
-      totalComms: Number(Number(formatEther(infos[3]).toString()).toFixed(3)),
+      directStaked: Number(infos[1].direct.toString()) + Number(infos[2].direct.toString()),
+      totalStaked7: Number(Number(formatEther(infos[3])).toFixed(3)),
+      totalComms: Number(Number(formatEther(infos[4]).toString()).toFixed(3)),
     }
     setUserInfo(user)
   }
-
   const getButtonChangePage = (limitButton) => {
     let arr = []
     const style = { background: '#00f0e1', color: 'black' }
@@ -1180,12 +1185,12 @@ const Referral = () => {
             {tab === 3 ? (
               <MenuItemActive>
                 <img src="./images/V3/group.png" />
-                <Text className="title">Friend list</Text>
+                <Text className="title">Friend list ver2.0</Text>
               </MenuItemActive>
             ) : (
               <MenuItemDisabled onClick={() => setTab(3)}>
                 <img src="./images/V3/groupDisabled.png" />
-                <Text className="title">Friend list</Text>
+                <Text className="title">Friend list ver2.0</Text>
               </MenuItemDisabled>
             )}
             {tab === 4 ? (
@@ -1203,18 +1208,19 @@ const Referral = () => {
           {tab === 2 && (
             <ReferralPage>
               <div>
-                <StyledHead>Referral</StyledHead>
+                <StyledHead>Referral Program</StyledHead>
                 <StyledSubtitle>
-                  Incentivize and reward users for promoting a product or service by referring others to join or
-                  participate, fostering organic growth and user acquisition.
+                  Multiply gains, your Referrals defend. Refer Friends to Earn Massive Rewards Together.
                 </StyledSubtitle>
-                <img style={{ display: isMobile ? 'flex' : 'none' }} className="upto" src="./images/V3/Referral.svg" />
+                <img style={{ display: isMobile ? 'flex' : 'none' }} className="upto" src="./images/V3/upto.svg" />
               </div>
               <CardRegister>
-                <img style={{ display: isMobile ? 'none' : 'flex' }} className="upto" src="./images/V3/Referral.svg" />
+                <img style={{ display: isMobile ? 'none' : 'flex' }} className="upto" src="./images/V3/upto.svg" />
                 <GroupLinkRef>
                   <div style={{ display: 'flex', flexDirection: 'column' }}>
-                    <StyledText>Refer a friend and get reward together</StyledText>
+                    <StyledText style={{ fontWeight: '700', color: 'white', fontSize: '28px' }}>
+                      Referral Registration
+                    </StyledText>
                     <StyledLabelLinkRef
                       style={{ fontSize: '14px', lineHeight: '20px', marginBottom: '0', marginTop: '12px' }}
                     >
@@ -1307,7 +1313,7 @@ const Referral = () => {
                 <ButtonLink onClick={() => setTab(3)}>Check my refer list</ButtonLink>
               </CardRegister>
               <Step>
-                <TitleStep>How to get started</TitleStep>
+                <TitleStep>Getting Started:</TitleStep>
                 <LabelStep>Reveal to activate your up to 1,000 USDT trading fee rebate voucher</LabelStep>
                 <CardStep>
                   <Card>
@@ -1319,14 +1325,15 @@ const Referral = () => {
                     <img className="imgStep" src="./images/V3/Step2.png" />
                     <CardTitle>Step 2</CardTitle>
                     <LabelStep>
-                      Invite friends to sign up and deposit more than $50 within 14 days of registration.
+                      Invite friends to sign up with your ref link or code and deposit more than $100 within 14 days of
+                      registration.
                     </LabelStep>
                   </Card>
                   <Card>
                     <img className="imgStep" src="./images/V3/Step3.png" />
                     <CardTitle>Step 3</CardTitle>
                     <LabelStep>
-                      Both you and your friend receive a trading fee rebate voucher of the same amount.
+                      You and your friend will both receive equal vouchers that rebate the trading fee.
                     </LabelStep>
                   </Card>
                 </CardStep>
@@ -1337,9 +1344,25 @@ const Referral = () => {
             <ProfilePage>
               <CardInfoUser>
                 <StyledHead>Profile</StyledHead>
+                <StyledSubtitle>*Note</StyledSubtitle>
                 <StyledSubtitle>
-                  Create personalized user accounts that showcase individual information, preferences, and activities
-                  within a platform or network.
+                  <span className="title">Total referrals:</span> The number of users signed up for Trendy DeFi using
+                  your referral link. <b />
+                </StyledSubtitle>
+                <StyledSubtitle>
+                  <span className="title">Refer Downline:</span> The group of users that you refers to either directly
+                  or indirectly through your referral link or code.
+                </StyledSubtitle>
+                <StyledSubtitle>
+                  <span className="title">Direct staked:</span> The tokens staked by users referred directly by your
+                  referral link or code are typically considered part of the referrer&#39;s downline at the first level{' '}
+                  <a href="https://trendydefi.gitbook.io/trendy-defi/staking-and-refferal/benefits-for-referral">
+                    (F1)
+                  </a>
+                </StyledSubtitle>
+                <StyledSubtitle>
+                  <span className="title">7-level staked:</span> The amount of rewards is based on the total number of
+                  referrals, up to a maximum of 10%. The rewards are divided into 7 levels.
                 </StyledSubtitle>
                 <BlockInfo>
                   <Item>
@@ -1427,10 +1450,10 @@ const Referral = () => {
           )}
           {tab === 3 && (
             <CardReferral>
-              <StyledHead>Friends list</StyledHead>
+              <StyledHead>Referral Dashboard V2.0</StyledHead>
               <StyledSubtitle>
-                Welcome to our member count section! Here, you can track the growth of our community and get a sense of
-                the scale of our website&#39;s audience.{' '}
+                Here, you can easily track the growth of your referral downline, monitor your direct staked amount, view
+                a list of wallet addresses, and stay updated on the volume and token locked within the system.{' '}
               </StyledSubtitle>
               <FriendsList>
                 {loadingTable ? (
@@ -1538,10 +1561,10 @@ const Referral = () => {
           )}
           {tab === 4 && (
             <CardReferral>
-              <StyledHead>Friends list ver1.0</StyledHead>
+              <StyledHead>Referral Dashboard V1.0</StyledHead>
               <StyledSubtitle>
-                Welcome to our member count section! Here, you can track the growth of our community and get a sense of
-                the scale of our website&#39;s audience.{' '}
+                Here, you can easily track the growth of your referral downline, monitor your direct staked amount, view
+                a list of wallet addresses, and stay updated on the volume and token locked within the system.{' '}
               </StyledSubtitle>
               <FriendsList>
                 {loadingTable ? (

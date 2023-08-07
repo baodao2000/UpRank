@@ -182,8 +182,11 @@ const Box = styled.div`
 `
 const ContentText = styled.text`
   font-weight: 700;
-  font-size: 22px;
+  font-size: 30px;
   color: rgba(255, 255, 255, 1);
+  @media screen and (max-width: 575px) {
+    font-size: 20px;
+  }
 `
 const Button = styled.button`
   align-items: center;
@@ -239,7 +242,7 @@ const SystemContent = styled.div`
 function Mining() {
   const { isMobile, isTablet } = useMatchBreakpoints()
   let { account, chainId } = useActiveWeb3React()
-  // account = '0x62c0a27e00cb50e3d3f23377097188cd25dc3a3c'
+  // account = '0x1ec0f8875B7fc2400a6F44788c6710959614e68A'
 
   const [loadingPage, setLoadingPage] = useState(true)
   const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId
@@ -894,7 +897,7 @@ function Mining() {
                   <Text fontSize={['24px', '20px', '24px', '24px', '20px', '34px']} fontWeight="700">
                     1 TREND
                   </Text>
-                  <div style={{ display: 'flex', gap: '5px' }}>
+                  <div style={{ display: 'flex', gap: '5px', alignItems: 'center' }}>
                     <ContentText style={{ fontSize: '22px', lineHeight: '16px', color: '#FFFFFF' }}>~</ContentText>
                     <ContentText style={{ fontSize: isMobile ? '20px' : '24px', fontWeight: 400, color: '#ADABB2' }}>
                       ${' '}
@@ -940,7 +943,7 @@ function Mining() {
                       />
                       <ContentText
                         style={{
-                          fontSize: isMobile ? '15px' : '20px',
+                          fontSize: isMobile ? '20px' : '24px',
                           fontWeight: 400,
                           color: '#ADABB2',
                           alignItems: 'center',
@@ -984,7 +987,7 @@ function Mining() {
                       />
                       <ContentText
                         style={{
-                          fontSize: isMobile ? '15px' : '20px',
+                          fontSize: isMobile ? '20px' : '24px',
                           fontWeight: 400,
                           color: '#ADABB2',
                           alignItems: 'center',
