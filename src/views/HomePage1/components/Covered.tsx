@@ -141,29 +141,28 @@ const CardItem = styled.div`
     margin-top: 0;
   }
 `
-
 const coverdList = [
   {
     img: './images/V3/Custodial.png',
     title: 'Non-Custodial',
-    detail: 'We never have access to any of your data or funds. Ever.',
+    detail: 'Take Full Control of Your Crypto: Freedom to Manage Your Funds and Data.',
   },
   {
     img: './images/V3/Privacy.png',
     title: 'Privacy',
-    detail: 'Phantom doesn’t track any personal identifiable information, your account addresses, or asset balances.',
+    detail: 'Your Data, Your Control: Safeguarding Privacy with Trendy DeFi.',
   },
 ]
 const coverdListRight = [
   {
     img: './images/V3/Ledger.png',
     title: 'Ledger Support',
-    detail: 'For additional security you can connect your hardware wallet.',
+    detail: 'Incorporate an extra layer of security by integrating your hardware wallet.',
   },
   {
     img: './images/V3/Bio.png',
     title: 'Biometric authentication',
-    detail: 'Protect your assets on the go with the convenience you expect.',
+    detail: 'Safeguard your valuable assets on the go with just a touch or a glance.',
   },
 ]
 const Covered = () => {

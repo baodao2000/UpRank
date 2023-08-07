@@ -169,35 +169,35 @@ const SupplyNumber = styled(Text)`
 `
 const dataLeft = [
   {
-    title: 'Team foundation',
+    title: '🔒 Team foundation',
     label: '15.00%',
     text: '#FF703B',
   },
   {
-    title: 'Miners Reward',
+    title: '🔒 Miners Reward',
     label: '50.00%',
     text: '#8544F5',
   },
   {
-    title: 'Bounty - Marketing',
+    title: '🔒 Bounty - Marketing',
     label: '3.00%',
     text: '#AF89EE',
   },
 ]
 const dataRight = [
   {
-    title: 'Platform',
+    title: '🔒 Trategic Partners',
     label: '17.00%',
     text: '#8ED556',
   },
 
   {
-    title: 'Market Maker',
+    title: '🔒 Market Maker',
     label: '10.00%',
     text: '#1250B0',
   },
   {
-    title: 'Early Contributors',
+    title: '🔒 Early Contributors',
     label: '5.00%',
     text: '#3AA6FF',
   },
@@ -209,11 +209,10 @@ function Overview() {
   return (
     <Wrapper>
       <Container>
-        <OverviewText>Tokenomic Overview</OverviewText>
+        <OverviewText>Tokenomic</OverviewText>
 
         <OverviewContent style={{ width: isMobile ? '343px' : isTablet ? '743px' : '785px' }}>
-          Govern the economic aspects of a cryptocurrency or blockchain network, including the distribution, supply, and
-          utility of tokens within the ecosystem.
+          Building Trust, One Block at a Time - Discover the future of TREND Token.
         </OverviewContent>
         <Token>
           <Image
@@ -223,7 +222,7 @@ function Overview() {
             height={isMobile ? '343px' : '500px'}
           />
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <SupplyText>Supply</SupplyText>
+            <SupplyText>Total Supply</SupplyText>
             <SupplyNumber>21,000,000 TREND</SupplyNumber>
             <Card>
               <ContentLeft>

@@ -163,9 +163,9 @@ function Box() {
   return (
     <Container>
       <Card>
-        <PoolText>Pool’s Mining Speed</PoolText>
+        <PoolText>Mining Speed</PoolText>
 
-        <PoolContent>The mining speed of the TREND token depends on the highest pool you participate in.</PoolContent>
+        <PoolContent>The mining speed of the TREND token depends on the pool you choose to join.</PoolContent>
         <BoxContent>
           {dataPool.map((i, index) => (
             <BoxContain style={{ background: dataPool[index].background, border: dataPool[index].border }}>
@@ -179,8 +179,7 @@ function Box() {
         <PoolText>Rank Instruction</PoolText>
 
         <PoolContent>
-          Supercharge your minting speed with Trendy DeFi! Increase your Rank level to accelerate the minting process
-          and unlock faster token acquisition.
+          To speed up the minting process and acquire tokens more quickly, increase your Rank level.
         </PoolContent>
         <BoxContent>
           {dataRank.map((i, index) => (

@@ -843,15 +843,14 @@ const Pools = () => {
 
     return () => clearInterval(timerId)
   }, [countDown])
-
   return (
     <Wraper>
       <Head>
         <Left>
           <StyledHead>Pools</StyledHead>
           <StyledSubtitle>
-            Pooling resources or assets from multiple participants in a collective manner, often seen in decentralized
-            finance (DeFi) ecosystems, to enhance liquidity, generate returns, or facilitate shared investments.
+            Pooling resources or assets from multiple participants in DeFi ecosystems to enhance liquidity, generate
+            returns, or facilitate shared investments.
           </StyledSubtitle>
         </Left>
         <Right>
@@ -912,7 +911,7 @@ const Pools = () => {
           <TitleContent>Pools Rewards</TitleContent>
           <LabelContent>
             <p>
-              These Pool Rewards are only for Referral. Let invite your friends and get our rewards{' '}
+              Rewards are exclusively reserved for referrals. Invite your friends get our rewards.
               <Link href="/referral">
                 <span className="link">Invite Now</span>
               </Link>

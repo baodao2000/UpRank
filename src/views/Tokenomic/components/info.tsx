@@ -83,7 +83,6 @@ const CardContainer = styled.div`
     width: 100%;
   }
 `
-
 function Info() {
   const { isMobile, isTablet } = useMatchBreakpoints()
 
@@ -96,15 +95,14 @@ function Info() {
         <Flex style={{ gap: '24px', flexDirection: isMobile ? 'column' : 'row' }}>
           <Card>
             <TextContent>
-              The regulation states that for every 1 dollar deposited, the user will receive a 20% conversion to TREND
-              in contract mining
+              Users will receive a 20% conversion to TREND in contract mining for every dollar deposited.
             </TextContent>
           </Card>
 
           <Card>
             <TextContent>
-              The claim speed of TREND per day is 1/730, which is equivalent to 2 years. However, it will be inversely
-              proportional to the price of TREND on the pool.
+              TREND tokens can be claimed daily at a rate of 1/730, equivalent to 2 years. However, this speed will
+              decrease as the price of TREND on the pool increases, and vice versa.
             </TextContent>
           </Card>
         </Flex>
@@ -114,28 +112,38 @@ function Info() {
 
             <TextTitle>
               <span style={{ fontSize: '16px', fontWeight: 400, color: 'gray' }}>
-                ✦ Claim speed is increased by an additional
+                ✦ The claim speed is boosted by an extra
               </span>{' '}
               {''}
-              0.25% <span style={{ fontSize: '16px', fontWeight: 400, color: 'gray' }}> mean</span> 1/730 * 1.25
+              0.5%{' '}
+              <span style={{ fontSize: '16px', fontWeight: 400, color: 'gray' }}>
+                {' '}
+                , which means 1/730 claims will have a 1.25x multiplier:
+              </span>{' '}
+              1/730 * 1.25
             </TextTitle>
           </Card>
           <Card>
             <TextTitle>Pool Pro</TextTitle>
             <TextTitle>
               <span style={{ fontSize: '16px', fontWeight: 400, color: 'gray' }}>
-                ✦ Claim speed is increased by an additional
+                ✦ The claim speed is boosted by an extra
               </span>{' '}
-              0.25% <span style={{ fontSize: '16px', fontWeight: 400, color: 'gray' }}> mean</span> 1/730 * 1.25
+              0.5%{' '}
+              <span style={{ fontSize: '16px', fontWeight: 400, color: 'gray' }}>
+                {' '}
+                , which means 1/730 claims will have a 1.5x multiplier:
+              </span>{' '}
+              1/730 * 1.5
             </TextTitle>
           </Card>
         </Flex>
         <Card>
-          <TextContent>The claim speed is determined by the highest pool that the user participates in.</TextContent>
+          <TextContent>The mining speed of the TREND token depends on the pool you choose to join.</TextContent>
         </Card>
         <Card>
           <TextContent>
-            When the user reaches the target level, for example Silver, the claim speed increases by{' '}
+            When the user reaches the target level, such as Silver, the claiming speed increases by{' '}
             <span
               style={{
                 color: '#fff',
@@ -148,7 +156,7 @@ function Info() {
             >
               x0.5
             </span>{' '}
-            =&gt; every day claim{' '}
+            =&gt; Therefore, the user can claim{' '}
             <span
               style={{
                 color: '#fff',
@@ -158,8 +166,9 @@ function Info() {
                 lineHeight: '32px',
               }}
             >
-              1/730 * 1.5 + (1/730 * 1.5 * 0.5)
+              1/730 * 1.5 + (1/730 * 1.5 * 0.5){' '}
             </span>
+            daily.
           </TextContent>
         </Card>
       </CardContainer>

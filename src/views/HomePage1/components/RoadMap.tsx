@@ -188,33 +188,31 @@ const StyledImg = styled.img`
 `
 const details = [
   {
-    detail: 'Launching Staking venture pool for MATIC Token',
+    detail: 'Launching Staking venture pool for MATIC Token.',
     class: '',
   },
   {
-    detail: 'Launching TrendyDefi App',
+    detail: 'Launching TrendyDefi App.',
     class: '',
   },
   {
-    detail:
-      'Launching NFT Ecosystem for Trendy Defi (You can use TREND Token to get the right to join TRENDY DEFI NFT Ecosystem)',
+    detail: 'Release of Trendy NFT Collection, powered by TREND Token.',
     class: 'activeLabel',
   },
   {
-    detail: 'Launching of Token Price Prediction AI TOOL',
+    detail: 'Launch AI-powered Prediction Tool for Token price forecasts.',
     class: '',
   },
   {
-    detail: 'Listing TREND Token on CEX. (Top 10 Major Crypto Exchanges Ranked on Coinmarketcap)',
+    detail: 'To list TREND Token on the top 10 major CEXs on CoinMarketCap.',
     class: '',
   },
   {
-    detail:
-      "Community votes through Trendydefi's DAO system to select and Launch Pool Stake for the next two Tokens (Use Trend Token to buy NFT keys)",
+    detail: 'DAO Voting proposal to launch a new Pool Stake for the next two Tokens.',
     class: '',
   },
   {
-    detail: 'Update Dapp Trendydefi Ver3.0 and expend TrendyDEFI ecosystem',
+    detail: 'Update Trendy DeFi Dapp to version 3.0 for major expansions.',
     class: '',
   },
 ]
@@ -225,7 +223,7 @@ const RoadMap = () => {
       <StyleRoadMap>
         <StyledHeading fontSize={['20px', '36px', '64px']}>Roadmap</StyledHeading>
         <Text
-          maxWidth={544}
+          maxWidth={555}
           fontSize="18px"
           fontWeight="400"
           style={{ color: 'rgba(173, 171, 178, 1)' }}
@@ -233,7 +231,7 @@ const RoadMap = () => {
           textAlign="center"
           paddingBottom={10}
         >
-          Stacks is a production-ready library of stackable content blocks built in React Native.
+          From Vision to Show, Trendy DeFi&#39;s Glow: Our Roadmap&apos; Let&#39;s Grow!
         </Text>
       </StyleRoadMap>
       <div className="scroll" style={{ overflow: 'auto' }}>

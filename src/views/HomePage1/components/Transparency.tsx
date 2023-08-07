@@ -23,7 +23,7 @@ const Wrapper = styled.div`
     display: none;
     margin: 0 auto;
     overflow: hidden;
-    max-width: 310px;
+    max-width: 300px;
     @media (max-width: 768px) {
       display: flex;
       flex-direction: column;
@@ -34,7 +34,7 @@ const Wrapper = styled.div`
   .slideshowSlider {
     white-space: nowrap;
     display: flex;
-    gap: 9px;
+    gap: 10px;
     transition: ease 2000ms;
   }
 
@@ -92,7 +92,7 @@ const CardTransparency = styled.div`
   border: 1px solid var(--white-white-12, rgba(255, 255, 255, 0.12));
   background: var(--white-white-6, rgba(255, 255, 255, 0.06));
   backdrop-filter: blur(5.5px);
-  padding: 40px;
+  padding: 30px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -160,38 +160,39 @@ const Img = styled.img`
 const data = [
   {
     image: './images/V3/feature01.png',
-    title: 'User are in full control',
+    title: 'Self-sovereignty',
     description:
-      'Users have authority over their money, allowing them to deal safely without the need for confirmation from a third party.',
-    text1: 'Users have authority over their',
-    text2: 'money, allowing them to deal',
-    text3: 'safely without the need for',
-    text4: 'confirmation from a third party.',
+      'Users are able to conduct transactions without requiring confirmation from third-party entities. Own you own data.',
+    text1: 'Users are able to conduct',
+    text2: 'transactions without requiring',
+    text3: 'confirmation from third-party',
+    text4: 'entities. Own you own data.',
     text5: '',
     text6: '',
   },
   {
     image: './images/V3/feature02.png',
-    title: 'DAO mechanism applied',
-    description: 'Using the DAO mechanism to vote on the monthly profit',
-    text1: 'Using the DAO mechanism to',
-    text2: 'vote on the monthly profit',
-    text3: ' ',
-    text4: ' ',
-    text5: ' ',
+    title: 'DAO Application',
+    description:
+      'DAO voting decides monthly profits. Agreement by over 51% triggers interest rate adjustments. Your vote, your rewards.',
+    text1: 'DAO voting decides monthly ',
+    text2: 'profits. Agreement by over',
+    text3: '51% triggers interest',
+    text4: 'rate adjustments. Your vote, ',
+    text5: 'your rewards. ',
     text6: ' ',
   },
   {
     image: './images/V3/feature03.png',
     title: 'Audited by Certik',
     description:
-      'TrendyDefi is audited by CertiK, Audits Platform for Industry-Leading Security. The Dev team is only permitted to adjust the interest rate depending on user vote results.',
+      'TrendyDefi has been audited by CertiK, a leading platform for crypto security audits. Your assets protected by the best.',
     text1: 'TrendyDefi is audited by CertiK,',
-    text2: 'Audits Platform for Industry-',
-    text3: 'Leading Security. The Dev team',
-    text4: 'is only permitted to adjust the',
-    text5: 'interest rate depending on user',
-    text6: 'vote results.',
+    text2: 'a leading platform for crypto',
+    text3: ' security audits.Your assets',
+    text4: ' protected by the best.',
+    text5: '',
+    text6: '',
   },
 ]
 
@@ -217,12 +218,13 @@ const Transparency = () => {
       resetTimeout()
     }
   }, [index])
-
   return (
     <Wrapper className="block">
       <Title>Transparency & Security</Title>
-      <Text style={{ fontSize: '18px', fontWeight: '400', lineHeight: '28px', paddingBottom: '24px' }}>
-        It only takes a few minutes
+      <Text
+        style={{ fontSize: '18px', fontWeight: '400', lineHeight: '28px', paddingBottom: '24px', textAlign: 'center' }}
+      >
+        Certified Security - Vote for Profits - Shape Interest Rates!
       </Text>
       <ListTransparency className="pc">
         {data.map((item, index) => (
@@ -247,6 +249,7 @@ const Transparency = () => {
               <DescCard>{item.text2}</DescCard>
               <DescCard>{item.text3}</DescCard>
               <DescCard>{item.text4}</DescCard>
+              {/* <Text style={{width: '100%'}}>{item.description}</Text> */}
             </CardTransparency>
           ))}
         </div>
