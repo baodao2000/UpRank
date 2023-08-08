@@ -588,12 +588,11 @@ line-height: 20px;
 color: rgba(252, 252, 253, 1);
 }
 @media screen and (max-width: 900px) {
-  width: 20%;
-  
+  width: 40%;
 }
 @media screen and (max-width: 575px) {
   padding: 0 8px;
-  width: 35%;
+  width: 40%;
 }
 `
 const MenuItemDisabled = styled.div`
@@ -602,6 +601,8 @@ flex-direction: row;
 align-items: center;
 gap: 8px;
 padding 8px 16px;
+width: 292px;
+
 img{
   width: 24px;
   height: 24px;
@@ -616,7 +617,7 @@ color: rgba(103, 102, 110, 1);
 cursor: pointer;
 @media screen and (max-width: 575px) {
   padding: 0 8px;
-  width: 35%;
+  width: 40%;
 }
 `
 const StyledText = styled(Text)`
@@ -939,6 +940,8 @@ const Referral = () => {
       getPoolV2Contract.getChildren(account),
       getPoolContract.volumeOntree(account),
       getPoolContract.remainComm(account),
+      getPoolV2Contract.remainComm(account),
+      getPoolV4Contract.remainComm(account),
     ])
 
     const user = {
@@ -948,10 +951,12 @@ const Referral = () => {
       totalRefer7: infos[0].totalRefer7.toString(),
       directStaked: Number(infos[1].direct.toString()) + Number(infos[2].direct.toString()),
       totalStaked7: Number(Number(formatEther(infos[3])).toFixed(3)),
-      totalComms: Number(Number(formatEther(infos[4]).toString()).toFixed(3)),
+      totalComms: Number(Number(formatEther(infos[4])) + Number(formatEther(infos[5])) + Number(formatEther(infos[6]))),
     }
     setUserInfo(user)
   }
+  // console.log(userInfos.totalComms);
+
   const getButtonChangePage = (limitButton) => {
     let arr = []
     const style = { background: '#00f0e1', color: 'black' }
@@ -1185,23 +1190,23 @@ const Referral = () => {
             {tab === 3 ? (
               <MenuItemActive>
                 <img src="./images/V3/group.png" />
-                <Text className="title">Friend list ver2.0</Text>
+                <Text className="title">Referral Dashboard V2.0</Text>
               </MenuItemActive>
             ) : (
               <MenuItemDisabled onClick={() => setTab(3)}>
                 <img src="./images/V3/groupDisabled.png" />
-                <Text className="title">Friend list ver2.0</Text>
+                <Text className="title">Referral Dashboard V2.0</Text>
               </MenuItemDisabled>
             )}
             {tab === 4 ? (
               <MenuItemActive>
                 <img src="./images/V3/group.png" />
-                <Text className="title">Friend list ver1.0</Text>
+                <Text className="title">Referral Dashboard V1.0</Text>
               </MenuItemActive>
             ) : (
               <MenuItemDisabled onClick={() => setTab(4)}>
                 <img src="./images/V3/groupDisabled.png" />
-                <Text className="title">Friend list ver1.0</Text>
+                <Text className="title">Referral Dashboard V1.0</Text>
               </MenuItemDisabled>
             )}
           </Menu>
@@ -1221,12 +1226,6 @@ const Referral = () => {
                     <StyledText style={{ fontWeight: '700', color: 'white', fontSize: '28px' }}>
                       Referral Registration
                     </StyledText>
-                    <StyledLabelLinkRef
-                      style={{ fontSize: '14px', lineHeight: '20px', marginBottom: '0', marginTop: '12px' }}
-                    >
-                      Up to
-                    </StyledLabelLinkRef>
-                    <StyledLabelLinkRef>10%</StyledLabelLinkRef>
                   </div>
                   <WrapperLinkRef>
                     <Text
@@ -1236,7 +1235,7 @@ const Referral = () => {
                       style={{ color: 'rgba(255, 255, 255, 1)' }}
                     >
                       {' '}
-                      Invite friends to earn 10%
+                      Earn up to 10%
                     </Text>
                     <GroupLink>
                       <div style={{ width: isMobile ? '100%' : '50%' }}>
@@ -1314,7 +1313,7 @@ const Referral = () => {
               </CardRegister>
               <Step>
                 <TitleStep>Getting Started:</TitleStep>
-                <LabelStep>Reveal to activate your up to 1,000 USDT trading fee rebate voucher</LabelStep>
+                <LabelStep>To activate up to 1,000 USDT trading fee rebate voucher:</LabelStep>
                 <CardStep>
                   <Card>
                     <img className="imgStep" src="./images/V3/Step1.png" />

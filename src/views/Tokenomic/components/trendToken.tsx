@@ -30,11 +30,11 @@ const Container = styled.div`
   flex-direction: column;
 `
 const TokenText = styled.div`
-  color: var(--neutrals-4, #777e90);
+  color: rgba(119, 126, 144, 1);
 
   font-size: 14px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 700;
   line-height: 20px;
 `
 const CardTrend = styled.div`
@@ -83,7 +83,6 @@ const ContentToken = styled.div`
 `
 function TrendToken() {
   const { isMobile, isTablet } = useMatchBreakpoints()
-
   return (
     <Container>
       <TrendTokenText>TREND Mining, Bounty & Airdrop</TrendTokenText>
@@ -111,6 +110,7 @@ function TrendToken() {
                       fontWeight: '400',
                       lineHeight: '20px',
                       cursor: 'pointer',
+                      marginLeft: '5px',
                     }}
                   >
                     Visit Pool
@@ -125,7 +125,7 @@ function TrendToken() {
               <Image src="/images/checkCircle.png" width={isMobile ? 16 : 24} height={isMobile ? 16 : 24} alt="" />
             </Circle>
             <Flex style={{ flexDirection: 'column' }}>
-              <TrendContent>Mine TREND token</TrendContent>
+              <TrendContent> Earn profit & receive reward</TrendContent>
               <TokenText>By developing the pool standard system</TokenText>
             </Flex>
           </CardContent>
@@ -136,7 +136,7 @@ function TrendToken() {
               <Image src="/images/checkCircle.png" width={isMobile ? 16 : 24} height={isMobile ? 16 : 24} alt="" />
             </Circle>
             <Flex style={{ flexDirection: 'column' }}>
-              <TrendContent>Earn profit and receive reward</TrendContent>
+              <TrendContent>Engage in Bouty & Airdrop Programs</TrendContent>
               <TokenText>On Trendy DeFi community platforms</TokenText>
             </Flex>
           </CardContent>

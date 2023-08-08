@@ -151,7 +151,6 @@ const Download = () => {
       <Card>
         <CardLeft>
           <CardTitle>Get started in seconds</CardTitle>
-          <CardLabel style={{ margin: '8px 0' }}>Let’s download the app and connect your wallet now!</CardLabel>
           <CardLabel>Download the Metamask or Trust Wallet apps, and connect your wallet to begin.</CardLabel>
           <CardContent>
             <div className="imgA">

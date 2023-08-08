@@ -60,16 +60,10 @@ const Container = styled.div`
       font-size: 48px;
     }
   }
-  @media screen and (max-width: 575px) {
-    padding: 16px;
-  }
 `
 const Body = styled.div`
   background: none;
   width: 100%;
-  @media screen and (max-width: 575px) {
-    padding: 15px;
-  }
 `
 const PoolsList = styled.div`
   display: grid;
@@ -131,11 +125,11 @@ const Wraper = styled.div`
   margin-right: auto;
   padding: 96px 0;
   position: relative;
-  @media screen and (max-width: 575px) {
-    padding: 40px 16px;
-  }
   @media screen and (max-width: 1440px) {
     padding: 20px;
+  }
+  @media screen and (max-width: 575px) {
+    padding: 40px 16px;
   }
 `
 const StyledHead = styled(Heading)`
@@ -673,7 +667,7 @@ const ButtonDetails = styled.div`
 `
 const Pools = () => {
   const { account, chainId } = useActiveWeb3React()
-  // account = '0x38f910b187a8ecd835883f879d7581bb7431f0f6'
+  // account = '0x1ec0f8875B7fc2400a6F44788c6710959614e68A'
   const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId
   const getPoolV4Contract = getPoolsV4Contract(CHAIN_ID)
   const [arr, setArr] = useState([])
@@ -710,21 +704,24 @@ const Pools = () => {
 
   const getAll = async (ids: number[]) => {
     if (!account) {
-      return
-    }
-    const [usersV1, getVolume] = await Promise.all([
-      readTrendyCT.getUsersV41(account, ids),
-      readTrendyCT.getTotalVolumeByUp7(account),
-    ])
-    await setAll({
-      rank: Number(usersV1.userRank),
-      locked: Number(Number(formatEther(usersV1.userTotalLock)).toFixed(3)),
-      direct: usersV1.direct,
-      downLine: usersV1.downLine,
-      volumnOnTree: Number(Number(formatEther(getVolume)).toFixed(3)),
-    })
-  }
+      setIsLoading(true)
+    } else {
+      setIsLoading(false)
+      const [usersV1, getVolume] = await Promise.all([
+        readTrendyCT.getUsersV41(account, ids),
+        readTrendyCT.getTotalVolumeByUp7(account),
+      ])
 
+      await setAll({
+        rank: Number(usersV1.userRank),
+        locked: Number(Number(formatEther(usersV1.userTotalLock)).toFixed(3)),
+        direct: usersV1.direct,
+        downLine: usersV1.downLine,
+        volumnOnTree: Number(Number(formatEther(getVolume)).toFixed(3)),
+      })
+    }
+  }
+  // console.log(all.volumnOnTree)
   const getCommission = async (ids: number[]) => {
     if (account) {
       const getremainComm = await readTrendyCT.getUsersV41(account, ids)
@@ -780,7 +777,6 @@ const Pools = () => {
         setArr(newPoolInfo)
         setIsLoading(false)
       } else {
-        // await getAll(ids)
         const newPoolInfo = await Promise.all(
           pools.map(async (item, id) => {
             const userLockAndPool = await readTrendyCT.getUsersV41(account, ids)
@@ -800,6 +796,7 @@ const Pools = () => {
         )
         setArr(newPoolInfo)
         setIsLoading(false)
+        await getAll(ids)
       }
     } catch (e) {
       console.log('error', e)
@@ -831,7 +828,6 @@ const Pools = () => {
     getAll([0, 1, 2, 3, 4, 5])
   }
   useEffect(() => {
-    getAll([0, 1, 2, 3, 4, 5])
     getCommission([0, 1, 2, 3, 4, 5])
     getPools([0, 1, 2, 3, 4, 5])
   }, [account])
@@ -843,6 +839,8 @@ const Pools = () => {
 
     return () => clearInterval(timerId)
   }, [countDown])
+  // console.log(all);
+
   return (
     <Wraper>
       <Head>
