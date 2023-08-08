@@ -712,7 +712,7 @@ const Pools = () => {
         readTrendyCT.getTotalVolumeByUp7(account),
       ])
 
-      await setAll({
+      setAll({
         rank: Number(usersV1.userRank),
         locked: Number(Number(formatEther(usersV1.userTotalLock)).toFixed(3)),
         direct: usersV1.direct,
@@ -794,9 +794,9 @@ const Pools = () => {
             }
           }),
         )
+        await getAll([0, 1, 2, 3, 4, 5])
         setArr(newPoolInfo)
         setIsLoading(false)
-        await getAll(ids)
       }
     } catch (e) {
       console.log('error', e)
@@ -830,7 +830,7 @@ const Pools = () => {
   useEffect(() => {
     getCommission([0, 1, 2, 3, 4, 5])
     getPools([0, 1, 2, 3, 4, 5])
-  }, [account])
+  }, [account, all])
   const [countDown, setCountDown] = useState(1679997600 - moment().unix())
   useEffect(() => {
     const timerId = setInterval(() => {
