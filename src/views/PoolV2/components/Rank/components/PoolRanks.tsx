@@ -220,14 +220,14 @@ const StyledButtonRank = styled.button`
 const ValueLocked = styled(Text)`
   color: var(--primary-primary-1, #8544f5);
   /* Display xs/Bold */
-  font-family: Inter;
+  font-family: Inter, sans-serif;
   font-size: 24px;
   font-style: normal;
   font-weight: 700;
   line-height: 32px;
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 5px;
 `
 const UpRanks = styled(Button)`
   border-radius: var(--border-radius-lg, 8px);
@@ -255,25 +255,25 @@ const nextRankRequire = [
   },
   {
     locked: 1000,
-    volumnOnTree: 200000,
+    volumnOnTree: 100000,
     direct: 5,
     downline: 50,
   },
   {
     locked: 2000,
-    volumnOnTree: 500000,
+    volumnOnTree: 200000,
     direct: 10,
     downline: 100,
   },
   {
     locked: 4000,
-    volumnOnTree: 1000000,
+    volumnOnTree: 300000,
     direct: 11,
     downline: 200,
   },
   {
     locked: 4000,
-    volumnOnTree: 3000000,
+    volumnOnTree: 500000,
     direct: 12,
     downline: 500,
   },
@@ -343,10 +343,6 @@ const PoolRanks = ({ onSuccess, userRank, unit }) => {
   // console.log(data[userRank.rank].image)
   const dataRank = [
     {
-      title: 'UnRank',
-      mine: '0',
-    },
-    {
       title: 'Bronze',
       mine: '0',
     },
@@ -366,6 +362,10 @@ const PoolRanks = ({ onSuccess, userRank, unit }) => {
       title: 'Platinum',
       mine: '1.25',
     },
+    {
+      title: 'Diamond',
+      mine: '1.5',
+    },
   ]
 
   return (
@@ -374,11 +374,7 @@ const PoolRanks = ({ onSuccess, userRank, unit }) => {
         <CardRankSilver style={{ background: r === 5 ? 'rgba(117, 60, 216, 0.80)' : '' }} key={r}>
           <CardHead>
             <HeadLeft>
-              <ImageRank
-                style={{ width: r === 0 ? '40px' : '54px', height: r === 0 ? '40px' : '60px' }}
-                src={getRankImage(r).img}
-                alt=""
-              />
+              <ImageRank src={getRankImage(r).img} alt="" />
               <TitleHeadRight style={{ color: '#fff' }}>{items.title}</TitleHeadRight>
             </HeadLeft>
             {userRank.rank === r && (
@@ -410,6 +406,7 @@ const PoolRanks = ({ onSuccess, userRank, unit }) => {
                 Locked
               </Label>
               <ValueLocked style={{ color: r === 5 ? 'gray' : '#8544f5' }}>
+                $
                 {r === 0 ? (
                   <CountUp
                     separator=","
@@ -445,8 +442,7 @@ const PoolRanks = ({ onSuccess, userRank, unit }) => {
                     )}
                   </>
                 )}
-
-                <div
+                {/* <div
                   style={{
                     background: r === 5 ? 'black' : 'var(--white-white-6, rgba(255, 255, 255, 0.06))',
                     display: 'flex',
@@ -459,7 +455,7 @@ const PoolRanks = ({ onSuccess, userRank, unit }) => {
                   }}
                 >
                   <img width="18px" height="16px" src="./images/V3/Vector.png" />
-                </div>
+                </div> */}
               </ValueLocked>
             </ItemInfoCard>
             <ItemInfoCard
