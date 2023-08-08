@@ -508,28 +508,28 @@ export const getRankImage = (index) => {
   }
   switch (index) {
     case 0:
-      obj.img = '/images/logo-mobile.png'
-      obj.title = 'UnRank'
-      break
-    case 1:
       obj.img = '/images/V3/Bronze.svg'
       obj.title = 'Bronze'
       break
-    case 2:
+    case 1:
       obj.img = '/images/V3/Silver.svg'
       obj.title = 'Silver'
       break
-    case 3:
+    case 2:
       obj.img = '/images/V3/Gold.svg'
       obj.title = 'Gold'
       break
-    case 4:
+    case 3:
       obj.img = '/images/V3/Titanium.svg'
       obj.title = 'Titanium'
       break
-    case 5:
+    case 4:
       obj.img = '/images/V3/Platinum.svg'
       obj.title = 'Platinum'
+      break
+    case 5:
+      obj.img = '/images/pools/diamond.svg?t=1'
+      obj.title = 'Diamond'
       break
     default:
       break
