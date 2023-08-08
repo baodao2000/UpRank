@@ -129,12 +129,12 @@ function Info() {
               <span style={{ fontSize: '16px', fontWeight: 400, color: 'gray' }}>
                 ✦ The claim speed is boosted by an extra
               </span>{' '}
-              0.5%{' '}
+              0.25%{' '}
               <span style={{ fontSize: '16px', fontWeight: 400, color: 'gray' }}>
                 {' '}
-                , which means 1/730 claims will have a 1.5x multiplier:
+                , which means 1/730 claims will have a 1.25x multiplier:
               </span>{' '}
-              1/730 * 1.5
+              1/730 * 1.25
             </TextTitle>
           </Card>
         </Flex>

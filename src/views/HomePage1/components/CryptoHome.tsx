@@ -104,7 +104,7 @@ const data = [
   {
     image: './images/V3/MoneyExchange.png',
     title: 'Transferability',
-    label: 'Exchange in real-time, instantl',
+    label: 'Exchange in real-time, instantly',
   },
   {
     image: './images/V3/Highest.png',
@@ -126,7 +126,7 @@ const CryptoHome = () => {
   return (
     <Crypto className="block">
       <Title color="mainColor" className="title colorchange">
-        Why TrendyDefi ?
+        Why TrendyDeFi ?
       </Title>
       <Content data-aos="fade-left">
         {data.map((items, r) => (

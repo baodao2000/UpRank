@@ -169,7 +169,7 @@ const SupplyNumber = styled(Text)`
 `
 const dataLeft = [
   {
-    title: '🔒 Team foundation',
+    title: '🔒 Team Foundation',
     label: '15.00%',
     text: '#FF703B',
   },
@@ -179,20 +179,20 @@ const dataLeft = [
     text: '#8544F5',
   },
   {
-    title: '🔒 Bounty - Marketing',
+    title: 'Bounty - Marketing',
     label: '3.00%',
     text: '#AF89EE',
   },
 ]
 const dataRight = [
   {
-    title: '🔒 Trategic Partners',
+    title: '🔒 Strategic Partners',
     label: '17.00%',
     text: '#8ED556',
   },
 
   {
-    title: '🔒 Market Maker',
+    title: 'Market Maker',
     label: '10.00%',
     text: '#1250B0',
   },

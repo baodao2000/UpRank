@@ -186,7 +186,6 @@ const HeadHome = () => {
             <ButtonStaking>Staking Now</ButtonStaking>
           </Link>
           <div>
-            <p>*Start staking now to maximize your earnings!</p>
             <p>
               Staking MATIC now to earn an APR of up to<span style={{ fontWeight: 700 }}> 85.1%</span> up to
               <span style={{ fontWeight: 700 }}> 127.75%</span>{' '}
