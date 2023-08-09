@@ -193,7 +193,7 @@ const StepBlock = () => {
               {step === 3 ? <img src="./images/V3/active3.png" /> : <img src="./images/V3/disabled3.png" />}
               <GruopRight>
                 <TextLabel>Step 3</TextLabel>
-                <TextTitle>Discover Trendy Defi solution</TextTitle>
+                <TextTitle>Discover Trendy DeFi solution</TextTitle>
               </GruopRight>
             </Step>
           </div>

@@ -356,7 +356,7 @@ const PoolRanks = ({ onSuccess, userRank, unit }) => {
     },
     {
       title: 'Titanium',
-      mine: '1',
+      mine: '1.0',
     },
     {
       title: 'Platinum',
@@ -563,13 +563,13 @@ const PoolRanks = ({ onSuccess, userRank, unit }) => {
                 />
               ) : (
                 <>
-                  {userRank.direct >= nextRankRequire[r].downline && userRank.rank === r ? (
+                  {userRank.downLine >= nextRankRequire[r].downline && userRank.rank === r ? (
                     <CountUp
                       separator=","
                       start={0}
                       preserveValue
                       delay={0}
-                      end={userRank.downline}
+                      end={userRank.downLine}
                       decimals={0}
                       duration={0.5}
                     />

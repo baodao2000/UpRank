@@ -405,15 +405,14 @@ const Exchange = (props) => {
     })
     AOS.refresh()
   }, [])
-
   return (
     <Wrapper className="block" data-aos="fade-up">
       <ContentLeft>
         <Table>
           <Title color="mainColor" style={{ position: 'relative' }}>
-            Calculate your crypto{' '}
+            Your{' '}
             <StyledText>
-              earnings
+              Earnings
               <span className="hovreTooltip">
                 <Image src="/images/info.svg" width={20} height={20} alt="" />
                 <div className="tooltip">
@@ -425,9 +424,7 @@ const Exchange = (props) => {
               </span>{' '}
             </StyledText>
           </Title>
-          <TitleM>
-            Enter an amount, pick a cryptocurrency, and select a time frame to find out how much interest you can earn.
-          </TitleM>
+          <TitleM>Please input a precise amount to determine the potential total interest earnings.</TitleM>
           <ExchangePart>
             <div>
               <CryptoSelect>
@@ -501,7 +498,7 @@ const Exchange = (props) => {
             <ImgCoin src="./images/V3/Trans.gif" alt="" />
             <WrapperInfoText>
               <StyledTextProject style={{ display: 'inline', marginLeft: 10, color: 'rgba(173, 171, 178, 1)' }}>
-                Projected {period.current} years interest
+                Total Earnings In 2 Year
               </StyledTextProject>
               <HeadingCustom>
                 <CountUp
@@ -520,7 +517,7 @@ const Exchange = (props) => {
                 textAlign="center"
                 style={{ color: 'rgba(173, 171, 178, 1)', fontSize: 18, fontWeight: '600', lineHeight: '24px' }}
               >
-                Calculated based on the current MATIC/USD price of{' '}
+                The data is based on the real-time market value of MATIC/USD, currently valued at{' '}
                 <span className="price">${numeral(price).format('0,0.00')}</span>
               </Text>
             </WrapperInfoText>
