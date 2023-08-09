@@ -72,7 +72,7 @@ export const CurrencyExchange = () => {
       matic: matic.data.price,
       maticChange: matic.data.priceChange,
       trend: trend.data.price,
-      trendChange: trend.data.price24h.priceChain,
+      trendChange: trend.data.price - trend.data.price24h.price,
     })
   }
 
