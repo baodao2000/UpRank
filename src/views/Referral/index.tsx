@@ -1355,7 +1355,10 @@ const Referral = () => {
                 <StyledSubtitle>
                   <span className="title">Direct staked:</span> The tokens staked by users referred directly by your
                   referral link or code are typically considered part of the referrer&#39;s downline at the first level{' '}
-                  <a href="https://trendydefi.gitbook.io/trendy-defi/staking-and-refferal/benefits-for-referral">
+                  <a
+                    style={{ color: 'rgba(133,68,245,1)' }}
+                    href="https://trendydefi.gitbook.io/trendy-defi/staking-and-refferal/benefits-for-referral"
+                  >
                     (F1)
                   </a>
                 </StyledSubtitle>
