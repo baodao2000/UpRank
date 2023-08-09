@@ -188,11 +188,11 @@ const StyledImg = styled.img`
 `
 const details = [
   {
-    detail: 'Launching Staking venture pool for MATIC Token.',
+    detail: 'Launch Staking venture pool for MATIC Token.',
     class: '',
   },
   {
-    detail: 'Launching TrendyDefi App.',
+    detail: 'Launch TrendyDefi App.',
     class: '',
   },
   {

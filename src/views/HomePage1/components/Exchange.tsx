@@ -498,7 +498,7 @@ const Exchange = (props) => {
             <ImgCoin src="./images/V3/Trans.gif" alt="" />
             <WrapperInfoText>
               <StyledTextProject style={{ display: 'inline', marginLeft: 10, color: 'rgba(173, 171, 178, 1)' }}>
-                Total Earnings
+                Total Earnings In 2 Year
               </StyledTextProject>
               <HeadingCustom>
                 <CountUp
