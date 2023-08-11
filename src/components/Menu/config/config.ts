@@ -160,8 +160,8 @@ const config: (
       items: [].map((item) => addMenuItemSupported(item, chainId)),
     },
     {
-      label: t('Erros'),
-      href: '/erros',
+      label: t('AirDrops'),
+      href: '/airdrops',
       showItemsOnMobile: false,
       icon: ErrorIconV3,
       items: [].map((item) => addMenuItemSupported(item, chainId)),

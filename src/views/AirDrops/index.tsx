@@ -93,7 +93,7 @@ const CardNumber = styled(Text)`
     line-height: 32px;
   }
 `
-const Error = () => {
+const AirDrops = () => {
   const [days, setDays] = useState(0)
   const [hours, setHours] = useState(0)
   const [minutes, setMinutes] = useState(0)
@@ -170,4 +170,4 @@ const Error = () => {
     </Waraper>
   )
 }
-export default Error
+export default AirDrops
