@@ -163,6 +163,6 @@ export { default as PoolV2Icon } from "./Icons/PoolsV2";
 export { default as MinningIcon } from "./Icons/MInning";
 export { default as TokenomicIcon } from "./Icons/Tokenomic";
 export { default as ReferralIcon } from "./Icons/Referral";
-export { default as ErrorIconV3 } from "./Icons/ErrorV3";
+export { default as AirDrop } from "./Icons/Airdrops";
 
 export type { SvgProps } from "./types";
