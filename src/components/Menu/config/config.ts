@@ -17,6 +17,7 @@ import {
   MinningIcon,
   TokenomicIcon,
   ReferralIcon,
+  ErrorIconV3,
   TokenPocketIcon,
 } from '@pancakeswap/uikit'
 import { ContextApi } from '@pancakeswap/localization'
@@ -156,6 +157,13 @@ const config: (
       href: '/mining',
       showItemsOnMobile: false,
       icon: MinningIcon,
+      items: [].map((item) => addMenuItemSupported(item, chainId)),
+    },
+    {
+      label: t('Erros'),
+      href: '/erros',
+      showItemsOnMobile: false,
+      icon: ErrorIconV3,
       items: [].map((item) => addMenuItemSupported(item, chainId)),
     },
 
