@@ -15,6 +15,7 @@ import { NavProps } from "./types";
 import LangSelector from "../../components/LangSelector/LangSelector";
 import { MenuContext } from "./context";
 import { CurrencyExchange } from "../../../../../src/components/Currency";
+import { NewNav } from "../../../../../src/components/Menu/newNavbar";
 const Wrapper = styled.div`
   position: relative;
   width: 100%;

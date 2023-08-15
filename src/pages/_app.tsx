@@ -26,7 +26,11 @@ import Menu from '../components/Menu'
 import Providers from '../Providers'
 import GlobalStyle from '../style/Global'
 import { VoteModal } from 'components/VoteModal'
-
+import LayoutNew from '../components/Menu/newMenu'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import Mining from './mining'
+import Referral from 'views/Referral'
+import { NewNav } from 'components/Menu/newNavbar'
 const EasterEgg = dynamic(() => import('components/EasterEgg'), { ssr: false })
 
 // This config is required for number formatting
@@ -146,19 +150,21 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
   const ShowMenu = Component.mp ? Fragment : Menu
 
   return (
-    <ProductionErrorBoundary>
-      <ShowMenu>
+    <>
+      <ProductionErrorBoundary>
+        {/* <ShowMenu>
         <Layout>
           <Component {...pageProps} />
         </Layout>
-      </ShowMenu>
-      <EasterEgg iterations={2} />
-      <ToastListener />
-      {/* <VoteModal /> */}
-      <ModalRegister />
-      <FixedSubgraphHealthIndicator />
-      <NetworkModal pageSupportedChains={Component.chains} />
-    </ProductionErrorBoundary>
+      </ShowMenu> */}
+        <NewNav />
+        <EasterEgg iterations={2} />
+        <ToastListener />
+        <ModalRegister />
+        <FixedSubgraphHealthIndicator />
+        <NetworkModal pageSupportedChains={Component.chains} />
+      </ProductionErrorBoundary>
+    </>
   )
 }
 
