@@ -30,7 +30,7 @@ import LayoutNew from '../components/Menu/newMenu'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Mining from './mining'
 import Referral from 'views/Referral'
-import { NewNav } from 'components/Menu/newNavbar'
+import { NewNav } from 'components/Menu/config/configV2'
 const EasterEgg = dynamic(() => import('components/EasterEgg'), { ssr: false })
 
 // This config is required for number formatting
