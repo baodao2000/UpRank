@@ -16,8 +16,8 @@ import styled from 'styled-components'
 import { CurrencyExchange } from 'components/Currency'
 import Footer from '../../../packages/uikit/src/components/Footer/index'
 import { useCakeBusdPrice } from 'hooks/useBUSDPrice'
-import BottomNav from '@pancakeswap/uikit/src/components/BottomNav/index'
 import UserMenu from './UserMenu'
+import BottomNavV2 from './BottomNavV2'
 
 const BodyWrapper = styled(Box)`
   position: relative;
@@ -84,7 +84,7 @@ const StyledMenuItem = styled.div`
     height: 20px;
     margin: 0 10px;
   }
-  width: 151px;
+  max-width: 151px;
   height: 40px;
 
   &:hover {
@@ -101,6 +101,9 @@ const StyledMenuItem = styled.div`
   .dropdown {
     display: none;
   }
+  @media screen and (max-width: 1300px) {
+    padding: 0 10px;
+  }
 `
 const StyledListItem = styled.div`
   display: flex;
@@ -109,6 +112,9 @@ const StyledListItem = styled.div`
     border-radius: var(--border-radius-lg, 8px);
     background: rgba(175, 137, 238, 0.2);
     box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.02);
+  }
+  @media screen and (max-width: 1300px) {
+    gap: 0;
   }
 `
 const DropdownMenu = styled.div`
@@ -240,7 +246,6 @@ const MenuV2 = () => {
   const { currentLanguage, setLanguage, t } = useTranslation()
   const banner = showPhishingWarningBanner && typeof window !== 'undefined' && <PhishingWarningBanner />
   const { isMobile, isTablet } = useMatchBreakpoints()
-
   const totalTopMenuHeight = banner ? MENU_HEIGHT : MENU_HEIGHT
   const cakePriceUsd = useCakeBusdPrice({ forceMainnet: true })
 
@@ -347,32 +352,36 @@ const MenuV2 = () => {
               <Link to="/airdrop">Airdrop</Link>
             </StyledMenuItem>
           </StyledListItem> */}
-          <StyledListItem>
+          <StyledListItem style={{ display: isMobile || isTablet ? 'none' : 'flex' }}>
             {data.map((items, index) => (
               <>
-                <StyledMenuItem
-                  style={{ display: index === 0 ? 'none' : 'flex' }}
-                  className={index === indexActive ? classActive : ''}
-                  onClick={() => checkActive(items.link, index)}
-                >
-                  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    <img src={items.img} />
-                    <Link to={items.link}>{items.label}</Link>
-                  </div>
-                  {items.dropdownMenu.length > 0 ? (
-                    <DropdownMenu className="dropdown">
-                      {items.dropdownMenu.map((i, k) => (
-                        <StyledDropdownMenu
-                          className={k === indexDropdown.current ? 'active' : ''}
-                          onClick={() => checkIsActive(k)}
-                        >
-                          <Link to={i.link}>{i.label}</Link>
-                          {i.img !== '' ? <img src={i.img} /> : null}
-                        </StyledDropdownMenu>
-                      ))}
-                    </DropdownMenu>
-                  ) : null}
-                </StyledMenuItem>
+                <Link to={items.link} style={{ display: index === 0 ? 'none' : 'flex' }}>
+                  <StyledMenuItem
+                    style={{ display: index === 0 ? 'none' : 'flex' }}
+                    className={index === indexActive ? classActive : ''}
+                    onClick={() => checkActive(items.link, index)}
+                  >
+                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+                      <img src={items.img} />
+                      <Link to={items.link} style={{ display: index === 0 ? 'none' : 'flex' }}>
+                        {items.label}
+                      </Link>
+                    </div>
+                    {items.dropdownMenu.length > 0 ? (
+                      <DropdownMenu className="dropdown">
+                        {items.dropdownMenu.map((i, k) => (
+                          <StyledDropdownMenu
+                            className={k === indexDropdown.current ? 'active' : ''}
+                            onClick={() => checkIsActive(k)}
+                          >
+                            <Link to={i.link}>{i.label}</Link>
+                            {i.img !== '' ? <img src={i.img} /> : null}
+                          </StyledDropdownMenu>
+                        ))}
+                      </DropdownMenu>
+                    ) : null}
+                  </StyledMenuItem>
+                </Link>
               </>
             ))}
           </StyledListItem>
@@ -392,6 +401,7 @@ const MenuV2 = () => {
             ))}
           </NavDropdownMenu>
         )}
+
         <div style={{ marginTop: '50px' }}>
           <Outlet />
         </div>
@@ -414,10 +424,12 @@ const MenuV2 = () => {
         </BodyWrapper>
 
         {isMobile && (
-          <BottomNav items={menuItems} activeItem={activeMenuItem?.href} activeSubItem={activeSubMenuItem?.href} />
+          // <BottomNav items={menuItems} activeItem={activeMenuItem?.href} activeSubItem={activeSubMenuItem?.href} />
+          <BottomNavV2 data={data} />
         )}
         {isTablet && (
-          <BottomNav items={menuItems} activeItem={activeMenuItem?.href} activeSubItem={activeSubMenuItem?.href} />
+          // <BottomNav items={menuItems} activeItem={activeMenuItem?.href} activeSubItem={activeSubMenuItem?.href} />
+          <BottomNavV2 data={data} />
         )}
       </Container>
     </Wrapper>
