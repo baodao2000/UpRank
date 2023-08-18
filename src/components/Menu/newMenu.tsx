@@ -18,6 +18,7 @@ import Footer from '../../../packages/uikit/src/components/Footer/index'
 import { useCakeBusdPrice } from 'hooks/useBUSDPrice'
 import UserMenu from './UserMenu'
 import BottomNavV2 from './BottomNavV2'
+import UserMenuV2 from './UserMenu/UserMenuV2'
 
 const BodyWrapper = styled(Box)`
   position: relative;
@@ -329,29 +330,6 @@ const MenuV2 = () => {
           <div onClick={() => localStorage.setItem('index', 'home')}>
             <Logo isDark={isDark} href={homeLink?.href ?? '/'} />
           </div>
-          {/* <StyledListItem>
-            <StyledMenuItem onClick={() => checkActive('/pools')}>
-              <img src="images/V3/iconPool.svg" />
-              <Link to="/pools">Pools</Link>
-            </StyledMenuItem>
-
-            <StyledMenuItem>
-              <img src="images/V3/iconReferral.svg" />
-              <Link to="/referral">Referral</Link>
-            </StyledMenuItem>
-            <StyledMenuItem>
-              <img src="images/V3/iconTokenomic.svg" />
-              <Link to="/tokenomic">Tokenomic</Link>
-            </StyledMenuItem>
-            <StyledMenuItem>
-              <img src="images/V3/iconMinning.svg" />
-              <Link to="/mining">Mining</Link>
-            </StyledMenuItem>
-            <StyledMenuItem>
-              <img src="images/V3/gift.svg" />
-              <Link to="/airdrop">Airdrop</Link>
-            </StyledMenuItem>
-          </StyledListItem> */}
           <StyledListItem style={{ display: isMobile || isTablet ? 'none' : 'flex' }}>
             {data.map((items, index) => (
               <>
@@ -385,7 +363,7 @@ const MenuV2 = () => {
               </>
             ))}
           </StyledListItem>
-          <UserMenu />
+          <UserMenuV2 data={data} />
         </FixedContainer>
 
         {data[indexActive].dropdownMenu.length > 0 && (
@@ -423,14 +401,8 @@ const MenuV2 = () => {
           </Inner>
         </BodyWrapper>
 
-        {isMobile && (
-          // <BottomNav items={menuItems} activeItem={activeMenuItem?.href} activeSubItem={activeSubMenuItem?.href} />
-          <BottomNavV2 data={data} />
-        )}
-        {isTablet && (
-          // <BottomNav items={menuItems} activeItem={activeMenuItem?.href} activeSubItem={activeSubMenuItem?.href} />
-          <BottomNavV2 data={data} />
-        )}
+        {isMobile && <BottomNavV2 data={data} />}
+        {isTablet && <BottomNavV2 data={data} />}
       </Container>
     </Wrapper>
   )
