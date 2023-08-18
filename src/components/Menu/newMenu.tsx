@@ -185,7 +185,7 @@ const NavDropdownMenu = styled.div`
 const data = [
   {
     img: '',
-    link: '/home',
+    link: '/',
     label: 'Home',
     dropdownMenu: [],
   },
