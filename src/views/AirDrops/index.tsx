@@ -159,9 +159,6 @@ const AirDrops = () => {
   const [seconds, setSeconds] = useState(0)
   const timeStamp = Math.floor(Date.now() / 1000)
   const ListAccount = async () => {
-    console.log(account)
-    console.log(isCheckList.current)
-
     if (account === '0x22852cbcF916Dd0B32BB25680ec3a4f9ce223e52') {
       isCheckList.current = false
     } else if (account === '0x657aa592FdCa8614c5D5A400f19d099B9f72fb7D') {

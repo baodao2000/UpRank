@@ -185,7 +185,7 @@ const NavDropdownMenu = styled.div`
 const data = [
   {
     img: '',
-    link: '/',
+    link: '/home',
     label: 'Home',
     dropdownMenu: [],
   },
@@ -275,17 +275,39 @@ const MenuV2 = () => {
     if (linkActive.indexOf(e) !== -1) {
       setClassActive('active')
       setIndexActive(r)
-      indexDropdown.current = 0
+      setIndexActive(0)
     } else {
       setClassActive('')
     }
   }
   const checkIsActive = (index) => {
-    indexDropdown.current = index
+    setisActive(index)
     localStorage.setItem('indexDropdown', index)
+  }
+  const checkHome = () => {
+    if (linkActive.slice(-1) === '/') {
+      setClassActive('')
+      setIndexActive(0)
+      localStorage.setItem('index', '0')
+      localStorage.setItem('indexDropdown', '0')
+      console.log('dsdsd')
+    }
+  }
+  const checkLink = () => {
+    for (let i = 1; i < data.length; i + 1) {
+      const link = data[i].link
+      if (linkActive.indexOf(link) !== -1) {
+        setClassActive('active')
+        setIndexActive(i)
+        localStorage.setItem('index', i.toString())
+      }
+      i++
+    }
   }
 
   useEffect(() => {
+    checkHome()
+    checkLink()
     if (localStorage.getItem('index') !== 'home') {
       setIndexActive(Number(localStorage.getItem('index')))
       indexDropdown.current = Number(localStorage.getItem('indexDropdown'))
@@ -294,7 +316,7 @@ const MenuV2 = () => {
       setClassActive('')
       setIndexActive(0)
     }
-  }, [linkActive])
+  }, [linkActive, classActive])
   useEffect(() => {
     const handleScroll = () => {
       const currentOffset = window.pageYOffset
@@ -333,7 +355,7 @@ const MenuV2 = () => {
           <StyledListItem style={{ display: isMobile || isTablet ? 'none' : 'flex' }}>
             {data.map((items, index) => (
               <>
-                <Link to={items.link} style={{ display: index === 0 ? 'none' : 'flex' }}>
+                <Link key={index} to={items.link} style={{ display: index === 0 ? 'none' : 'flex' }}>
                   <StyledMenuItem
                     style={{ display: index === 0 ? 'none' : 'flex' }}
                     className={index === indexActive ? classActive : ''}
@@ -348,13 +370,15 @@ const MenuV2 = () => {
                     {items.dropdownMenu.length > 0 ? (
                       <DropdownMenu className="dropdown">
                         {items.dropdownMenu.map((i, k) => (
-                          <StyledDropdownMenu
-                            className={k === indexDropdown.current ? 'active' : ''}
-                            onClick={() => checkIsActive(k)}
-                          >
-                            <Link to={i.link}>{i.label}</Link>
-                            {i.img !== '' ? <img src={i.img} /> : null}
-                          </StyledDropdownMenu>
+                          <Link key={k} style={{ width: '100%' }} to={i.link}>
+                            <StyledDropdownMenu
+                              className={k === indexDropdown.current ? 'active' : ''}
+                              onClick={() => checkIsActive(k)}
+                            >
+                              <Link to={i.link}>{i.label}</Link>
+                              {i.img !== '' ? <img src={i.img} /> : null}
+                            </StyledDropdownMenu>
+                          </Link>
                         ))}
                       </DropdownMenu>
                     ) : null}
@@ -369,13 +393,12 @@ const MenuV2 = () => {
         {data[indexActive].dropdownMenu.length > 0 && (
           <NavDropdownMenu>
             {data[indexActive].dropdownMenu.map((item, index) => (
-              <StyledItemNav
-                className={index === indexDropdown.current ? 'active' : ''}
-                onClick={() => checkIsActive(index)}
-              >
-                <Link to={item.link}>{item.label}</Link>
-                {item.img !== '' ? <img src={item.img} /> : null}
-              </StyledItemNav>
+              <Link key={index} to={item.link}>
+                <StyledItemNav className={index === isActive ? 'active' : ''} onClick={() => checkIsActive(index)}>
+                  <Link to={item.link}>{item.label}</Link>
+                  {item.img !== '' ? <img src={item.img} /> : null}
+                </StyledItemNav>
+              </Link>
             ))}
           </NavDropdownMenu>
         )}
@@ -401,8 +424,14 @@ const MenuV2 = () => {
           </Inner>
         </BodyWrapper>
 
-        {isMobile && <BottomNavV2 data={data} />}
-        {isTablet && <BottomNavV2 data={data} />}
+        {isMobile && (
+          // <BottomNav items={menuItems} activeItem={activeMenuItem?.href} activeSubItem={activeSubMenuItem?.href} />
+          <BottomNavV2 data={data} />
+        )}
+        {isTablet && (
+          // <BottomNav items={menuItems} activeItem={activeMenuItem?.href} activeSubItem={activeSubMenuItem?.href} />
+          <BottomNavV2 data={data} />
+        )}
       </Container>
     </Wrapper>
   )

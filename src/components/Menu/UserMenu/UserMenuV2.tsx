@@ -32,24 +32,6 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
 const NavMobile = styled.div``
-const data = [
-  {
-    title: 'Pool',
-    link: '/pools',
-  },
-  {
-    title: 'Referral',
-    link: '/referral',
-  },
-  {
-    title: 'Tokenomic',
-    link: '/tokenomic',
-  },
-  {
-    title: 'Mining',
-    link: '/mining',
-  },
-]
 const TextLink = styled(Text)`
   font-size: 16px;
   font-style: normal;
@@ -106,9 +88,9 @@ const UserMenuV2 = ({ data }) => {
         {isMobile || isTablet ? (
           <>
             <NavMobile>
-              {data.map((items) => (
+              {data.map((items, r) => (
                 <>
-                  <UserMenuItem>
+                  <UserMenuItem key={r}>
                     <Link to={items.link}>
                       <TextLink>{items.label}</TextLink>
                     </Link>
