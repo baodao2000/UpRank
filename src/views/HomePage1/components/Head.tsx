@@ -1,4 +1,4 @@
-import { Button, Flex, useModal } from '@pancakeswap/uikit'
+import { Button, Flex, LinkExternal, Text, useModal } from '@pancakeswap/uikit'
 import styled from 'styled-components'
 import images from 'configs/images'
 import 'aos/dist/aos.css'
@@ -181,12 +181,21 @@ const HeadHome = () => {
   return (
     <Head>
       <ContentHead data-aos="fade-up-right">
-        <p style={{ color: 'rgba(133, 68, 245, 1)', fontSize: '24px', fontWeight: '700' }}>
-          TREND Contract:{' '}
-          <a style={{ color: '#fff' }} href={getBlockExploreLink(contracts.trend[CHAIN_ID], 'address', CHAIN_ID)}>
-            {shortenURL(`${contracts.poolsV4[CHAIN_ID]}`, 18)}
-          </a>
-        </p>
+        <div style={{ display: 'flex', gap: '10px' }}>
+          <Text style={{ color: 'rgba(133,68,245,1)' }} fontSize="22px">
+            TREND Contract:{' '}
+          </Text>
+          <LinkExternal
+            fontSize="18px"
+            href={getBlockExploreLink(contracts.trend[CHAIN_ID], 'address', CHAIN_ID)}
+            ellipsis={true}
+            style={{ color: 'rgba(249, 249, 249, 1)' }}
+            color="#00F0E1"
+          >
+            {' '}
+            {shortenURL(`${contracts.trend[CHAIN_ID]}`, 18)}
+          </LinkExternal>
+        </div>
         <p>
           <span className="p2">Start Earning</span>
           <span className="p1"> Passive Income with </span>
