@@ -23,6 +23,7 @@ import TableDataPool from './components/TableData'
 import DetailInfoPool from './components/DetailInfo'
 import DepositPoolModal from './components/DepositModal'
 import { ChainId, NATIVE } from '../../../packages/swap-sdk/src/constants'
+import { useParams } from 'react-router'
 
 // ============= STYLED
 const PoolDetail = styled.div`
@@ -96,7 +97,14 @@ const NoteDeposit = styled.span`
   border-radius: 10px;
 `
 
-const Pool = ({ poolId }) => {
+const Pool = () => {
+  type Employee = {
+    id?: number
+    chainIds?: string
+  }
+  const poolsV2 = useParams()
+  const abc: Employee = poolsV2
+  const poolId = Number(abc.id)
   const { account, chainId } = useActiveWeb3React()
   const [isLoading, setIsLoading] = useState(true)
   const [now, setNow] = useState(0)

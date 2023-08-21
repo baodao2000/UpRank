@@ -3,11 +3,11 @@ import styled from 'styled-components'
 import images from 'configs/images'
 import 'aos/dist/aos.css'
 import { isMobile } from 'react-device-detect'
-import Link from 'next/link'
 import { getBlockExploreLink } from 'utils'
 import contracts from 'config/constants/contracts'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { ChainId } from '../../../../packages/swap-sdk/src/constants'
+import { Link } from 'react-router-dom'
 
 const Head = styled(Flex)`
   * {
@@ -207,7 +207,7 @@ const HeadHome = () => {
           </span>
         </H5ShowMb>
         <Staking>
-          <Link href="/pools">
+          <Link to="/pools">
             <ButtonStaking>Staking Now</ButtonStaking>
           </Link>
           <div>

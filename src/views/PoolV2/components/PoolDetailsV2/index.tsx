@@ -17,6 +17,7 @@ import DetailInfoPool from './DetailInfo'
 import DepositPoolModal from './DepositModal'
 import { ChainId, NATIVE } from '../../../../../packages/swap-sdk/src/constants'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import { useParams } from 'react-router'
 
 const PoolDetail = styled.div`
   * {
@@ -116,14 +117,20 @@ const BtnBack = styled.a`
   }
 `
 
-const Pool = ({ poolId }) => {
+const Pool = () => {
+  type Employee = {
+    id?: number
+    chainIds?: string
+  }
+  const poolsV2 = useParams()
+  const abc: Employee = poolsV2
+  const poolId = Number(abc.id)
   const { account, chainId } = useActiveWeb3React()
   const [isLoading, setIsLoading] = useState(true)
   const [now, setNow] = useState(0)
   const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId
   const getPoolContract = getPoolsV4Contract(CHAIN_ID)
   const [usersClaimed, setUserClaimed] = useState([])
-
   const unit = NATIVE[chainId].symbol
 
   const [poolInfo, setPoolInfo] = useState({

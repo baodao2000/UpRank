@@ -198,7 +198,7 @@ const data = [
     dropdownMenu: [
       {
         img: '/images/V3/iconNew.svg',
-        link: 'pools',
+        link: '/pools',
         label: 'Ver2.0',
       },
       {

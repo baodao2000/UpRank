@@ -1,6 +1,6 @@
 import { Flex, Text, useMatchBreakpoints } from '@pancakeswap/uikit'
 import Image from 'next/image'
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 const TrendTokenText = styled.div`
@@ -101,7 +101,7 @@ function TrendToken() {
               <TrendContent>Mine Trend token</TrendContent>
               <TokenText>
                 Through pool Stater Visit Pool{''}
-                <Link href="/pools">
+                <Link to="/pools">
                   <span
                     style={{
                       color: 'var(--primary-primary-1, #8544F5)',
