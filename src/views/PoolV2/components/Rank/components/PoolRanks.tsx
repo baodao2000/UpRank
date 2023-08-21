@@ -604,12 +604,12 @@ const PoolRanks = ({ onSuccess, userRank, unit }) => {
             >
               {isConfirmingUpRank ? (
                 <ThreeDots className="loading">
-                  Requesting<span>.</span>
+                  Updating<span>.</span>
                   <span>.</span>
                   <span>.</span>
                 </ThreeDots>
               ) : (
-                'Request Level Up'
+                'Up Rank'
               )}
             </StyledButtonRank>
           </div>
