@@ -2,6 +2,11 @@ import { Text, useMatchBreakpoints } from '@pancakeswap/uikit'
 import Image from 'next/image'
 import styled from 'styled-components'
 import images from 'configs/images'
+import { useTrendContract } from 'hooks/useContract'
+import { getBlockExploreLink } from 'utils'
+import contracts from 'config/constants/contracts'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import { ChainId } from '../../../../packages/swap-sdk/src/constants'
 
 const Wrapper = styled.div`
   background: url(${images.bg});
@@ -205,6 +210,9 @@ const dataRight = [
 
 function Overview() {
   const { isMobile, isTablet } = useMatchBreakpoints()
+  const { account, chainId } = useActiveWeb3React()
+  // account = '0x1ec0f8875B7fc2400a6F44788c6710959614e68A'
+  const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId
 
   return (
     <Wrapper>
@@ -212,7 +220,14 @@ function Overview() {
         <OverviewText>Tokenomic</OverviewText>
 
         <OverviewContent style={{ width: isMobile ? '343px' : isTablet ? '743px' : '785px' }}>
-          Building Trust, One Block at a Time - Discover the future of TREND Token.
+          Building Trust, One Block at a Time - Discover the future of{' '}
+          <a
+            style={{ color: 'rgb(133, 68, 245)' }}
+            href={getBlockExploreLink(contracts.trend[CHAIN_ID], 'address', CHAIN_ID)}
+          >
+            TREND
+          </a>{' '}
+          Token.
         </OverviewContent>
         <Token>
           <Image

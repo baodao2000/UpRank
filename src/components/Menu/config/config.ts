@@ -17,6 +17,7 @@ import {
   MinningIcon,
   TokenomicIcon,
   ReferralIcon,
+  AirDrop,
   TokenPocketIcon,
 } from '@pancakeswap/uikit'
 import { ContextApi } from '@pancakeswap/localization'
@@ -156,6 +157,13 @@ const config: (
       href: '/mining',
       showItemsOnMobile: false,
       icon: MinningIcon,
+      items: [].map((item) => addMenuItemSupported(item, chainId)),
+    },
+    {
+      label: t('Airdrop'),
+      href: '/airdrop',
+      showItemsOnMobile: false,
+      icon: AirDrop,
       items: [].map((item) => addMenuItemSupported(item, chainId)),
     },
 

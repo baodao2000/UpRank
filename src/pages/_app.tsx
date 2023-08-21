@@ -25,8 +25,7 @@ import { SentryErrorBoundary } from '../components/ErrorBoundary'
 import Menu from '../components/Menu'
 import Providers from '../Providers'
 import GlobalStyle from '../style/Global'
-import { VoteModal } from 'components/VoteModal'
-
+import MenuV2 from '../components/Menu/newMenu'
 const EasterEgg = dynamic(() => import('components/EasterEgg'), { ssr: false })
 
 // This config is required for number formatting
@@ -146,19 +145,16 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
   const ShowMenu = Component.mp ? Fragment : Menu
 
   return (
-    <ProductionErrorBoundary>
-      <ShowMenu>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </ShowMenu>
-      <EasterEgg iterations={2} />
-      <ToastListener />
-      {/* <VoteModal /> */}
-      <ModalRegister />
-      <FixedSubgraphHealthIndicator />
-      <NetworkModal pageSupportedChains={Component.chains} />
-    </ProductionErrorBoundary>
+    <>
+      <ProductionErrorBoundary>
+        <MenuV2 />
+        <EasterEgg iterations={2} />
+        <ToastListener />
+        <ModalRegister />
+        <FixedSubgraphHealthIndicator />
+        <NetworkModal pageSupportedChains={Component.chains} />
+      </ProductionErrorBoundary>
+    </>
   )
 }
 

@@ -17,7 +17,7 @@ const Wrapper = styled.div`
   width: 100%;
   font-style: normal;
   background-color: #13171b;
-  margin-bottom: 48px;
+  // margin-bottom: 48px;
   background-color: var(--black-black-60, rgba(0, 0, 0, 0.6));
 `
 

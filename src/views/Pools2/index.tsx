@@ -28,7 +28,7 @@ import moment from 'moment'
 import readTrendyAbi from '../../config/abi/readTrendy.json'
 // ============= STYLED
 const Container = styled.div`
-  background: url(${images.backgroundpool}) #1e1e1e no-repeat;
+  background: url(${images.backgroundpool}) rgba(0, 0, 0, 0.6) no-repeat;
   background-size: contain;
   min-height: 600px;
   display: flex;
