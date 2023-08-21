@@ -1,5 +1,5 @@
 import { Box, Logo, Menu, Text, useMatchBreakpoints } from '@pancakeswap/uikit'
-import { Outlet, Link } from 'react-router-dom'
+import { Link, BrowserRouter as Router } from 'react-router-dom'
 import { getActiveMenuItem, getActiveSubMenuItem } from './utils'
 import throttle from 'lodash/throttle'
 
@@ -19,7 +19,7 @@ import { useCakeBusdPrice } from 'hooks/useBUSDPrice'
 import UserMenu from './UserMenu'
 import BottomNavV2 from './BottomNavV2'
 import UserMenuV2 from './UserMenu/UserMenuV2'
-import NotFound from 'views/NotFound'
+import { NewNav } from './config/configV2'
 
 const BodyWrapper = styled(Box)`
   position: relative;
@@ -174,7 +174,7 @@ const StyledItemNav = styled.div`
 const NavDropdownMenu = styled.div`
   display: flex;
   max-width: 860px;
-  width: 100%
+  width: 100%;
   gap: 30px;
   margin: 60px auto;
   justify-content: center;
@@ -352,89 +352,90 @@ const MenuV2 = () => {
   return (
     <Wrapper>
       <Container>
-        <FixedContainer showMenu={showMenu} height={totalTopMenuHeight}>
-          <div onClick={() => localStorage.setItem('index', '0')}>
-            <Logo isDark={isDark} href={homeLink?.href ?? '/'} />
-          </div>
-          <StyledListItem style={{ display: isMobile || isTablet ? 'none' : 'flex' }}>
-            {data.map((items, index) => (
-              <>
-                <Link key={index} to={items.link} style={{ display: index === 0 ? 'none' : 'flex' }}>
-                  <StyledMenuItem
-                    style={{ display: index === 0 ? 'none' : 'flex' }}
-                    className={index === indexActive ? classActive : ''}
-                    onClick={() => checkActive(items.link, index)}
-                  >
-                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
-                      <img src={items.img} />
-                      <Link to={items.link} style={{ display: index === 0 ? 'none' : 'flex' }}>
-                        {items.label}
-                      </Link>
-                    </div>
-                    {items.dropdownMenu.length > 0 ? (
-                      <DropdownMenu className="dropdown">
-                        {items.dropdownMenu.map((i, k) => (
-                          <Link key={k} style={{ width: '100%' }} to={i.link}>
-                            <StyledDropdownMenu
-                              className={k === isActive ? 'active' : ''}
-                              onClick={() => checkIsActive(k)}
-                            >
-                              <Link to={i.link}>{i.label}</Link>
-                              {i.img !== '' ? <img src={i.img} /> : null}
-                            </StyledDropdownMenu>
-                          </Link>
-                        ))}
-                      </DropdownMenu>
-                    ) : null}
-                  </StyledMenuItem>
+        <Router>
+          <FixedContainer showMenu={showMenu} height={totalTopMenuHeight}>
+            <div onClick={() => localStorage.setItem('index', '0')}>
+              <Logo isDark={isDark} href={homeLink?.href ?? '/'} />
+            </div>
+            <StyledListItem style={{ display: isMobile || isTablet ? 'none' : 'flex' }}>
+              {data.map((items, index) => (
+                <>
+                  <Link key={index} to={items.link} style={{ display: index === 0 ? 'none' : 'flex' }}>
+                    <StyledMenuItem
+                      style={{ display: index === 0 ? 'none' : 'flex' }}
+                      className={index === indexActive ? classActive : ''}
+                      onClick={() => checkActive(items.link, index)}
+                    >
+                      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+                        <img src={items.img} />
+                        <Link to={items.link} style={{ display: index === 0 ? 'none' : 'flex' }}>
+                          {items.label}
+                        </Link>
+                      </div>
+                      {items.dropdownMenu.length > 0 ? (
+                        <DropdownMenu className="dropdown">
+                          {items.dropdownMenu.map((i, k) => (
+                            <Link key={k} style={{ width: '100%' }} to={i.link}>
+                              <StyledDropdownMenu
+                                className={k === isActive ? 'active' : ''}
+                                onClick={() => checkIsActive(k)}
+                              >
+                                <Link to={i.link}>{i.label}</Link>
+                                {i.img !== '' ? <img src={i.img} /> : null}
+                              </StyledDropdownMenu>
+                            </Link>
+                          ))}
+                        </DropdownMenu>
+                      ) : null}
+                    </StyledMenuItem>
+                  </Link>
+                </>
+              ))}
+            </StyledListItem>
+            <UserMenuV2 data={data} />
+          </FixedContainer>
+
+          {data[indexActive].dropdownMenu.length > 0 && (
+            <NavDropdownMenu>
+              {data[indexActive].dropdownMenu.map((item, index) => (
+                <Link key={index} to={item.link}>
+                  <StyledItemNav className={index === isActive ? 'active' : ''} onClick={() => checkIsActive(index)}>
+                    <Link to={item.link}>{item.label}</Link>
+                    {item.img !== '' ? <img src={item.img} /> : null}
+                  </StyledItemNav>
                 </Link>
-              </>
-            ))}
-          </StyledListItem>
-          <UserMenuV2 data={data} />
-        </FixedContainer>
+              ))}
+            </NavDropdownMenu>
+          )}
 
-        {data[indexActive].dropdownMenu.length > 0 && (
-          <NavDropdownMenu>
-            {data[indexActive].dropdownMenu.map((item, index) => (
-              <Link key={index} to={item.link}>
-                <StyledItemNav className={index === isActive ? 'active' : ''} onClick={() => checkIsActive(index)}>
-                  <Link to={item.link}>{item.label}</Link>
-                  {item.img !== '' ? <img src={item.img} /> : null}
-                </StyledItemNav>
-              </Link>
-            ))}
-          </NavDropdownMenu>
-        )}
+          <NewNav />
 
-        <div style={{ marginTop: '50px' }}>{notFound === true ? <NotFound /> : <Outlet />}</div>
-
-        <BodyWrapper mt={!subLinks ? '0' : '0'}>
-          <CurrencyExchange />
-          <Inner isPushed={false} showMenu={showMenu}>
-            <Footer
-              items={getFooterLinks}
-              isDark={isDark}
-              toggleTheme={toggleTheme}
-              langs={languageList}
-              setLang={setLanguage}
-              currentLang={currentLanguage.code}
-              cakePriceUsd={Number(cakePriceUsd)}
-              buyCakeLabel={t('Buy CAKE')}
-              mb={[`${MOBILE_MENU_HEIGHT}px`, null, '0px']}
-            />
-          </Inner>
-        </BodyWrapper>
-
-        {isMobile && (
-          // <BottomNav items={menuItems} activeItem={activeMenuItem?.href} activeSubItem={activeSubMenuItem?.href} />
-          <BottomNavV2 data={data} />
-        )}
-        {isTablet && (
-          // <BottomNav items={menuItems} activeItem={activeMenuItem?.href} activeSubItem={activeSubMenuItem?.href} />
-          <BottomNavV2 data={data} />
-        )}
+          {isMobile && (
+            // <BottomNav items={menuItems} activeItem={activeMenuItem?.href} activeSubItem={activeSubMenuItem?.href} />
+            <BottomNavV2 data={data} />
+          )}
+          {isTablet && (
+            // <BottomNav items={menuItems} activeItem={activeMenuItem?.href} activeSubItem={activeSubMenuItem?.href} />
+            <BottomNavV2 data={data} />
+          )}
+        </Router>
       </Container>
+      <BodyWrapper mt={!subLinks ? '0' : '0'}>
+        <CurrencyExchange />
+        <Inner isPushed={false} showMenu={showMenu}>
+          <Footer
+            items={getFooterLinks}
+            isDark={isDark}
+            toggleTheme={toggleTheme}
+            langs={languageList}
+            setLang={setLanguage}
+            currentLang={currentLanguage.code}
+            cakePriceUsd={Number(cakePriceUsd)}
+            buyCakeLabel={t('Buy CAKE')}
+            mb={[`${MOBILE_MENU_HEIGHT}px`, null, '0px']}
+          />
+        </Inner>
+      </BodyWrapper>
     </Wrapper>
   )
 }

@@ -1,6 +1,5 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom'
 import Referral from 'views/Referral'
-import MenuV2 from '../newMenu'
 import Mining from 'views/Mining'
 import HomePage from 'views/HomePage1'
 import Pools from 'views/PoolV2'
@@ -13,19 +12,34 @@ import NotFound from 'views/NotFound'
 export const NewNav = () => {
   return (
     <>
-      <Routes>
-        <Route path="/" element={<MenuV2 />}>
-          <Route index element={<HomePage />} />
-          <Route path="pools" element={<Pools />} />
-          <Route path="pools_v1" element={<Poolsv1 />} />
-          <Route path="referral" element={<Referral />} />
-          <Route path="tokenomic" element={<Tokenomic />} />
-          <Route path="mining" element={<Mining />} />
-
-          <Route path="airdrop" element={<AirDrops />} />
-          <Route path="*" element={<NotFound />} />
-        </Route>
-      </Routes>
+      <div>
+        <Switch>
+          <Route path="/pools">
+            <Pools />
+          </Route>
+          <Route path="/pools_V1">
+            <Poolsv1 />
+          </Route>
+          <Route path="/referral">
+            <Referral />
+          </Route>
+          <Route path="/tokenomic">
+            <Tokenomic />
+          </Route>
+          <Route path="/mining">
+            <Mining />
+          </Route>
+          <Route path="/airdrop">
+            <AirDrops />
+          </Route>
+          <Route path="*">
+            <NotFound />
+          </Route>
+          <Route path="/">
+            <HomePage />
+          </Route>
+        </Switch>
+      </div>
     </>
   )
 }

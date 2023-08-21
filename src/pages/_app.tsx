@@ -25,12 +25,7 @@ import { SentryErrorBoundary } from '../components/ErrorBoundary'
 import Menu from '../components/Menu'
 import Providers from '../Providers'
 import GlobalStyle from '../style/Global'
-import { VoteModal } from 'components/VoteModal'
-import LayoutNew from '../components/Menu/newMenu'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import Mining from './mining'
-import Referral from 'views/Referral'
-import { NewNav } from 'components/Menu/config/configV2'
+import MenuV2 from '../components/Menu/newMenu'
 const EasterEgg = dynamic(() => import('components/EasterEgg'), { ssr: false })
 
 // This config is required for number formatting
@@ -151,21 +146,14 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
 
   return (
     <>
-      <BrowserRouter>
-        <ProductionErrorBoundary>
-          {/* <ShowMenu>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </ShowMenu> */}
-          <NewNav />
-          <EasterEgg iterations={2} />
-          <ToastListener />
-          <ModalRegister />
-          <FixedSubgraphHealthIndicator />
-          <NetworkModal pageSupportedChains={Component.chains} />
-        </ProductionErrorBoundary>
-      </BrowserRouter>
+      <ProductionErrorBoundary>
+        <MenuV2 />
+        <EasterEgg iterations={2} />
+        <ToastListener />
+        <ModalRegister />
+        <FixedSubgraphHealthIndicator />
+        <NetworkModal pageSupportedChains={Component.chains} />
+      </ProductionErrorBoundary>
     </>
   )
 }
