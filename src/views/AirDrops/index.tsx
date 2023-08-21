@@ -158,22 +158,22 @@ const AirDrops = () => {
   const [minutes, setMinutes] = useState(0)
   const [seconds, setSeconds] = useState(0)
   const timeStamp = Math.floor(Date.now() / 1000)
-  const ListAccount = async () => {
-    if (account === '0x22852cbcF916Dd0B32BB25680ec3a4f9ce223e52') {
-      isCheckList.current = false
-    } else if (account === '0x657aa592FdCa8614c5D5A400f19d099B9f72fb7D') {
-      isCheckList.current = true
-      setIsClaim(false)
-    } else if (account === '0x909839C893f5768e739eC7b6AF878537b84B9220') {
-      isCheckList.current = true
-      setIsClaim(true)
-    }
-  }
-  useEffect(() => {
-    if (account) {
-      ListAccount()
-    }
-  }, [account, isCheckList.current, isClaim])
+  // const ListAccount = async () => {
+  //   if (account === '0x22852cbcF916Dd0B32BB25680ec3a4f9ce223e52') {
+  //     isCheckList.current = false
+  //   } else if (account === '0x657aa592FdCa8614c5D5A400f19d099B9f72fb7D') {
+  //     isCheckList.current = true
+  //     setIsClaim(false)
+  //   } else if (account === '0x909839C893f5768e739eC7b6AF878537b84B9220') {
+  //     isCheckList.current = true
+  //     setIsClaim(true)
+  //   }
+  // }
+  // useEffect(() => {
+  //   if (account) {
+  //     ListAccount()
+  //   }
+  // }, [account, isCheckList.current, isClaim])
   useEffect(() => {
     let countdown = 1694501880 - timeStamp
     const updateCountdown = () => {
@@ -214,7 +214,7 @@ const AirDrops = () => {
                 <Social href="https://twitter.com/TrendyDefi">
                   <img src="images/V3/twitter-icon.svg" />
                 </Social>
-                <Social href="https://twitter.com/TrendyDefi">
+                <Social href="https://t.me/trendydefi">
                   <img src="images/V3/Telegramicon.svg" />
                 </Social>
                 <Social href="https://t.me/trendydefiglobal">
