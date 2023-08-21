@@ -151,19 +151,21 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
 
   return (
     <>
-      <ProductionErrorBoundary>
-        {/* <ShowMenu>
+      <BrowserRouter>
+        <ProductionErrorBoundary>
+          {/* <ShowMenu>
         <Layout>
           <Component {...pageProps} />
         </Layout>
       </ShowMenu> */}
-        <NewNav />
-        <EasterEgg iterations={2} />
-        <ToastListener />
-        <ModalRegister />
-        <FixedSubgraphHealthIndicator />
-        <NetworkModal pageSupportedChains={Component.chains} />
-      </ProductionErrorBoundary>
+          <NewNav />
+          <EasterEgg iterations={2} />
+          <ToastListener />
+          <ModalRegister />
+          <FixedSubgraphHealthIndicator />
+          <NetworkModal pageSupportedChains={Component.chains} />
+        </ProductionErrorBoundary>
+      </BrowserRouter>
     </>
   )
 }

@@ -13,21 +13,19 @@ import NotFound from 'views/NotFound'
 export const NewNav = () => {
   return (
     <>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<MenuV2 />}>
-            <Route index element={<HomePage />} />
-            <Route path="pools" element={<Pools />} />
-            <Route path="pools_v1" element={<Poolsv1 />} />
-            <Route path="referral" element={<Referral />} />
-            <Route path="tokenomic" element={<Tokenomic />} />
-            <Route path="mining" element={<Mining />} />
+      <Routes>
+        <Route path="/" element={<MenuV2 />}>
+          <Route index element={<HomePage />} />
+          <Route path="pools" element={<Pools />} />
+          <Route path="pools_v1" element={<Poolsv1 />} />
+          <Route path="referral" element={<Referral />} />
+          <Route path="tokenomic" element={<Tokenomic />} />
+          <Route path="mining" element={<Mining />} />
 
-            <Route path="airdrop" element={<AirDrops />} />
-            <Route path="*" element={<NotFound />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+          <Route path="airdrop" element={<AirDrops />} />
+          <Route path="*" element={<NotFound />} />
+        </Route>
+      </Routes>
     </>
   )
 }

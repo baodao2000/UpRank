@@ -55,7 +55,7 @@ const BottomNavV2 = ({ data }) => {
   return (
     <Wrapper>
       {data.map((items, index) => (
-        <Link style={{ display: index === 0 ? 'none' : 'flex' }} to={items.link}>
+        <Link key={index} style={{ display: index === 0 ? 'none' : 'flex' }} to={items.link}>
           <StyledBottomNavItem style={{ display: index === 0 ? 'none' : 'flex' }}>
             <img src={items.img} />
             <StyledBottomNavText>{items.label}</StyledBottomNavText>

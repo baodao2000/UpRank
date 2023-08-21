@@ -297,7 +297,7 @@ const MenuV2 = () => {
       localStorage.setItem('indexDropdown', '0')
     }
   }
-  const checkLink = async () => {
+  const checkLink = () => {
     for (let i = 1; i < data.length; i + 1) {
       const link = data[i].link
       if (linkActive.indexOf(link) !== -1) {
