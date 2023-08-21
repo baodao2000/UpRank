@@ -19,6 +19,7 @@ import { useCakeBusdPrice } from 'hooks/useBUSDPrice'
 import UserMenu from './UserMenu'
 import BottomNavV2 from './BottomNavV2'
 import UserMenuV2 from './UserMenu/UserMenuV2'
+import NotFound from 'views/NotFound'
 
 const BodyWrapper = styled(Box)`
   position: relative;
@@ -237,9 +238,9 @@ const MenuV2 = () => {
   const [classActive, setClassActive] = useState('')
   const [indexActive, setIndexActive] = useState(0)
   // const [indexDropdown , setIndexDropdown] = useState(0)
-  const indexDropdown = useRef(0)
+  // const indexDropdown = useRef(0)
   const [isActive, setisActive] = useState(0)
-
+  const [notFound, setNotFound] = useState(false)
   // console.log(indexDropdown.current);
 
   const { pathname } = useRouter()
@@ -267,33 +268,35 @@ const MenuV2 = () => {
   const homeLink = menuItems.find((link) => link.label === 'Home')
   const refPrevOffset = useRef(typeof window === 'undefined' ? 0 : window.pageYOffset)
   const linkActive = window.location.href
-
+  const local = window.location.origin
   const checkActive = (e, r) => {
     const linkActive = window.location.href
+    console.log(e, r)
 
     localStorage.setItem('index', r)
     if (linkActive.indexOf(e) !== -1) {
       setClassActive('active')
       setIndexActive(r)
-      setIndexActive(0)
+      setisActive(0)
     } else {
       setClassActive('')
     }
   }
+
   const checkIsActive = (index) => {
     setisActive(index)
     localStorage.setItem('indexDropdown', index)
   }
   const checkHome = () => {
     if (linkActive.slice(-1) === '/') {
+      console.log('dsdsd')
       setClassActive('')
       setIndexActive(0)
       localStorage.setItem('index', '0')
       localStorage.setItem('indexDropdown', '0')
-      console.log('dsdsd')
     }
   }
-  const checkLink = () => {
+  const checkLink = async () => {
     for (let i = 1; i < data.length; i + 1) {
       const link = data[i].link
       if (linkActive.indexOf(link) !== -1) {
@@ -304,15 +307,15 @@ const MenuV2 = () => {
       i++
     }
   }
-
   useEffect(() => {
     checkHome()
     checkLink()
-    if (localStorage.getItem('index') !== 'home') {
+    if (localStorage.getItem('index') !== '0') {
       setIndexActive(Number(localStorage.getItem('index')))
-      indexDropdown.current = Number(localStorage.getItem('indexDropdown'))
+      // indexDropdown.current = Number(localStorage.getItem('indexDropdown'))
+      setisActive(Number(localStorage.getItem('indexDropdown')))
       setClassActive('active')
-    } else if (localStorage.getItem('index') === 'home') {
+    } else if (localStorage.getItem('index') === '0') {
       setClassActive('')
       setIndexActive(0)
     }
@@ -349,7 +352,7 @@ const MenuV2 = () => {
     <Wrapper>
       <Container>
         <FixedContainer showMenu={showMenu} height={totalTopMenuHeight}>
-          <div onClick={() => localStorage.setItem('index', 'home')}>
+          <div onClick={() => localStorage.setItem('index', '0')}>
             <Logo isDark={isDark} href={homeLink?.href ?? '/'} />
           </div>
           <StyledListItem style={{ display: isMobile || isTablet ? 'none' : 'flex' }}>
@@ -372,7 +375,7 @@ const MenuV2 = () => {
                         {items.dropdownMenu.map((i, k) => (
                           <Link key={k} style={{ width: '100%' }} to={i.link}>
                             <StyledDropdownMenu
-                              className={k === indexDropdown.current ? 'active' : ''}
+                              className={k === isActive ? 'active' : ''}
                               onClick={() => checkIsActive(k)}
                             >
                               <Link to={i.link}>{i.label}</Link>
@@ -403,9 +406,7 @@ const MenuV2 = () => {
           </NavDropdownMenu>
         )}
 
-        <div style={{ marginTop: '50px' }}>
-          <Outlet />
-        </div>
+        <div style={{ marginTop: '50px' }}>{notFound === true ? <NotFound /> : <Outlet />}</div>
 
         <BodyWrapper mt={!subLinks ? '0' : '0'}>
           <CurrencyExchange />

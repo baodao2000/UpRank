@@ -8,6 +8,7 @@ import Poolsv1 from 'views/Pools2'
 
 import Tokenomic from 'views/Tokenomic'
 import AirDrops from 'views/AirDrops'
+import NotFound from 'views/NotFound'
 
 export const NewNav = () => {
   return (
@@ -23,8 +24,7 @@ export const NewNav = () => {
             <Route path="mining" element={<Mining />} />
 
             <Route path="airdrop" element={<AirDrops />} />
-            {/* <Route path="contact" element={<Contact />} />
-          <Route path="*" element={<NoPage />} /> */}
+            <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
       </BrowserRouter>
