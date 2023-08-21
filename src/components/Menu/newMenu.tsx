@@ -173,7 +173,8 @@ const StyledItemNav = styled.div`
 `
 const NavDropdownMenu = styled.div`
   display: flex;
-  width: 860px;
+  max-width: 860px;
+  width: 100%
   gap: 30px;
   margin: 60px auto;
   justify-content: center;
