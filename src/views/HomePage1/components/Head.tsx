@@ -4,6 +4,10 @@ import images from 'configs/images'
 import 'aos/dist/aos.css'
 import { isMobile } from 'react-device-detect'
 import Link from 'next/link'
+import { getBlockExploreLink } from 'utils'
+import contracts from 'config/constants/contracts'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import { ChainId } from '../../../../packages/swap-sdk/src/constants'
 
 const Head = styled(Flex)`
   * {
@@ -168,9 +172,21 @@ const ButtonStaking = styled(Button)`
   }
 `
 const HeadHome = () => {
+  const { account, chainId } = useActiveWeb3React()
+  // account = '0x1ec0f8875B7fc2400a6F44788c6710959614e68A'
+  const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId
+  const shortenURL = (s: string, max: number) => {
+    return s.length > max ? s.substring(0, max / 2 - 1) + '...' + s.substring(s.length - max / 2 + 2, s.length) : s
+  }
   return (
     <Head>
       <ContentHead data-aos="fade-up-right">
+        <p style={{ color: 'rgba(133, 68, 245, 1)', fontSize: '24px', fontWeight: '700' }}>
+          TREND Contract:{' '}
+          <a style={{ color: '#fff' }} href={getBlockExploreLink(contracts.trend[CHAIN_ID], 'address', CHAIN_ID)}>
+            {shortenURL(`${contracts.poolsV4[CHAIN_ID]}`, 18)}
+          </a>
+        </p>
         <p>
           <span className="p2">Start Earning</span>
           <span className="p1"> Passive Income with </span>
