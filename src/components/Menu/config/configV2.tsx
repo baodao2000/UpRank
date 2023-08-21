@@ -32,9 +32,6 @@ export const NewNav = () => {
           <Route path="/airdrop">
             <AirDrops />
           </Route>
-          <Route path="*">
-            <NotFound />
-          </Route>
           <Route path="/">
             <HomePage />
           </Route>

@@ -221,7 +221,13 @@ function Overview() {
 
         <OverviewContent style={{ width: isMobile ? '343px' : isTablet ? '743px' : '785px' }}>
           Building Trust, One Block at a Time - Discover the future of{' '}
-          <a href={getBlockExploreLink(contracts.trend[CHAIN_ID], 'address', CHAIN_ID)}>TREND</a> Token.
+          <a
+            style={{ color: 'rgb(133, 68, 245)' }}
+            href={getBlockExploreLink(contracts.trend[CHAIN_ID], 'address', CHAIN_ID)}
+          >
+            TREND
+          </a>{' '}
+          Token.
         </OverviewContent>
         <Token>
           <Image
