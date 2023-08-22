@@ -381,7 +381,7 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
               <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
                 <Title>Deposit</Title>
                 <div className="imgMine">
-                  {mine ? <img style={{ width: '100%' }} src="/images/V3/cup.svg" alt="cup" /> : null}
+                  {mine && pool.pid !== 0 ? <img style={{ width: '100%' }} src="/images/V3/cup.svg" alt="cup" /> : null}
                 </div>
                 <span>
                   <span style={{ fontSize: '18px', lineHeight: '24px', fontWeight: '400', color: '#E2E1E5' }}>
@@ -479,7 +479,7 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
                     </div>
                   </div>
                 </UserBalance>
-                {mine === true ? (
+                {mine === true && pool.pid !== 0 ? (
                   <UserBalance>
                     <div
                       style={{
