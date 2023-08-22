@@ -21,6 +21,7 @@ import BottomNavV2 from './BottomNavV2'
 import UserMenuV2 from './UserMenu/UserMenuV2'
 import { NewNav } from './config/configV2'
 
+import images from 'configs/images'
 const BodyWrapper = styled(Box)`
   position: relative;
   display: flex;
@@ -192,7 +193,7 @@ const data = [
     dropdownMenu: [],
   },
   {
-    img: 'images/V3/iconPool.svg',
+    img: '/images/V3/iconPool.svg',
     link: '/pools',
     label: 'Pools',
     dropdownMenu: [
@@ -209,25 +210,25 @@ const data = [
     ],
   },
   {
-    img: 'images/V3/iconReferral.svg',
+    img: '/images/V3/iconReferral.svg',
     link: '/referral',
     label: 'Referral',
     dropdownMenu: [],
   },
   {
-    img: 'images/V3/iconTokenomic.svg',
+    img: '/images/V3/iconTokenomic.svg',
     link: '/tokenomic',
     label: 'Tokenomic',
     dropdownMenu: [],
   },
   {
-    img: 'images/V3/iconMinning.svg',
+    img: '/images/V3/iconMinning.svg',
     link: '/mining',
     label: 'Minning',
     dropdownMenu: [],
   },
   {
-    img: 'images/V3/gift.svg',
+    img: '/images/V3/gift.svg',
     link: '/airdrop',
     label: 'Airdrop',
     dropdownMenu: [],
@@ -290,7 +291,6 @@ const MenuV2 = () => {
   }
   const checkHome = () => {
     if (linkActive.slice(-1) === '/') {
-      console.log('dsdsd')
       setClassActive('')
       setIndexActive(0)
       localStorage.setItem('index', '0')
@@ -321,6 +321,7 @@ const MenuV2 = () => {
       setIndexActive(0)
     }
   }, [linkActive, classActive])
+
   useEffect(() => {
     const handleScroll = () => {
       const currentOffset = window.pageYOffset
