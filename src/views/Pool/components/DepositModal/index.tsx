@@ -231,6 +231,7 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
             decimals={0}
             duration={0.5}
             style={{ color: '#2CE0D5', fontWeight: 600 }}
+            separator=","
           />
           <span style={{ color: '#2CE0D5', fontWeight: 600 }}>$</span>
           <span style={{ color: '#2CE0D5' }}>{' ~ '}</span>
@@ -242,6 +243,7 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
             decimals={4}
             duration={0.5}
             style={{ color: '#2CE0D5', fontWeight: 400 }}
+            separator=","
           />{' '}
           <img src={`/images/chains/${chainId}.png`} alt="logo" width="12px" /> to{' '}
           <CountUp
@@ -252,6 +254,7 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
             decimals={0}
             duration={0.5}
             style={{ color: '#2CE0D5', fontWeight: 600 }}
+            separator=","
           ></CountUp>
           <span style={{ color: '#2CE0D5', fontWeight: 600 }}>$</span>
           <span style={{ color: '#2CE0D5' }}>{' ~ '}</span>
@@ -263,6 +266,7 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
             decimals={4}
             duration={0.5}
             style={{ color: '#2CE0D5', fontWeight: 400 }}
+            separator=","
           />{' '}
           <img src={`/images/chains/${chainId}.png`} alt="logo" width="12px" />
         </span>
@@ -278,6 +282,7 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
                 end={Number(userBalance)}
                 decimals={4}
                 duration={0.5}
+                separator=","
               ></CountUp>
             }{' '}
             <img src={`/images/chains/${chainId}.png`} alt="logo" width="12px" />
@@ -290,6 +295,7 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
                 end={Number(userBalance) * pool.rateBNB2USD}
                 decimals={4}
                 duration={0.5}
+                separator=","
               ></CountUp>
             }
             {'$'}
