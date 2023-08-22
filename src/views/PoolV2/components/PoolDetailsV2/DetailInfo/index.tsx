@@ -195,6 +195,7 @@ const DetailInfoPool: React.FC<
                 end={Number(currentReward * rateBNB2USD)}
                 decimals={currentReward > 0 ? 2 : 0}
                 duration={0.5}
+                separator=","
               />
               &nbsp;
             </Text>
@@ -211,6 +212,7 @@ const DetailInfoPool: React.FC<
                 end={Number(currentReward)}
                 decimals={totalReward > 0 ? 4 : 2}
                 duration={0.5}
+                separator=","
               />{' '}
               <img className="imagesvector" src={images.vector} alt="pool name" width={18} />
             </Text>
@@ -236,6 +238,7 @@ const DetailInfoPool: React.FC<
                 end={Number(totalReward * rateBNB2USD)}
                 decimals={totalReward > 0 ? 2 : 0}
                 duration={0.5}
+                separator=","
               />
               &nbsp;
             </Text>
@@ -252,6 +255,7 @@ const DetailInfoPool: React.FC<
                 end={Number(totalReward)}
                 decimals={totalReward > 0 ? 4 : 0}
                 duration={0.5}
+                separator=","
               />{' '}
               <img className="imagesvector" src={images.vector} alt="pool name" width={18} />
             </Text>
@@ -284,6 +288,7 @@ const DetailInfoPool: React.FC<
             end={totalLock * rateBNB2USD}
             decimals={totalLock > 0 ? 2 : 0}
             duration={0.5}
+            separator=","
           />
           <div
             style={{
@@ -305,6 +310,7 @@ const DetailInfoPool: React.FC<
               decimals={totalLock > 0 ? 4 : 0}
               duration={0.5}
               style={{ fontWeight: 400 }}
+              separator=","
             />
             <img
               className="imagesvector"

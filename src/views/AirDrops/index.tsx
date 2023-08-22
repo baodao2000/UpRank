@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { Button, Text, useMatchBreakpoints, useToast } from '@pancakeswap/uikit'
 import { useWeb3React } from '../../../packages/wagmi/src/useWeb3React'
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 
 const Waraper = styled.div`
   display: flex;
@@ -221,7 +221,7 @@ const AirDrops = () => {
                   <img src="images/V3/Telegramicon.svg" />
                 </Social>
               </SocialGroup>
-              <Link href="/pools">
+              <Link to="/pools">
                 <ButtonClaim>Stacking Now</ButtonClaim>
               </Link>
             </CheckList>
@@ -242,7 +242,7 @@ const AirDrops = () => {
                   <Title style={{ fontSize: isMobile ? '20px' : '20px' }}>
                     You had claimed please stacke Matic to receive TREND.
                   </Title>
-                  <Link href="/pools">
+                  <Link to="/pools">
                     <ButtonClaim>Stacking Now</ButtonClaim>
                   </Link>
                 </>

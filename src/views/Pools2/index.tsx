@@ -18,7 +18,6 @@ import { isMobile } from 'react-device-detect'
 import { useState, useEffect } from 'react'
 import { formatBigNumber } from 'utils/formatBalance'
 import { poolBaseUrl } from 'views/Pools/constants'
-import Link from 'next/link'
 import { formatEther } from '@ethersproject/units'
 import { shortenURL, timeDisplayLong } from './util'
 import useActiveWeb3React from '../../hooks/useActiveWeb3React'
@@ -26,6 +25,7 @@ import { ChainId, NATIVE } from '../../../packages/swap-sdk/src/constants'
 import Rank from './components/Rank'
 import moment from 'moment'
 import readTrendyAbi from '../../config/abi/readTrendy.json'
+import { Link } from 'react-router-dom'
 // ============= STYLED
 const Container = styled.div`
   background: url(${images.backgroundpool}) rgba(0, 0, 0, 0.6) no-repeat;
@@ -792,7 +792,7 @@ const Pools = () => {
                       </Reward>
                       <Time></Time>
                     </Info>
-                    <Link href={`${poolBaseUrl}/${r}?chainId=${CHAIN_ID}`}>
+                    <Link to={`${poolBaseUrl}/${r}/chainId=${CHAIN_ID}`}>
                       {isMobile ? (
                         <Button
                           style={{ color: '#6216B0', backgroundColor: '#D9D9D9' }}

@@ -1,7 +1,7 @@
 import { useTranslation } from '@pancakeswap/localization'
 import { Box, Modal, useToast, Button, Input, Text, Checkbox } from '@pancakeswap/uikit'
 import images from 'configs/images'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { trendyColors } from 'style/trendyTheme'
 import useConfirmTransaction from 'hooks/useConfirmTransaction'
@@ -34,11 +34,12 @@ const InputArea = styled.div`
     margin-top: 8px;
     display: flex;
     flex-direction: row;
-    gap: 3px;
+    gap: 10px;
     font-size: 18px;
     line-height: 24px;
-    @media (max-width: 494px) {
+    @media (max-width: 575px) {
       flex-direction: column;
+      gap: 0;
     }
   }
   .imagesvector {
@@ -54,6 +55,14 @@ const InputArea = styled.div`
     gap: 10px;
     border-radius: 4px;
     background: var(--white-white-8, rgba(255, 255, 255, 0.08));
+  }
+  position: relative;
+  .imgMine {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 70px;
+    height: 70px;
   }
 `
 const depositInput = {
@@ -220,6 +229,7 @@ const Title = styled(Text)`
   font-weight: 700;
   line-height: 32px;
   text-align: center;
+  margin-bottom: 20px;
 `
 
 const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>> = ({
@@ -251,7 +261,8 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
   const userBalance = isFetched && data && data.value ? formatBigNumber(data.value, 4) : 0
   const [userTotal, setUserTotal] = useState(false)
   const [mine, setMine] = useState(false)
-  const [checked, setChecked] = useState(false)
+  const [checked, setChecked] = useState(true)
+  // const checked = useRef(true)
   const [pid, setPid] = useState(pool.pid)
   const [isLoading, setIsLoading] = useState(true)
   const [disabledDiposit, setDisabledDeposit] = useState(false)
@@ -324,13 +335,19 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
       setIsLoading(false)
       const users = await poolContract.users(account, pid)
       const period = await poolContract.period()
-      console.log(Number(7 * Number(period)))
+      const startTime = users.startTime
+      if (Number(startTime) > 0) {
+        setChecked(users.isMine)
+        setMine(users.isMine)
+      } else {
+        setChecked(true)
+        setMine(true)
+      }
 
-      setChecked(users.isMine)
       if (timeStamp - Number(users.startTime) >= 7 * Number(period) && Number(users.startTime) > 0) {
         setDisabledDeposit(true)
       }
-      setMine(users.isMine)
+
       if (users.totalLock.toString() === '0') {
         setUserTotal(false)
       } else {
@@ -343,7 +360,7 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
   }
   useEffect(() => {
     checkUsers()
-  }, [account, pool.pid])
+  }, [account, pool.pid, checked])
 
   return (
     <>
@@ -363,6 +380,9 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
               <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
                 <Title>Deposit</Title>
+                <div className="imgMine">
+                  {mine ? <img style={{ width: '100%' }} src="/images/V3/cup.svg" alt="cup" /> : null}
+                </div>
                 <span>
                   <span style={{ fontSize: '18px', lineHeight: '24px', fontWeight: '400', color: '#E2E1E5' }}>
                     {' '}
@@ -391,8 +411,9 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
                         duration={0.5}
                         style={{ color: '#8544F5', fontWeight: 400 }}
                       />{' '}
-                      <img className="imagesvector" src={images.vector} alt="logo" width="12px" /> &emsp;&emsp;to&emsp;{' '}
+                      <img className="imagesvector" src={images.vector} alt="logo" width="12px" />
                     </div>
+                    <span>to</span>
                     <div style={{ display: 'flex', flexDirection: 'row' }}>
                       <CountUp
                         start={0}
@@ -512,9 +533,6 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
                   </UserBalance>
                 )}
               </div>
-              <div style={{ width: 'auto' }}>
-                {mine ? <img style={{ width: '100%' }} src="/images/V3/cup.svg" alt="cup" /> : null}
-              </div>
             </div>
 
             <StyledInput
@@ -549,6 +567,7 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
                 <CheckMine>
                   <input
                     id="switchMine"
+                    defaultChecked={checked}
                     onChange={onChange}
                     disabled={userTotal}
                     className="checkBox"

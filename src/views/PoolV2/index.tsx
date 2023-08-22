@@ -18,7 +18,6 @@ import { PageMeta } from 'components/Layout/Page'
 import { useState, useEffect } from 'react'
 import { formatBigNumber } from 'utils/formatBalance'
 import { poolBaseUrlV2 } from 'views/PoolV2/components/PoolDetailsV2/constants'
-import Link from 'next/link'
 import { formatEther } from '@ethersproject/units'
 import { shortenURL, timeDisplayLong } from './util'
 import useActiveWeb3React from '../../hooks/useActiveWeb3React'
@@ -29,6 +28,8 @@ import readTrendyAbi from '../../config/abi/readTrendy.json'
 // import addresses from 'config/constants/contracts'
 
 import { arrayify } from '@ethersproject/bytes'
+import { Link, Route, useRouteMatch } from 'react-router-dom'
+import Pool from './components/PoolDetailsV2'
 
 // ============= STYLED
 const Container = styled.div`
@@ -667,6 +668,7 @@ const ButtonDetails = styled.div`
 `
 const Pools = () => {
   const { account, chainId } = useActiveWeb3React()
+  let match = useRouteMatch()
   // account = '0x1ec0f8875B7fc2400a6F44788c6710959614e68A'
   const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId
   const getPoolV4Contract = getPoolsV4Contract(CHAIN_ID)
@@ -910,7 +912,7 @@ const Pools = () => {
           <LabelContent>
             <p>
               Rewards are exclusively reserved for referrals. Invite your friends get our rewards.
-              <Link href="/referral">
+              <Link to="/referral">
                 <span className="link">Invite Now</span>
               </Link>
             </p>
@@ -1274,7 +1276,7 @@ const Pools = () => {
                           </Reward>
                           <Time></Time>
                         </Info>
-                        <Link href={`${poolBaseUrlV2}/${r}?chainId=${CHAIN_ID}`}>
+                        <Link to={`${poolBaseUrlV2}/${r}/chainId=${CHAIN_ID}`}>
                           {isMobile && isTablet ? (
                             <Button
                               style={{
