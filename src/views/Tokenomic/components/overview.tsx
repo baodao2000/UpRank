@@ -223,7 +223,7 @@ function Overview() {
           Building Trust, One Block at a Time - Discover the future of{' '}
           <a
             style={{ color: 'rgb(133, 68, 245)' }}
-            href={getBlockExploreLink(contracts.trend[CHAIN_ID], 'address', CHAIN_ID)}
+            href={getBlockExploreLink(contracts.trend[CHAIN_ID], 'token', CHAIN_ID)}
           >
             TREND
           </a>{' '}

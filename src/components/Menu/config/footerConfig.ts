@@ -69,7 +69,7 @@ export const footerLinks: (t: ContextApi['t']) => FooterLinkType[] = (t) => [
       {
         label: 'Twitter',
         href: 'https://twitter.com/TrendyDefi',
-        image: '/images/V3/TwitterIcon.svg',
+        image: '/images/V3/Logotwitter.svg',
       },
       // {
       //   label: t('Facebook'),
