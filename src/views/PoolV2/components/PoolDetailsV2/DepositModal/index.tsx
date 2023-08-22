@@ -34,11 +34,12 @@ const InputArea = styled.div`
     margin-top: 8px;
     display: flex;
     flex-direction: row;
-    gap: 3px;
+    gap: 10px;
     font-size: 18px;
     line-height: 24px;
-    @media (max-width: 494px) {
+    @media (max-width: 575px) {
       flex-direction: column;
+      gap: 0;
     }
   }
   .imagesvector {
@@ -54,6 +55,14 @@ const InputArea = styled.div`
     gap: 10px;
     border-radius: 4px;
     background: var(--white-white-8, rgba(255, 255, 255, 0.08));
+  }
+  position: relative;
+  .imgMine {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 70px;
+    height: 70px;
   }
 `
 const depositInput = {
@@ -220,6 +229,7 @@ const Title = styled(Text)`
   font-weight: 700;
   line-height: 32px;
   text-align: center;
+  margin-bottom: 20px;
 `
 
 const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>> = ({
@@ -370,6 +380,9 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
               <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
                 <Title>Deposit</Title>
+                <div className="imgMine">
+                  {mine ? <img style={{ width: '100%' }} src="/images/V3/cup.svg" alt="cup" /> : null}
+                </div>
                 <span>
                   <span style={{ fontSize: '18px', lineHeight: '24px', fontWeight: '400', color: '#E2E1E5' }}>
                     {' '}
@@ -398,8 +411,9 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
                         duration={0.5}
                         style={{ color: '#8544F5', fontWeight: 400 }}
                       />{' '}
-                      <img className="imagesvector" src={images.vector} alt="logo" width="12px" /> &emsp;&emsp;to&emsp;{' '}
+                      <img className="imagesvector" src={images.vector} alt="logo" width="12px" />
                     </div>
+                    <span>to</span>
                     <div style={{ display: 'flex', flexDirection: 'row' }}>
                       <CountUp
                         start={0}
@@ -518,9 +532,6 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
                     </div>
                   </UserBalance>
                 )}
-              </div>
-              <div style={{ width: 'auto' }}>
-                {mine ? <img style={{ width: '100%' }} src="/images/V3/cup.svg" alt="cup" /> : null}
               </div>
             </div>
 
