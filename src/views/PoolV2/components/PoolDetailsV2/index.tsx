@@ -18,6 +18,7 @@ import DepositPoolModal from './DepositModal'
 import { ChainId, NATIVE } from '../../../../../packages/swap-sdk/src/constants'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useParams } from 'react-router'
+import { Link } from 'react-router-dom'
 
 const PoolDetail = styled.div`
   * {
@@ -102,7 +103,7 @@ const ButtonArea = styled.div`
   gap: 16px;
 `
 
-const BtnBack = styled.a`
+const BtnBack = styled(Link)`
   margin-top: 60px;
   display: flex;
   flex-direction: row;
@@ -301,7 +302,7 @@ const Pool = () => {
             alt="iconback"
           />
           <PageHeader background="none">
-            <BtnBack href="/pools">
+            <BtnBack to="/pools">
               <img src={images.iconback} alt="iconback" />
               Back
             </BtnBack>

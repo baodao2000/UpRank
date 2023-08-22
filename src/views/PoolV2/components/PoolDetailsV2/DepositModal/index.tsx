@@ -1,7 +1,7 @@
 import { useTranslation } from '@pancakeswap/localization'
 import { Box, Modal, useToast, Button, Input, Text, Checkbox } from '@pancakeswap/uikit'
 import images from 'configs/images'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { trendyColors } from 'style/trendyTheme'
 import useConfirmTransaction from 'hooks/useConfirmTransaction'
@@ -251,7 +251,8 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
   const userBalance = isFetched && data && data.value ? formatBigNumber(data.value, 4) : 0
   const [userTotal, setUserTotal] = useState(false)
   const [mine, setMine] = useState(false)
-  const [checked, setChecked] = useState(false)
+  const [checked, setChecked] = useState(true)
+  // const checked = useRef(true)
   const [pid, setPid] = useState(pool.pid)
   const [isLoading, setIsLoading] = useState(true)
   const [disabledDiposit, setDisabledDeposit] = useState(false)
@@ -324,13 +325,19 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
       setIsLoading(false)
       const users = await poolContract.users(account, pid)
       const period = await poolContract.period()
-      console.log(Number(7 * Number(period)))
+      const startTime = users.startTime
+      if (Number(startTime) > 0) {
+        setChecked(users.isMine)
+        setMine(users.isMine)
+      } else {
+        setChecked(true)
+        setMine(true)
+      }
 
-      setChecked(users.isMine)
       if (timeStamp - Number(users.startTime) >= 7 * Number(period) && Number(users.startTime) > 0) {
         setDisabledDeposit(true)
       }
-      setMine(users.isMine)
+
       if (users.totalLock.toString() === '0') {
         setUserTotal(false)
       } else {
@@ -343,7 +350,7 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
   }
   useEffect(() => {
     checkUsers()
-  }, [account, pool.pid])
+  }, [account, pool.pid, checked])
 
   return (
     <>
@@ -549,6 +556,7 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
                 <CheckMine>
                   <input
                     id="switchMine"
+                    defaultChecked={checked}
                     onChange={onChange}
                     disabled={userTotal}
                     className="checkBox"
