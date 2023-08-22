@@ -15,7 +15,7 @@ import { getContract, getPoolsV4Contract } from 'utils/contractHelpers'
 import { usePoolsContract, usePoolsV4Contract } from 'hooks/useContract'
 import { PageMeta } from 'components/Layout/Page'
 // import { isMobile } from 'react-device-detect'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { formatBigNumber } from 'utils/formatBalance'
 import { poolBaseUrlV2 } from 'views/PoolV2/components/PoolDetailsV2/constants'
 import { formatEther } from '@ethersproject/units'
@@ -701,8 +701,14 @@ const Pools = () => {
 
   const [userClaimed, setUserClaimed] = useState(false)
   const { isMobile, isTablet } = useMatchBreakpoints()
+  const link = window.location.href
 
-  // console.log(all);
+  const review = () => {
+    // if(link.indexOf('review') !== -1 ) {
+    //   console.log('dsdsdsd');
+    //   location.href = '#'+'review'
+    // }
+  }
 
   const getAll = async (ids: number[]) => {
     if (!account) {
@@ -841,6 +847,9 @@ const Pools = () => {
 
     return () => clearInterval(timerId)
   }, [countDown])
+  useEffect(() => {
+    // review()
+  }, [link])
   // console.log(all);
 
   return (
@@ -1400,7 +1409,11 @@ const Pools = () => {
                   </PoolsReward>
                 </Flex>
               </PageHeader>
-              {!account ? null : <Rank unit={unit} userRank={all} onSuccess={onSuccessRank} />}
+              {!account ? null : (
+                <div id="review">
+                  <Rank unit={unit} userRank={all} onSuccess={onSuccessRank} />
+                </div>
+              )}
             </>
           )}
         </Background>

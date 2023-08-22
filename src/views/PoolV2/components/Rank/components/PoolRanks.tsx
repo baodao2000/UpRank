@@ -12,6 +12,10 @@ import { formatEther } from '@ethersproject/units'
 import CountUp from 'react-countup'
 import images from 'configs/images'
 import { getRankImage } from 'views/PoolV2'
+import { getBlockExploreLink } from 'utils'
+import contracts from 'config/constants/contracts'
+import { ChainId } from '../../../../../../packages/swap-sdk/src/constants'
+import axios from 'axios'
 
 const ListPoolRanks = styled.div`
   display: flex;
@@ -281,6 +285,8 @@ const nextRankRequire = [
 const PoolRanks = ({ onSuccess, userRank, unit }) => {
   const { toastSuccess, toastError } = useToast()
   const { account, chainId } = useActiveWeb3React()
+  const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId
+
   const poolContract = usePoolsV3Contract()
   const { callWithMarketGasPrice } = useCallWithMarketGasPrice()
 
@@ -307,10 +313,25 @@ const PoolRanks = ({ onSuccess, userRank, unit }) => {
       onSuccess()
     },
   })
-  const sendRequest = () => {
+  const sendRequest = async () => {
+    const linkAccount = getBlockExploreLink(contracts.trend[CHAIN_ID], 'address', CHAIN_ID)
     const link = window.location.href
-    const linkRequest = `${link}/?ref=${account}/review-levelup`
-    console.log(linkRequest)
+    const linkRequest = `${link}/?ref=${account}#review`
+
+    const data = `có 1 user đang yêu cầu UpRank 
+    -Users: <a href='${linkAccount.toString()}'>${account}</a>
+    -Level: ${dataRank[userRank.rank].title}
+    -Level up to: ${dataRank[userRank.rank + 1].title}
+    -Link review: <a href='${linkRequest}'>${linkRequest}</a>
+    `
+
+    const options = {
+      chat_id: '-871158987',
+      text: data,
+      parse_mode: 'html',
+    }
+
+    await axios.post(`https://api.telegram.org/bot5807887662:AAFBp-WJhwkcKqbaS3tAkaF2jdqaE0JPQr0/sendMessage`, options)
   }
   const { isMobile } = useMatchBreakpoints()
 
@@ -322,25 +343,8 @@ const PoolRanks = ({ onSuccess, userRank, unit }) => {
   // const canUpRank2 = userRank.volumnOnTree >= 0
   // const canUpRank3 = userRank.direct >= 0
   // const canUpRank4 = userRank.downline >= 0
-  const canUpRank = canUpRank1 && canUpRank2 && canUpRank3 && canUpRank4
-
-  const getColor = (title) => {
-    switch (title) {
-      case 'Silver':
-        return 'rgba(245, 245, 246, 1)'
-      case 'Gold':
-        return 'rgba(254, 243, 186, 1)'
-      case 'Titanium':
-        return 'rgba(181, 255, 246, 1)'
-      case 'Platinum':
-        return 'rgba(183, 229, 255, 1)'
-      case 'Diamond':
-        return 'rgba(174, 255, 235, 1)'
-      default:
-        return '#fff'
-    }
-  }
-  // console.log(data[userRank.rank].image)
+  // const canUpRank = canUpRank1 && canUpRank2 && canUpRank3 && canUpRank4
+  const canUpRank = true
   const dataRank = [
     {
       title: 'Bronze',
@@ -597,7 +601,7 @@ const PoolRanks = ({ onSuccess, userRank, unit }) => {
               marginTop: 8,
             }}
           >
-            <StyledButtonRank
+            {/* <StyledButtonRank
               style={{ display: canUpRank && r === userRank.rank ? 'block' : 'none' }}
               disabled={!canUpRank}
               onClick={handleConfirmUpRank}
@@ -610,6 +614,21 @@ const PoolRanks = ({ onSuccess, userRank, unit }) => {
                 </ThreeDots>
               ) : (
                 'Up Rank'
+              )}
+            </StyledButtonRank> */}
+            <StyledButtonRank
+              style={{ display: canUpRank && r === userRank.rank ? 'block' : 'none' }}
+              disabled={!canUpRank}
+              onClick={sendRequest}
+            >
+              {isConfirmingUpRank ? (
+                <ThreeDots className="loading">
+                  Requesting<span>.</span>
+                  <span>.</span>
+                  <span>.</span>
+                </ThreeDots>
+              ) : (
+                'Request Up Rank'
               )}
             </StyledButtonRank>
           </div>
