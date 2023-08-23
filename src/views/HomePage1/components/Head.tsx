@@ -1,8 +1,7 @@
-import { Button, Flex, LinkExternal, Text, useModal } from '@pancakeswap/uikit'
+import { Button, Flex, LinkExternal, Text, useMatchBreakpoints, useModal } from '@pancakeswap/uikit'
 import styled from 'styled-components'
 import images from 'configs/images'
 import 'aos/dist/aos.css'
-import { isMobile } from 'react-device-detect'
 import { getBlockExploreLink } from 'utils'
 import contracts from 'config/constants/contracts'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
@@ -36,7 +35,7 @@ const Head = styled(Flex)`
 `
 
 const ContentHead = styled.div`
-  margin-top: 50px;
+  margin-top: 150px;
   width: 53%;
   z-index: 1;
   @media (max-width: 575px) {
@@ -176,9 +175,10 @@ const Popup = styled.div`
   border-radius: 12px;
   display: flex;
   border: 1px solid rgba(255, 255, 255, 0.12);
-  background: linear-gradient(360deg, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0) 100%);
+  background: rgba(160, 154, 161, 0.3);
   backdrop-filter: blur(5.5px);
-  width: 1000px;
+  max-width: 1000px;
+  width: 100%;
   margin: 70px auto 0 auto;
   justify-content: center;
   align-items: center;
@@ -194,11 +194,21 @@ const Popup = styled.div`
     height: 20px;
     cursor: pointer;
   }
+  @media screen and (max-width: 575px) {
+    gap: 5px;
+    justify-content: flex-start;
+    .icon {
+      width: 48px;
+      height: 48px;
+    }
+  }
 `
 const HeadHome = () => {
   const { account, chainId } = useActiveWeb3React()
   const [close, setClose] = useState('flex')
   // account = '0x1ec0f8875B7fc2400a6F44788c6710959614e68A'
+  const { isMobile, isTablet } = useMatchBreakpoints()
+
   const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId
   const shortenURL = (s: string, max: number) => {
     return s.length > max ? s.substring(0, max / 2 - 1) + '...' + s.substring(s.length - max / 2 + 2, s.length) : s
@@ -219,12 +229,12 @@ const HeadHome = () => {
           <div onClick={handleClose}>
             <img src="/images/closeIcon.png" className="close" />
           </div>
-          <img src="/images/iocnPopup.svg" />
-          <Text style={{ color: '#A09AA1' }} fontSize="16px">
+          <img className="icon" src="/images/iocnPopup.svg" />
+          <Text style={{ color: '#A09AA1' }} fontSize={isMobile ? '12px' : '16px'}>
             TREND Contract:{' '}
           </Text>
           <LinkExternal
-            fontSize="20px"
+            fontSize={isMobile ? '14px' : '20px'}
             fontWeight="700"
             href={getBlockExploreLink(contracts.trend[CHAIN_ID], 'token', CHAIN_ID)}
             ellipsis={true}
@@ -262,7 +272,12 @@ const HeadHome = () => {
       </ContentHead>
       <ContentHeadRight data-aos="fade-left">
         {isMobile ? (
-          <ImageHead src={images.homeMobile} alt="" loading="eager" />
+          <ImageHead
+            style={{ marginTop: close === 'flex' ? '70px' : '0' }}
+            src={images.homeMobile}
+            alt=""
+            loading="eager"
+          />
         ) : (
           <ImageHead src={images.headhome} alt="" loading="eager" />
         )}
