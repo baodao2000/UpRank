@@ -202,6 +202,7 @@ const Popup = styled.div`
       height: 48px;
     }
   }
+  z-index: 1000;
 `
 const HeadHome = () => {
   const { account, chainId } = useActiveWeb3React()
