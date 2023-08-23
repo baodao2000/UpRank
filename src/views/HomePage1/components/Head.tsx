@@ -8,6 +8,7 @@ import contracts from 'config/constants/contracts'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { ChainId } from '../../../../packages/swap-sdk/src/constants'
 import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 
 const Head = styled(Flex)`
   * {
@@ -171,31 +172,72 @@ const ButtonStaking = styled(Button)`
     line-height: 20px;
   }
 `
+const Popup = styled.div`
+  border-radius: 12px;
+  display: flex;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: linear-gradient(360deg, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0) 100%);
+  backdrop-filter: blur(5.5px);
+  width: 1000px;
+  margin: 70px auto 0 auto;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  height: 64px;
+  position: relative;
+  top: 0;
+  .close {
+    position: absolute;
+    right: 3px;
+    top: 0;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+`
 const HeadHome = () => {
   const { account, chainId } = useActiveWeb3React()
+  const [close, setClose] = useState('flex')
   // account = '0x1ec0f8875B7fc2400a6F44788c6710959614e68A'
   const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId
   const shortenURL = (s: string, max: number) => {
     return s.length > max ? s.substring(0, max / 2 - 1) + '...' + s.substring(s.length - max / 2 + 2, s.length) : s
   }
+  const handleClose = () => {
+    setClose('none')
+    localStorage.setItem('popup', 'none')
+  }
+  useEffect(() => {
+    if (localStorage.getItem('popup') === 'none') {
+      setClose('none')
+    }
+  }, [])
   return (
     <Head>
-      <ContentHead data-aos="fade-up-right">
-        <div style={{ display: 'flex', gap: '10px' }}>
-          <Text style={{ color: 'rgba(133,68,245,1)' }} fontSize="22px">
+      <div style={{ width: '100%', position: 'absolute', top: '0' }}>
+        <Popup style={{ display: close }}>
+          <div onClick={handleClose}>
+            <img src="/images/closeIcon.png" className="close" />
+          </div>
+          <img src="/images/iocnPopup.svg" />
+          <Text style={{ color: '#A09AA1' }} fontSize="16px">
             TREND Contract:{' '}
           </Text>
           <LinkExternal
-            fontSize="18px"
+            fontSize="20px"
+            fontWeight="700"
             href={getBlockExploreLink(contracts.trend[CHAIN_ID], 'token', CHAIN_ID)}
             ellipsis={true}
-            style={{ color: 'rgba(249, 249, 249, 1)' }}
-            color="#00F0E1"
+            style={{ color: '#8544F5' }}
+            color="rgb(0, 240, 225)"
           >
             {' '}
             {shortenURL(`${contracts.trend[CHAIN_ID]}`, 18)}
           </LinkExternal>
-        </div>
+        </Popup>
+      </div>
+
+      <ContentHead data-aos="fade-up-right">
         <p>
           <span className="p2">Start Earning</span>
           <span className="p1"> Passive Income with </span>
