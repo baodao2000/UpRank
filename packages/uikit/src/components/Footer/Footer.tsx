@@ -111,7 +111,7 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
   return (
     <StyledFooter data-theme="dark" p={["40px 16px", null, "56px 40px 32px 40px"]} {...props}>
       <BlockListItem>
-        <img src="./images/V3/Logo.png" />
+        <img src="/images/V3/Logo.png" />
 
         {items?.map((item) => (
           <StyledList key={item.label}>

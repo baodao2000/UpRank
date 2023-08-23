@@ -368,7 +368,7 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
         <TrendyPageLoader />
       ) : (
         <Modal
-          style={{ padding: '32px', maxWidth: '498px' }}
+          style={{ padding: '32px', maxWidth: '500px' }}
           title={''}
           onDismiss={onDismiss}
           hideCloseButton={false}
@@ -381,7 +381,7 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
               <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
                 <Title>Deposit</Title>
                 <div className="imgMine">
-                  {mine ? <img style={{ width: '100%' }} src="/images/V3/cup.svg" alt="cup" /> : null}
+                  {mine && pool.pid !== 0 ? <img style={{ width: '100%' }} src="/images/V3/cup.svg" alt="cup" /> : null}
                 </div>
                 <span>
                   <span style={{ fontSize: '18px', lineHeight: '24px', fontWeight: '400', color: '#E2E1E5' }}>
@@ -399,6 +399,7 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
                         decimals={0}
                         duration={0.5}
                         style={{ color: '#8544F5', fontWeight: 600 }}
+                        separator=","
                       />
                       <span style={{ color: '#8544F5', fontWeight: 600 }}>$</span>
                       <span style={{ color: '#8544F5' }}>{' ~ '}</span>
@@ -410,6 +411,7 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
                         decimals={4}
                         duration={0.5}
                         style={{ color: '#8544F5', fontWeight: 400 }}
+                        separator=","
                       />{' '}
                       <img className="imagesvector" src={images.vector} alt="logo" width="12px" />
                     </div>
@@ -423,6 +425,7 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
                         decimals={0}
                         duration={0.5}
                         style={{ color: '#8544F5', fontWeight: 600 }}
+                        separator=","
                       ></CountUp>
                       <span style={{ color: '#8544F5', fontWeight: 600 }}>$</span>
                       <span style={{ color: '#8544F5' }}>{' ~ '}</span>
@@ -434,6 +437,7 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
                         decimals={4}
                         duration={0.5}
                         style={{ color: '#8544F5', fontWeight: 400 }}
+                        separator=","
                       />{' '}
                       <img className="imagesvector" src={images.vector} alt="logo" width="12px" />
                     </div>
@@ -461,6 +465,7 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
                           end={Number(userBalance)}
                           decimals={4}
                           duration={0.5}
+                          separator=","
                         ></CountUp>
                       }{' '}
                       <img className="imagesvector" src={images.vector} alt="logo" width="12px" />
@@ -473,13 +478,14 @@ const DepositPoolModal: React.FC<React.PropsWithChildren<DepositPoolModalProps>>
                           end={Number(userBalance) * pool.rateBNB2USD}
                           decimals={4}
                           duration={0.5}
+                          separator=","
                         ></CountUp>
                       }
                       {'$'}
                     </div>
                   </div>
                 </UserBalance>
-                {mine === true ? (
+                {mine === true && pool.pid !== 0 ? (
                   <UserBalance>
                     <div
                       style={{

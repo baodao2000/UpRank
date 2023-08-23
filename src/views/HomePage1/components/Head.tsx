@@ -187,7 +187,7 @@ const HeadHome = () => {
           </Text>
           <LinkExternal
             fontSize="18px"
-            href={getBlockExploreLink(contracts.trend[CHAIN_ID], 'address', CHAIN_ID)}
+            href={getBlockExploreLink(contracts.trend[CHAIN_ID], 'token', CHAIN_ID)}
             ellipsis={true}
             style={{ color: 'rgba(249, 249, 249, 1)' }}
             color="#00F0E1"
