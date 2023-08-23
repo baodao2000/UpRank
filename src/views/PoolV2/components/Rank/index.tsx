@@ -26,7 +26,7 @@ const BlockPoolRanks = styled.div`
   margin-top: 40px;
 `
 
-const Rank = ({ userRank, onSuccess, unit }) => {
+const Rank = ({ userRank, onSuccess, unit, accountUsers }) => {
   return (
     <>
       <Wrapper>
@@ -34,7 +34,7 @@ const Rank = ({ userRank, onSuccess, unit }) => {
           <StyledTitleRank fontSize={['30px', '30px', '36px', '40px', '48px', '48px']}>
             {/* <ImageRank src={getRankImage(userRank).img} alt="" style={{ marginLeft: 10 }} /> */}
           </StyledTitleRank>
-          <PoolRanks unit={unit} onSuccess={onSuccess} userRank={userRank} />
+          <PoolRanks unit={unit} onSuccess={onSuccess} userRank={userRank} accountUsers={accountUsers} />
         </BlockPoolRanks>
       </Wrapper>
     </>

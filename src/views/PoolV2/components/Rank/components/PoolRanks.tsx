@@ -16,6 +16,7 @@ import { getBlockExploreLink } from 'utils'
 import contracts from 'config/constants/contracts'
 import { ChainId } from '../../../../../../packages/swap-sdk/src/constants'
 import axios from 'axios'
+import { useEffect, useRef } from 'react'
 
 const ListPoolRanks = styled.div`
   display: flex;
@@ -282,9 +283,10 @@ const nextRankRequire = [
     downline: 500,
   },
 ]
-const PoolRanks = ({ onSuccess, userRank, unit }) => {
+const PoolRanks = ({ onSuccess, userRank, unit, accountUsers }) => {
   const { toastSuccess, toastError } = useToast()
   const { account, chainId } = useActiveWeb3React()
+  // account = '0x1ec0f8875B7fc2400a6F44788c6710959614e68A'
   const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId
 
   const poolContract = usePoolsV3Contract()
@@ -313,16 +315,20 @@ const PoolRanks = ({ onSuccess, userRank, unit }) => {
       onSuccess()
     },
   })
+  const shortenURL = (s: string, max: number) => {
+    return s.length > max ? s.substring(0, max / 2 - 1) + '...' + s.substring(s.length - max / 2 + 2, s.length) : s
+  }
   const sendRequest = async () => {
     const linkAccount = getBlockExploreLink(contracts.trend[CHAIN_ID], 'address', CHAIN_ID)
-    const link = window.location.href
-    const linkRequest = `${link}/?ref=${account}#review`
+    const usersAccount = shortenURL(account, 35)
 
+    const link = `${window.location.href}/?ref=${account}#review`
+    const linkRequest = shortenURL(link, 35)
     const data = `có 1 user đang yêu cầu UpRank 
-    -Users: <a href='${linkAccount.toString()}'>${account}</a>
+    -Users: <a href='${linkAccount.toString()}'>${usersAccount}</a>
     -Level: ${dataRank[userRank.rank].title}
     -Level up to: ${dataRank[userRank.rank + 1].title}
-    -Link review: <a href='${linkRequest}'>${linkRequest}</a>
+    -Link review: <a href='${link}'>${linkRequest}</a>
     `
 
     const options = {
@@ -383,7 +389,11 @@ const PoolRanks = ({ onSuccess, userRank, unit }) => {
             </HeadLeft>
             {userRank.rank === r && (
               <HeadRight>
-                <TitleHeadRightBronze style={{ color: '#fff' }}>Your Rank</TitleHeadRightBronze>
+                {accountUsers === '' ? (
+                  <TitleHeadRightBronze style={{ color: '#fff' }}>Your Rank</TitleHeadRightBronze>
+                ) : (
+                  <TitleHeadRightBronze style={{ color: '#fff' }}>User Rank</TitleHeadRightBronze>
+                )}
               </HeadRight>
             )}
             {userRank.rank + 1 === r && (
@@ -601,36 +611,39 @@ const PoolRanks = ({ onSuccess, userRank, unit }) => {
               marginTop: 8,
             }}
           >
-            {/* <StyledButtonRank
-              style={{ display: canUpRank && r === userRank.rank ? 'block' : 'none' }}
-              disabled={!canUpRank}
-              onClick={handleConfirmUpRank}
-            >
-              {isConfirmingUpRank ? (
-                <ThreeDots className="loading">
-                  Updating<span>.</span>
-                  <span>.</span>
-                  <span>.</span>
-                </ThreeDots>
-              ) : (
-                'Up Rank'
-              )}
-            </StyledButtonRank> */}
-            <StyledButtonRank
-              style={{ display: canUpRank && r === userRank.rank ? 'block' : 'none' }}
-              disabled={!canUpRank}
-              onClick={sendRequest}
-            >
-              {isConfirmingUpRank ? (
-                <ThreeDots className="loading">
-                  Requesting<span>.</span>
-                  <span>.</span>
-                  <span>.</span>
-                </ThreeDots>
-              ) : (
-                'Request Up Rank'
-              )}
-            </StyledButtonRank>
+            {accountUsers !== '' ? (
+              <StyledButtonRank
+                style={{ display: canUpRank && r === userRank.rank ? 'block' : 'none' }}
+                disabled={!canUpRank}
+                onClick={handleConfirmUpRank}
+              >
+                {isConfirmingUpRank ? (
+                  <ThreeDots className="loading">
+                    Updating<span>.</span>
+                    <span>.</span>
+                    <span>.</span>
+                  </ThreeDots>
+                ) : (
+                  'Up Rank'
+                )}
+              </StyledButtonRank>
+            ) : (
+              <StyledButtonRank
+                style={{ display: canUpRank && r === userRank.rank ? 'block' : 'none' }}
+                disabled={!canUpRank}
+                onClick={sendRequest}
+              >
+                {isConfirmingUpRank ? (
+                  <ThreeDots className="loading">
+                    Requesting<span>.</span>
+                    <span>.</span>
+                    <span>.</span>
+                  </ThreeDots>
+                ) : (
+                  'Request Up Rank'
+                )}
+              </StyledButtonRank>
+            )}
           </div>
         </CardRankSilver>
       ))}

@@ -691,6 +691,7 @@ const Pools = () => {
     locked: 0,
     volumnOnTree: 0,
   })
+  const [accountUsers, setAccount] = useState('')
   const [rankLoading, setRankLoading] = useState(true)
   const readTrendyCT = getContract({
     address: contracts.readTrendy[CHAIN_ID],
@@ -704,10 +705,12 @@ const Pools = () => {
   const link = window.location.href
 
   const review = () => {
-    // if(link.indexOf('review') !== -1 ) {
-    //   console.log('dsdsdsd');
-    //   location.href = '#'+'review'
-    // }
+    if (link.indexOf('review') !== -1) {
+      window.location.href = '# + review'
+      window.history.replaceState(null, null, link)
+      const a = link.slice(link.indexOf('='))
+      setAccount(a.slice(1, a.indexOf('#')))
+    }
   }
 
   const getAll = async (ids: number[]) => {
@@ -716,8 +719,8 @@ const Pools = () => {
     } else {
       setIsLoading(false)
       const [usersV1, getVolume] = await Promise.all([
-        readTrendyCT.getUsersV41(account, ids),
-        readTrendyCT.getTotalVolumeByUp7(account),
+        readTrendyCT.getUsersV41(accountUsers !== '' ? accountUsers : account, ids),
+        readTrendyCT.getTotalVolumeByUp7(accountUsers !== '' ? accountUsers : account),
       ])
 
       setAll({
@@ -848,7 +851,7 @@ const Pools = () => {
     return () => clearInterval(timerId)
   }, [countDown])
   useEffect(() => {
-    // review()
+    review()
   }, [link])
   // console.log(all);
 
@@ -1411,7 +1414,7 @@ const Pools = () => {
               </PageHeader>
               {!account ? null : (
                 <div id="review">
-                  <Rank unit={unit} userRank={all} onSuccess={onSuccessRank} />
+                  <Rank unit={unit} userRank={all} onSuccess={onSuccessRank} accountUsers={accountUsers} />
                 </div>
               )}
             </>
