@@ -219,7 +219,6 @@ const Pool = () => {
         })
         if (Number(getUsersClaimedLength) > 0)
           getPoolContract.getUsersClaimed(poolId, account, 10, 0).then((res) => {
-            console.log(res)
             setUserClaimed(
               res.list.map((claimed: any, i: number) => {
                 return {

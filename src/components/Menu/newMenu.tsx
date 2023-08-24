@@ -1,4 +1,4 @@
-import { Box, Logo, Menu, Text, useMatchBreakpoints } from '@pancakeswap/uikit'
+import { Box, LinkExternal, Logo, Menu, Text, useMatchBreakpoints } from '@pancakeswap/uikit'
 import { Link, BrowserRouter as Router } from 'react-router-dom'
 import { getActiveMenuItem, getActiveSubMenuItem } from './utils'
 import throttle from 'lodash/throttle'
@@ -21,6 +21,11 @@ import BottomNavV2 from './BottomNavV2'
 import UserMenuV2 from './UserMenu/UserMenuV2'
 import { NewNav } from './config/configV2'
 
+import images from 'configs/images'
+import { getBlockExploreLink } from 'utils'
+import contracts from 'config/constants/contracts'
+import { ChainId } from '../../../packages/swap-sdk/src/constants'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 const BodyWrapper = styled(Box)`
   position: relative;
   display: flex;
@@ -44,6 +49,7 @@ const Wrapper = styled.div`
   width: 100%;
   background-color: black;
   overflow: hidden;
+  font-family: Inter, sans-serif;
 `
 const Container = styled.div`
   position: relative;
@@ -176,7 +182,7 @@ const NavDropdownMenu = styled.div`
   max-width: 860px;
   width: 100%;
   gap: 30px;
-  margin: 60px auto;
+  margin: 60px auto 0 auto;
   justify-content: center;
   .active {
     border-radius: var(--border-radius-lg, 8px);
@@ -184,6 +190,7 @@ const NavDropdownMenu = styled.div`
     box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.02);
   }
 `
+
 const data = [
   {
     img: '',
@@ -192,7 +199,7 @@ const data = [
     dropdownMenu: [],
   },
   {
-    img: 'images/V3/iconPool.svg',
+    img: '/images/V3/iconPool.svg',
     link: '/pools',
     label: 'Pools',
     dropdownMenu: [
@@ -209,25 +216,25 @@ const data = [
     ],
   },
   {
-    img: 'images/V3/iconReferral.svg',
+    img: '/images/V3/iconReferral.svg',
     link: '/referral',
     label: 'Referral',
     dropdownMenu: [],
   },
   {
-    img: 'images/V3/iconTokenomic.svg',
+    img: '/images/V3/iconTokenomic.svg',
     link: '/tokenomic',
     label: 'Tokenomic',
     dropdownMenu: [],
   },
   {
-    img: 'images/V3/iconMinning.svg',
+    img: '/images/V3/iconMinning.svg',
     link: '/mining',
     label: 'Minning',
     dropdownMenu: [],
   },
   {
-    img: 'images/V3/gift.svg',
+    img: '/images/V3/gift.svg',
     link: '/airdrop',
     label: 'Airdrop',
     dropdownMenu: [],
@@ -235,6 +242,7 @@ const data = [
 ]
 const MenuV2 = () => {
   const [showPhishingWarningBanner] = usePhishingBannerManager()
+
   const [showMenu, setShowMenu] = useState(true)
   const [classActive, setClassActive] = useState('')
   const [indexActive, setIndexActive] = useState(0)
@@ -243,7 +251,6 @@ const MenuV2 = () => {
   const [isActive, setisActive] = useState(0)
   const [notFound, setNotFound] = useState(false)
   // console.log(indexDropdown.current);
-
   const { pathname } = useRouter()
   const { isDark, setTheme } = useTheme()
   const { currentLanguage, setLanguage, t } = useTranslation()
@@ -264,7 +271,6 @@ const MenuV2 = () => {
   const getFooterLinks = useMemo(() => {
     return footerLinks(t)
   }, [t])
-
   const subLinks = activeMenuItem?.hideSubNav || activeSubMenuItem?.hideSubNav ? [] : activeMenuItem?.items
   const homeLink = menuItems.find((link) => link.label === 'Home')
   const refPrevOffset = useRef(typeof window === 'undefined' ? 0 : window.pageYOffset)
@@ -290,7 +296,6 @@ const MenuV2 = () => {
   }
   const checkHome = () => {
     if (linkActive.slice(-1) === '/') {
-      console.log('dsdsd')
       setClassActive('')
       setIndexActive(0)
       localStorage.setItem('index', '0')
@@ -321,6 +326,7 @@ const MenuV2 = () => {
       setIndexActive(0)
     }
   }, [linkActive, classActive])
+
   useEffect(() => {
     const handleScroll = () => {
       const currentOffset = window.pageYOffset
