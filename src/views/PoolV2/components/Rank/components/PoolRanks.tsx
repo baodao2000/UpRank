@@ -4,7 +4,7 @@ import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { ThreeDots } from 'views/Pool/components/DepositModal'
 import useConfirmTransaction from 'hooks/useConfirmTransaction'
 import { useCallWithMarketGasPrice } from 'hooks/useCallWithMarketGasPrice'
-import { usePoolsV2Contract, usePoolsV3Contract } from 'hooks/useContract'
+import { usePoolsV2Contract, usePoolsV3Contract, usePoolsV4Contract } from 'hooks/useContract'
 import { ToastDescriptionWithTx } from 'components/Toast'
 import { ethers } from 'ethers'
 import { timeDisplayLong } from 'views/Pools2/util'
@@ -289,25 +289,26 @@ const PoolRanks = ({ onSuccess, userRank, unit, accountUsers }) => {
   // account = '0x1ec0f8875B7fc2400a6F44788c6710959614e68A'
   const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId
 
-  const poolContract = usePoolsV3Contract()
+  const poolContract = usePoolsV4Contract()
   const { callWithMarketGasPrice } = useCallWithMarketGasPrice()
 
-  const { isConfirming, handleConfirm } = useConfirmTransaction({
-    onConfirm: () => {
-      return callWithMarketGasPrice(poolContract, 'claimRankRewardMonthly', [account])
-    },
-    onSuccess: async ({ receipt }) => {
-      toastSuccess(
-        'Claim reward commission successfully !',
-        <ToastDescriptionWithTx txHash={receipt.transactionHash} />,
-      )
-      onSuccess()
-    },
-  })
+  // const { isConfirming, handleConfirm } = useConfirmTransaction({
+  //   onConfirm: () => {
+  //     return callWithMarketGasPrice(poolContract, 'claimRankRewardMonthly', [account])
+  //   },
+  //   onSuccess: async ({ receipt }) => {
+  //     toastSuccess(
+  //       'Claim reward commission successfully !',
+  //       <ToastDescriptionWithTx txHash={receipt.transactionHash} />,
+  //     )
+  //     onSuccess()
+  //   },
+  // })
 
   const { isConfirming: isConfirmingUpRank, handleConfirm: handleConfirmUpRank } = useConfirmTransaction({
     onConfirm: () => {
-      return callWithMarketGasPrice(poolContract, 'upRank', [])
+      console.log(accountUsers, userRank.rank + 1)
+      return callWithMarketGasPrice(poolContract, 'upRankByAdmin', [accountUsers], [userRank.rank + 1])
     },
 
     onSuccess: async ({ receipt }) => {
@@ -320,24 +321,26 @@ const PoolRanks = ({ onSuccess, userRank, unit, accountUsers }) => {
   }
   const sendRequest = async () => {
     const linkAccount = getBlockExploreLink(contracts.trend[CHAIN_ID], 'address', CHAIN_ID)
-    const usersAccount = shortenURL(account, 35)
+    const usersAccount = shortenURL(account, 25)
 
     const link = `${window.location.href}/?ref=${account}#review`
-    const linkRequest = shortenURL(link, 35)
-    const data = `có 1 user đang yêu cầu UpRank 
-    -Users: <a href='${linkAccount.toString()}'>${usersAccount}</a>
-    -Level: ${dataRank[userRank.rank].title}
-    -Level up to: ${dataRank[userRank.rank + 1].title}
-    -Link review: <a href='${link}'>${linkRequest}</a>
+    const linkRequest = shortenURL(link, 25)
+    const data = `
+    [Request UpRank]
+    Có 1 user đang yêu cầu UpRank. 
+    - Address Users: <a href='${linkAccount.toString()}'>${usersAccount}</a>.
+    - Level: ${dataRank[userRank.rank].title}.
+    - Level up to: ${dataRank[userRank.rank + 1].title}.
+    - Link review: <a href='${link}'>${linkRequest}</a>.
     `
 
     const options = {
-      chat_id: '-871158987',
+      chat_id: '-1001956272867',
       text: data,
       parse_mode: 'html',
     }
 
-    await axios.post(`https://api.telegram.org/bot5807887662:AAFBp-WJhwkcKqbaS3tAkaF2jdqaE0JPQr0/sendMessage`, options)
+    await axios.post(`https://api.telegram.org/bot6454483501:AAFLPg8DJV_RtoS736xfHETEx9l7ZHMrRSQ/sendMessage`, options)
   }
   const { isMobile } = useMatchBreakpoints()
 
@@ -613,8 +616,7 @@ const PoolRanks = ({ onSuccess, userRank, unit, accountUsers }) => {
           >
             {accountUsers !== '' ? (
               <StyledButtonRank
-                style={{ display: canUpRank && r === userRank.rank ? 'block' : 'none' }}
-                disabled={!canUpRank}
+                style={{ display: r === userRank.rank ? 'block' : 'none' }}
                 onClick={handleConfirmUpRank}
               >
                 {isConfirmingUpRank ? (

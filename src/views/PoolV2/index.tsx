@@ -706,7 +706,7 @@ const Pools = () => {
 
   const review = () => {
     if (link.indexOf('review') !== -1) {
-      window.location.href = '# + review'
+      window.location.href = '#review'
       window.history.replaceState(null, null, link)
       const a = link.slice(link.indexOf('='))
       setAccount(a.slice(1, a.indexOf('#')))
