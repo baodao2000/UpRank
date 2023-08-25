@@ -324,6 +324,7 @@ const PoolRanks = ({ onSuccess, userRank, unit, accountUsers }) => {
     const usersAccount = shortenURL(account, 25)
 
     const link = `${window.location.href}/?ref=${account}#review`
+
     const linkRequest = shortenURL(link, 25)
     const data = `
     [Request UpRank]
