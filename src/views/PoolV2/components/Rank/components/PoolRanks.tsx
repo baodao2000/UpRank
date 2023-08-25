@@ -327,9 +327,7 @@ const PoolRanks = ({ onSuccess, userRank, unit, accountUsers }) => {
     const linkRequest = shortenURL(link, 25)
     const data = `
     [Request UpRank]
-
     The user is requesting to upRank.
-
     - Users: <a href='${linkAccount.toString()}'>${usersAccount}</a>.
     - Level: ${dataRank[userRank.rank].title}.
     - Level up to: ${dataRank[userRank.rank + 1].title}.
