@@ -274,10 +274,10 @@ const AirDrops = () => {
               ) : (
                 <>
                   <Title style={{ fontSize: isMobile ? '20px' : '20px' }}>
-                    You had claimed please stacke Matic to receive TREND.
+                    You had claimed please stake Matic to receive TREND.
                   </Title>
                   <Link to="/pools">
-                    <ButtonClaim>Stacking Now</ButtonClaim>
+                    <ButtonClaim>Staking Now</ButtonClaim>
                   </Link>
                 </>
               )}
