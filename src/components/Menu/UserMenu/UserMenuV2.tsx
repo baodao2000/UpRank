@@ -88,9 +88,9 @@ const UserMenuV2 = ({ data }) => {
         {isMobile || isTablet ? (
           <>
             <NavMobile>
-              {data.map((items, r) => (
+              {data.map((items, index) => (
                 <>
-                  <UserMenuItem key={r}>
+                  <UserMenuItem key={index}>
                     <Link to={items.link}>
                       <TextLink>{items.label}</TextLink>
                     </Link>

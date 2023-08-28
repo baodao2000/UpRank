@@ -184,4 +184,8 @@ export default {
   vote: {
     137: '0x49A0E77eB25655391A4E6C35fce30E383C04F1a3',
   },
+  airdrop: {
+    137: '0x24dCe4B2b9Aa6d1921d5c425bEE2e7Fc057bDF06',
+    56: '',
+  },
 }

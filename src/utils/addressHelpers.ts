@@ -137,3 +137,6 @@ export const getPoolsV4Address = (chainId?: number) => {
 export const getTrendAddress = (chainId?: number) => {
   return getAddress(addresses.trend, chainId)
 }
+export const getAirdropAddress = (chainId?: number) => {
+  return getAddress(addresses.airdrop, chainId)
+}
