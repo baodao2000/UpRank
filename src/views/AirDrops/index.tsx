@@ -231,8 +231,8 @@ const AirDrops = () => {
           {isCheckList === false ? (
             <CheckList>
               <Title className="text">
-                Your account is not on the whitelist, please follow social channels or join the Matic stake to claim
-                TREND.
+                Your account is not on the whitelist, please follow social channels or join the Matic staking pool to
+                claim TREND.
               </Title>
               <SocialGroup>
                 <Social href="https://twitter.com/TrendyDefi">
