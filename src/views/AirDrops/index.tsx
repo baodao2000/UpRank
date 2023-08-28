@@ -231,7 +231,7 @@ const AirDrops = () => {
           {isCheckList === false ? (
             <CheckList>
               <Title className="text">
-                Your account is not in the whitelist, please follow social channels or join the Matic stacke to claim
+                Your account is not on the whitelist, please follow social channels or join the Matic stake to claim
                 TREND.
               </Title>
               <SocialGroup>
@@ -246,7 +246,7 @@ const AirDrops = () => {
                 </Social>
               </SocialGroup>
               <Link to="/pools">
-                <ButtonClaim>Stacking Now</ButtonClaim>
+                <ButtonClaim>Staking Now</ButtonClaim>
               </Link>
             </CheckList>
           ) : (
