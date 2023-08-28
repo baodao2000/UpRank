@@ -181,7 +181,7 @@ const AirDrops = () => {
     const isClaimed = await getAirdropContarct.isClaimed(account)
     // isCheckList.current = isWL
     setIsChecList(isWL)
-    // setIsClaim(isClaimed)
+    setIsClaim(isClaimed)
   }
   useEffect(() => {
     isWhiteList()
@@ -191,7 +191,7 @@ const AirDrops = () => {
   }
   const { isConfirming, handleConfirm } = useConfirmTransaction({
     onConfirm: () => {
-      return callWithMarketGasPrice(airdropContract, 'claim', [account])
+      return callWithMarketGasPrice(airdropContract, 'claim')
     },
     onSuccess: async ({ receipt }) => {
       toastSuccess('Claim successfully !', <ToastDescriptionWithTx txHash={receipt.transactionHash} />)
