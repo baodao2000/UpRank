@@ -29,7 +29,7 @@ background-image: linear-gradient(#18171b, #18171b), radial-gradient(circle at t
   position: relative;
 max-width: 600px;
 width: 100%;
-padding: 20px 0;
+padding: 20px 20px;
 border-radius: 24px;
 display: flex;
 flex-direction: column;
@@ -231,8 +231,8 @@ const AirDrops = () => {
           {isCheckList === false ? (
             <CheckList>
               <Title className="text">
-                Your account is not on the whitelist, please follow social channels or join the Matic staking pool to
-                claim TREND.
+                Your account is not currently on the whitelist. To claim TREND, please consider following our social
+                channels or joining the MATIC staking pool.
               </Title>
               <SocialGroup>
                 <Social target="_blank" href="https://twitter.com/TrendyDefi">
@@ -274,7 +274,8 @@ const AirDrops = () => {
               ) : (
                 <>
                   <Title style={{ fontSize: isMobile ? '20px' : '20px' }}>
-                    You had claimed please stake Matic to receive TREND.
+                    Claimed Successfully. To receive $TREND daily, consider joining the &#8243;Experience&#8243;
+                    investment package with a minimum stake of $100.
                   </Title>
                   <Link to="/pools">
                     <ButtonClaim>Staking Now</ButtonClaim>
