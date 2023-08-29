@@ -1369,7 +1369,7 @@ const Referral = () => {
                 <BlockInfo>
                   <Item>
                     <InfoItem>
-                      <Label>Total reffer</Label>
+                      <Label>Total referrals</Label>
                       <Value>{userInfos.totalReffer}</Value>
                     </InfoItem>
                     <InfoItem>

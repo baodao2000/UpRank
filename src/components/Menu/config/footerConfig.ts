@@ -25,6 +25,10 @@ export const footerLinks: (t: ContextApi['t']) => FooterLinkType[] = (t) => [
         label: t('Mining'),
         href: '/mining',
       },
+      {
+        label: t('Airdrop'),
+        href: '/airdrop',
+      },
     ],
   },
   {

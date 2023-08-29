@@ -230,7 +230,7 @@ const data = [
   {
     img: '/images/V3/iconMinning.svg',
     link: '/mining',
-    label: 'Minning',
+    label: 'Mining',
     dropdownMenu: [],
   },
   {

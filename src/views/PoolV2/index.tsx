@@ -917,7 +917,7 @@ const Pools = () => {
           <TitleContent>Pools Rewards</TitleContent>
           <LabelContent>
             <p>
-              Rewards are exclusively reserved for referrals. Invite your friends get our rewards.
+              Rewards are exclusively reserved for referrals. Invite your friends and get our rewards.
               <Link to="/referral">
                 <span style={{ marginLeft: '5px' }} className="link">
                   Invite Now

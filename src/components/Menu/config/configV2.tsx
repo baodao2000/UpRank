@@ -19,32 +19,36 @@ export const NewNav = () => {
     <>
       <div>
         <Switch>
-          <Route path="/pools">
+          <Route exact path="/">
+            <HomePage />
+          </Route>
+
+          <Route exact path="/pools">
             <Pools />
           </Route>
-          <Route path="/pools_V1">
+          <Route exact path="/pools_V1">
             <Poolsv1 />
           </Route>
-          <Route path="/referral">
+          <Route exact path="/referral">
             <Referral />
           </Route>
-          <Route path="/tokenomic">
+          <Route exact path="/tokenomic">
             <Tokenomic />
           </Route>
-          <Route path="/mining">
+          <Route exact path="/mining">
             <Mining />
           </Route>
-          <Route path="/airdrop">
+          <Route exact path="/airdrop">
             <AirDrops />
           </Route>
-          <Route path={`${poolBaseUrl}/:id/chainId=:chainId`}>
+          <Route exact path={`${poolBaseUrl}/:id/chainId=:chainId`}>
             <Pool />
           </Route>
-          <Route path={`${poolBaseUrlV2}/:id/chainId=:chainId`}>
+          <Route exact path={`${poolBaseUrlV2}/:id/chainId=:chainId`}>
             <PoolV2 />
           </Route>
-          <Route path="/">
-            <HomePage />
+          <Route path="*">
+            <NotFound />
           </Route>
         </Switch>
       </div>

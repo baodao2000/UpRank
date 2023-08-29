@@ -235,14 +235,14 @@ const AirDrops = () => {
                 claim TREND.
               </Title>
               <SocialGroup>
-                <Social href="https://twitter.com/TrendyDefi">
-                  <img src="images/V3/twitter-icon.svg" />
+                <Social target="_blank" href="https://twitter.com/TrendyDefi">
+                  <img src="/images/V3/twitter-icon.svg" />
                 </Social>
-                <Social href="https://t.me/trendydefi">
-                  <img src="images/V3/Telegramicon.svg" />
+                <Social target="_blank" href="https://t.me/trendydefi">
+                  <img src="/images/V3/Telegramicon.svg" />
                 </Social>
-                <Social href="https://t.me/trendydefiglobal">
-                  <img src="images/V3/Telegramicon.svg" />
+                <Social target="_blank" href="https://t.me/trendydefiglobal">
+                  <img src="/images/V3/Telegramicon.svg" />
                 </Social>
               </SocialGroup>
               <Link to="/pools">

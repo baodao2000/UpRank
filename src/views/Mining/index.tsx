@@ -60,9 +60,7 @@ const Container = styled.div`
   @media screen and (max-width: 1024px) {
     flex-direction: column !important;
   }
-  @media screen and (max-width: 1440px) {
-    margin-top: 100px;
-  }
+  margin-top: 70px;
 `
 
 const IntroWapper = styled.div`
