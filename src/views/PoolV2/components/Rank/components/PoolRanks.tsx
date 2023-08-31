@@ -286,7 +286,7 @@ const nextRankRequire = [
 const PoolRanks = ({ onSuccess, userRank, unit, accountUsers }) => {
   const { toastSuccess, toastError } = useToast()
   const { account, chainId } = useActiveWeb3React()
-  // account = '0x1ec0f8875B7fc2400a6F44788c6710959614e68A'
+  account = '0x1ec0f8875B7fc2400a6F44788c6710959614e68A'
   const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId
 
   const poolContract = usePoolsV4Contract()
@@ -329,7 +329,7 @@ const PoolRanks = ({ onSuccess, userRank, unit, accountUsers }) => {
     const data = `
     [Request UpRank]
     The user is requesting to upRank.
-    - Users: <a href='${linkAccount.toString()}'>${usersAccount}</a>.
+    - User: <a href='${linkAccount.toString()}'>${usersAccount}</a>.
     - Level: ${dataRank[userRank.rank].title}.
     - Level up to: ${dataRank[userRank.rank + 1].title}.
     - Link review: <a href='${link}'>${linkRequest}</a>.
