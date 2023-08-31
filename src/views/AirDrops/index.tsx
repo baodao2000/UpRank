@@ -3,6 +3,12 @@ import styled from 'styled-components'
 import { Button, Text, useMatchBreakpoints, useToast } from '@pancakeswap/uikit'
 import { useWeb3React } from '../../../packages/wagmi/src/useWeb3React'
 import { Link } from 'react-router-dom'
+import { getAirdropContract } from 'utils/contractHelpers'
+import { useCallWithMarketGasPrice } from 'hooks/useCallWithMarketGasPrice'
+import useConfirmTransaction from 'hooks/useConfirmTransaction'
+import { useAirdropContract } from 'hooks/useContract'
+import { ToastDescriptionWithTx } from 'components/Toast'
+import { ThreeDots } from 'views/PoolV2/components/PoolDetailsV2/DepositModal'
 
 const Waraper = styled.div`
   display: flex;
@@ -15,7 +21,15 @@ const CheckList = styled.div`
 * {
     font-family: Inter,sans-serif;
 }
-max-width: 400px;
+background-image: linear-gradient(#18171b, #18171b), radial-gradient(circle at top left, #7b3fe4 0%, #a726c1 100%);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  border: 1px solid transparent;
+  border-image-slice: 1;
+  position: relative;
+max-width: 600px;
+width: 100%;
+padding: 20px 20px;
 border-radius: 24px;
 display: flex;
 flex-direction: column;
@@ -151,99 +165,120 @@ const CardNumber = styled(Text)`
 `
 const AirDrops = () => {
   const { account, chainId } = useWeb3React()
-  const isCheckList = useRef(false)
+  // const isCheckList = useRef(false)
+  const [isCheckList, setIsChecList] = useState(false)
   const [isClaim, setIsClaim] = useState(false)
   const [days, setDays] = useState(0)
   const [hours, setHours] = useState(0)
   const [minutes, setMinutes] = useState(0)
   const [seconds, setSeconds] = useState(0)
   const timeStamp = Math.floor(Date.now() / 1000)
-  // const ListAccount = async () => {
-  //   if (account === '0x22852cbcF916Dd0B32BB25680ec3a4f9ce223e52') {
-  //     isCheckList.current = false
-  //   } else if (account === '0x657aa592FdCa8614c5D5A400f19d099B9f72fb7D') {
-  //     isCheckList.current = true
-  //     setIsClaim(false)
-  //   } else if (account === '0x909839C893f5768e739eC7b6AF878537b84B9220') {
-  //     isCheckList.current = true
-  //     setIsClaim(true)
-  //   }
-  // }
-  // useEffect(() => {
-  //   if (account) {
-  //     ListAccount()
-  //   }
-  // }, [account, isCheckList.current, isClaim])
+  const getAirdropContarct = getAirdropContract(chainId)
+  const airdropContract = useAirdropContract()
+  const { callWithMarketGasPrice } = useCallWithMarketGasPrice()
+  const isWhiteList = async () => {
+    const isWL = await getAirdropContarct.isWL(account)
+    const isClaimed = await getAirdropContarct.isClaimed(account)
+    // isCheckList.current = isWL
+    setIsChecList(isWL)
+    setIsClaim(isClaimed)
+  }
   useEffect(() => {
-    let countdown = 1694501880 - timeStamp
-    const updateCountdown = () => {
-      setDays(Math.floor(countdown / 86400))
-      setHours(Math.floor((countdown % 86400) / 3600))
-      setMinutes(Math.floor((countdown % 3600) / 60))
-      setSeconds(countdown % 60)
-    }
-    const timer = setInterval(() => {
-      if (countdown > 0) {
-        updateCountdown()
-        countdown--
-      } else {
-        clearInterval(timer)
-      }
-    }, 1000)
+    isWhiteList()
+  }, [account])
+  const onSuccess = () => {
+    isWhiteList()
+  }
+  const { isConfirming, handleConfirm } = useConfirmTransaction({
+    onConfirm: () => {
+      return callWithMarketGasPrice(airdropContract, 'claim')
+    },
+    onSuccess: async ({ receipt }) => {
+      toastSuccess('Claim successfully !', <ToastDescriptionWithTx txHash={receipt.transactionHash} />)
+      onSuccess()
+    },
+  })
+  // useEffect(() => {
+  //   let countdown = 1694501880 - timeStamp
+  //   const updateCountdown = () => {
+  //     setDays(Math.floor(countdown / 86400))
+  //     setHours(Math.floor((countdown % 86400) / 3600))
+  //     setMinutes(Math.floor((countdown % 3600) / 60))
+  //     setSeconds(countdown % 60)
+  //   }
+  //   const timer = setInterval(() => {
+  //     if (countdown > 0) {
+  //       updateCountdown()
+  //       countdown--
+  //     } else {
+  //       clearInterval(timer)
+  //     }
+  //   }, 1000)
 
-    return () => {
-      clearInterval(timer)
-    }
-  }, [timeStamp])
+  //   return () => {
+  //     clearInterval(timer)
+  //   }
+  // }, [timeStamp])
   const { isMobile } = useMatchBreakpoints()
   const { toastSuccess } = useToast()
-  const handleClaim = () => {
-    toastSuccess('You have claimed your rewards!')
-  }
+
   return (
     <Waraper>
       <Container>
         <>
-          {isCheckList.current === false ? (
+          <img width="148px" height="120px" src="/images/V3/Error.svg" />
+
+          {isCheckList === false ? (
             <CheckList>
               <Title className="text">
-                Your account is not in the whitelist, please follow social channels or join the Matic stacke to claim
-                TREND.
+                Your account is not currently on the whitelist. To claim TREND, please consider following our social
+                channels or joining the MATIC staking pool.
               </Title>
               <SocialGroup>
-                <Social href="https://twitter.com/TrendyDefi">
-                  <img src="images/V3/twitter-icon.svg" />
+                <Social target="_blank" href="https://twitter.com/TrendyDefi">
+                  <img src="/images/V3/twitter-icon.svg" />
                 </Social>
-                <Social href="https://t.me/trendydefi">
-                  <img src="images/V3/Telegramicon.svg" />
+                <Social target="_blank" href="https://t.me/trendydefi">
+                  <img src="/images/V3/Telegramicon.svg" />
                 </Social>
-                <Social href="https://t.me/trendydefiglobal">
-                  <img src="images/V3/Telegramicon.svg" />
+                <Social target="_blank" href="https://t.me/trendydefiglobal">
+                  <img src="/images/V3/Telegramicon.svg" />
                 </Social>
               </SocialGroup>
               <Link to="/pools">
-                <ButtonClaim>Stacking Now</ButtonClaim>
+                <ButtonClaim>Staking Now</ButtonClaim>
               </Link>
             </CheckList>
           ) : (
             <CheckList>
               {isClaim === false ? (
                 <>
-                  <Title>Your Rewards</Title>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <Title>Your Rewards:</Title>
                     <img width="24px" height="24px" src="images/trendyloopcoin2.png" />
                     <Title>0.5</Title>
                   </div>
 
-                  <ButtonClaim onClick={handleClaim}>Claim</ButtonClaim>
+                  <ButtonClaim onClick={handleConfirm}>
+                    {isConfirming ? (
+                      <ThreeDots className="loading">
+                        Claiming<span>.</span>
+                        <span>.</span>
+                        <span>.</span>
+                      </ThreeDots>
+                    ) : (
+                      'Claim'
+                    )}
+                  </ButtonClaim>
                 </>
               ) : (
                 <>
                   <Title style={{ fontSize: isMobile ? '20px' : '20px' }}>
-                    You had claimed please stacke Matic to receive TREND.
+                    Claimed Successfully. To receive $TREND daily, consider joining the &#8243;Experience&#8243;
+                    investment package with a minimum stake of $100.
                   </Title>
                   <Link to="/pools">
-                    <ButtonClaim>Stacking Now</ButtonClaim>
+                    <ButtonClaim>Staking Now</ButtonClaim>
                   </Link>
                 </>
               )}
@@ -251,8 +286,7 @@ const AirDrops = () => {
           )}
         </>
 
-        <img width="148px" height="120px" src="/images/V3/Error.svg" />
-        <Text
+        {/* <Text
           style={{
             fontSize: '20px',
             fontWeight: '500',
@@ -293,7 +327,7 @@ const AirDrops = () => {
         >
           A new system update is available. This update includes security fixes, performance improvements, and new
           features.
-        </Text>
+        </Text> */}
       </Container>
     </Waraper>
   )

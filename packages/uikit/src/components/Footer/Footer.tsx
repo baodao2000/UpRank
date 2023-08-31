@@ -132,7 +132,7 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
                   <Link
                     data-theme="dark"
                     href={href}
-                    target="_blank"
+                    target={item.label === "Home" ? "" : "_blank"}
                     rel="noreferrer noopener"
                     color={isHighlighted ? vars.colors.warning : "text"}
                     bold={false}

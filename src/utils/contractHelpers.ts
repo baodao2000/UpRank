@@ -46,6 +46,7 @@ import {
   getPoolsV3Address,
   getPoolsV4Address,
   getTrendAddress,
+  getAirdropAddress,
 } from 'utils/addressHelpers'
 
 // ABI
@@ -102,6 +103,7 @@ import oldPoolsAbi from 'config/abi/pools2.json'
 import pools3ABI from 'config/abi/pools3.json'
 import pools4ABI from 'config/abi/pools4.json'
 import trenABI from 'config/abi/trend.json'
+import airdrop from 'config/abi/airdrop.json'
 // Types
 import type {
   ChainlinkOracle,
@@ -409,6 +411,14 @@ export const getTrendContract = (chainId: number, signer?: Signer | Provider) =>
   return getContract({
     abi: trenABI,
     address: getTrendAddress(chainId),
+    chainId,
+    signer,
+  })
+}
+export const getAirdropContract = (chainId: number, signer?: Signer | Provider) => {
+  return getContract({
+    abi: airdrop,
+    address: getAirdropAddress(chainId),
     chainId,
     signer,
   })

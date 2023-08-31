@@ -115,6 +115,8 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
   ...props
 }) => {
   const { account, chainId } = useActiveWeb3React()
+  // account = '0x0ef7b247af103aa6ae66b8530875732a73f4bf68'
+
   const minesContract = getPoolsContract(chainId)
   const { t } = useTranslation()
   const [usersClaimed, setUserClaimed] = useState([])
@@ -188,7 +190,16 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
             </Td>
             <Td textAlign={'center'}>
               <Text fontSize={responsiveTextSize}>
-                <CountUp start={0} preserveValue delay={0} end={Number(power)} decimals={2} duration={0.5}></CountUp> X
+                <CountUp
+                  start={0}
+                  preserveValue
+                  delay={0}
+                  end={Number(power)}
+                  decimals={2}
+                  duration={0.5}
+                  separator=","
+                ></CountUp>{' '}
+                X
               </Text>
             </Td>
             <Td textAlign={'right'}>
@@ -207,6 +218,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                       end={mine.totalMined}
                       decimals={mine.totalMined > 0 ? 4 : 0}
                       duration={0.5}
+                      separator=","
                     />{' '}
                     <Image src="/images/trendyloop.png" width={25} height={25} alt="" />
                   </Text>
@@ -229,6 +241,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                       end={mine.totalMined}
                       decimals={mine.claimed > 0 ? 4 : 0}
                       duration={0.5}
+                      separator=","
                     />{' '}
                     $
                   </Text>
@@ -251,6 +264,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                       end={mine.remain}
                       decimals={mine.remain > 0 ? 4 : 0}
                       duration={0.5}
+                      separator=","
                     />{' '}
                     $
                   </Text>
@@ -286,6 +300,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                       end={mine.currentReward}
                       decimals={mine.currentReward > 0 ? 4 : 0}
                       duration={0.5}
+                      separator=","
                     />{' '}
                     $
                   </Text>
@@ -327,6 +342,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                       end={Number(power)}
                       decimals={2}
                       duration={0.5}
+                      separator=","
                     ></CountUp>{' '}
                     x
                   </Text>
@@ -350,6 +366,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                           end={claimHistory.totalLock + claimHistory.amount}
                           decimals={claimHistory.totalLock > 0 ? 4 : 0}
                           duration={0.5}
+                          separator=","
                         />
                       </Text>
                     </AmountData>
@@ -372,6 +389,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                           end={(claimHistory.totalLock + claimHistory.amount) * claimHistory.rateUSD}
                           decimals={claimHistory.totalLock > 0 ? 4 : 0}
                           duration={0.5}
+                          separator=","
                         />
                       </Text>
                     </AmountData>
@@ -396,6 +414,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                           end={claimHistory.amount}
                           decimals={claimHistory.amount > 0 ? 6 : 0}
                           duration={0.5}
+                          separator=","
                         />
                       </Text>
                     </AmountData>
@@ -418,6 +437,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                           end={claimHistory.amount * claimHistory.rateUSD}
                           decimals={claimHistory.amount > 0 ? 6 : 0}
                           duration={0.5}
+                          separator=","
                         />
                       </Text>
                     </AmountData>
@@ -442,6 +462,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                           end={claimHistory.totalLock}
                           decimals={claimHistory.totalLock > 0 ? 4 : 0}
                           duration={0.5}
+                          separator=","
                         />
                       </Text>
                     </AmountData>
@@ -464,6 +485,7 @@ const TableDataPool: React.FC<PropsWithChildren<{ mine: Mine; userClaimedMineLen
                           end={claimHistory.totalLock * claimHistory.rateUSD}
                           decimals={claimHistory.totalLock > 0 ? 4 : 0}
                           duration={0.5}
+                          separator=","
                         />
                       </Text>
                     </AmountData>

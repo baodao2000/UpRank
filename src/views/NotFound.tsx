@@ -2,14 +2,14 @@ import styled from 'styled-components'
 import { Button, Heading, Text, LogoIcon } from '@pancakeswap/uikit'
 import Page from 'components/Layout/Page'
 import { useTranslation } from '@pancakeswap/localization'
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 
 const StyledNotFound = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 64px);
   justify-content: center;
+  align-items: center;
   .title {
     background: var(--primary-primary-gradient-2, linear-gradient(180deg, #7B3FE4 0%, #A726C1 100%));
 background-clip: text;
@@ -63,7 +63,7 @@ const NotFound = ({ statusCode = 404 }: { statusCode?: number }) => {
         <Text className="label" mb="16px">
           {t('We’re sorry, but the page you were looking for doesn’t exist.')}
         </Text>
-        <Link href="/" passHref>
+        <Link to="/">
           <Button className="button" as="a" scale="sm">
             {t('Back Home')}
           </Button>

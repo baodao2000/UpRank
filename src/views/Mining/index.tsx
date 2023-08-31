@@ -60,9 +60,7 @@ const Container = styled.div`
   @media screen and (max-width: 1024px) {
     flex-direction: column !important;
   }
-  @media screen and (max-width: 1440px) {
-    margin-top: 100px;
-  }
+  margin-top: 70px;
 `
 
 const IntroWapper = styled.div`
@@ -242,7 +240,7 @@ const SystemContent = styled.div`
 function Mining() {
   const { isMobile, isTablet } = useMatchBreakpoints()
   let { account, chainId } = useActiveWeb3React()
-  // account = '0x1ec0f8875B7fc2400a6F44788c6710959614e68A'
+  // account = '0x0ef7b247af103aa6ae66b8530875732a73f4bf68'
 
   const [loadingPage, setLoadingPage] = useState(true)
   const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId
@@ -579,6 +577,7 @@ function Mining() {
                                 end={mineData.totalMined}
                                 decimals={mineData.totalMined > 0 ? 4 : 0}
                                 duration={0.5}
+                                separator=","
                               />
                             </ContentText>
                           </div>
@@ -603,6 +602,7 @@ function Mining() {
                             end={mineData.totalMined * mineData.trend2USDT}
                             decimals={mineData.totalMined > 0 ? 4 : 0}
                             duration={0.5}
+                            separator=","
                           />
                         </ContentText>
                       )}
@@ -769,6 +769,7 @@ function Mining() {
                                 end={available.show}
                                 decimals={available.show > 0 ? 6 : 0}
                                 duration={0.5}
+                                separator=","
                               />
                             </ContentText>
                           </div>
@@ -789,6 +790,7 @@ function Mining() {
                               end={available.show * mineData.trend2USDT}
                               decimals={available.show > 0 ? 6 : 0}
                               duration={0.5}
+                              separator=","
                             />
                           </ContentText>
                         )}
@@ -874,6 +876,7 @@ function Mining() {
                     end={Number(systemData.totalMiner)}
                     // decimals={Number((mineData.balanceTrend)) > 0 ? 4 : 0}
                     duration={0.5}
+                    separator=","
                     style={{
                       color: '#E2E1E5',
                       fontSize: '36px',
@@ -908,6 +911,7 @@ function Mining() {
                         end={Number(systemData.defaultTrend)}
                         decimals={Number(systemData.defaultTrend) > 0 ? 4 : 0}
                         duration={0.5}
+                        separator=","
                       />
                     </ContentText>
                   </div>
@@ -940,6 +944,7 @@ function Mining() {
                         end={Number(systemData.totalMined)}
                         decimals={Number(systemData.totalMined) > 0 ? 4 : 0}
                         duration={0.5}
+                        separator=","
                       />
                       <ContentText
                         style={{
@@ -957,6 +962,7 @@ function Mining() {
                           end={Number(systemData.totalMined) * systemData.defaultTrend}
                           decimals={Number(systemData.totalMined) > 0 ? 4 : 0}
                           duration={0.5}
+                          separator=","
                         />
                       </ContentText>
                     </ContentText>

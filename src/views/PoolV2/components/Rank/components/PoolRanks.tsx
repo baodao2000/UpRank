@@ -481,7 +481,7 @@ const PoolRanks = ({ onSuccess, userRank, unit, accountUsers }) => {
                 color: (canUpRank2 && r === userRank.rank + 1) || (canUpRank2 && r === userRank.rank) ? '#fff' : 'gray',
               }}
             >
-              <Label>Volumn on tree</Label>
+              <Label>Volume on tree</Label>
               <Value>
                 $
                 {r === 0 ? (

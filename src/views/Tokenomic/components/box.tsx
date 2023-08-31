@@ -179,7 +179,7 @@ function Box() {
         <PoolText>Rank Instruction</PoolText>
 
         <PoolContent>
-          To speed up the minting process and acquire tokens more quickly, increase your Rank level.
+          To speed up the mining process and acquire tokens more quickly, increase your Rank level.
         </PoolContent>
         <BoxContent>
           {dataRank.map((i, index) => (

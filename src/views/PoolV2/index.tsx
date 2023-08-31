@@ -39,6 +39,7 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 32px;
   * {
     font-family: Inter, sans-serif;
   }
@@ -261,6 +262,11 @@ const HeadContent = styled.div`
   }
   @media screen and (max-width: 575px) {
     padding: 16px;
+  }
+  @media screen and (max-width: 800px) {
+    .pool {
+      right: -7%;
+    }
   }
 `
 const TitleContent = styled(Text)`
@@ -923,9 +929,11 @@ const Pools = () => {
           <TitleContent>Pools Rewards</TitleContent>
           <LabelContent>
             <p>
-              Rewards are exclusively reserved for referrals. Invite your friends get our rewards.
+              Rewards are exclusively reserved for referrals. Invite your friends and get our rewards.
               <Link to="/referral">
-                <span className="link">Invite Now</span>
+                <span style={{ marginLeft: '5px' }} className="link">
+                  Invite Now
+                </span>
               </Link>
             </p>
           </LabelContent>

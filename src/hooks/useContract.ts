@@ -62,6 +62,7 @@ import {
   getPoolsV3Contract,
   getPoolsV4Contract,
   getTrendContract,
+  getAirdropContract,
 } from 'utils/contractHelpers'
 import { useSigner } from 'wagmi'
 
@@ -389,6 +390,11 @@ export const usePoolsV4Contract = () => {
   const { chainId } = useActiveChainId()
   const { data: signer } = useSigner()
   return useMemo(() => getPoolsV4Contract(chainId, signer), [chainId, signer])
+}
+export const useAirdropContract = () => {
+  const { chainId } = useActiveChainId()
+  const { data: signer } = useSigner()
+  return useMemo(() => getAirdropContract(chainId, signer), [chainId, signer])
 }
 export const useTrendContract = () => {
   const { chainId } = useActiveChainId()

@@ -263,7 +263,7 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
             </Value>
           </ItemInfoCard>
           <ItemInfoCard>
-            <Label>Volumn on tree:</Label>
+            <Label>Volume on tree:</Label>
             <Value>
               <div
                 style={{
@@ -319,7 +319,7 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
             </Value>
           </ItemInfoCard>
           <ItemInfoCard style={{ color: canUpRank2 ? '#fff' : 'gray' }}>
-            <Label>Volumn on tree:</Label>
+            <Label>Volume on tree:</Label>
             <Value>
               <div
                 style={{
@@ -395,7 +395,7 @@ const PoolRanks = ({ data, onSuccess, userRank, userIsClaim, unit }) => {
               <Value>{item.total}$</Value>
             </ItemInfoCard>
             <ItemInfoCard>
-              <Label>Volumn on tree:</Label>
+              <Label>Volume on tree:</Label>
               <Value>
                 <div
                   style={{

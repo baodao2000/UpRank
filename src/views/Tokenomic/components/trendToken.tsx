@@ -100,7 +100,7 @@ function TrendToken() {
             <Flex style={{ flexDirection: 'column' }}>
               <TrendContent>Mine Trend token</TrendContent>
               <TokenText>
-                Through pool Stater Visit Pool{''}
+                Through pool Starter Visit Pool{''}
                 <Link to="/pools">
                   <span
                     style={{
@@ -125,7 +125,7 @@ function TrendToken() {
               <Image src="/images/checkCircle.png" width={isMobile ? 16 : 24} height={isMobile ? 16 : 24} alt="" />
             </Circle>
             <Flex style={{ flexDirection: 'column' }}>
-              <TrendContent> Earn profit & receive reward</TrendContent>
+              <TrendContent> Earn profit & receive a reward</TrendContent>
               <TokenText>By developing the pool standard system</TokenText>
             </Flex>
           </CardContent>
@@ -136,7 +136,7 @@ function TrendToken() {
               <Image src="/images/checkCircle.png" width={isMobile ? 16 : 24} height={isMobile ? 16 : 24} alt="" />
             </Circle>
             <Flex style={{ flexDirection: 'column' }}>
-              <TrendContent>Engage in Bouty & Airdrop Programs</TrendContent>
+              <TrendContent>Engage in Bounty & Airdrop Programs</TrendContent>
               <TokenText>On Trendy DeFi community platforms</TokenText>
             </Flex>
           </CardContent>
