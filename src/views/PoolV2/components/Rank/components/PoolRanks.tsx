@@ -286,7 +286,7 @@ const nextRankRequire = [
 const PoolRanks = ({ onSuccess, userRank, unit, accountUsers }) => {
   const { toastSuccess, toastError } = useToast()
   const { account, chainId } = useActiveWeb3React()
-  account = '0x1ec0f8875B7fc2400a6F44788c6710959614e68A'
+  // account = '0x1ec0f8875B7fc2400a6F44788c6710959614e68A'
   const CHAIN_ID = chainId === undefined ? ChainId.BSC_TESTNET : chainId
 
   const poolContract = usePoolsV4Contract()
@@ -322,7 +322,7 @@ const PoolRanks = ({ onSuccess, userRank, unit, accountUsers }) => {
   const sendRequest = async () => {
     const linkAccount = getBlockExploreLink(contracts.trend[CHAIN_ID], 'address', CHAIN_ID)
     const usersAccount = shortenURL(account, 25)
-
+    toastSuccess('your upRank request has been sent please wait...')
     const link = `${window.location.href}/?ref=${account}#review`
 
     const linkRequest = shortenURL(link, 25)
